@@ -9,12 +9,14 @@ using UnityEngine.Events;
 //TODO: should be renamed to character
 public abstract class Character : MonoBehaviour
 {
+    //Should we use different state for travelling and just looking at something clsoe by
     public enum CharacterState
     {
-        Idling, Attacking, Travelling, Fleeing, Dead
+        Idling, Attacking, Travelling, Fleeing, Hiding, Dead
     }
 
     public CharacterState State;
+
 
 
     [HideInInspector] public TeamController Team;
@@ -24,6 +26,9 @@ public abstract class Character : MonoBehaviour
     public bool Walking;
     public float WalkSpeed;
     public float AttackRange;
+
+
+    private bool idleAction;
 
     [HideInInspector]
     //should ignore z for 2d.
@@ -126,7 +131,7 @@ public abstract class Character : MonoBehaviour
         OnDamage.AddListener(x=> StartCoroutine(HurtRoutine()));
         OnDeath.AddListener(Die);
         
-        AttackRange = transform.lossyScale.x * 2f;
+        //AttackRange = transform.lossyScale.x * 2f;
 
         OnTargetDeath.AddListener(TargetGone);
         OnBeingAttacked.AddListener(BeingAttacked);
@@ -247,14 +252,35 @@ public abstract class Character : MonoBehaviour
         switch (State)
         {
             case CharacterState.Idling:
-                //TODO: something random
+                if (idleAction)
+                {
+                    if (Vector2.Distance(transform.position, Target) < 0.02f)
+                    {
+                        idleAction = false;
+                    }
+                    moveDirection = (Target - transform.position).normalized +
+                                    new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
+
+                    transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
+                }
+                else if (Random.value < 0.015f) //selecting idle action
+                {
+                    idleAction = true;
+                    var idleDistance = 3;
+
+                    Target = transform.position + new Vector3(Random.Range(-idleDistance, idleDistance), 0,
+                                 Random.Range(-idleDistance, idleDistance));
+
+                    Walking = Random.value < 0.75f;
+                }
+
                 break;
             case CharacterState.Attacking:
                 if (AttackTarget)
                 {
                     Target = AttackTarget.transform.position;
 
-                    moveDirection = (Target - transform.position).normalized + new Vector3(Random.value-0.5f,Random.value-0.5f);
+                    moveDirection = (Target - transform.position).normalized + new Vector3(Random.value-0.5f,0,Random.value-0.5f);
                     
                     transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
                 }
@@ -265,13 +291,13 @@ public abstract class Character : MonoBehaviour
                 break;
             case CharacterState.Travelling:
                 //check for arrival and stop travelling
-                if (Vector2.Distance(transform.position,Target) < 1)
+                if (Vector2.Distance(transform.position,Target) < 0.1f)
                 {
                     Debug.Log(name +" arrived at target");
                     State = CharacterState.Idling;
                 }
 
-                moveDirection = (Target - transform.position).normalized;
+                moveDirection = (Target - transform.position).normalized + new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
                 
 
                 transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
@@ -281,7 +307,7 @@ public abstract class Character : MonoBehaviour
                 {
                     Target = AttackTarget.transform.position;
 
-                    moveDirection = (Target - transform.position).normalized;
+                    moveDirection = (Target - transform.position).normalized + new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
 
                     Walking = false;
                     moveDirection *= -1;
@@ -315,22 +341,32 @@ public abstract class Character : MonoBehaviour
         //TODO: remove this at some point
         gameObject.SetActive(false);
 
+        //TODO: remove listeners
+        OnDamage.RemoveAllListeners();
+
         State = CharacterState.Dead;
     }
 
     private bool InAttackRange()
     {
+
+
         if (!AttackTarget)
             return false;
 
-        var targetCol = AttackTarget.GetComponent<BoxCollider2D>();
+        var targetCol = AttackTarget.GetComponent<CapsuleCollider>();
 
         if (!targetCol)
+        {
+            Debug.LogWarning(name+ "'s target does not have a capsule collider");
             return false;
+        }
 
-        var boxCol = GetComponent<BoxCollider2D>();
+        var boxCol = GetComponent<CapsuleCollider>();
 
-        return (boxCol.Distance(targetCol).distance <= AttackRange);
+        return ((boxCol.transform.position -(targetCol.transform.position) ).magnitude 
+            <= boxCol.radius*boxCol.transform.lossyScale.x
+            + targetCol.radius*targetCol.transform.lossyScale.x+AttackRange);
 
     }
 

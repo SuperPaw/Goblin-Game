@@ -1,16 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
     public TeamController Team;
     public Camera Cam;
     public int MouseMoveKey = 1;
-    //TODO: should be related to distance of travel
-    public float RandomMoveFactor = 2f;
 
     private bool _mouseHeld;
     private Vector3 _mouseDragPos;
@@ -31,7 +31,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(Input.touchSupported)
+
+        if (Input.touchSupported)
         { }
 
         
@@ -46,7 +47,13 @@ public class PlayerController : MonoBehaviour
 
         if (_mouseHeld)
         {
-            Cam.transform.position += (_mouseDragPos - Cam.ScreenToWorldPoint(Input.mousePosition));
+            var moveDelta = (_mouseDragPos - Cam.ScreenToWorldPoint(Input.mousePosition));
+            moveDelta.y = 0;
+
+            //TODO: the z axis does not move correctly due to the rotation of the camera
+
+            Cam.transform.position += moveDelta;
+
         }
 
 
@@ -54,40 +61,32 @@ public class PlayerController : MonoBehaviour
         {
             //TODO Move this to a routine and insert a pause here and a shout from the Chief
 
-            RaycastHit2D hit = Physics2D.Raycast(Cam.transform.position, Cam.ScreenToWorldPoint(Input.mousePosition));
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-            if (hit && hit.collider && hit.collider.GetComponent<Character>())
+            if (Physics.Raycast(ray, out hit))
             {
-                var c = hit.collider.GetComponent<Character>();
-                if (c)
+                if (hit.collider && hit.collider.GetComponent<Character>())
                 {
-                    Debug.Log("Clicked charaacter " + c.name);
+                    var c = hit.collider.GetComponent<Character>();
+                    if (c)
+                    {
+                        Debug.Log("Clicked charaacter " + c.name);
 
-                    if (c.tag != "Player")
-                        foreach (var gobbo in Team.Members)
-                        {
-                            gobbo.State = Character.CharacterState.Attacking;
-                            gobbo.AttackTarget = c;
-                        }
+                        if (c.tag != "Player")
+                            foreach (var gobbo in Team.Members)
+                            {
+                                gobbo.State = Character.CharacterState.Attacking;
+                                gobbo.AttackTarget = c;
+                            }
+                    }
                 }
-            }
-            else //MOVE
-            {
-                var target = Cam.ScreenToWorldPoint(Input.mousePosition);
-
-
-                var leaderPos = Team.Leader.transform.position;
-
-                //TODO: check for distance so no move right next to group
-
-                foreach (var gobbo in Team.Members)
+                else
                 {
-                    gobbo.State = Character.CharacterState.Travelling;
+                    var target = hit.point;
+                    target.y = 0;
 
-                    //TODO: should use a max distance from leader to include group them together if seperated
-                    //TODO: could just use a local instead of gloabl pos for the entire team and move that
-                    gobbo.Target =
-                        target + (gobbo.transform.position - leaderPos) * (Random.Range(0, RandomMoveFactor));
+                    Team.Move(target);
                 }
             }
         }
@@ -97,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
     private void Zoom(float deltaMagnitudeDiff, float speed)
     {
-        if(deltaMagnitudeDiff == 0f) return;
+        if(Math.Abs(deltaMagnitudeDiff) < 0.001) return;
 
         Cam.orthographicSize += deltaMagnitudeDiff * speed;
         // set min and max value of Clamp function upon your requirement
