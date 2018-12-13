@@ -489,6 +489,9 @@ MonoBehaviour:
   Team: {fileID: 0}
   Cam: {fileID: 0}
   MouseMoveKey: 1
+  KeyMappings:
+  - Key: 104
+    Action: 0
   ZoomMinBound: 2
   ZoomMaxBound: 50
   MouseZoomSpeed: 1
