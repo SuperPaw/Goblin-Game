@@ -10,7 +10,17 @@ public class PlayerController : MonoBehaviour
 {
     public TeamController Team;
     public Camera Cam;
+
+    [Header("Controls")]
     public int MouseMoveKey = 1;
+    public enum MappableActions { Hide, Attack, Flee, Menu }
+    [Serializable]
+    public struct KeyMapping
+    {
+        public KeyCode Key;
+        public MappableActions Action;
+    }
+    public KeyMapping[] KeyMappings;
 
     private bool _mouseHeld;
     private Vector3 _mouseDragPos;
@@ -26,12 +36,13 @@ public class PlayerController : MonoBehaviour
         if(!Team) Debug.LogWarning("Unable to find team for player controls!");
 
         if (!Cam) Cam = Camera.main;
+
     }
 
 
     void Update()
     {
-
+        //TODO: divide these into methods
         if (Input.touchSupported)
         { }
 
@@ -90,9 +101,29 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        
-    }
 
+
+        foreach (var mapping in KeyMappings)
+        {
+            if (Input.GetKeyDown(mapping.Key))
+            {
+                switch (mapping.Action)
+                {
+                    case MappableActions.Hide:
+                        Team.Hide();
+                        break;
+                    case MappableActions.Attack:
+                        break;
+                    case MappableActions.Flee:
+                        break;
+                    case MappableActions.Menu:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+    }
 
     private void Zoom(float deltaMagnitudeDiff, float speed)
     {

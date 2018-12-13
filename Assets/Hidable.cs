@@ -6,4 +6,5 @@ public class Hidable : MonoBehaviour
 {
 
     public Transform HideLocation;
+    public Character OccupiedBy;
 }

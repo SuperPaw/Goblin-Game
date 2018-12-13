@@ -56,6 +56,17 @@ public class TeamController : MonoBehaviour
 
     }
 
+
+    public void Hide()
+    {
+        foreach (var ch in Members)
+        {
+
+        }
+    }
+
+
+
     private void MemberDied(Character c)
     {
         Members.Remove(c);

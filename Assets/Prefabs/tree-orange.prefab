@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 65175601132316730}
   - component: {fileID: 114691825108400538}
   - component: {fileID: 54195329309519110}
+  - component: {fileID: 114678356272322610}
   m_Layer: 0
   m_Name: tree-orange
   m_TagString: Untagged
@@ -51,14 +52,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1910571166180590}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.16692118, y: 1, z: 4.3965445}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: -0.16692118, y: 0.5, z: 4.3965445}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_Children:
   - {fileID: 4712357691483580}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!4 &4712357691483580
 Transform:
   m_ObjectHideFlags: 1
@@ -83,9 +84,9 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!65 &65175601132316730
 BoxCollider:
@@ -99,6 +100,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.8, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114678356272322610
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1910571166180590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2eadcfaaa049744aa8c3d5585e6250a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: 8c69f3cd16f534bec8236a6484f500d4, type: 3}
+  - {fileID: 21300000, guid: c008626f5108946299e1a584ba85fa5b, type: 3}
+  - {fileID: 21300000, guid: db07cc93e21f1457d9a1364618027fbb, type: 3}
+  SpriteRenderer: {fileID: 212160447925340590}
 --- !u!114 &114691825108400538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -111,6 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HideLocation: {fileID: 4712357691483580}
+  OccupiedBy: {fileID: 0}
 --- !u!212 &212160447925340590
 SpriteRenderer:
   m_ObjectHideFlags: 1
