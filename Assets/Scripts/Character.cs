@@ -1,6 +1,7 @@
 ﻿
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Events;
@@ -121,6 +122,21 @@ public abstract class Character : MonoBehaviour
 
     private Collider2D collider;
     private Coroutine _attackRoutine;
+    private Hidable hiding;
+
+    public Hidable Hidingplace
+    {
+        get { return hiding; }
+        set
+        {
+            if (hiding)
+                hiding.OccupiedBy = null;
+            if(!value) return;
+
+            value.OccupiedBy = this;
+            hiding = value;
+        }
+    }
 
     public void Start()
     {
@@ -165,6 +181,34 @@ public abstract class Character : MonoBehaviour
         return State == CharacterState.Idling;
     }
 
+
+    private Hidable GetClosestHidingPlace()
+    {
+
+        //get these from a game or fight controller instead for maintenance
+        GameObject[] gos;
+        gos = GameObject.FindGameObjectsWithTag("Hidable");
+        Hidable closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = transform.position;
+        foreach (Hidable go in gos.Select(h=>h.GetComponent<Hidable>()))
+        {
+            if(!go)
+                Debug.LogError("Hidable object does not have hidable script");
+            if(go.OccupiedBy != null)
+                continue;
+            Vector3 diff = go.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = go;
+                distance = curDistance;
+            }
+        }
+
+        if (!closest) return null;
+        return closest;
+    }
 
     private Character GetClosestEnemy()
     {
@@ -295,6 +339,7 @@ public abstract class Character : MonoBehaviour
                 {
                     Debug.Log(name +" arrived at target");
                     State = CharacterState.Idling;
+                    break;
                 }
 
                 moveDirection = (Target - transform.position).normalized + new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
@@ -318,6 +363,25 @@ public abstract class Character : MonoBehaviour
                     State = CharacterState.Idling;
                 break;
             case CharacterState.Dead:
+                break;
+            case CharacterState.Hiding:
+                if (!Hidingplace)
+                {
+                    State = CharacterState.Idling;
+                }
+
+                Target = hiding.HideLocation.transform.position;
+
+                if (Vector2.Distance(transform.position, Target) < 0.01f)
+                {
+                    break;
+                }
+
+                Walking = false;
+                
+                moveDirection = (Target - transform.position).normalized + new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
+
+                transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
                 break;
             default:
                 break;
@@ -371,4 +435,14 @@ public abstract class Character : MonoBehaviour
     }
 
     #endregion
+
+    public void Hide()
+    {
+        Hidingplace = GetClosestHidingPlace();
+
+        if (!Hidingplace) return;
+        
+        State = CharacterState.Hiding;
+    }
+
 }

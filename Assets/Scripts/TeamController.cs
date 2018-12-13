@@ -61,7 +61,10 @@ public class TeamController : MonoBehaviour
     {
         foreach (var ch in Members)
         {
-
+            if (ch.State != Character.CharacterState.Attacking || ch.State != Character.CharacterState.Fleeing)
+            {
+                ch.Hide();
+            }
         }
     }
 
@@ -92,6 +95,20 @@ public class TeamController : MonoBehaviour
             //TODO: could just use a local instead of gloabl pos for the entire team and move that
             gobbo.Target =
                 target + (gobbo.transform.position - leaderPos) * (Random.Range(0, RandomMoveFactor));
+        }
+    }
+
+    public void Attack(Character character)
+    {
+        foreach (var gobbo in Members)
+        {
+            if (gobbo.State == Character.CharacterState.Hiding)
+                gobbo.Hidingplace = null;
+            if (gobbo.State == Character.CharacterState.Fleeing)
+                return;
+
+            gobbo.State = Character.CharacterState.Attacking;
+            gobbo.AttackTarget = character;
         }
     }
 }

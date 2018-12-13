@@ -6,5 +6,6 @@ public class Hidable : MonoBehaviour
 {
 
     public Transform HideLocation;
+    //todo: should also change the chracter state, when this switches
     public Character OccupiedBy;
 }

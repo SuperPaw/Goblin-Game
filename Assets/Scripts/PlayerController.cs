@@ -85,11 +85,7 @@ public class PlayerController : MonoBehaviour
                         Debug.Log("Clicked charaacter " + c.name);
 
                         if (c.tag != "Player")
-                            foreach (var gobbo in Team.Members)
-                            {
-                                gobbo.State = Character.CharacterState.Attacking;
-                                gobbo.AttackTarget = c;
-                            }
+                            Team.Attack(c);
                     }
                 }
                 else
@@ -110,6 +106,7 @@ public class PlayerController : MonoBehaviour
                 switch (mapping.Action)
                 {
                     case MappableActions.Hide:
+                        Debug.Log("Hiding");
                         Team.Hide();
                         break;
                     case MappableActions.Attack:
