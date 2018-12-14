@@ -59,8 +59,9 @@ public class MapGenerator : MonoBehaviour
     public IEnumerator GenerateMap(Action<int> progressCallback, Action EndCallback)
     {
         var progress = 0;
+        var charFact = 20;
         //could use factors on the two last to make them more important than each tiles
-        var totalProgress = (int)(SizeX*SizeZ) + NpcsToGenerate + GoblinsToGenerate;
+        var totalProgress = (int)(SizeX*SizeZ) + NpcsToGenerate*charFact + GoblinsToGenerate*charFact;
         var progressPct = 0;
 
         progressCallback(progressPct);
@@ -196,7 +197,9 @@ public class MapGenerator : MonoBehaviour
             //TODO:check 
 	        next.transform.position = new Vector3(tile.X, 0, tile.Y);
 
-	        int loc = (++progress * 100) / totalProgress;
+	        progress += charFact;
+
+	        int loc = (progress * 100) / totalProgress;
 	        if (loc != progressPct)
 	        {
 	            progressPct = loc;
@@ -231,7 +234,9 @@ public class MapGenerator : MonoBehaviour
             Members.Add(next.GetComponent<Character>());
 
 
-            int loc = (++progress * 100) / totalProgress;
+            progress += charFact;
+
+            int loc = (progress * 100) / totalProgress;
             if (loc != progressPct)
             {
                 progressPct = loc;

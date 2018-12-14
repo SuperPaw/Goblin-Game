@@ -281,7 +281,7 @@ public abstract class Character : MonoBehaviour
         Debug.Log(gameObject.name + " is Attacking " + AttackTarget.gameObject.name);
         
         State = CharacterState.Attacking;
-        while (Attacking() && InAttackRange())
+        while (Attacking() && InAttackRange() && AttackTarget)
         {
             //HIT TARGET
             AttackTarget.Health -= Damage;
