@@ -29,14 +29,19 @@ public class PlayerController : MonoBehaviour
     public float ZoomMaxBound = 50;
     public float MouseZoomSpeed = 1;
 
-    void Start()
+    [Header("Follow Animation")] public float MoveTime = 1;
+    public AnimationCurve MoveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+
+
+    public void Initialize()
     {
         Team = GetComponent<TeamController>();
 
         if(!Team) Debug.LogWarning("Unable to find team for player controls!");
 
         if (!Cam) Cam = Camera.main;
-
+        
+        MoveToLeader();
     }
 
 
@@ -122,12 +127,35 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Zoom(float deltaMagnitudeDiff, float speed)
+    //TODO: move top camera controller
+    public void Zoom(float deltaMagnitudeDiff, float speed)
     {
         if(Math.Abs(deltaMagnitudeDiff) < 0.001) return;
 
         Cam.orthographicSize += deltaMagnitudeDiff * speed;
         // set min and max value of Clamp function upon your requirement
         //Cam.orthographicSize = Mathf.Clamp(Cam.orthographicSize, ZoomMinBound, ZoomMaxBound);
+    }
+
+
+    private void MoveToLeader()
+    {
+        StartCoroutine(MoveCamera(Team.Leader.transform.position));
+    }
+
+    private IEnumerator MoveCamera(Vector3 loc)
+    {
+        //currentLocation = loc;
+        var offset = 50;
+
+        var start = Cam.transform.position;
+        var end = new Vector3(loc.x, start.y,loc.z-offset);
+        for (var t = 0f; t < MoveTime; t += Time.deltaTime)
+        {
+            yield return null;
+            Cam.transform.position = Vector3.LerpUnclamped(start, end, MoveCurve.Evaluate(t / MoveTime));
+        }
+
+        Cam.transform.position = end;
     }
 }

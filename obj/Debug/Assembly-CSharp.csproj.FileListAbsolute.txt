@@ -334,3 +334,7 @@ C:\git\GoblinGame\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 C:\git\GoblinGame\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\git\GoblinGame\obj\Debug\Assembly-CSharp.dll
 C:\git\GoblinGame\obj\Debug\Assembly-CSharp.pdb
+C:\git\GoblinGame\Temp\bin\Debug\UnityEditor.UI.dll
+C:\git\GoblinGame\Temp\bin\Debug\NavMeshComponentsEditor.pdb
+C:\git\GoblinGame\Temp\bin\Debug\NavMeshComponents.pdb
+C:\git\GoblinGame\Temp\bin\Debug\UnityEditor.UI.xml

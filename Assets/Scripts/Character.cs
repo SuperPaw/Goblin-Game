@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 
@@ -43,6 +44,7 @@ public abstract class Character : MonoBehaviour
     public AttackEvent OnAttackCharacter = new AttackEvent();
     public AttackEvent OnBeingAttacked = new AttackEvent();
 
+    private NavMeshAgent navMeshAgent;
 
     private Character _attackTarget;
     public Character AttackTarget
@@ -152,6 +154,10 @@ public abstract class Character : MonoBehaviour
         OnTargetDeath.AddListener(TargetGone);
         OnBeingAttacked.AddListener(BeingAttacked);
         OnAttackCharacter.AddListener(AttackCharacter);
+
+        navMeshAgent = GetComponent<NavMeshAgent>();
+
+        if(!navMeshAgent) Debug.LogWarning(name+ ": character does not have Nav Mesh Agent");
     }
 
     void FixedUpdate()

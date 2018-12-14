@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Experimental.PlayerLoop;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
@@ -45,16 +46,21 @@ public class MapGenerator : MonoBehaviour
     public GameObject ImmovableMapTile;
     public GameObject[] Npcs;
     public GameObject[] HidableObjects;
+
+    [Header("Character Generation")]
     public GameObject NpcHolder;
     public int NpcsToGenerate;
+    [Range(0, 20)]
+    public int GoblinsToGenerate;
+    public GameObject DefaultCharacter;
+    public TeamController GoblinTeam;
 
-    
-	// Use this for initialization
+    // Use this for initialization
     public IEnumerator GenerateMap(Action<int> progressCallback, Action EndCallback)
     {
         var progress = 0;
         //could use factors on the two last to make them more important than each tiles
-        var totalProgress = SizeX + (int)(SizeX*SizeZ*PctOfImmovableAreas) + NpcsToGenerate;
+        var totalProgress = (int)(SizeX*SizeZ) + NpcsToGenerate + GoblinsToGenerate;
         var progressPct = 0;
 
         progressCallback(progressPct);
@@ -89,6 +95,7 @@ public class MapGenerator : MonoBehaviour
             clusters.Add(i, new List<Tile>());
 
             Tile t = GetRandomGroundTile();
+            movableTiles.Remove(t);
             AssignToCluster(t, i);
             imovableSize++;
 
@@ -100,6 +107,7 @@ public class MapGenerator : MonoBehaviour
                 {
                     next = GetRandomNeighbour(next);
                 }
+                movableTiles.Remove(t);
                 AssignToCluster(next,i);
                 imovableSize++;
             }
@@ -117,23 +125,24 @@ public class MapGenerator : MonoBehaviour
             {
                 next = GetRandomNeighbour(next);
             }
+
+            movableTiles.Remove(next);
             AssignToCluster(next, i);
             
         }
 
+        //List<NavMeshSurface> surfaces = new List<NavMeshSurface>(movableTiles.Count);
+
         //INSTANTIATING
-        for (int x = startX; x < endX; x++)
-	    {
-	        for (int z = startZ; z < endZ; z++)
-	        {
-                //TODO: only create tiles where needed
+        foreach (var tile in movableTiles)
+        {
+	        var next =Instantiate(MapTileGameObject,transform);
 
-	            var next =Instantiate(MapTileGameObject,transform);
+            next.transform.position = new Vector3(tile.X,0,tile.Y);
+	        next.name = "Ground ("+tile.X+","+tile.Y+")";
 
-                next.transform.position = new Vector3(x,0,z);
-	            next.name = "Ground ("+x+","+z+")";
-
-            }
+            //surfaces.Add(next.GetComponent<NavMeshSurface>());
+            
             int loc = (++progress * 100) / totalProgress;
 	        if (loc != progressPct)
 	        {
@@ -168,6 +177,15 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
+        //HACK CHECK FOR AREA ACCESSIBILITY
+        //select a middle point 
+        //ground points at random a bunch of times and check that they are reachable
+        //if not make a forest road
+
+        //foreach (var movable in surfaces)  {
+        //    movable.BuildNavMesh();
+        //}
+
 
         for (int i = 0; i < NpcsToGenerate; i++)
 	    {
@@ -187,6 +205,45 @@ public class MapGenerator : MonoBehaviour
 	        }
 
         }
+
+        List<Character> Members = new List<Character>();
+        List<Tile> postions = new List<Tile>(GoblinsToGenerate);
+        int TilesToMoveFromFirst = 4;
+        postions.Add(GetRandomGroundTile());
+
+        //TODO: check that we are not initializinig in a too small area
+        for (int i = 0; i < GoblinsToGenerate; i++)
+        {
+            var next = Instantiate(DefaultCharacter, GoblinTeam.transform);
+
+            //Find suitable start position
+            Tile pos = postions.First();
+            int x = 0;
+            while (postions.Contains(pos) && x++ < TilesToMoveFromFirst)
+            {
+                var neighbour = GetRandomNeighbour(pos);
+
+                if (neighbour.Type == TileType.Ground) pos = neighbour;
+            }
+
+            next.transform.position = new Vector3(pos.X, 0, pos.Y);
+
+            Members.Add(next.GetComponent<Character>());
+
+
+            int loc = (++progress * 100) / totalProgress;
+            if (loc != progressPct)
+            {
+                progressPct = loc;
+                yield return null;
+                progressCallback(progressPct);
+            }
+
+        }
+        GoblinTeam.Initialize(Members);
+
+        //TODO: give reference and move to overalle generation script
+        FindObjectOfType<PlayerController>().Initialize();
 
         EndCallback();
     }
@@ -218,13 +275,12 @@ public class MapGenerator : MonoBehaviour
 
     private Tile GetRandomGroundTile()
     {
-        //TODO: keep hold of ground tiles in list an return a random from that is cheaper
-        Tile t = map[(int)(Random.value * SizeX), (int)(Random.value * SizeZ)]; ;
+        //Tile t = map[(int)(Random.value * SizeX), (int)(Random.value * SizeZ)]; ;
 
-        while ( t.Type != TileType.Ground)
-            t = map[(int) (Random.value * SizeX), (int) (Random.value * SizeZ)];
-        
-        return t;
+        //while ( t.Type != TileType.Ground)
+        //    t = map[(int) (Random.value * SizeX), (int) (Random.value * SizeZ)];
+
+        return movableTiles[Random.Range(0, movableTiles.Count)];
     }
 	
 }

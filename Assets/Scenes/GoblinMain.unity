@@ -589,8 +589,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Members: []
   Leader: {fileID: 0}
-  DefaultCharacter: {fileID: 100702, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe, type: 2}
-  CharacterToGenerate: 7
   RandomMoveFactor: 2
 --- !u!4 &904032342
 Transform:
@@ -969,3 +967,6 @@ MonoBehaviour:
   - {fileID: 1910571166180590, guid: 039038a2da993284dbd739d670e3a939, type: 2}
   NpcHolder: {fileID: 71002400}
   NpcsToGenerate: 50
+  GoblinsToGenerate: 4
+  DefaultCharacter: {fileID: 100702, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe, type: 2}
+  GoblinTeam: {fileID: 904032341}

@@ -9,9 +9,6 @@ public class TeamController : MonoBehaviour
     public List<Character> Members;
     public Character Leader;
     private bool updatedListeners;
-    public GameObject DefaultCharacter;
-    [Range(0,20)]
-    public int CharacterToGenerate;
 
     //TODO: should be related to distance of travel
     public float RandomMoveFactor = 2f;
@@ -19,18 +16,12 @@ public class TeamController : MonoBehaviour
     private Vector3 targetPos;
 
     // Use this for initialization
-    void Start ()
+    public void Initialize (List<Character> members)
     {
-        for (int i = 0; i < CharacterToGenerate; i++)
-        {
-            var next = Instantiate(DefaultCharacter, transform);
 
-            next.transform.position = new Vector3(i, 0, i%3);
+        Members = members;
 
-            Members.Add(next.GetComponent<Character>());
-        }
-
-        if(CharacterToGenerate == 0) Members = GetComponentsInChildren<Character>().ToList();
+        if(Members.Count == 0) Members = GetComponentsInChildren<Character>().ToList();
 
         if (!Leader)
             Leader = Members.First();
