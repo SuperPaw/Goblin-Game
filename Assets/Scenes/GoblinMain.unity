@@ -774,7 +774,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1578144542}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 10, z: -6.3}
+  m_LocalPosition: {x: 0, y: 50, z: -6.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -957,7 +957,7 @@ MonoBehaviour:
   ClustersOfNoWalking: 80
   MinClusterSize: 1
   MinDistanceBetweenClusters: 0
-  GrowthRate: 3
+  Cohesion: 1.23
   PctOfImmovableAreas: 0.45
   MapTileGameObject: {fileID: 1402779629115860, guid: 9b585b0ff8c29c34faa5031de5ee81a3,
     type: 2}

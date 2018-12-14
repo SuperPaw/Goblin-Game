@@ -31,9 +31,9 @@ public class MapGenerator : MonoBehaviour
     public int ClustersOfNoWalking;
     public int MinClusterSize;
     public int MinDistanceBetweenClusters;
-    [Range(1,9)]
+    [Range(1.01f,5)]
     //for more fidelity around tiles
-    public int GrowthRate;
+    public float Cohesion;
     private Tile[,] map;
     private readonly Dictionary<int, List<Tile>> clusters = new Dictionary<int, List<Tile>>();
     private List<Tile> movableTiles;
@@ -111,7 +111,7 @@ public class MapGenerator : MonoBehaviour
             //select random cluster
             var i = Random.Range(0, ClustersOfNoWalking);
             //Switch to first for more round forests
-            Tile next = GetRandomNeighbour(clusters[i][(int)(clusters[i].Count/1.3f)]);
+            Tile next = GetRandomNeighbour(clusters[i][(int)(clusters[i].Count/Cohesion)]);
             //TODO: this can return the edge of another cluster
             while (next.Type != TileType.Ground)
             {
