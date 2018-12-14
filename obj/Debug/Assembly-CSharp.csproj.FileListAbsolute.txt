@@ -338,3 +338,5 @@ C:\git\GoblinGame\Temp\bin\Debug\UnityEditor.UI.dll
 C:\git\GoblinGame\Temp\bin\Debug\NavMeshComponentsEditor.pdb
 C:\git\GoblinGame\Temp\bin\Debug\NavMeshComponents.pdb
 C:\git\GoblinGame\Temp\bin\Debug\UnityEditor.UI.xml
+C:\git\GoblinGame\Temp\bin\Debug\NavMeshComponentsExamplesEditor.pdb
+C:\git\GoblinGame\Temp\bin\Debug\NavMeshComponentsExamples.pdb

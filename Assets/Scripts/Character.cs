@@ -34,7 +34,7 @@ public abstract class Character : MonoBehaviour
 
     [HideInInspector]
     //should ignore z for 2d.
-    public Vector3 Target;
+    //public Vector3 Target;
 
     public class TargetDeathEvent : UnityEvent{ }
     public TargetDeathEvent OnTargetDeath = new TargetDeathEvent();
@@ -44,7 +44,7 @@ public abstract class Character : MonoBehaviour
     public AttackEvent OnAttackCharacter = new AttackEvent();
     public AttackEvent OnBeingAttacked = new AttackEvent();
 
-    private NavMeshAgent navMeshAgent;
+    public NavMeshAgent navMeshAgent;
 
     private Character _attackTarget;
     public Character AttackTarget
@@ -304,22 +304,22 @@ public abstract class Character : MonoBehaviour
             case CharacterState.Idling:
                 if (idleAction)
                 {
-                    if (Vector2.Distance(transform.position, Target) < 0.02f)
-                    {
+                    if(navMeshAgent.remainingDistance < 0.02f)
                         idleAction = false;
-                    }
-                    moveDirection = (Target - transform.position).normalized +
-                                    new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
 
-                    transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
+                    //moveDirection = (Target - transform.position).normalized +
+                                    //new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
+                    //navMeshAgent.SetDestination();
+
+                    //transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
                 }
                 else if (Random.value < 0.015f) //selecting idle action
                 {
                     idleAction = true;
                     var idleDistance = 3;
 
-                    Target = transform.position + new Vector3(Random.Range(-idleDistance, idleDistance), 0,
-                                 Random.Range(-idleDistance, idleDistance));
+                    //navMeshAgent.SetDestination(transform.position + new Vector3(Random.Range(-idleDistance, idleDistance), 0,
+                    //             Random.Range(-idleDistance, idleDistance)));
 
                     Walking = Random.value < 0.75f;
                 }
@@ -328,11 +328,12 @@ public abstract class Character : MonoBehaviour
             case CharacterState.Attacking:
                 if (AttackTarget)
                 {
-                    Target = AttackTarget.transform.position;
+                    navMeshAgent.SetDestination(AttackTarget.transform.position);
 
-                    moveDirection = (Target - transform.position).normalized + new Vector3(Random.value-0.5f,0,Random.value-0.5f);
+                    //TODO: add random factor
+                    //moveDirection = (Target - transform.position).normalized + new Vector3(Random.value-0.5f,0,Random.value-0.5f);
                     
-                    transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
+                    //transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
                 }
                 else
                 {
@@ -341,29 +342,32 @@ public abstract class Character : MonoBehaviour
                 break;
             case CharacterState.Travelling:
                 //check for arrival and stop travelling
-                if (Vector2.Distance(transform.position,Target) < 0.1f)
+                if (navMeshAgent.remainingDistance < 0.1f)
                 {
                     Debug.Log(name +" arrived at target");
                     State = CharacterState.Idling;
                     break;
                 }
-
-                moveDirection = (Target - transform.position).normalized + new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
                 
+                //navMeshAgent.SetDestination()
 
-                transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
+                //moveDirection = (Target - transform.position).normalized + new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
+            
+                //transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
                 break;
             case CharacterState.Fleeing:
                 if (AttackTarget)
                 {
-                    Target = AttackTarget.transform.position;
+                    //Target = AttackTarget.transform.position;
 
-                    moveDirection = (Target - transform.position).normalized + new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
+                    //moveDirection = (Target - transform.position).normalized + new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
+                    //TODO: choose a better flee destination and check once there
+                    navMeshAgent.SetDestination(AttackTarget.transform.position * -1);
 
                     Walking = false;
-                    moveDirection *= -1;
+                    //moveDirection *= -1;
 
-                    transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
+                    //transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
                 }
                 else
                     State = CharacterState.Idling;
@@ -376,18 +380,18 @@ public abstract class Character : MonoBehaviour
                     State = CharacterState.Idling;
                 }
 
-                Target = hiding.HideLocation.transform.position;
+                navMeshAgent.SetDestination( hiding.HideLocation.transform.position);
 
-                if (Vector2.Distance(transform.position, Target) < 0.01f)
-                {
-                    break;
-                }
+                //if (Vector2.Distance(transform.position, Target) < 0.01f)
+                //{
+                //    break;
+                //}
 
-                Walking = false;
+                //Walking = false;
                 
-                moveDirection = (Target - transform.position).normalized + new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
+                //moveDirection = (Target - transform.position).normalized + new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
 
-                transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
+                //transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
                 break;
             default:
                 break;

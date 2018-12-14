@@ -84,8 +84,7 @@ public class TeamController : MonoBehaviour
 
             //TODO: should use a max distance from leader to include group them together if seperated
             //TODO: could just use a local instead of gloabl pos for the entire team and move that
-            gobbo.Target =
-                target + (gobbo.transform.position - leaderPos) * (Random.Range(0, RandomMoveFactor));
+            gobbo.navMeshAgent.SetDestination(target + (gobbo.transform.position - leaderPos) * (Random.Range(0, RandomMoveFactor)));
         }
     }
 

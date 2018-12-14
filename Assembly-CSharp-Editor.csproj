@@ -10,7 +10,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{53E5213F-D30F-B95B-0A12-F97811AF67A9}</ProjectGuid>
+    <ProjectGuid>{4941BBF6-41EC-18D2-C503-7B605B7B2BF1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -61,19 +61,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Isometric Camera Controller\Scripts\Editor\Jims_CameraControllerEditor.cs" />
-    <Compile Include="Assets\Isometric Camera Controller\Scripts\Editor\Jims_CameraProfileEditor.cs" />
+    <Compile Include="Assets\Imported\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshComponentsGUIUtility.cs" />
+    <Compile Include="Assets\Imported\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshLinkEditor.cs" />
+    <Compile Include="Assets\Imported\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshModifierEditor.cs" />
+    <Compile Include="Assets\Imported\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshModifierVolumeEditor.cs" />
+    <Compile Include="Assets\Imported\NavMeshComponents-master\Assets\NavMeshComponents\Editor\NavMeshSurfaceEditor.cs" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>C:/git/Goblin Game/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>C:/git/GoblinGame/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/git/Goblin Game/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/git/GoblinGame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/git/Goblin Game/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/git/GoblinGame/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/git/Goblin Game/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/git/GoblinGame/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -342,6 +345,24 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.PackageManagerUI.Editor">
+      <HintPath>C:/git/GoblinGame/Assets/Imported/NavMeshComponents-master/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="NavMeshComponents">
+      <HintPath>C:/git/GoblinGame/Assets/Imported/NavMeshComponents-master/Library/ScriptAssemblies/NavMeshComponents.dll</HintPath>
+    </Reference>
+    <Reference Include="NavMeshComponentsExamplesEditor">
+      <HintPath>C:/git/GoblinGame/Assets/Imported/NavMeshComponents-master/Library/ScriptAssemblies/NavMeshComponentsExamplesEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="NavMeshComponentsExamples">
+      <HintPath>C:/git/GoblinGame/Assets/Imported/NavMeshComponents-master/Library/ScriptAssemblies/NavMeshComponentsExamples.dll</HintPath>
+    </Reference>
+    <Reference Include="NavMeshComponentsPlaymodeTests">
+      <HintPath>C:/git/GoblinGame/Assets/Imported/NavMeshComponents-master/Library/ScriptAssemblies/NavMeshComponentsPlaymodeTests.dll</HintPath>
+    </Reference>
+    <Reference Include="NavMeshComponentsEditor">
+      <HintPath>C:/git/GoblinGame/Assets/Imported/NavMeshComponents-master/Library/ScriptAssemblies/NavMeshComponentsEditor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
     </Reference>
@@ -378,8 +399,24 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{840A91FF-4AED-5F0B-26A0-BCBF1DF8B653}</Project>
+      <Project>{3114A97C-E113-3C23-DB2C-E3FD08C098FC}</Project>
       <Name>Assembly-CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="NavMeshComponentsEditor.csproj">
+      <Project>{869F9748-05E7-387E-A363-6EC1CC8B602F}</Project>
+      <Name>NavMeshComponentsEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="NavMeshComponents.csproj">
+      <Project>{2EE2B87C-5A01-005A-C0A8-C0E7D8CC3107}</Project>
+      <Name>NavMeshComponents</Name>
+    </ProjectReference>
+    <ProjectReference Include="NavMeshComponentsExamplesEditor.csproj">
+      <Project>{E6199AF4-4DEC-7AA3-A365-623B2738A92C}</Project>
+      <Name>NavMeshComponentsExamplesEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="NavMeshComponentsExamples.csproj">
+      <Project>{384ED483-15CA-C189-65EB-E9A12941EA02}</Project>
+      <Name>NavMeshComponentsExamples</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

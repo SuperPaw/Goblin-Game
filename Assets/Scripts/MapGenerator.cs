@@ -59,10 +59,13 @@ public class MapGenerator : MonoBehaviour
     public IEnumerator GenerateMap(Action<int> progressCallback, Action EndCallback)
     {
         var progress = 0;
-        var charFact = 20;
+        var charFact = 25;
         //could use factors on the two last to make them more important than each tiles
         var totalProgress = (int)(SizeX*SizeZ) + NpcsToGenerate*charFact + GoblinsToGenerate*charFact;
         var progressPct = 0;
+
+        //TODO: Include navmesh gen in here
+
 
         progressCallback(progressPct);
 
@@ -84,6 +87,7 @@ public class MapGenerator : MonoBehaviour
                 movableTiles.Add(map[i,j]);
             }
         }
+
 
 
         var imovableSize = 0;
@@ -135,24 +139,25 @@ public class MapGenerator : MonoBehaviour
         //List<NavMeshSurface> surfaces = new List<NavMeshSurface>(movableTiles.Count);
 
         //INSTANTIATING
-        foreach (var tile in movableTiles)
-        {
-	        var next =Instantiate(MapTileGameObject,transform);
-
-            next.transform.position = new Vector3(tile.X,0,tile.Y);
-	        next.name = "Ground ("+tile.X+","+tile.Y+")";
+        //TODO: movable tiles are replaced with plane. Remove this
+        //foreach (var tile in movableTiles)
+        //{
+	        //var next =Instantiate(MapTileGameObject, new Vector3(tile.X, 0, tile.Y),Quaternion.identity);
+         //   next.transform.parent = transform;
+            
+	        //next.name = "Ground ("+tile.X+","+tile.Y+")";
 
             //surfaces.Add(next.GetComponent<NavMeshSurface>());
             
-            int loc = (++progress * 100) / totalProgress;
-	        if (loc != progressPct)
-	        {
-                //TODO: move to method
-	            progressPct = loc;
-	            yield return null;
-	            progressCallback(progressPct);
-	        }
-	    }
+         //   int loc = (++progress * 100) / totalProgress;
+	        //if (loc != progressPct)
+	        //{
+         //       //TODO: move to method
+	        //    progressPct = loc;
+	        //    yield return null;
+	        //    progressCallback(progressPct);
+	        //}
+	    //}
         
         //y=1 for tree height
 	    for (int i = 0; i < clusters.Count; i++)
@@ -182,22 +187,38 @@ public class MapGenerator : MonoBehaviour
         //select a middle point 
         //ground points at random a bunch of times and check that they are reachable
         //if not make a forest road
-
-        //foreach (var movable in surfaces)  {
-        //    movable.BuildNavMesh();
-        //}
+        
 
 
         for (int i = 0; i < NpcsToGenerate; i++)
-	    {
-	        var next = Instantiate(Npcs[Random.Range(0,Npcs.Length)], NpcHolder.transform);
+        {
+            var next = Instantiate(Npcs[Random.Range(0, Npcs.Length)], NpcHolder.transform);
 
-	        var tile = GetRandomGroundTile();
+            next.name = "NPC " + i;
+            
+            var tile = GetRandomGroundTile();
 
             //TODO:check 
-	        next.transform.position = new Vector3(tile.X, 0, tile.Y);
+            next.transform.position = new Vector3(tile.X, 0, tile.Y);
+            //next.AddComponent<NavMeshAgent>();
 
-	        progress += charFact;
+            //Vector3 sourcePostion = new Vector3(tile.X, 0, tile.Y);//The position you want to place your agent
+            //NavMeshHit closestHit;
+            //if (NavMesh.SamplePosition(sourcePostion, out closestHit, 500, NavMesh.AllAreas))
+            //{
+            //    next.transform.position = closestHit.position;
+                
+            //}
+            //else
+            //{
+            //    Debug.LogError("Not able to find poistion on NavMEsh");
+            //}
+
+
+            //var next = Instantiate(Npcs[Random.Range(0,Npcs.Length)], NpcHolder.transform);
+
+
+            progress += charFact;
 
 	        int loc = (progress * 100) / totalProgress;
 	        if (loc != progressPct)
