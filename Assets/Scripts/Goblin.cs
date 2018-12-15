@@ -12,6 +12,7 @@ public class Goblin : Character
     //meaning how often they notice what other are doing
     //0-10
     public int Awareness;
+    private int goToLeaderDistance = 5;
 
     new void Start()
     {
@@ -37,10 +38,17 @@ public class Goblin : Character
         
         //these could also all be more random dependant on Awareness
 
+        Debug.Log("checking leader distance ");
+
         // -------------- CHECK FOR LEADER DISTANCE AND MOVE TO HIM -----------------
-        if (Team.Leader != this &! Attacking())
+        //TODO: make a readyForOrder() method, instead of checking on each state every time
+        if (Team.Leader != this & !Attacking() & !Fleeing() &&
+            (transform.position - Team.Leader.transform.position).magnitude > goToLeaderDistance)
         {
-            
+            Debug.Log(name + " going to leader");
+            //TODO: make it disappear from at a certain range. Lost goblin...
+            navMeshAgent.SetDestination(Team.Leader.transform.position);
+
         }
 
     }

@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Controls")]
     public int MouseMoveKey = 1;
-    public enum MappableActions { Hide, Attack, Flee, Menu }
+    public enum MappableActions { Hide, Attack, Flee, Menu,FixCamOnLeader }
     [Serializable]
     public struct KeyMapping
     {
@@ -28,9 +28,11 @@ public class PlayerController : MonoBehaviour
     public float ZoomMinBound= 2;
     public float ZoomMaxBound = 50;
     public float MouseZoomSpeed = 1;
+    public bool FollowLeader;
 
     [Header("Follow Animation")] public float MoveTime = 1;
     public AnimationCurve MoveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+
 
 
     public void Initialize()
@@ -42,6 +44,13 @@ public class PlayerController : MonoBehaviour
         if (!Cam) Cam = Camera.main;
         
         MoveToLeader();
+    }
+
+    void FixedUpdate()
+    {
+        //maybe at larger interval
+        if(FollowLeader)
+            MoveToLeader();
     }
 
 
@@ -58,6 +67,7 @@ public class PlayerController : MonoBehaviour
         {
             _mouseHeld = true;
             _mouseDragPos = Cam.ScreenToWorldPoint(Input.mousePosition);
+            FollowLeader = false;
         }
         if (Input.GetMouseButtonUp(0)) _mouseHeld = false;
 
@@ -119,6 +129,9 @@ public class PlayerController : MonoBehaviour
                     case MappableActions.Flee:
                         break;
                     case MappableActions.Menu:
+                        break;
+                    case MappableActions.FixCamOnLeader:
+                        FollowLeader = true;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

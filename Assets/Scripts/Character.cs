@@ -178,11 +178,11 @@ public abstract class Character : MonoBehaviour
     {
         return State == CharacterState.Attacking;
     }
-    bool Fleeing()
+    protected bool Fleeing()
     {
         return State == CharacterState.Fleeing;
     }
-    bool Idling()
+    protected bool Idling()
     {
         return State == CharacterState.Idling;
     }

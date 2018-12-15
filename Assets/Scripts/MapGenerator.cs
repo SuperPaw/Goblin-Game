@@ -154,30 +154,7 @@ public class MapGenerator : MonoBehaviour
                 //immovableTiles.Remove(adjacentToOtherClusterTile);
             }
         }
-
-
-        //List<NavMeshSurface> surfaces = new List<NavMeshSurface>(movableTiles.Count);
-
-        //INSTANTIATING
-        //TODO: movable tiles are replaced with plane. Remove this
-        //foreach (var tile in movableTiles)
-        //{
-	        //var next =Instantiate(MapTileGameObject, new Vector3(tile.X, 0, tile.Y),Quaternion.identity);
-         //   next.transform.parent = transform;
-            
-	        //next.name = "Ground ("+tile.X+","+tile.Y+")";
-
-            //surfaces.Add(next.GetComponent<NavMeshSurface>());
-            
-         //   int loc = (++progress * 100) / totalProgress;
-	        //if (loc != progressPct)
-	        //{
-         //       //TODO: move to method
-	        //    progressPct = loc;
-	        //    yield return null;
-	        //    progressCallback(progressPct);
-	        //}
-	    //}
+        
         
         //y=1 for tree height
 	    for (int i = 0; i < clusters.Count; i++)
@@ -212,39 +189,8 @@ public class MapGenerator : MonoBehaviour
 
         for (int i = 0; i < NpcsToGenerate; i++)
         {
-            var next = Instantiate(Npcs[Random.Range(0, Npcs.Length)], NpcHolder.transform);
-
-            
-            var tile = GetRandomGroundTile();
-            next.name = "NPC " + i + "(" + tile.X + "," + tile.Y + ")";
-
-            //TODO:check 
-            next.transform.position = new Vector3(tile.X, 0, tile.Y);
-            try
-            {
-                next.AddComponent<NavMeshAgent>();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-
-            //Vector3 sourcePostion = new Vector3(tile.X, 0, tile.Y);//The position you want to place your agent
-            //NavMeshHit closestHit;
-            //if (NavMesh.SamplePosition(sourcePostion, out closestHit, 500, NavMesh.AllAreas))
-            //{
-            //    next.transform.position = closestHit.position;
-                
-            //}
-            //else
-            //{
-            //    Debug.LogError("Not able to find poistion on NavMEsh");
-            //}
-
-
-            //var next = Instantiate(Npcs[Random.Range(0,Npcs.Length)], NpcHolder.transform);
-
+            //TODO: create a number of spawn positions and check their connectivity.
+            CreateCharacter(Npcs[Random.Range(0, Npcs.Length)], NpcHolder.transform);
 
             progress += charFact;
 
@@ -255,18 +201,28 @@ public class MapGenerator : MonoBehaviour
 	            yield return null;
 	            progressCallback(progressPct);
 	        }
-
         }
 
         List<Character> Members = new List<Character>();
         List<Tile> postions = new List<Tile>(GoblinsToGenerate);
         int TilesToMoveFromFirst = 4;
-        postions.Add(GetRandomGroundTile());
+
+        var pos = GetRandomGroundTile();
+        //find middle ish tile
+        while (pos.X < SizeX/4 || pos.X > SizeX *0.75 ||
+               pos.Y < SizeZ / 4 || pos.Y > SizeZ * 0.75 )
+        {
+             pos = GetRandomGroundTile();
+        }
+
+        Debug.Log("Initializing Goblin team in pos ("+ pos.X + ","+pos.Y+")");
+
+        postions.Add(pos);
         //Find suitable start position
-        Tile pos = postions.First();
         GoblinTeam.transform.position = new Vector3(pos.X,0,pos.Y);
 
-        //TODO: check that we are not initializinig in a too small area
+        //TODO: check that we are not initializinig in a too small area. could be done with connectivity check
+        //TODO: Use create character
         for (int i = 0; i < GoblinsToGenerate; i++)
         {
 
@@ -302,6 +258,28 @@ public class MapGenerator : MonoBehaviour
         FindObjectOfType<PlayerController>().Initialize();
 
         EndCallback();
+    }
+
+    private void CreateCharacter(GameObject go, Transform parent)
+    {
+        var next = Instantiate(go, parent);
+
+
+        var tile = GetRandomGroundTile();
+        //next.name +=  "(" + tile.X + "," + tile.Y + ")";
+
+        //TODO:check 
+        next.transform.position = new Vector3(tile.X, 0, tile.Y);
+        try
+        {
+            next.AddComponent<NavMeshAgent>();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
     }
 
     private void AssignToCluster(Tile t, int cluster) //Type type)

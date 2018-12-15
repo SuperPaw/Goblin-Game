@@ -573,10 +573,13 @@ MonoBehaviour:
   KeyMappings:
   - Key: 104
     Action: 0
+  - Key: 99
+    Action: 4
   ZoomMinBound: 2
   ZoomMaxBound: 50
   MouseZoomSpeed: 1
-  MoveTime: 1
+  FollowLeader: 0
+  MoveTime: 0.5
   MoveCurve:
     serializedVersion: 2
     m_Curve:
@@ -894,7 +897,7 @@ Prefab:
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 2}
       propertyPath: NpcsToGenerate
-      value: 2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 2}
@@ -904,17 +907,17 @@ Prefab:
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 2}
       propertyPath: PctOfImmovableAreas
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 2}
       propertyPath: ClustersOfNoWalking
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 2}
       propertyPath: Cohesion
-      value: 1.1
+      value: 1.01
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 2}
@@ -929,12 +932,12 @@ Prefab:
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 2}
       propertyPath: GoblinsToGenerate
-      value: 2
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 2}
       propertyPath: MinClusterSize
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0, type: 2}
@@ -972,7 +975,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.3972499, g: 0.595244, b: 0.745283, a: 1}
+  m_BackGroundColor: {r: 0.19215688, g: 0.19215688, b: 0.19215688, a: 1}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}

@@ -21,6 +21,8 @@ public class TeamController : MonoBehaviour
 
         Members = members;
 
+        members.ForEach(m=>m.Team = this);
+
         if(Members.Count == 0) Members = GetComponentsInChildren<Character>().ToList();
 
         if (!Leader)
