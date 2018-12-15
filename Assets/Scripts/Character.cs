@@ -318,8 +318,8 @@ public abstract class Character : MonoBehaviour
                     idleAction = true;
                     var idleDistance = 3;
 
-                    //navMeshAgent.SetDestination(transform.position + new Vector3(Random.Range(-idleDistance, idleDistance), 0,
-                    //             Random.Range(-idleDistance, idleDistance)));
+                    navMeshAgent.SetDestination(transform.position + new Vector3(Random.Range(-idleDistance, idleDistance), 0,
+                                 Random.Range(-idleDistance, idleDistance)));
 
                     Walking = Random.value < 0.75f;
                 }
@@ -342,7 +342,7 @@ public abstract class Character : MonoBehaviour
                 break;
             case CharacterState.Travelling:
                 //check for arrival and stop travelling
-                if (navMeshAgent.remainingDistance < 0.1f)
+                if (navMeshAgent.isStopped)
                 {
                     Debug.Log(name +" arrived at target");
                     State = CharacterState.Idling;

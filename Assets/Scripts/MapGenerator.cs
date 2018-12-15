@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Experimental.PlayerLoop;
@@ -31,13 +32,14 @@ public class MapGenerator : MonoBehaviour
     public int SizeX, SizeZ;
     public int ClustersOfNoWalking;
     public int MinClusterSize;
-    public int MinDistanceBetweenClusters;
+    public bool DistanceBetweenClusters;
     [Range(1.01f,5)]
     //for more fidelity around tiles
     public float Cohesion;
     private Tile[,] map;
     private readonly Dictionary<int, List<Tile>> clusters = new Dictionary<int, List<Tile>>();
     private List<Tile> movableTiles;
+    private List<Tile> immovableTiles = new List<Tile>();
 
     [Range(0f, 1)]
     public float PctOfImmovableAreas;
@@ -128,13 +130,31 @@ public class MapGenerator : MonoBehaviour
             //TODO: this can return the edge of another cluster
             while (next.Type != TileType.Ground)
             {
+                i = next.Cluster;
                 next = GetRandomNeighbour(next);
             }
 
             movableTiles.Remove(next);
+            immovableTiles.Add(next);
             AssignToCluster(next, i);
             
         }
+
+        //Turn adjacent cluster tiles into roads
+        if (DistanceBetweenClusters)
+        {
+            var adjacentToOtherClusterTiles =
+                immovableTiles.Where(t => GetNeightbours(t,true).Any(n => n.Type == TileType.Forest && n.Cluster != t.Cluster));
+
+            foreach (var adjacentToOtherClusterTile in adjacentToOtherClusterTiles)
+            {
+                adjacentToOtherClusterTile.Type = TileType.Ground;
+                movableTiles.Add(adjacentToOtherClusterTile);
+                RemoveFromCluster(adjacentToOtherClusterTile);
+                //immovableTiles.Remove(adjacentToOtherClusterTile);
+            }
+        }
+
 
         //List<NavMeshSurface> surfaces = new List<NavMeshSurface>(movableTiles.Count);
 
@@ -194,13 +214,21 @@ public class MapGenerator : MonoBehaviour
         {
             var next = Instantiate(Npcs[Random.Range(0, Npcs.Length)], NpcHolder.transform);
 
-            next.name = "NPC " + i;
             
             var tile = GetRandomGroundTile();
+            next.name = "NPC " + i + "(" + tile.X + "," + tile.Y + ")";
 
             //TODO:check 
             next.transform.position = new Vector3(tile.X, 0, tile.Y);
-            next.AddComponent<NavMeshAgent>();
+            try
+            {
+                next.AddComponent<NavMeshAgent>();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
             //Vector3 sourcePostion = new Vector3(tile.X, 0, tile.Y);//The position you want to place your agent
             //NavMeshHit closestHit;
@@ -234,14 +262,16 @@ public class MapGenerator : MonoBehaviour
         List<Tile> postions = new List<Tile>(GoblinsToGenerate);
         int TilesToMoveFromFirst = 4;
         postions.Add(GetRandomGroundTile());
+        //Find suitable start position
+        Tile pos = postions.First();
+        GoblinTeam.transform.position = new Vector3(pos.X,0,pos.Y);
 
         //TODO: check that we are not initializinig in a too small area
         for (int i = 0; i < GoblinsToGenerate; i++)
         {
+
             var next = Instantiate(DefaultCharacter, GoblinTeam.transform);
 
-            //Find suitable start position
-            Tile pos = postions.First();
             int x = 0;
             while (postions.Contains(pos) && x++ < TilesToMoveFromFirst)
             {
@@ -285,27 +315,51 @@ public class MapGenerator : MonoBehaviour
         clusters[cluster].Add(t);
     }
 
+    private void RemoveFromCluster(Tile t) //Type type)
+    {
+        if (t.Cluster > -1)
+            clusters[t.Cluster].Remove(t);
+
+        t.Cluster = -1;
+
+        t.Type = TileType.Ground;
+    }
+
+
     private Tile GetRandomNeighbour(Tile tile)
     {
+        var neighbours = GetNeightbours(tile);
+        
+        return neighbours[(Random.Range(0, neighbours.Count))];
+    }
 
+    private List<Tile> GetNeightbours(Tile tile,bool includeDiagonal = false)
+    {
         var neighbours = new List<Tile>(4);
 
-        if( tile.X < SizeX-1) neighbours.Add(map[tile.X+1,tile.Y]);
-        if (tile.X > 0 ) neighbours.Add(map[tile.X - 1,tile.Y]);
-        if ( tile.Y < SizeX - 1) neighbours.Add(map[tile.X,tile.Y+1]);
-        if (tile.Y > 0) neighbours.Add(map[tile.X ,tile.Y-1]);
+        var notTopX = tile.X < SizeX - 1;
+        var notBottomX = tile.X > 0;
+        var notTopY = tile.Y < SizeZ - 1;
+        var notBottomY = tile.Y > 0;
 
-        return neighbours[(int)(Random.value * neighbours.Count)];
+        if (notTopX) neighbours.Add(map[tile.X + 1, tile.Y]);
+        if (notBottomX) neighbours.Add(map[tile.X - 1, tile.Y]);
+        if (notTopY) neighbours.Add(map[tile.X, tile.Y + 1]);
+        if (notBottomY) neighbours.Add(map[tile.X, tile.Y - 1]);
 
+        if (includeDiagonal)
+        {
+            if (notTopX && notTopY) neighbours.Add(map[tile.X + 1, tile.Y + 1]);
+            if (notBottomX && notTopY) neighbours.Add(map[tile.X - 1, tile.Y + 1]);
+            if (notTopX &&notBottomY ) neighbours.Add(map[tile.X+1, tile.Y - 1]);
+            if (notBottomX && notBottomY) neighbours.Add(map[tile.X-1, tile.Y - 1]);
+        }
+
+        return neighbours;
     }
 
     private Tile GetRandomGroundTile()
     {
-        //Tile t = map[(int)(Random.value * SizeX), (int)(Random.value * SizeZ)]; ;
-
-        //while ( t.Type != TileType.Ground)
-        //    t = map[(int) (Random.value * SizeX), (int) (Random.value * SizeZ)];
-
         return movableTiles[Random.Range(0, movableTiles.Count)];
     }
 	

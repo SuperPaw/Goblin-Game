@@ -490,7 +490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.95013654, g: 1, b: 0.47843137, a: 1}
+  m_Color: {r: 0.75686276, g: 0.8235294, b: 0.30588236, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -770,7 +770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.95013654, g: 1, b: 0.47843137, a: 1}
+  m_Color: {r: 0.75686276, g: 0.8235294, b: 0.30588236, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -894,7 +894,47 @@ Prefab:
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 2}
       propertyPath: NpcsToGenerate
-      value: 20
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 2}
+      propertyPath: DistanceBetweenClusters
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 2}
+      propertyPath: PctOfImmovableAreas
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 2}
+      propertyPath: ClustersOfNoWalking
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 2}
+      propertyPath: Cohesion
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 2}
+      propertyPath: SizeX
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 2}
+      propertyPath: SizeZ
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 2}
+      propertyPath: GoblinsToGenerate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 2}
+      propertyPath: MinClusterSize
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0, type: 2}
@@ -1054,7 +1094,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1877421696
 RectTransform:
   m_ObjectHideFlags: 0
