@@ -200,7 +200,7 @@ public class MapGenerator : MonoBehaviour
 
             //TODO:check 
             next.transform.position = new Vector3(tile.X, 0, tile.Y);
-            //next.AddComponent<NavMeshAgent>();
+            next.AddComponent<NavMeshAgent>();
 
             //Vector3 sourcePostion = new Vector3(tile.X, 0, tile.Y);//The position you want to place your agent
             //NavMeshHit closestHit;

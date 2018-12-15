@@ -54,7 +54,6 @@ GameObject:
   - component: {fileID: 65175601132316730}
   - component: {fileID: 114691825108400538}
   - component: {fileID: 208395386577737414}
-  - component: {fileID: 114962926698053292}
   m_Layer: 0
   m_Name: tree-orange
   m_TagString: Hidable
@@ -144,17 +143,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HideLocation: {fileID: 4712357691483580}
   OccupiedBy: {fileID: 0}
---- !u!114 &114962926698053292
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1910571166180590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e038bf700cfa444fb16c6ef963be9f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!208 &208395386577737414
 NavMeshObstacle:
   m_ObjectHideFlags: 1
@@ -165,8 +153,8 @@ NavMeshObstacle:
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.375, y: 0.5, z: 0.375}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_MoveThreshold: 1
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
