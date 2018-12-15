@@ -297,7 +297,6 @@ public abstract class Character : MonoBehaviour
 
     private  void Move()
     {
-        Vector3 moveDirection;
 
         switch (State)
         {

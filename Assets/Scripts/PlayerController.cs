@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
 
         Cam.orthographicSize += deltaMagnitudeDiff * speed;
         // set min and max value of Clamp function upon your requirement
-        //Cam.orthographicSize = Mathf.Clamp(Cam.orthographicSize, ZoomMinBound, ZoomMaxBound);
+        Cam.orthographicSize = Mathf.Clamp(Cam.orthographicSize, ZoomMinBound, ZoomMaxBound);
     }
 
 

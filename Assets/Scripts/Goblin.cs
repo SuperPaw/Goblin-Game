@@ -38,7 +38,7 @@ public class Goblin : Character
         
         //these could also all be more random dependant on Awareness
 
-        Debug.Log("checking leader distance ");
+        //Debug.Log("checking leader distance ");
 
         // -------------- CHECK FOR LEADER DISTANCE AND MOVE TO HIM -----------------
         //TODO: make a readyForOrder() method, instead of checking on each state every time

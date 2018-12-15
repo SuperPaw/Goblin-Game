@@ -576,7 +576,7 @@ MonoBehaviour:
   - Key: 99
     Action: 4
   ZoomMinBound: 2
-  ZoomMaxBound: 50
+  ZoomMaxBound: 30
   MouseZoomSpeed: 1
   FollowLeader: 0
   MoveTime: 0.5
