@@ -1,27 +1,27 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.UIElements;
-using UnityEngine;
-using UnityEngine.Assertions.Must;
-using UnityEngine.Events;
+    using System.Collections.Generic;
+    using UnityEditor.Experimental.UIElements;
+    using UnityEngine;
+    using UnityEngine.Assertions.Must;
+    using UnityEngine.Events;
 
-public class Goblin : Character
-{
-    [Header("Goblin Specific")]
-    //consider removing to Character
-    //meaning how often they notice what other are doing
-    //0-10
-    public int Awareness;
-    private int goToLeaderDistance = 5;
-
-    new void Start()
+    public class Goblin : Character
     {
-        base.Start();
+        [Header("Goblin Specific")]
+        //consider removing to Character
+        //meaning how often they notice what other are doing
+        //0-10
+        public int Awareness;
+        private int goToLeaderDistance = 3;
 
-        StartCoroutine(AwarenessLoop());
-    }
+        new void Start()
+        {
+            base.Start();
+
+            StartCoroutine(AwarenessLoop());
+        }
     
-    private IEnumerator AwarenessLoop()
+        private IEnumerator AwarenessLoop()
     {
         while (true)
         {
@@ -42,11 +42,14 @@ public class Goblin : Character
 
         // -------------- CHECK FOR LEADER DISTANCE AND MOVE TO HIM -----------------
         //TODO: make a readyForOrder() method, instead of checking on each state every time
-        if (Team.Leader != this & !Attacking() & !Fleeing() &&
+        if (Team.Leader != this & !Attacking() & !Fleeing() &! Travelling() &&
             (transform.position - Team.Leader.transform.position).magnitude > goToLeaderDistance)
         {
             Debug.Log(name + " going to leader");
             //TODO: make it disappear from at a certain range. Lost goblin...
+            var newDes = Team.Leader.transform.position + new Vector3(Random.Range(-0.1f,0.1f), 0, Random.Range(-0.1f,0.1f));
+
+
             navMeshAgent.SetDestination(Team.Leader.transform.position);
 
         }

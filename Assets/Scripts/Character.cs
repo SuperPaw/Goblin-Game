@@ -44,6 +44,7 @@ public abstract class Character : MonoBehaviour
     public AttackEvent OnAttackCharacter = new AttackEvent();
     public AttackEvent OnBeingAttacked = new AttackEvent();
 
+    public Vector3 Target;
     public NavMeshAgent navMeshAgent;
 
     private Character _attackTarget;
@@ -173,6 +174,12 @@ public abstract class Character : MonoBehaviour
     }
 
     #region Private methods
+
+
+    protected bool Travelling()
+    {
+        return State == CharacterState.Travelling;
+    }
 
     protected bool Attacking()
     {
@@ -305,17 +312,12 @@ public abstract class Character : MonoBehaviour
                 {
                     if(navMeshAgent.remainingDistance < 0.02f)
                         idleAction = false;
-
-                    //moveDirection = (Target - transform.position).normalized +
-                                    //new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
-                    //navMeshAgent.SetDestination();
-
-                    //transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
+                    
                 }
                 else if (Random.value < 0.015f) //selecting idle action
                 {
                     idleAction = true;
-                    var idleDistance = 3;
+                    var idleDistance = 4;
 
                     navMeshAgent.SetDestination(transform.position + new Vector3(Random.Range(-idleDistance, idleDistance), 0,
                                  Random.Range(-idleDistance, idleDistance)));
@@ -338,7 +340,7 @@ public abstract class Character : MonoBehaviour
                 break;
             case CharacterState.Travelling:
                 //check for arrival and stop travelling
-                if (navMeshAgent.isStopped)
+                if (Vector3.Distance(transform.position, Target) < 1f)
                 {
                     Debug.Log(name +" arrived at target");
                     State = CharacterState.Idling;
