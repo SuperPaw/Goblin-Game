@@ -229,12 +229,17 @@ public class MapGenerator : MonoBehaviour
             var next = Instantiate(DefaultCharacter, GoblinTeam.transform);
 
             int x = 0;
-            while (postions.Contains(pos) && x++ < TilesToMoveFromFirst)
+            while (postions.Contains(pos) || x++ < TilesToMoveFromFirst)
             {
                 var neighbour = GetRandomNeighbour(pos);
 
-                if (neighbour.Type == TileType.Ground) pos = neighbour;
+                if (neighbour.Type == TileType.Ground)
+                    pos = neighbour;
             }
+
+            postions.Add(pos);
+
+            Debug.Log("Creating gbolin at "+ pos.X +","+pos.Y);
 
             next.transform.position = new Vector3(pos.X, 0, pos.Y);
 
