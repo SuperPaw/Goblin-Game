@@ -330,9 +330,6 @@ public abstract class Character : MonoBehaviour
                     navMeshAgent.SetDestination(AttackTarget.transform.position);
 
                     //TODO: add random factor
-                    //moveDirection = (Target - transform.position).normalized + new Vector3(Random.value-0.5f,0,Random.value-0.5f);
-                    
-                    //transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
                 }
                 else
                 {
@@ -348,25 +345,14 @@ public abstract class Character : MonoBehaviour
                     break;
                 }
                 
-                //navMeshAgent.SetDestination()
-
-                //moveDirection = (Target - transform.position).normalized + new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
-            
-                //transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
                 break;
             case CharacterState.Fleeing:
                 if (AttackTarget)
                 {
-                    //Target = AttackTarget.transform.position;
-
-                    //moveDirection = (Target - transform.position).normalized + new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
                     //TODO: choose a better flee destination and check once there
                     navMeshAgent.SetDestination(AttackTarget.transform.position * -1);
 
                     Walking = false;
-                    //moveDirection *= -1;
-
-                    //transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
                 }
                 else
                     State = CharacterState.Idling;
@@ -380,17 +366,7 @@ public abstract class Character : MonoBehaviour
                 }
 
                 navMeshAgent.SetDestination( hiding.HideLocation.transform.position);
-
-                //if (Vector2.Distance(transform.position, Target) < 0.01f)
-                //{
-                //    break;
-                //}
-
-                //Walking = false;
                 
-                //moveDirection = (Target - transform.position).normalized + new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f);
-
-                //transform.position += moveDirection * (Walking ? WalkSpeed : RunSpeed);
                 break;
             default:
                 break;
