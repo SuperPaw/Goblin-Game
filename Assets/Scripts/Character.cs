@@ -1,11 +1,14 @@
 ﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 
 //TODO: should be renamed to character
@@ -18,18 +21,127 @@ public abstract class Character : MonoBehaviour
     }
 
     public CharacterState State;
+    
 
+    public struct Stat
+    {
+        //public enum ModType
+        //{
+        //    Multiplier, Addition
+        //}
+
+        public struct StatMod
+        {
+            public string Name;
+            //public ModType Type;
+            public float Modifier;
+
+            public StatMod(string name,float modifier)
+            {
+                Name = name;
+                //Type = type;
+                Modifier = modifier;
+            }
+        }
+
+        public string Name;
+        private int Max;
+        //TODO: should decreases like damage be done with modifiers instead?
+        
+        public List<StatMod> Modifiers;
+
+        public Stat(string name, int max) 
+        {
+            Name = name;
+            Max = max;
+            Modifiers = new List<StatMod>();
+        }
+
+        //accumulation first and then each multiplier is done at the base
+        //public  int GetStatValue()
+        //{
+        //    var x = CurrentValue;
+        //    foreach (var mod in Modifiers)
+        //    {
+        //        x += mod.Modifier;
+        //    }
+        //    return x % 1 < 0.5f ? (int)x : (int)x + 1;
+        //}
+        public int GetStatMax()
+        {
+            float x = Max;
+
+            foreach (var mod in Modifiers)
+            {
+                x += mod.Modifier;
+            }
+
+            return x % 1 < 0.5f ? (int)x : (int)x + 1;
+        }
+
+        //accumulation first and then each multiplier is done at the base
+        public string GetStatDescription()
+        {
+            string x = Name + ": " + Max + "(base)";
+
+            foreach (var mod in Modifiers)
+            {
+                x += " + " + mod.Modifier.ToString("F") + "(" + mod.Name + ")";
+            }
+
+            x += " = " + GetStatMax();
+
+            return x;
+        }
+    }
 
 
     [HideInInspector] public TeamController Team;
 
+    [Header("Stats")]
+    //Damage All(from 1 to DAM)
+    //Aim
+    //Attention scout, diplomat, Ambusher
+    //courage/guts/daring/bravery Swarmer
+    //Health Swarmer
+    //Speed Ambusher, Scout
+    //Smarts? Slave, Diplomat, Shaman, Necromancer
+
+    //TODO: use a max for stats;
+    public Stat DMG;
+    public Stat AIM;
+    public Stat ATT;
+    public Stat COU;
+    public Stat HEA;
+    public Stat SPE;
+    public Stat SMA ;
+    [SerializeField]
+    public List<Stat> Stats;
+
+    public int DamMin,
+        DamMax,
+        AimMin,
+        AimMax,
+        AttMin,
+        AttMax,
+        CouMin,
+        CouMax,
+        HeaMin,
+        HeaMax,
+        SpeMin,
+        SpeMax,
+        SmaMin,
+        SmaMax;
+    //TODO: should probably be an interval with min/max
+    //public int Damage = 1;
+    //public int Aim = 5;
+    //public int Intelligence = 5;
+
+
     [Header("Movement")]
-    public float RunSpeed;
     public bool Walking;
-    public float WalkSpeed;
     public float AttackRange;
-
-
+    
     private bool idleAction;
 
     [HideInInspector]
@@ -63,8 +175,6 @@ public abstract class Character : MonoBehaviour
     }
 
     //Should they have a seperate move target? so they can remember it.
-
-    [Header("Stats")]
     [SerializeField]
     private int _health = 10;
     public int Health
@@ -81,15 +191,12 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    //TODO: should probably be an interval with min/max
-    public int Damage = 1;
 
     //TODO: all typical values should have a modifier List with val, modType and modName, which makees it easier to add and remove modifiers from equipment and stuff. 
     //TODO: also values can be easily shown as a total or with all modifier displayed
     public float AttackTime;
 
     [Header("Moral stats")]
-
     private int _moral = 10;
 
     //TODO: use a max moral and have a current of the stat
@@ -141,8 +248,60 @@ public abstract class Character : MonoBehaviour
         }
     }
 
+
+    [Header("Levelling")]
+    public static int[] LevelCaps = {0,10,20,30,50,80,130,210,340, 550,890, 20000};
+    
+    public class LevelUp : UnityEvent { }
+    public LevelUp OnLevelUp = new LevelUp();
+
+    private static int GetLevel(int xp)
+    {
+        int level = 0;
+        
+        while(LevelCaps[level++] < xp) { }
+
+        return level;
+    }
+
+    public int CurrentLevel = GetLevel(0);
+    private float xp = 0;
+
+    public float Xp
+    {
+        get
+        {
+            return xp;
+        }
+        set
+        {
+            if(value == xp)
+                return;
+            xp = value;
+            var lvl =GetLevel((int)value);
+            //TODO: should check for extra level 
+            if (lvl > CurrentLevel)
+            {
+                CurrentLevel++;
+                OnLevelUp.Invoke();
+            }
+        }
+    }
+
     public void Start()
     {
+        //------------------------- STAT SET-UP --------------------------
+        DMG = new Stat("DAMAGE", Random.Range(DamMin, DamMax));
+        AIM = new Stat("AIM", Random.Range(AimMin, AimMax));
+        ATT = new Stat("ATTENTION", Random.Range(1, 4));
+        COU = new Stat("COURAGE", Random.Range(3, 10));
+        HEA = new Stat("HEALTH", Random.Range(5, 15));
+        SPE = new Stat("SPEED", Random.Range(3, 5));
+        SMA = new Stat("SMARTS", Random.Range(3, 6));
+        Stats = new List<Stat>() {DMG,AIM,ATT,COU,HEA,SPE,SMA};
+
+        Health = HEA.GetStatMax();
+        
         //CharacterSprite = GetComponent<SpriteRenderer>();
         //NormalColor = CharacterSprite.color;
         DamageColor = Color.red;
@@ -150,7 +309,7 @@ public abstract class Character : MonoBehaviour
         OnDamage.AddListener(x=> StartCoroutine(HurtRoutine()));
         OnDeath.AddListener(Die);
         
-        //AttackRange = transform.lossyScale.x * 2f;
+        AttackRange = transform.lossyScale.x * 2f;
 
         OnTargetDeath.AddListener(TargetGone);
         OnBeingAttacked.AddListener(BeingAttacked);
@@ -158,11 +317,15 @@ public abstract class Character : MonoBehaviour
 
         navMeshAgent = GetComponent<NavMeshAgent>();
 
+        navMeshAgent.speed = SPE.GetStatMax();
+
         if(!navMeshAgent) Debug.LogWarning(name+ ": character does not have Nav Mesh Agent");
     }
 
     void FixedUpdate()
     {
+        navMeshAgent.speed = SPE.GetStatMax();
+
         //TODO: merge together with move's switch statement
         if (AttackTarget && AttackTarget.isActiveAndEnabled && InAttackRange()) //has live enemy target and in attackrange
         {
@@ -175,6 +338,25 @@ public abstract class Character : MonoBehaviour
 
     #region Private methods
 
+    private void NextLevel()
+    {
+        //Set some level icon active
+
+        //a sound
+    }
+
+    //protected void UpdateStatValues()
+    //{
+    //    //Only goblins change their values
+    //    //maybe use current value for health...
+    //    var gob = this as Goblin;
+    //    if (gob)
+    //        gob.Awareness = ATT.GetStatValue();
+    //    Moral = COU.GetStatMax();
+    //    Health = HEA.GetStatValue();
+    //    navMeshAgent.speed = SPE.GetStatMax();
+    //    //SMARTS unused
+    //}
 
     protected bool Travelling()
     {
@@ -291,6 +473,7 @@ public abstract class Character : MonoBehaviour
         while (Attacking() && InAttackRange() && AttackTarget)
         {
             //HIT TARGET
+            var Damage = Random.Range(1, DMG.GetStatMax());
             AttackTarget.Health -= Damage;
 
             Debug.Log(gameObject.name + " hit " + AttackTarget.gameObject.name +" for " + Damage + " damage");
@@ -431,5 +614,4 @@ public abstract class Character : MonoBehaviour
         
         State = CharacterState.Hiding;
     }
-
 }

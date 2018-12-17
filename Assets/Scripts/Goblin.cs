@@ -18,6 +18,8 @@
         {
             base.Start();
 
+            Awareness = ATT.GetStatMax();
+
             StartCoroutine(AwarenessLoop());
         }
     

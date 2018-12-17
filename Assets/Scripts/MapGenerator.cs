@@ -311,24 +311,14 @@ public class MapGenerator : MonoBehaviour
 
     private void CreateCharacter(GameObject go, Transform parent)
     {
-        var next = Instantiate(go, parent);
-
 
         var tile = GetRandomGroundTile();
+        var next = Instantiate(go, new Vector3(tile.X, 0, tile.Y),Quaternion.identity);
+        next.transform.parent = parent;
+
         //next.name +=  "(" + tile.X + "," + tile.Y + ")";
-
-        //TODO:check 
-        next.transform.position = new Vector3(tile.X, 0, tile.Y);
-        try
-        {
-            next.AddComponent<NavMeshAgent>();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-
+        
+        //next.transform.position = 
     }
 
     private void AssignToCluster(Tile t, int cluster) //Type type)
