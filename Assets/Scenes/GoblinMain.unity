@@ -818,7 +818,7 @@ MonoBehaviour:
   - Key: 99
     Action: 4
   ZoomMinBound: 2
-  ZoomMaxBound: 30
+  ZoomMaxBound: 18
   MouseZoomSpeed: 1
   FollowLeader: 0
   MoveTime: 0.5
@@ -1149,12 +1149,12 @@ Prefab:
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 2}
       propertyPath: PctOfImmovableAreas
-      value: 0.2
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 2}
       propertyPath: ClustersOfNoWalking
-      value: 50
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 2}
@@ -1164,12 +1164,12 @@ Prefab:
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 2}
       propertyPath: SizeX
-      value: 100
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 2}
       propertyPath: SizeZ
-      value: 100
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 2}
@@ -1180,6 +1180,11 @@ Prefab:
         type: 2}
       propertyPath: MinClusterSize
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 2}
+      propertyPath: BorderClusterSize
+      value: 5000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0, type: 2}

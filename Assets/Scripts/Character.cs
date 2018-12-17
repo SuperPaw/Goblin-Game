@@ -342,7 +342,7 @@ public abstract class Character : MonoBehaviour
                 //check for arrival and stop travelling
                 if (Vector3.Distance(transform.position, Target) < 1f)
                 {
-                    Debug.Log(name +" arrived at target");
+                    //Debug.Log(name +" arrived at target");
                     State = CharacterState.Idling;
                     break;
                 }

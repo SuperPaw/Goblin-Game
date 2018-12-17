@@ -36,6 +36,8 @@ public class MapGenerator : MonoBehaviour
     [Range(1.01f,5)]
     //for more fidelity around tiles
     public float Cohesion;
+
+    public int BorderClusterSize;
     private Tile[,] map;
     private readonly Dictionary<int, List<Tile>> clusters = new Dictionary<int, List<Tile>>();
     private List<Tile> movableTiles;
@@ -57,6 +59,7 @@ public class MapGenerator : MonoBehaviour
     public GameObject DefaultCharacter;
     public TeamController GoblinTeam;
 
+
     // Use this for initialization
     public IEnumerator GenerateMap(Action<int> progressCallback, Action EndCallback)
     {
@@ -66,16 +69,15 @@ public class MapGenerator : MonoBehaviour
         var totalProgress = (int)(SizeX*SizeZ) + NpcsToGenerate*charFact + GoblinsToGenerate*charFact;
         var progressPct = 0;
 
-        //TODO: Include navmesh gen in here
-
-
         progressCallback(progressPct);
 
-	    var endX = SizeX;
-	    var startX = 0 ;
-
-	    var endZ = SizeZ ;
-        var startZ = 0;
+        // check that input numbers are actually allowed
+        if (BorderClusterSize + ClustersOfNoWalking * MinClusterSize > SizeX * SizeZ)
+        {
+            Debug.LogError("Cluster sizes are too big for the map");
+            yield break;
+        }
+        
 
         // using a tile array to generate the map before initializing it
         //GENERATING 
@@ -89,15 +91,59 @@ public class MapGenerator : MonoBehaviour
                 movableTiles.Add(map[i,j]);
             }
         }
-
-
-
+        
         var imovableSize = 0;
         var totalSize = map.Length;
 
+        // --------------- CREATING THE BORDER CLUSTER --------------
+        if (BorderClusterSize > 0)
+        {
+            var borderIdx = 0;
+
+            clusters.Add(borderIdx, new List<Tile>());
+
+            for (int i = 0; i < SizeX; i++)
+            {
+                Tile t = map[i, 0];
+                Tile y = map[i, SizeZ - 1];
+
+                movableTiles.Remove(t);
+                movableTiles.Remove(y);
+                AssignToCluster(t, borderIdx);
+                AssignToCluster(y, borderIdx);
+                
+                imovableSize +=2;
+            }
+            for (int i = 0; i < SizeZ; i++)
+            {
+                Tile t = map[0,i];
+                Tile y = map[SizeX-1,i];
+
+                movableTiles.Remove(t);
+                movableTiles.Remove(y);
+                AssignToCluster(t, borderIdx);
+                AssignToCluster(y, borderIdx);
+
+                imovableSize += 2;
+            }
+
+            var count = clusters[borderIdx].Count;
+
+            for (int i = 0; i < BorderClusterSize; i++)
+            {
+                Tile next = clusters[borderIdx][Random.Range(0, count)];
+                while (next.Type != TileType.Ground)
+                {
+                    next = GetRandomNeighbour(next);
+                }
+                movableTiles.Remove(next);
+                AssignToCluster(next, borderIdx);
+                imovableSize++;
+            }
+        }
+
         //initialize clusters expanding untill clusters meets min size
-        //TODO check that input numbers are actually allowed
-        for (int i = 0; i < ClustersOfNoWalking; i++)
+        for (int i = clusters.Count; i < ClustersOfNoWalking; i++)
         {
             clusters.Add(i, new List<Tile>());
 
@@ -109,12 +155,11 @@ public class MapGenerator : MonoBehaviour
             while (clusters[i].Count < MinClusterSize)
             {
                 Tile next = GetRandomNeighbour(t);
-                //TODO: this can return the edge of another cluster
                 while (next.Type != TileType.Ground)
                 {
                     next = GetRandomNeighbour(next);
                 }
-                movableTiles.Remove(t);
+                movableTiles.Remove(next);
                 AssignToCluster(next,i);
                 imovableSize++;
             }
@@ -154,7 +199,6 @@ public class MapGenerator : MonoBehaviour
                 //immovableTiles.Remove(adjacentToOtherClusterTile);
             }
         }
-        
         
         //y=1 for tree height
 	    for (int i = 0; i < clusters.Count; i++)

@@ -45,7 +45,7 @@
         if (Team.Leader != this & !Attacking() & !Fleeing() &! Travelling() &&
             (transform.position - Team.Leader.transform.position).magnitude > goToLeaderDistance)
         {
-            Debug.Log(name + " going to leader");
+            //Debug.Log(name + " going to leader");
             //TODO: make it disappear from at a certain range. Lost goblin...
             var newDes = Team.Leader.transform.position + new Vector3(Random.Range(-0.1f,0.1f), 0, Random.Range(-0.1f,0.1f));
 
