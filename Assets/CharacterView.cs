@@ -15,7 +15,7 @@ public class CharacterView : MonoBehaviour
     public GameObject ViewHolder;
     private static CharacterView Instance;
     private Character character;
-    private List<GameObject> generatedObjects = new List<GameObject>(10);
+    private readonly List<GameObject> generatedObjects = new List<GameObject>(10);
 
     void Start()
     {
@@ -35,9 +35,9 @@ public class CharacterView : MonoBehaviour
         ViewHolder.SetActive(true);
 
         Name.text = c.name;
-        var lvl = Character.GetLevel((int) c.Xp);
+        var lvl = Goblin.GetLevel((int) c.Xp);
         ClassLevelText.text = "Level " + lvl + " " + ClassName(c.ClassType);
-        XpTextEntry.Value.text = c.Xp.ToString("F0") + "/" + Character.LevelCaps[lvl];
+        XpTextEntry.Value.text = c.Xp.ToString("F0") + "/" + Goblin.LevelCaps[lvl];
         HealthTextEntry.Value.text = c.Health + "/" +c.HEA.GetStatMax();
         ClassIcon.sprite = GameManager.GetClassImage(c.ClassType);
 
@@ -49,7 +49,27 @@ public class CharacterView : MonoBehaviour
             entry.gameObject.SetActive(true);
             generatedObjects.Add(entry.gameObject);
             //TODO: create level up which happens when pressing level up button
+
+            if (c.WaitingOnLevelUp)
+            {
+                entry.LevelUpStat.onClick.AddListener(() => LevelUp(c, stat));
+                entry.LevelUpStat.enabled = true;
+
+            }
+            else entry.LevelUpStat.enabled = false;
+
         }
+    }
+
+    private void LevelUp(Goblin gob, Character.Stat stat)
+    {
+        
+        foreach (var ob in generatedObjects)
+        {
+            ob.GetComponent<StatEntry>().LevelUpStat.enabled = false;
+        }
+
+        //TODO: Handle levelup
     }
 
     private string ClassName(Goblin.Class cl)

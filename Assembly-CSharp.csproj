@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\CharacterView.cs" />
+    <Compile Include="Assets\DisableOnStart.cs" />
     <Compile Include="Assets\Hidable.cs" />
     <Compile Include="Assets\Menu.cs" />
     <Compile Include="Assets\RandomSpriteSelecter.cs" />

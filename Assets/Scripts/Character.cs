@@ -93,6 +93,11 @@ public abstract class Character : MonoBehaviour
 
             return x;
         }
+
+        public void LevelUp()
+        {
+            Max++;
+        }
     }
 
 
@@ -234,6 +239,10 @@ public abstract class Character : MonoBehaviour
     private Coroutine _attackRoutine;
     private Hidable hiding;
 
+    public Goblin.LevelUp OnLevelUp = new Goblin.LevelUp();
+    public int CurrentLevel = Goblin.GetLevel(0);
+    private float xp = 0;
+
     public Hidable Hidingplace
     {
         get { return hiding; }
@@ -248,25 +257,6 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-
-    [Header("Levelling")]
-    public static int[] LevelCaps = {0,10,20,30,50,80,130,210,340, 550,890, 20000};
-    
-    public class LevelUp : UnityEvent { }
-    public LevelUp OnLevelUp = new LevelUp();
-
-    public static int GetLevel(int xp)
-    {
-        int level = 0;
-        
-        while(LevelCaps[level++] < xp) { }
-
-        return level;
-    }
-
-    public int CurrentLevel = GetLevel(0);
-    private float xp = 0;
-
     public float Xp
     {
         get
@@ -275,10 +265,10 @@ public abstract class Character : MonoBehaviour
         }
         set
         {
-            if(value == xp)
+            if (value == xp)
                 return;
             xp = value;
-            var lvl =GetLevel((int)value);
+            var lvl = Goblin.GetLevel((int)value);
             //TODO: should check for extra level 
             if (lvl > CurrentLevel)
             {
@@ -287,6 +277,7 @@ public abstract class Character : MonoBehaviour
             }
         }
     }
+
 
     public void Start()
     {

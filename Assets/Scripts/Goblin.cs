@@ -14,6 +14,46 @@ public class Goblin : Character
     public int Awareness;
     private int goToLeaderDistance = 3;
 
+    [Header("Levelling")]
+    public static int[] LevelCaps = { 0, 10, 20, 30, 50, 80, 130, 210, 340, 550, 890, 20000 };
+
+    public class LevelUp : UnityEvent { }
+
+    public LevelUp OnLevelUp = new LevelUp();
+
+    public static int GetLevel(int xp)
+    {
+        int level = 0;
+
+        while (LevelCaps[level++] < xp) { }
+
+        return level;
+    }
+
+    public int CurrentLevel = GetLevel(0);
+    public bool WaitingOnLevelUp;
+    private float xp = 0;
+
+    public float Xp
+    {
+        get
+        {
+            return xp;
+        }
+        set
+        {
+            if (value == xp)
+                return;
+            xp = value;
+            var lvl = GetLevel((int)value);
+            //TODO: should check for extra level 
+            if (lvl > CurrentLevel)
+            {
+                CurrentLevel++;
+                OnLevelUp.Invoke();
+            }
+        }
+    }
     public enum Class
     {
         NoClass, Swarmer, Shooter, Ambusher, Scout, Slave
@@ -29,6 +69,8 @@ public class Goblin : Character
         Awareness = ATT.GetStatMax();
 
         StartCoroutine(AwarenessLoop());
+
+        OnLevelUp.AddListener(() => WaitingOnLevelUp = true);
     }
     
     private IEnumerator AwarenessLoop()
@@ -40,6 +82,7 @@ public class Goblin : Character
             CheckWhatOthersAreDoing();
         }
     }
+    
 
     private void CheckWhatOthersAreDoing()
     {
