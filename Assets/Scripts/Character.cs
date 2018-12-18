@@ -255,7 +255,7 @@ public abstract class Character : MonoBehaviour
     public class LevelUp : UnityEvent { }
     public LevelUp OnLevelUp = new LevelUp();
 
-    private static int GetLevel(int xp)
+    public static int GetLevel(int xp)
     {
         int level = 0;
         

@@ -5,25 +5,33 @@
     using UnityEngine.Assertions.Must;
     using UnityEngine.Events;
 
-    public class Goblin : Character
+public class Goblin : Character
+{
+    [Header("Goblin Specific")]
+    //consider removing to Character
+    //meaning how often they notice what other are doing
+    //0-10
+    public int Awareness;
+    private int goToLeaderDistance = 3;
+
+    public enum Class
     {
-        [Header("Goblin Specific")]
-        //consider removing to Character
-        //meaning how often they notice what other are doing
-        //0-10
-        public int Awareness;
-        private int goToLeaderDistance = 3;
+        NoClass, Swarmer, Shooter, Ambusher, Scout, Slave
+    }
 
-        new void Start()
-        {
-            base.Start();
+    public Class ClassType;
+        
 
-            Awareness = ATT.GetStatMax();
+    new void Start()
+    {
+        base.Start();
 
-            StartCoroutine(AwarenessLoop());
-        }
+        Awareness = ATT.GetStatMax();
+
+        StartCoroutine(AwarenessLoop());
+    }
     
-        private IEnumerator AwarenessLoop()
+    private IEnumerator AwarenessLoop()
     {
         while (true)
         {

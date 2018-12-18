@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
         
         Zoom(Input.mouseScrollDelta.y, MouseZoomSpeed);
-
+        
         if (Input.GetMouseButtonDown(0))
         {
             _mouseHeld = true;
@@ -101,6 +101,10 @@ public class PlayerController : MonoBehaviour
 
                         if (c.tag != "Player")
                             Team.Attack(c);
+                        else 
+                        {
+                            CharacterView.ShowCharacter(c as Goblin);
+                        }
                     }
                 }
                 else
