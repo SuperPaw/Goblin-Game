@@ -272,6 +272,8 @@ public class MapGenerator : MonoBehaviour
 
             var next = Instantiate(DefaultCharacter, GoblinTeam.transform);
 
+            next.name = NameGenerator.GetName();
+
             int x = 0;
             while (postions.Contains(pos) || x++ < TilesToMoveFromFirst)
             {
