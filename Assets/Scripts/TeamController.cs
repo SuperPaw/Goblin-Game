@@ -7,7 +7,25 @@ using UnityEngine.Events;
 public class TeamController : MonoBehaviour
 {
     public List<Character> Members;
-    public Character Leader;
+    private Character leader;
+    
+    public Character Leader
+    {
+        get
+        {
+            return leader;
+        }
+        set
+        {
+            if (value != leader)
+            {
+                leader = value;
+                leader.name = "Chief " + leader.name + NameGenerator.GetSurName();
+            }
+            value = leader;
+        }
+    }
+
     private bool updatedListeners;
 
     //TODO: should be related to distance of travel
@@ -62,9 +80,14 @@ public class TeamController : MonoBehaviour
     }
 
 
-
+    //TODO: check if this is actually called
     private void MemberDied(Character c)
     {
+        if (Leader == c)
+        {
+            SelectLeader();
+        }
+
         Members.Remove(c);
 
         Debug.Log("Team member : "+ c.name + " died");
@@ -115,5 +138,11 @@ public class TeamController : MonoBehaviour
             }
             else return;
         }
+    }
+
+    //TODO: make better
+    void SelectLeader()
+    {
+        Leader = Members.First(m => m.isActiveAndEnabled);
     }
 }

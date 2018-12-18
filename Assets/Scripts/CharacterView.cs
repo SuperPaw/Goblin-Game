@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class CharacterView : MonoBehaviour
     public StatEntry XpTextEntry;
     public StatEntry HealthTextEntry;
     public StatEntry RightTextEntry;
-    public Text Name;
+    public TextMeshProUGUI Name;
     public Text ClassLevelText;
     public Button ClassIcon;
     public Text ClassSelectText;

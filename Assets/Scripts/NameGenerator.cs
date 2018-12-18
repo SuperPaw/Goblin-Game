@@ -7,11 +7,13 @@ public class NameGenerator : MonoBehaviour
 {
     public static NameGenerator Instance;
 
-    public string[] endings = new []{"k","p","ka","k","l","k","ki"};
-    public string[] vowels = new []{"i","u","o","o","a"};
-    public string[] startings = new []{"","r","k","t","sh","y","b","n"};
+    private string[] endings = new []{"k","p","ka","k","l","k","ki"};
+    private string[] vowels = new []{"i","u","o","o","a"};
+    private string[] startings = new []{"","r","k","t","sh","y","b","n"};
+    private string[] surNames = new[] {"", " the Great", " Horse-killer", " the Beautiful", " Big-Bottom", " the Loud", " BIg-mind", " Ankle-shankER"," the many-TeEthed", " the IMmortal"};
 
     //public string[] prenames; are just without vowels
+
 
     //chance for double
     [Range(1, 10)]
@@ -51,6 +53,14 @@ public class NameGenerator : MonoBehaviour
         var name = Instance.NameGen();
 
         return name.First().ToString().ToUpper() + name.Substring(1); ;
+    }
+
+    public static string GetSurName()
+    {
+        if (!Instance)
+            return " the forGotTen";
+        
+        return Rnd(Instance.surNames); ;
     }
 
     private string NameGen()

@@ -364,10 +364,10 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 35
+  m_fontSize: 29.75
   m_fontSizeBase: 35
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -382,7 +382,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 0
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -2150,7 +2150,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Members: []
-  Leader: {fileID: 0}
   RandomMoveFactor: 2
 --- !u!4 &904032342
 Transform:
@@ -2776,7 +2775,7 @@ MonoBehaviour:
   XpTextEntry: {fileID: 101975080}
   HealthTextEntry: {fileID: 1847241776}
   RightTextEntry: {fileID: 1331342217}
-  Name: {fileID: 0}
+  Name: {fileID: 29189933}
   ClassLevelText: {fileID: 424250401}
   ClassIcon: {fileID: 949243143}
   ClassSelectText: {fileID: 421173968}
@@ -3209,28 +3208,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c31ba6d6070b4a47b96fe9dd4de38da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endings:
-  - k
-  - p
-  - ka
-  - k
-  - l
-  - k
-  vowels:
-  - i
-  - u
-  - o
-  - o
-  - a
-  startings:
-  - 
-  - r
-  - k
-  - t
-  - sh
-  - y
-  - b
-  - n
   TwotimesSyllabalChance: 4
   SingleSyllabalChance: 2
   DoubleSyllabalChance: 2
