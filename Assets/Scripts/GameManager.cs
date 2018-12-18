@@ -22,8 +22,14 @@ public class GameManager : MonoBehaviour
         public Goblin.Class ClassType;
         public Sprite Image;
     }
+    [Header("Images")]
     public IconImg[] IconImages;
     public ClassImg[] ClassImgs;
+
+    [Header("Game Rules")]
+    public int XpOnKill = 10;
+    public int XpOnTeamKill = 2;
+
 
     void Start()
     {
@@ -43,5 +49,36 @@ public class GameManager : MonoBehaviour
             return Instance.ClassImgs.First(im => im.ClassType == type).Image;
 
         return Instance.ClassImgs.First().Image;
+    }
+
+    public static Sprite GetIconImage(Character.CharacterState state)
+    {
+        switch (state)
+        {
+            case Character.CharacterState.Idling:
+                return GetIconImage(Icon.Idling);
+            case Character.CharacterState.Attacking:
+                return GetIconImage(Icon.Fighting);
+            case Character.CharacterState.Travelling:
+                return GetIconImage(Icon.Travelling);
+            case Character.CharacterState.Fleeing:
+                return GetIconImage(Icon.Fleeing);
+            case Character.CharacterState.Hiding:
+                return GetIconImage(Icon.Hiding);
+            case Character.CharacterState.Dead:
+                return GetIconImage(Icon.Dead);
+            default:
+                throw new ArgumentOutOfRangeException("state", state, null);
+        }
+        
+    }
+
+    public static int XpKill()
+    {
+        return Instance.XpOnKill;
+    }
+    public static int XpTeamKill()
+    {
+        return Instance.XpOnKill;
     }
 }

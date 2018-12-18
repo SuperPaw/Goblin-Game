@@ -11,7 +11,7 @@ using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 
-//TODO: should be renamed to character
+//TODO: Should be divided into smaller classes
 public abstract class Character : MonoBehaviour
 {
     //Should we use different state for travelling and just looking at something clsoe by
@@ -104,13 +104,6 @@ public abstract class Character : MonoBehaviour
     [HideInInspector] public TeamController Team;
 
     [Header("Stats")]
-    //Damage All(from 1 to DAM)
-    //Aim
-    //Attention scout, diplomat, Ambusher
-    //courage/guts/daring/bravery Swarmer
-    //Health Swarmer
-    //Speed Ambusher, Scout
-    //Smarts? Slave, Diplomat, Shaman, Necromancer
 
     //TODO: use a max for stats;
     public Stat DMG;
@@ -119,7 +112,7 @@ public abstract class Character : MonoBehaviour
     public Stat COU;
     public Stat HEA;
     public Stat SPE;
-    public Stat SMA ;
+    public Stat SMA;
     [SerializeField]
     public List<Stat> Stats;
 
@@ -137,10 +130,6 @@ public abstract class Character : MonoBehaviour
         SpeMax,
         SmaMin,
         SmaMax;
-    //TODO: should probably be an interval with min/max
-    //public int Damage = 1;
-    //public int Aim = 5;
-    //public int Intelligence = 5;
 
 
     [Header("Movement")]
@@ -238,11 +227,7 @@ public abstract class Character : MonoBehaviour
     private Collider2D collider;
     private Coroutine _attackRoutine;
     private Hidable hiding;
-
-    public Goblin.LevelUp OnLevelUp = new Goblin.LevelUp();
-    public int CurrentLevel = Goblin.GetLevel(0);
-    private float xp = 0;
-
+    
     public Hidable Hidingplace
     {
         get { return hiding; }
@@ -256,27 +241,7 @@ public abstract class Character : MonoBehaviour
             hiding = value;
         }
     }
-
-    public float Xp
-    {
-        get
-        {
-            return xp;
-        }
-        set
-        {
-            if (value == xp)
-                return;
-            xp = value;
-            var lvl = Goblin.GetLevel((int)value);
-            //TODO: should check for extra level 
-            if (lvl > CurrentLevel)
-            {
-                CurrentLevel++;
-                OnLevelUp.Invoke();
-            }
-        }
-    }
+    
 
 
     public void Start()
@@ -313,42 +278,28 @@ public abstract class Character : MonoBehaviour
         if(!navMeshAgent) Debug.LogWarning(name+ ": character does not have Nav Mesh Agent");
     }
 
-    void FixedUpdate()
+    protected void FixedUpdate()
     {
         navMeshAgent.speed = SPE.GetStatMax();
 
         //TODO: merge together with move's switch statement
-        if (AttackTarget && AttackTarget.isActiveAndEnabled && InAttackRange()) //has live enemy target and in attackrange
+        if (AttackTarget && AttackTarget.isActiveAndEnabled && InAttackRange()
+        ) //has live enemy target and in attackrange
         {
-            if(_attackRoutine == null)
+            navMeshAgent.isStopped = true;
+
+            if (_attackRoutine == null)
                 _attackRoutine = StartCoroutine(AttackRoutine());
         }
         else
+        {
+            navMeshAgent.isStopped = false;
             Move();
+        }
     }
 
     #region Private methods
-
-    private void NextLevel()
-    {
-        //Set some level icon active
-
-        //a sound
-    }
-
-    //protected void UpdateStatValues()
-    //{
-    //    //Only goblins change their values
-    //    //maybe use current value for health...
-    //    var gob = this as Goblin;
-    //    if (gob)
-    //        gob.Awareness = ATT.GetStatValue();
-    //    Moral = COU.GetStatMax();
-    //    Health = HEA.GetStatValue();
-    //    navMeshAgent.speed = SPE.GetStatMax();
-    //    //SMARTS unused
-    //}
-
+    
     protected bool Travelling()
     {
         return State == CharacterState.Travelling;
@@ -465,7 +416,23 @@ public abstract class Character : MonoBehaviour
         {
             //HIT TARGET
             var Damage = Random.Range(1, DMG.GetStatMax());
-            AttackTarget.Health -= Damage;
+            var target = AttackTarget;
+            target.Health -= Damage;
+
+            if (target.Health <= 0)
+            {
+                Debug.Log(name + " killed " + AttackTarget.name);
+
+                if (this as Goblin)
+                {
+                    ((Goblin) this).Xp += GameManager.XpKill();
+                    if (Team)
+                        Team.AddXp(GameManager.XpTeamKill());
+                }
+
+                break;
+
+            }
 
             Debug.Log(gameObject.name + " hit " + AttackTarget.gameObject.name +" for " + Damage + " damage");
 
@@ -507,7 +474,7 @@ public abstract class Character : MonoBehaviour
 
                     //TODO: add random factor
                 }
-                else
+                else 
                 {
                     TargetGone();
                 }

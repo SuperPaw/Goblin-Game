@@ -11,11 +11,13 @@ public class CharacterView : MonoBehaviour
     public StatEntry RightTextEntry;
     public Text Name;
     public Text ClassLevelText;
-    public Image ClassIcon;
+    public Button ClassIcon;
+    public Text ClassSelectText;
     public GameObject ViewHolder;
     private static CharacterView Instance;
     private Character character;
     private readonly List<GameObject> generatedObjects = new List<GameObject>(10);
+    private List<Button> generatedClassButtons ;
 
     void Start()
     {
@@ -39,37 +41,90 @@ public class CharacterView : MonoBehaviour
         ClassLevelText.text = "Level " + lvl + " " + ClassName(c.ClassType);
         XpTextEntry.Value.text = c.Xp.ToString("F0") + "/" + Goblin.LevelCaps[lvl];
         HealthTextEntry.Value.text = c.Health + "/" +c.HEA.GetStatMax();
-        ClassIcon.sprite = GameManager.GetClassImage(c.ClassType);
+        HealthTextEntry.ValueHover.Stat = c.HEA;
+        ClassIcon.image.sprite = GameManager.GetClassImage(c.ClassType);
 
+
+        //TODO: update current stats instead replacing
         foreach (var stat in c.Stats)
         {
             var entry = Instantiate(RightTextEntry,RightTextEntry.transform.parent);
             entry.Name.text = stat.Name;
             entry.Value.text = stat.GetStatMax().ToString();
             entry.gameObject.SetActive(true);
+            entry.ValueHover.Stat = stat;
             generatedObjects.Add(entry.gameObject);
             //TODO: create level up which happens when pressing level up button
 
             if (c.WaitingOnLevelUp)
             {
                 entry.LevelUpStat.onClick.AddListener(() => LevelUp(c, stat));
-                entry.LevelUpStat.enabled = true;
+                entry.LevelUpStat.gameObject.SetActive(true);
 
             }
-            else entry.LevelUpStat.enabled = false;
+            else entry.LevelUpStat.gameObject.SetActive(false);
+
+            if (c.WaitingOnClassSelection)
+            {
+                if (generatedClassButtons == null)
+                {
+                    generatedClassButtons = new List<Button>();
+
+                    for (Goblin.Class i = (Goblin.Class)1; i < Goblin.Class.END; i++)
+                    {
+                        var clBut = Instantiate(ClassIcon,ClassIcon.transform.parent);
+
+                        clBut.image.sprite = GameManager.GetClassImage(i);
+
+                        var cl = i;
+
+                        generatedClassButtons.Add(clBut);
+
+                        clBut.onClick.AddListener(() =>SelectClass(c,cl));
+
+                        clBut.gameObject.SetActive(true);
+                    }
+                }
+                ClassSelectText.text = "Select Class:";
+                ClassIcon.gameObject.SetActive(false);
+            }
+            else
+            {
+                ClassIcon.gameObject.SetActive(true);
+                ClassSelectText.text = "";
+            }
 
         }
     }
 
+    private void SelectClass(Goblin c, Goblin.Class cl)
+    {
+        foreach (var generatedClassButton in generatedClassButtons)
+        {
+            Destroy(generatedClassButton.gameObject);
+        }
+        generatedClassButtons.Clear();
+
+        c.SelectClass(cl);
+        Close();
+
+        showCharacter(c);
+    }
+
+    //TODO: move to character or game manager
     private void LevelUp(Goblin gob, Character.Stat stat)
     {
-        
+
+        stat.LevelUp();
         foreach (var ob in generatedObjects)
         {
-            ob.GetComponent<StatEntry>().LevelUpStat.enabled = false;
+            var s =ob.GetComponent<StatEntry>();
+            s.LevelUpStat.gameObject.SetActive(false);
+            if(s.Name.text == stat.Name)
+                s.Value.text = stat.GetStatMax().ToString();
         }
-
-        //TODO: Handle levelup
+        
+        gob.WaitingOnLevelUp = false;
     }
 
     private string ClassName(Goblin.Class cl)

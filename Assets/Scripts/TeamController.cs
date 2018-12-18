@@ -104,4 +104,16 @@ public class TeamController : MonoBehaviour
             gobbo.AttackTarget = character;
         }
     }
+    
+    internal void AddXp(int v)
+    {
+        foreach (var g in Members)
+        {
+            if (g as Goblin)
+            {
+                (g as Goblin).Xp += v;
+            }
+            else return;
+        }
+    }
 }

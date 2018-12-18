@@ -4,6 +4,7 @@
     using UnityEngine;
     using UnityEngine.Assertions.Must;
     using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Goblin : Character
 {
@@ -14,8 +15,13 @@ public class Goblin : Character
     public int Awareness;
     private int goToLeaderDistance = 3;
 
+    public Image ChiefImage;
+    public Image StateImage;
+
     [Header("Levelling")]
+    public int CurrentLevel = GetLevel(0);
     public static int[] LevelCaps = { 0, 10, 20, 30, 50, 80, 130, 210, 340, 550, 890, 20000 };
+
 
     public class LevelUp : UnityEvent { }
 
@@ -30,8 +36,12 @@ public class Goblin : Character
         return level;
     }
 
-    public int CurrentLevel = GetLevel(0);
+    public ParticleSystem particles;
+    private ParticleSystem.EmissionModule emission;
+
+
     public bool WaitingOnLevelUp;
+    public bool WaitingOnClassSelection;
     private float xp = 0;
 
     public float Xp
@@ -56,7 +66,8 @@ public class Goblin : Character
     }
     public enum Class
     {
-        NoClass, Swarmer, Shooter, Ambusher, Scout, Slave
+        NoClass, Swarmer, Shooter, Ambusher, Scout, Slave, 
+        END
     }
 
     public Class ClassType;
@@ -66,13 +77,52 @@ public class Goblin : Character
     {
         base.Start();
 
+        emission = particles.emission;
+
         Awareness = ATT.GetStatMax();
 
         StartCoroutine(AwarenessLoop());
 
-        OnLevelUp.AddListener(() => WaitingOnLevelUp = true);
+        OnLevelUp.AddListener(NextLevel);
     }
-    
+
+    public void FixedUpdate()
+    {
+        base.FixedUpdate();
+        //TODO: this could be handled with events instead of checking each frame
+
+        if(Team)
+            ChiefImage.enabled = Team.Leader == this;
+
+        StateImage.sprite = GameManager.GetIconImage(State);
+
+        emission.enabled = WaitingOnLevelUp || WaitingOnClassSelection;
+    }
+
+
+    private void NextLevel()
+    {
+        //Set some level icon active
+        
+        //a sound
+
+        //TODO: health should be handled differently than other stuff
+        HEA.LevelUp();
+
+        if (CurrentLevel == 2)
+            WaitingOnClassSelection = true;
+        
+        WaitingOnLevelUp = true;
+    }
+
+    public void SelectClass(Class c)
+    {
+        ClassType = c;
+        WaitingOnClassSelection = false;
+
+        //TODO: add class modifiers
+    }
+
     private IEnumerator AwarenessLoop()
     {
         while (true)

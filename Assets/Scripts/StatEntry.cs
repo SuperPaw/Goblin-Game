@@ -8,4 +8,5 @@ public class StatEntry : MonoBehaviour
     public Text Name;
     public Text Value;
     public Button LevelUpStat;
+    public OnValueHover ValueHover;
 }
