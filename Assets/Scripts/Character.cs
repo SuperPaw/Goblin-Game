@@ -216,6 +216,8 @@ public abstract class Character : MonoBehaviour
     [Header("Sprite")]
     //public SpriteRenderer CharacterSprite;
     public Color DamageColor, NormalColor;
+
+    public Material Material;
     
     public class DamageEvent : UnityEvent<int> { }
     public DamageEvent OnDamage = new DamageEvent();
@@ -258,8 +260,9 @@ public abstract class Character : MonoBehaviour
 
         Health = HEA.GetStatMax();
         
-        //CharacterSprite = GetComponent<SpriteRenderer>();
-        //NormalColor = CharacterSprite.color;
+        Material = GetComponentInChildren<Renderer>().material;
+        if(Material)
+            NormalColor = Material.color;
         DamageColor = Color.red;
         
         OnDamage.AddListener(x=> StartCoroutine(HurtRoutine()));
@@ -520,11 +523,14 @@ public abstract class Character : MonoBehaviour
     //could take a damage parameter
     public IEnumerator HurtRoutine()
     {
-        //CharacterSprite.color = DamageColor;
+        if (!Material)
+            yield break;
+
+        Material.color = DamageColor;
 
         yield return new WaitForSeconds(0.1f);
 
-        //CharacterSprite.color = NormalColor;
+        Material.color = NormalColor;
     }
 
 
