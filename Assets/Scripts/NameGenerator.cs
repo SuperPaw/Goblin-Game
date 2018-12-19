@@ -10,7 +10,7 @@ public class NameGenerator : MonoBehaviour
     private string[] endings = new []{"k","p","ka","k","l","k","ki"};
     private string[] vowels = new []{"i","u","o","o","a"};
     private string[] startings = new []{"","r","k","t","sh","y","b","n"};
-    private string[] surNames = new[] {"", " the Great", " Horse-killer", " the Beautiful", " Big-Bottom", " the Loud", " BIg-mind", " Ankle-shankER"," the many-TeEthed", " the IMmortal"};
+    private string[] surNames = new[] {"", " the Great", " Horse-killer", " the Beautiful", " Big-Bottom", " the Loud", " BIg-mind", " Ankle-shankER"," the many-TeEthed", " the IMmortal", " thE BIG", " Nose-CutTER", " thE Smart", " thE Hung", " the TalL", " supER-StabBer", " the RemEMBEreR", " GoOD-sTank", " the Smelly", " Big-Heart", " Large-FeEt", " smAlL-hands", " pretTy-EARS"};
 
     //public string[] prenames; are just without vowels
 
@@ -37,12 +37,7 @@ public class NameGenerator : MonoBehaviour
             Instance = this;
 
         TotalChance = TwotimesSyllabalChance + SingleSyllabalChance + DoubleSyllabalChance + ShortLongSyllabalChance;
-
-        for (int i = 0; i < 20; i++)
-        {
-            Debug.Log(GetName());
-
-        }
+        
     }
 
     public static string GetName()

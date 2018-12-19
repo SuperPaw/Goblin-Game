@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
@@ -120,28 +121,41 @@ public class PlayerController : MonoBehaviour
 
         foreach (var mapping in KeyMappings)
         {
-            if (Input.GetKeyDown(mapping.Key))
+            if (Input.GetKeyDown(mapping.Key) )
             {
-                switch (mapping.Action)
-                {
-                    case MappableActions.Hide:
-                        Debug.Log("Hiding");
-                        Team.Hide();
-                        break;
-                    case MappableActions.Attack:
-                        break;
-                    case MappableActions.Flee:
-                        break;
-                    case MappableActions.Menu:
-                        break;
-                    case MappableActions.FixCamOnLeader:
-                        FollowLeader = true;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                Action(mapping.Action);
             }
         }
+    }
+
+    public void Action(MappableActions action)
+    {
+        switch (action)
+        {
+            case MappableActions.Hide:
+                Debug.Log("Hiding");
+                Team.Hide();
+                break;
+            case MappableActions.Attack:
+                Team.Attack();
+                break;
+            case MappableActions.Flee:
+                Team.Flee();
+                break;
+            case MappableActions.Menu:
+                break;
+            case MappableActions.FixCamOnLeader:
+                FollowLeader = true;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    //TODO: this should be less hacky
+    public void Action(string action)
+    {
+        Action((MappableActions)Enum.Parse(typeof(MappableActions),action,true) );
     }
 
     //TODO: move top camera controller

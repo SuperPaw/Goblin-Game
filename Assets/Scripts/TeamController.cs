@@ -145,4 +145,25 @@ public class TeamController : MonoBehaviour
     {
         Leader = Members.First(m => m.isActiveAndEnabled);
     }
+
+    internal void Flee()
+    {
+        foreach (var gobbo in Members)
+        {
+            gobbo.State = Character.CharacterState.Fleeing;
+        }
+    }
+
+    internal void Attack()
+    {
+        foreach (var gobbo in Members)
+        {
+            if (gobbo.State == Character.CharacterState.Hiding)
+                gobbo.Hidingplace = null;
+            if (gobbo.State == Character.CharacterState.Fleeing)
+                return;
+
+            gobbo.State = Character.CharacterState.Attacking;
+        }
+    }
 }
