@@ -1758,7 +1758,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f367bc6751787434fbe6a314f8bf8281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  State: 0
   Team: {fileID: 0}
   DamMin: 10
   DamMax: 10
@@ -1774,6 +1773,7 @@ MonoBehaviour:
   SpeMax: 2
   SmaMin: 5
   SmaMax: 5
+  idleDistance: 4
   Walking: 0
   AttackRange: 0
   Target: {x: 0, y: 0, z: 0}
@@ -1786,6 +1786,7 @@ MonoBehaviour:
   MoralBoostOnKill: 5
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
+  Material: {fileID: 0}
 --- !u!136 &136731165325136334
 CapsuleCollider:
   m_ObjectHideFlags: 1

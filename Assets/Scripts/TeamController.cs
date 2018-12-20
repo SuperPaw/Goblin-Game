@@ -6,10 +6,10 @@ using UnityEngine.Events;
 
 public class TeamController : MonoBehaviour
 {
-    public List<Character> Members;
-    private Character leader;
+    public List<Goblin> Members;
+    private Goblin leader;
     
-    public Character Leader
+    public Goblin Leader
     {
         get
         {
@@ -26,6 +26,8 @@ public class TeamController : MonoBehaviour
         }
     }
 
+    public Goblin Challenger;
+    private Coroutine _challengeRoutine;
     private bool updatedListeners;
 
     //TODO: should be related to distance of travel
@@ -34,14 +36,20 @@ public class TeamController : MonoBehaviour
     private Vector3 targetPos;
 
     // Use this for initialization
-    public void Initialize (List<Character> members)
+    public void Initialize (List<Goblin> members)
     {
 
         Members = members;
+        
+        if (Members.Count == 0) Members = GetComponentsInChildren<Goblin>().ToList();
 
-        members.ForEach(m=>m.Team = this);
+        foreach (var character in Members)
+        {
+            character.Team = this;
 
-        if(Members.Count == 0) Members = GetComponentsInChildren<Character>().ToList();
+            if (character.OnDeath == null) continue;
+            character.OnDeath.AddListener(MemberDied);
+        }
 
         if (!Leader)
             Leader = Members.First();
@@ -50,50 +58,12 @@ public class TeamController : MonoBehaviour
 
     private void Update()
     {
-        if(!updatedListeners)
-        {
-            foreach (var character in Members)
-            {
-                character.Team = this;
-
-                if (character.OnDeath == null) continue;
-                character.OnDeath.AddListener(MemberDied);
-            }
-            updatedListeners = true;
-        }
-
-
         Debug.DrawLine(targetPos, targetPos + Vector3.up);
 
     }
 
-
-    public void Hide()
-    {
-        foreach (var ch in Members)
-        {
-            if (ch.State != Character.CharacterState.Attacking || ch.State != Character.CharacterState.Fleeing)
-            {
-                ch.Hide();
-            }
-        }
-    }
-
-
-    //TODO: check if this is actually called
-    private void MemberDied(Character c)
-    {
-        if (Leader == c)
-        {
-            SelectLeader();
-        }
-
-        Members.Remove(c);
-
-        Debug.Log("Team member : "+ c.name + " died");
-
-        Members.ForEach(m=> m.Moral -= m.MoralLossOnFriendDeath);
-    }
+    
+    #region Orders
 
     public void Move(Vector3 target)
     {
@@ -105,7 +75,7 @@ public class TeamController : MonoBehaviour
 
         foreach (var gobbo in Members)
         {
-            gobbo.State = Character.CharacterState.Travelling;
+            gobbo.ChangeState(Character.CharacterState.Travelling);
             gobbo.Target = target + (gobbo.transform.position - leaderPos) * (Random.Range(0, RandomMoveFactor));
 
             //TODO: should use a max distance from leader to include group them together if seperated
@@ -113,20 +83,113 @@ public class TeamController : MonoBehaviour
             gobbo.navMeshAgent.SetDestination(gobbo.Target);
         }
     }
+    
+    public void Hide()
+    {
+        foreach (var ch in Members)
+        {
+            if (!ch.Attacking() && !ch.Fleeing())
+            {
+                ch.Hide();
+            }
+        }
+    }
+
+    internal void Attack()
+    {
+        foreach (var gobbo in Members)
+        {
+            if (gobbo.Fleeing())
+                return;
+            if (gobbo.Hiding())
+                gobbo.Hidingplace = null;
+
+            gobbo.ChangeState(Character.CharacterState.Attacking);
+        }
+    }
 
     public void Attack(Character character)
     {
         foreach (var gobbo in Members)
         {
-            if (gobbo.State == Character.CharacterState.Hiding)
-                gobbo.Hidingplace = null;
-            if (gobbo.State == Character.CharacterState.Fleeing)
+            if (gobbo.Fleeing())
                 return;
+            if (gobbo.Hiding())
+                gobbo.Hidingplace = null;
 
-            gobbo.State = Character.CharacterState.Attacking;
-            gobbo.AttackTarget = character;
+            AttackCharacter(gobbo,character);
         }
     }
+
+    private void AttackCharacter(Goblin gobbo, Character target)
+    {
+
+        gobbo.ChangeState(Character.CharacterState.Attacking);
+        gobbo.AttackTarget = target;
+    }
+
+    public void ChallengeForLeadership(Goblin challenger)
+    {
+        if (Leader == challenger)
+        {
+            Debug.LogWarning("Leader cannot challenge themself");
+            return;
+        }
+
+        Debug.Log("Challenging");
+
+        Challenger = challenger;
+        _challengeRoutine = StartCoroutine(ChallengeRoutine());
+    }
+
+    private IEnumerator ChallengeRoutine()
+    {
+        //maybe move camera
+
+        var fightPos = leader.transform.position;
+
+        //while (Challenger && Challenger.Alive() && Leader.Alive())
+        
+
+        Debug.Log("Setting up options");
+
+        //Set up in ring
+
+        //CreateChoice
+
+        PlayerChoice.ChoiceOption o1 = new PlayerChoice.ChoiceOption(){ Description = "Fight!",Action = ()=>AttackCharacter(Challenger,leader)};
+
+        PlayerChoice.ChoiceOption o2 = new PlayerChoice.ChoiceOption() { Description = "Choose " + leader, Action = () => Attack(Challenger) };
+            
+        PlayerChoice.ChoiceOption o3 = new PlayerChoice.ChoiceOption() { Description = "Choose " + Challenger, Action = () => Attack(leader) };
+
+        PlayerChoice.SetupPlayerChoice(new PlayerChoice.ChoiceOption[] {o1, o2, o3}, Challenger.name + " has challenged "+ leader.name+ ".\n\nDo you want to choose a chief or let them fight for it?");
+
+        yield return new WaitForFixedUpdate();
+    }
+
+    #endregion
+
+    //TODO: check if this is actually called
+    private void MemberDied(Character c)
+    {
+        var g = c as Goblin;
+
+        if(!g)
+            return;
+
+        Members.Remove(g);
+
+        if (Leader == g)
+        {
+            SelectLeader();
+        }
+        Debug.Log("Team member : "+ g.name + " died");
+
+        Members.ForEach(m=> m.Moral -= m.MoralLossOnFriendDeath);
+    }
+
+
     
     internal void AddXp(int v)
     {
@@ -150,20 +213,8 @@ public class TeamController : MonoBehaviour
     {
         foreach (var gobbo in Members)
         {
-            gobbo.State = Character.CharacterState.Fleeing;
+            gobbo.ChangeState(Character.CharacterState.Fleeing);
         }
     }
 
-    internal void Attack()
-    {
-        foreach (var gobbo in Members)
-        {
-            if (gobbo.State == Character.CharacterState.Hiding)
-                gobbo.Hidingplace = null;
-            if (gobbo.State == Character.CharacterState.Fleeing)
-                return;
-
-            gobbo.State = Character.CharacterState.Attacking;
-        }
-    }
 }

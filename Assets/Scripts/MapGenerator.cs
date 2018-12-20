@@ -247,7 +247,7 @@ public class MapGenerator : MonoBehaviour
 	        }
         }
 
-        List<Character> Members = new List<Character>();
+        List<Goblin> Members = new List<Goblin>();
         List<Tile> postions = new List<Tile>(GoblinsToGenerate);
         int TilesToMoveFromFirst = 4;
 
@@ -285,11 +285,11 @@ public class MapGenerator : MonoBehaviour
 
             postions.Add(pos);
 
-            Debug.Log("Creating gbolin at "+ pos.X +","+pos.Y);
+            //Debug.Log("Creating gbolin at "+ pos.X +","+pos.Y);
 
             next.transform.position = new Vector3(pos.X, 0, pos.Y);
 
-            Members.Add(next.GetComponent<Character>());
+            Members.Add(next.GetComponent<Goblin>());
 
 
             progress += charFact;

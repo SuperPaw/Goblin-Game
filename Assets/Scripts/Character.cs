@@ -20,7 +20,7 @@ public abstract class Character : MonoBehaviour
         Idling, Attacking, Travelling, Fleeing, Hiding, Dead
     }
 
-    public CharacterState State;
+    protected CharacterState State;
     
 
     public struct Stat
@@ -133,6 +133,8 @@ public abstract class Character : MonoBehaviour
 
 
     [Header("Movement")]
+
+    public int idleDistance;
     public bool Walking;
     public float AttackRange;
     
@@ -283,10 +285,13 @@ public abstract class Character : MonoBehaviour
 
     protected void FixedUpdate()
     {
+        if(!Alive())
+            return;
+
         navMeshAgent.speed = SPE.GetStatMax();
 
         //TODO: merge together with move's switch statement
-        if (AttackTarget && AttackTarget.isActiveAndEnabled && InAttackRange()
+        if (AttackTarget && AttackTarget.Alive() && InAttackRange()
         ) //has live enemy target and in attackrange
         {
             navMeshAgent.isStopped = true;
@@ -301,26 +306,52 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    #region Private methods
-    
-    protected bool Travelling()
+    /// <summary>
+    /// to be used for orders
+    /// will do nothing if state == dead
+    /// </summary>
+    /// <param name="newState">The new character state</param>
+    public void ChangeState(CharacterState newState, int leaderAncinitet = 10)
+    {
+        if(!Alive())
+            return;
+
+        //TODO: check if state is already being changed
+        StartCoroutine(StateChangingRoutine(newState, Random.Range(0.2f, 2f)));
+    }
+
+    private IEnumerator StateChangingRoutine(CharacterState newState, float wait)
+    {
+        yield return new WaitForSeconds(wait);
+        State = newState;
+    }
+
+    public bool Travelling()
     {
         return State == CharacterState.Travelling;
     }
 
-    protected bool Attacking()
+    public bool Attacking()
     {
         return State == CharacterState.Attacking;
     }
-    protected bool Fleeing()
+
+    public bool Fleeing()
     {
         return State == CharacterState.Fleeing;
     }
-    protected bool Idling()
+    public bool Idling()
     {
         return State == CharacterState.Idling;
     }
 
+    public bool Hiding()
+    {
+        return State == CharacterState.Hiding;
+    }
+
+
+    #region Private methods
 
     private Hidable GetClosestHidingPlace()
     {
@@ -415,7 +446,7 @@ public abstract class Character : MonoBehaviour
         Debug.Log(gameObject.name + " is Attacking " + AttackTarget.gameObject.name);
         
         State = CharacterState.Attacking;
-        while (Attacking() && InAttackRange() && AttackTarget)
+        while (Attacking() && InAttackRange() && AttackTarget.Alive())
         {
             //HIT TARGET
             var Damage = Random.Range(1, DMG.GetStatMax());
@@ -446,6 +477,11 @@ public abstract class Character : MonoBehaviour
         _attackRoutine = null;
     }
 
+    public bool Alive()
+    {
+        return State != CharacterState.Dead;
+    }
+
     private  void Move()
     {
 
@@ -461,17 +497,22 @@ public abstract class Character : MonoBehaviour
                 else if (Random.value < 0.015f) //selecting idle action
                 {
                     idleAction = true;
-                    var idleDistance = 4;
 
                     navMeshAgent.SetDestination(transform.position + new Vector3(Random.Range(-idleDistance, idleDistance), 0,
                                  Random.Range(-idleDistance, idleDistance)));
 
                     Walking = Random.value < 0.75f;
                 }
+                else if (this as Goblin && Team &! Team.Challenger &&Random.value < 1f && (Team.Leader as Goblin).CurrentLevel < ((Goblin) this).CurrentLevel)
+                {
+                    
+                    Debug.Log("Chief Fight!!");
+                    Team.ChallengeForLeadership(this as Goblin);
+                }
 
                 break;
             case CharacterState.Attacking:
-                if (AttackTarget)
+                if (AttackTarget && AttackTarget.Alive())
                 {
                     navMeshAgent.SetDestination(AttackTarget.transform.position);
 
@@ -493,7 +534,7 @@ public abstract class Character : MonoBehaviour
                 
                 break;
             case CharacterState.Fleeing:
-                if (AttackTarget)
+                if (AttackTarget && AttackTarget.Alive())
                 {
                     //TODO: choose a better flee destination and check once there
                     navMeshAgent.SetDestination(AttackTarget.transform.position * -1);
@@ -537,19 +578,17 @@ public abstract class Character : MonoBehaviour
     private void Die(Character self)
     {
         //TODO: remove this at some point
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
 
         //TODO: remove listeners
         OnDamage.RemoveAllListeners();
-
+        
         State = CharacterState.Dead;
     }
 
     private bool InAttackRange()
     {
-
-
-        if (!AttackTarget)
+        if (!AttackTarget || !AttackTarget.Alive())
             return false;
 
         var targetCol = AttackTarget.GetComponent<CapsuleCollider>();

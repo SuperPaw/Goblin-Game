@@ -189,4 +189,5 @@ public class PlayerController : MonoBehaviour
 
         Cam.transform.position = end;
     }
+    
 }

@@ -35,6 +35,12 @@ public class CharacterView : MonoBehaviour
 
     private void showCharacter(Goblin c)
     {
+        foreach (var generatedObject in generatedObjects)
+        {
+            Destroy(generatedObject);
+        }
+        generatedObjects.Clear();
+
         ViewHolder.SetActive(true);
 
         Name.text = c.name;
@@ -149,12 +155,6 @@ public class CharacterView : MonoBehaviour
 
     public void Close()
     {
-        foreach (var generatedObject in generatedObjects)
-        {
-            Destroy(generatedObject);
-        }
-        generatedObjects.Clear();
-
         ViewHolder.SetActive(false);
     }
 

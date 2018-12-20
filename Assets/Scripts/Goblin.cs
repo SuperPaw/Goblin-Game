@@ -86,7 +86,7 @@ public class Goblin : Character
         OnLevelUp.AddListener(NextLevel);
     }
 
-    public void FixedUpdate()
+    public new void FixedUpdate()
     {
         base.FixedUpdate();
         //TODO: this could be handled with events instead of checking each frame
@@ -125,7 +125,7 @@ public class Goblin : Character
 
     private IEnumerator AwarenessLoop()
     {
-        while (true)
+        while (true && Alive())
         {
             yield return new WaitForSeconds(Mathf.Max(1, 10 - Awareness));
 
@@ -136,7 +136,7 @@ public class Goblin : Character
 
     private void CheckWhatOthersAreDoing()
     {
-        if (!Team)
+        if (!Team || !Alive())
             return;
         
         //these could also all be more random dependant on Awareness

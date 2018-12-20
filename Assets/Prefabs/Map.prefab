@@ -66,10 +66,11 @@ MonoBehaviour:
     type: 2}
   Npcs:
   - {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9, type: 2}
+  - {fileID: 1969145986120274, guid: f95d1a9483a8c6a4496c281ffd93702c, type: 2}
   HidableObjects:
   - {fileID: 1910571166180590, guid: 039038a2da993284dbd739d670e3a939, type: 2}
   NpcHolder: {fileID: 0}
-  NpcsToGenerate: 10
+  NpcsToGenerate: 25
   GoblinsToGenerate: 5
   DefaultCharacter: {fileID: 100702, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe, type: 2}
   GoblinTeam: {fileID: 0}
