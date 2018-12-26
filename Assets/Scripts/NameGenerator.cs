@@ -18,6 +18,9 @@ public class NameGenerator : MonoBehaviour
     //chance for double
     [Range(1, 10)]
     public int TwotimesSyllabalChance;
+    //chance for double
+    [Range(1, 10)]
+    public int RhymingSyllabalChance;
     //chance for single sylabyl
     [Range(1, 10)]
     public int SingleSyllabalChance;
@@ -36,8 +39,12 @@ public class NameGenerator : MonoBehaviour
         if (!Instance)
             Instance = this;
 
-        TotalChance = TwotimesSyllabalChance + SingleSyllabalChance + DoubleSyllabalChance + ShortLongSyllabalChance;
-        
+        TotalChance = TwotimesSyllabalChance +RhymingSyllabalChance + SingleSyllabalChance + DoubleSyllabalChance + ShortLongSyllabalChance;
+
+        for (int i = 0; i < 10; i++)
+        {
+            Debug.Log(GetName());
+        }
     }
 
     public static string GetName()
@@ -68,13 +75,22 @@ public class NameGenerator : MonoBehaviour
 
             return syllabal + syllabal;
         }
-        else if (valRange < TwotimesSyllabalChance + SingleSyllabalChance)
+        else if (valRange < TwotimesSyllabalChance + RhymingSyllabalChance)
+        {
+            var ending = Rnd(vowels) + Rnd(endings);
+
+            var syllabal = Rnd(startings) + ending;
+            var sndSyllabal = Rnd(startings) + ending;
+
+            return syllabal + sndSyllabal;
+        }
+        else if (valRange < TwotimesSyllabalChance + RhymingSyllabalChance + SingleSyllabalChance)
         {
             var syllabal = Rnd(startings) + Rnd(vowels) + Rnd(endings);
 
             return syllabal ;
         }
-        else if (valRange < TwotimesSyllabalChance + SingleSyllabalChance + DoubleSyllabalChance)
+        else if (valRange < TwotimesSyllabalChance + RhymingSyllabalChance + SingleSyllabalChance + DoubleSyllabalChance)
         {
 
             var syllabal = Rnd(startings) + Rnd(vowels) + Rnd(endings);

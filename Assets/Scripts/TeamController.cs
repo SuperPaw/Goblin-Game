@@ -153,19 +153,44 @@ public class TeamController : MonoBehaviour
 
         Debug.Log("Setting up options");
 
+        var watchDistance = 3;
+
+
         //Set up in ring
+        foreach (var goblin in Members)
+        {
+            goblin.ChangeState(Character.CharacterState.Watching);
+
+            if (goblin == leader || goblin == Challenger)
+            {
+                //stand and look tough
+
+                goblin.Target = fightPos;
+
+            }
+            else
+            {
+                Vector3 rndDirection = new Vector3(Random.Range(-1,1),0, Random.Range(-1, 1)).normalized * watchDistance;
+
+                goblin.Target = fightPos + rndDirection;
+            }
+        }
 
         //CreateChoice
 
         PlayerChoice.ChoiceOption o1 = new PlayerChoice.ChoiceOption(){ Description = "Fight!",Action = ()=>AttackCharacter(Challenger,leader)};
 
-        PlayerChoice.ChoiceOption o2 = new PlayerChoice.ChoiceOption() { Description = "Choose " + leader, Action = () => Attack(Challenger) };
+        PlayerChoice.ChoiceOption o2 = new PlayerChoice.ChoiceOption() { Description = "Choose " + leader.name, Action = () => Attack(Challenger) };
             
-        PlayerChoice.ChoiceOption o3 = new PlayerChoice.ChoiceOption() { Description = "Choose " + Challenger, Action = () => Attack(leader) };
+        PlayerChoice.ChoiceOption o3 = new PlayerChoice.ChoiceOption() { Description = "Choose " + Challenger.name, Action = () => Attack(leader) };
 
         PlayerChoice.SetupPlayerChoice(new PlayerChoice.ChoiceOption[] {o1, o2, o3}, Challenger.name + " has challenged "+ leader.name+ ".\n\nDo you want to choose a chief or let them fight for it?");
 
-        yield return new WaitForFixedUpdate();
+        yield return new WaitUntil(()=>!Challenger.Alive() ||!Leader.Alive());
+
+        if (Challenger.Alive()) Leader = Challenger;
+
+
     }
 
     #endregion

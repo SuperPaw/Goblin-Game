@@ -17,7 +17,7 @@ public abstract class Character : MonoBehaviour
     //Should we use different state for travelling and just looking at something clsoe by
     public enum CharacterState
     {
-        Idling, Attacking, Travelling, Fleeing, Hiding, Dead
+        Idling, Attacking, Travelling, Fleeing, Hiding, Dead,Watching
     }
 
     protected CharacterState State;
@@ -492,7 +492,6 @@ public abstract class Character : MonoBehaviour
                 {
                     if(navMeshAgent.remainingDistance < 0.02f)
                         idleAction = false;
-                    
                 }
                 else if (Random.value < 0.015f) //selecting idle action
                 {
@@ -554,6 +553,13 @@ public abstract class Character : MonoBehaviour
 
                 navMeshAgent.SetDestination( hiding.HideLocation.transform.position);
                 
+                break;
+            case CharacterState.Watching:
+                if (Vector3.Distance(transform.position, Target) < 2f)
+                {
+                    navMeshAgent.SetDestination(Target);
+                    break;
+                }
                 break;
             default:
                 break;
