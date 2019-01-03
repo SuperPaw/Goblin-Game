@@ -7,12 +7,22 @@ public class NameGenerator : MonoBehaviour
 {
     public static NameGenerator Instance;
 
-    private string[] endings = new []{"k","p","ka","k","l","k","ki"};
-    private string[] vowels = new []{"i","u","o","o","a"};
-    private string[] startings = new []{"","r","k","t","sh","y","b","n"};
-    private string[] surNames = new[] {"", " the Great", " Horse-killer", " the Beautiful", " Big-Bottom", " the Loud", " BIg-mind", " Ankle-shankER"," the many-TeEthed", " the IMmortal", " thE BIG", " Nose-CutTER", " thE Smart", " thE Hung", " the TalL", " supER-StabBer", " the RemEMBEreR", " GoOD-sTank", " the Smelly", " Big-Heart", " Large-FeEt", " smAlL-hands", " pretTy-EARS"};
+    private static string[] endings = new []{"k","p","ka","k","l","k","ki"};//g
+    private static string[] vowels = new []{"i","u","o","o","a"};
+    private static string[] startings = new []{"r","k","t","s","y","b","n","g","b"};//v, m "" no start only for singles and doubles
+    private static string[] startingsWithNone = startings.Concat(new []{""}).ToArray();
 
-    //public string[] prenames; are just without vowels
+    //private string[] surNames = new[] {"", " the Great", " Horse-killer", " the Beautiful", " Big-Bottom", " the Loud", " BIg-mind", " Ankle-shankER"," the many-TeEthed", " the IMmortal", " thE BIG", " Nose-CutTER", " thE Smart", " thE Hung", " the TalL", " supER-StabBer", " the RemEMBEreR", " GoOD-sTank", " the Smelly", " Big-Heart", " Large-FeEt", " smAlL-hands", " pretTy-EARS"};
+
+    private static string[] surNameCompliments = new[]
+    {
+        "pretty", "strong", "great", "green", "loud", "smart", "small","sneaky", "beautiful", "many-teethed","fierce","scarred",
+        "immortal", "dirty", "hungry", "muddy","heavy", "nasty", "greasy", "greedy", "sharp", "big", "good","smelly","silent","bad","dark","bright"
+    };
+    private static string[] surNameEnemies = new[] { "man","horse","orc","troll","spider","goat","elf","bear","bug","king","knight","dog","wolf","cow","pig","sheep","snake","book","word"};
+    private static string[] surNameBodyParts = new[] {"mind","ear","ass","bottom","heart","foot","mouth","crotch","soul","marrow","bowel","head","shadow","tongue", "ankle","bone" };
+    private static string[] surNameAttacks = new[] {"thrasher", "burner","breaker","shanker","killer", "slayer","stabber", "slitter","shooter","chopper","hacker","kicker","whacker","gnawer","slapper","basher","biter", "cutter", "eater", };
+    
 
 
     //chance for double
@@ -41,10 +51,10 @@ public class NameGenerator : MonoBehaviour
 
         TotalChance = TwotimesSyllabalChance +RhymingSyllabalChance + SingleSyllabalChance + DoubleSyllabalChance + ShortLongSyllabalChance;
 
-        for (int i = 0; i < 10; i++)
-        {
-            Debug.Log(GetName());
-        }
+        //for (int i = 0; i < 20; i++)
+        //{
+        //    Debug.Log(GetName()+GetSurName());
+        //}
     }
 
     public static string GetName()
@@ -61,8 +71,30 @@ public class NameGenerator : MonoBehaviour
     {
         if (!Instance)
             return " the forGotTen";
-        
-        return Rnd(Instance.surNames); ;
+
+        var val = Random.value;
+
+        if (val < 0.25f)
+        {
+            //The great
+            return " the " + Rnd(surNameCompliments);
+        }
+        else if (val < 0.5f)
+        {
+            //big-ass
+            return " " + Rnd(surNameCompliments) + "-" + Rnd(surNameBodyParts);
+        }
+        else if (val < 0.75f)
+        {
+            //ass-whackker
+            return " " + Rnd(surNameBodyParts) + "-" + Rnd(surNameAttacks);
+        }
+        else
+        {
+            //elf-stabber
+            return " " + Rnd(surNameEnemies) + "-" + Rnd(surNameAttacks);
+        }
+
     }
 
     private string NameGen()
@@ -86,22 +118,24 @@ public class NameGenerator : MonoBehaviour
         }
         else if (valRange < TwotimesSyllabalChance + RhymingSyllabalChance + SingleSyllabalChance)
         {
-            var syllabal = Rnd(startings) + Rnd(vowels) + Rnd(endings);
+            var syllabal = Rnd(startingsWithNone) + Rnd(vowels) + Rnd(endings);
 
             return syllabal ;
         }
         else if (valRange < TwotimesSyllabalChance + RhymingSyllabalChance + SingleSyllabalChance + DoubleSyllabalChance)
         {
+            var start = Rnd(startings);
+            var end = Rnd(endings);
 
-            var syllabal = Rnd(startings) + Rnd(vowels) + Rnd(endings);
-            var sndSyllabal = Rnd(startings) + Rnd(vowels) + Rnd(endings);
+            var syllabal = start+ Rnd(vowels) + end;
+            var sndSyllabal = start+ Rnd(vowels) + end;
 
             return syllabal+sndSyllabal;
         }
         else 
         {
 
-            var syllabal = Rnd(startings) + Rnd(vowels) ;
+            var syllabal = Rnd(startingsWithNone) + Rnd(vowels) ;
             var sndSyllabal = Rnd(startings) + Rnd(vowels) + Rnd(endings);
 
             return syllabal + sndSyllabal;
