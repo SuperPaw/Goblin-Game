@@ -215,11 +215,13 @@ public class MapGenerator : MonoBehaviour
                 //TODO: use holders for these
                 var next = Instantiate(AreaTilePrefab, transform);
 
+                next.name = "Area (" + x + "," + z + ")";
+
                 var posAdjust = AreaSize / 2;
 
                 next.transform.position = new Vector3(x*AreaSize+posAdjust,0.001f,z*AreaSize+posAdjust);
                 next.Size = AreaSize;
-                next.transform.localScale = new Vector3(AreaSize,0,AreaSize);
+                next.transform.localScale = new Vector3(AreaSize,0.1f,AreaSize);
             }
         }
 

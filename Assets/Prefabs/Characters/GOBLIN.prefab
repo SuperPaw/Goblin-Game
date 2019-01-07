@@ -11130,7 +11130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748abc6737b48dc48a88a30b1645daaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  State: 0
   Team: {fileID: 0}
   DamMin: 1
   DamMax: 3
@@ -11146,6 +11145,7 @@ MonoBehaviour:
   SpeMax: 5
   SmaMin: 3
   SmaMax: 6
+  idleDistance: 0
   Walking: 1
   AttackRange: 1
   Target: {x: 0, y: 0, z: 0}
@@ -11158,12 +11158,14 @@ MonoBehaviour:
   MoralBoostOnKill: 5
   DamageColor: {r: 1, g: 0, b: 0, a: 1}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
+  Material: {fileID: 0}
   Awareness: 1
   ChiefImage: {fileID: 114764703591676486}
   StateImage: {fileID: 114716199431146400}
   CurrentLevel: 1
   particles: {fileID: 198664184989041772}
   WaitingOnLevelUp: 0
+  WaitingOnClassSelection: 0
   ClassType: 0
 --- !u!114 &114653775277136858
 MonoBehaviour:
@@ -15910,7 +15912,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &224262025925782854
 RectTransform:

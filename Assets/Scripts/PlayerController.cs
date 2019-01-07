@@ -93,9 +93,12 @@ public class PlayerController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
+
                 if (hit.collider && hit.collider.GetComponent<Character>())
                 {
-                    var c = hit.collider.GetComponent<Character>();
+
+
+                        var c = hit.collider.GetComponent<Character>();
                     if (c)
                     {
                         Debug.Log("Clicked charaacter " + c.name);
@@ -108,13 +111,21 @@ public class PlayerController : MonoBehaviour
                         }
                     }
                 }
-                else
+                else if (hit.collider && hit.collider.GetComponent<Area>())
                 {
+
+                    Debug.Log("Clicked Area : " + (hit.collider.GetComponent<Area>().name));
+
                     var target = hit.point;
                     target.y = 0;
 
                     Team.Move(target);
                 }
+                else
+                {
+                    Debug.LogWarning("Not a valid hit: "+hit.point);
+                }
+
             }
         }
 
