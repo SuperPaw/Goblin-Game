@@ -30,6 +30,10 @@ public class MapGenerator : MonoBehaviour
 
     public int RandomSeed;
     public int SizeX, SizeZ;
+    public Area AreaTilePrefab;
+    public int AreaSize;
+    private Area[,] AreaArray;
+
     public int ClustersOfNoWalking;
     public int MinClusterSize;
     public bool DistanceBetweenClusters;
@@ -46,8 +50,6 @@ public class MapGenerator : MonoBehaviour
     [Range(0f, 1)]
     public float PctOfImmovableAreas;
     [Header("References")]
-    public GameObject MapTileGameObject;
-    public GameObject ImmovableMapTile;
     public GameObject[] Npcs;
     public GameObject[] HidableObjects;
 
@@ -61,7 +63,7 @@ public class MapGenerator : MonoBehaviour
 
 
     // Use this for initialization
-    public IEnumerator GenerateMap(Action<int> progressCallback, Action EndCallback)
+    public IEnumerator GenerateMap(Action<int> progressCallback, Action endCallback)
     {
         var progress = 0;
         var charFact = 25;
@@ -200,8 +202,35 @@ public class MapGenerator : MonoBehaviour
             }
         }
         
+        //Instantiating Area Tiles
+        var noOfAreasX = SizeX / AreaSize;
+        var noOfAreasZ = SizeZ / AreaSize;
+
+        AreaArray = new Area[noOfAreasX,noOfAreasZ];
+
+        for (int x = 0; x < noOfAreasX; x++)
+        {
+            for (int z = 0; z < noOfAreasZ; z++)
+            {
+                //TODO: use holders for these
+                var next = Instantiate(AreaTilePrefab, transform);
+
+                var posAdjust = AreaSize / 2;
+
+                next.transform.position = new Vector3(x*AreaSize+posAdjust,0.001f,z*AreaSize+posAdjust);
+                next.Size = AreaSize;
+                next.transform.localScale = new Vector3(AreaSize,0,AreaSize);
+            }
+        }
+
+        //set up neighbors
+
+
+
+
+        //INSTANTIATING MAP
         //y=1 for tree height
-	    for (int i = 0; i < clusters.Count; i++)
+        for (int i = 0; i < clusters.Count; i++)
 	    {
             for (var i1 = 0; i1 < clusters[i].Count; i1++)
             {
@@ -308,7 +337,7 @@ public class MapGenerator : MonoBehaviour
         //TODO: give reference and move to overalle generation script
         FindObjectOfType<PlayerController>().Initialize();
 
-        EndCallback();
+        endCallback();
     }
 
     private void CreateCharacter(GameObject go, Transform parent)

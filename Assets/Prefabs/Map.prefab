@@ -54,16 +54,15 @@ MonoBehaviour:
   RandomSeed: 0
   SizeX: 200
   SizeZ: 200
-  ClustersOfNoWalking: 80
-  MinClusterSize: 15
+  AreaTilePrefab: {fileID: 114614147775462646, guid: e15f42e3c6199524da160032eae3127f,
+    type: 2}
+  AreaSize: 50
+  ClustersOfNoWalking: 300
+  MinClusterSize: 1
   DistanceBetweenClusters: 1
   Cohesion: 1.01
-  BorderClusterSize: 2000
-  PctOfImmovableAreas: 0.5
-  MapTileGameObject: {fileID: 1402779629115860, guid: 9b585b0ff8c29c34faa5031de5ee81a3,
-    type: 2}
-  ImmovableMapTile: {fileID: 1910571166180590, guid: 039038a2da993284dbd739d670e3a939,
-    type: 2}
+  BorderClusterSize: 5000
+  PctOfImmovableAreas: 0.3
   Npcs:
   - {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9, type: 2}
   - {fileID: 1969145986120274, guid: f95d1a9483a8c6a4496c281ffd93702c, type: 2}
