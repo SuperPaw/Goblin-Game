@@ -76,6 +76,7 @@ public class Goblin : Character
     new void Start()
     {
         base.Start();
+        
 
         emission = particles.emission;
 

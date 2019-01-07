@@ -104,7 +104,14 @@ public class PlayerController : MonoBehaviour
                         Debug.Log("Clicked charaacter " + c.name);
 
                         if (c.tag != "Player")
-                            Team.Attack(c);
+                        {
+                            if(c.InArea == Team.Leader.InArea)
+                                Team.Attack(c);
+                            else
+                            {
+                                Debug.LogWarning("Trying to attack character in another area");
+                            }
+                        }
                         else 
                         {
                             CharacterView.ShowCharacter(c as Goblin);
@@ -113,13 +120,13 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (hit.collider && hit.collider.GetComponent<Area>())
                 {
+                    var a = hit.collider.GetComponent<Area>();
+                    //Debug.Log("Clicked Area : " + (a.name));
 
-                    Debug.Log("Clicked Area : " + (hit.collider.GetComponent<Area>().name));
-
-                    var target = hit.point;
+                    var target = a.transform.position;//hit.point;
                     target.y = 0;
 
-                    Team.Move(target);
+                    Team.Move(target,a);
                 }
                 else
                 {

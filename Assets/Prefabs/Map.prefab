@@ -56,7 +56,7 @@ MonoBehaviour:
   SizeZ: 200
   AreaTilePrefab: {fileID: 114614147775462646, guid: e15f42e3c6199524da160032eae3127f,
     type: 2}
-  AreaSize: 50
+  AreaSize: 25
   ClustersOfNoWalking: 300
   MinClusterSize: 1
   DistanceBetweenClusters: 1

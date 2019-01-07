@@ -240,8 +240,8 @@ public abstract class Character : MonoBehaviour
             hiding = value;
         }
     }
-    
 
+    public Area InArea;
 
     public void Start()
     {
@@ -348,6 +348,7 @@ public abstract class Character : MonoBehaviour
 
     #region Private methods
 
+    //TODO: make generic methods for this and other getclosests
     private Hidable GetClosestHidingPlace()
     {
 
@@ -357,7 +358,7 @@ public abstract class Character : MonoBehaviour
         Hidable closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
-        foreach (Hidable go in gos.Select(h=>h.GetComponent<Hidable>()))
+        foreach (Hidable go in gos.Select(h=>h.GetComponent<Hidable>()))//.Where(h=> h.GetComponent<Hidable>().Area = InArea))
         {
             if(!go)
                 Debug.LogError("Hidable object does not have hidable script");
@@ -382,12 +383,11 @@ public abstract class Character : MonoBehaviour
         var enemyTag = playerChar ? "NPC" : "Player";
 
         //get these from a game or fight controller instead for maintenance
-        GameObject[] gos;
-        gos = GameObject.FindGameObjectsWithTag(enemyTag);
-        GameObject closest = null;
+        var gos = GameObject.FindGameObjectsWithTag(enemyTag).Select(g=>g.GetComponent<Character>());
+        Character closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
-        foreach (GameObject go in gos)
+        foreach (var go in gos.Where(e=>e.InArea == InArea))
         {
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
@@ -399,7 +399,7 @@ public abstract class Character : MonoBehaviour
         }
 
         if (!closest) return null;
-        return closest.GetComponent<Character>();
+        return closest;
     }
 
     private void TargetGone()
@@ -492,13 +492,25 @@ public abstract class Character : MonoBehaviour
                 {
                     idleAction = true;
 
-                    navMeshAgent.SetDestination(transform.position + new Vector3(Random.Range(-idleDistance, idleDistance), 0,
-                                 Random.Range(-idleDistance, idleDistance)));
+                    Vector3 dest;
+
+                    if (InArea)
+                    {
+                        dest = InArea.GetRandomPosInArea();
+                    }
+                    else
+                    {
+                        dest = transform.position + Random.insideUnitSphere * idleDistance;
+                        dest.y = 0;
+                    }
+
+                    navMeshAgent.SetDestination(dest);//new Vector3(Random.Range(-idleDistance, idleDistance), 0,Random.Range(-idleDistance, idleDistance)));
 
                     Walking = Random.value < 0.75f;
                 }
                 else if (this as Goblin && Team &! Team.Challenger &&Random.value < 1f && (Team.Leader as Goblin).CurrentLevel < ((Goblin) this).CurrentLevel)
                 {
+                    //TODO: make it only appear after a while
                     
                     Debug.Log("Chief Fight!!");
                     Team.ChallengeForLeadership(this as Goblin);

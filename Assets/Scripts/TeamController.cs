@@ -65,11 +65,12 @@ public class TeamController : MonoBehaviour
     
     #region Orders
 
-    public void Move(Vector3 target)
+    public void Move(Vector3 target,Area a = null)
     {
         var leaderPos = Leader.transform.position;
 
         targetPos = target;
+
 
         //TODO: check for distance so no move right next to group
 
@@ -77,6 +78,10 @@ public class TeamController : MonoBehaviour
         {
             gobbo.ChangeState(Character.CharacterState.Travelling);
             gobbo.Target = target + (gobbo.transform.position - leaderPos) * (Random.Range(0, RandomMoveFactor));
+
+
+            if (a)
+                gobbo.InArea = a;
 
             //TODO: should use a max distance from leader to include group them together if seperated
             //TODO: could just use a local instead of gloabl pos for the entire team and move that

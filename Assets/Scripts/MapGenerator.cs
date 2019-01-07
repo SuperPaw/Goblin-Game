@@ -32,7 +32,7 @@ public class MapGenerator : MonoBehaviour
     public int SizeX, SizeZ;
     public Area AreaTilePrefab;
     public int AreaSize;
-    private Area[,] AreaArray;
+    public List<Area> Areas;
 
     public int ClustersOfNoWalking;
     public int MinClusterSize;
@@ -206,7 +206,7 @@ public class MapGenerator : MonoBehaviour
         var noOfAreasX = SizeX / AreaSize;
         var noOfAreasZ = SizeZ / AreaSize;
 
-        AreaArray = new Area[noOfAreasX,noOfAreasZ];
+        Areas = new List<Area>(noOfAreasZ*noOfAreasX);
 
         for (int x = 0; x < noOfAreasX; x++)
         {
@@ -222,6 +222,7 @@ public class MapGenerator : MonoBehaviour
                 next.transform.position = new Vector3(x*AreaSize+posAdjust,0.001f,z*AreaSize+posAdjust);
                 next.Size = AreaSize;
                 next.transform.localScale = new Vector3(AreaSize,0.1f,AreaSize);
+                Areas.Add(next);
             }
         }
 
@@ -279,23 +280,24 @@ public class MapGenerator : MonoBehaviour
         }
 
         List<Goblin> Members = new List<Goblin>();
-        List<Tile> postions = new List<Tile>(GoblinsToGenerate);
         int TilesToMoveFromFirst = 4;
 
-        var pos = GetRandomGroundTile();
+        var a = GetRandomArea();
         //find middle ish tile
-        while (pos.X < SizeX/4 || pos.X > SizeX *0.75 ||
-               pos.Y < SizeZ / 4 || pos.Y > SizeZ * 0.75 )
-        {
-             pos = GetRandomGroundTile();
-        }
+        //while (area.X < SizeX/4 || area.X > SizeX *0.75 ||
+        //       area.Y < SizeZ / 4 || area.Y > SizeZ * 0.75 )
+        //{
+        //     area = GetRandomGroundTile();
+        //}
 
-        Debug.Log("Initializing Goblin team in pos ("+ pos.X + ","+pos.Y+")");
+        var pos = a.transform.position;
 
-        postions.Add(pos);
+        Debug.Log("Initializing Goblin team in "+a);
+        
         //Find suitable start position
-        GoblinTeam.transform.position = new Vector3(pos.X,0,pos.Y);
+        GoblinTeam.transform.position = new Vector3(pos.x,0,pos.z);
 
+        var GroupDistance = 4;
         //TODO: check that we are not initializinig in a too small area. could be done with connectivity check
         //TODO: Use create character
         for (int i = 0; i < GoblinsToGenerate; i++)
@@ -305,22 +307,15 @@ public class MapGenerator : MonoBehaviour
 
             next.name = NameGenerator.GetName();
 
-            int x = 0;
-            while (postions.Contains(pos) || x++ < TilesToMoveFromFirst)
-            {
-                var neighbour = GetRandomNeighbour(pos);
-
-                if (neighbour.Type == TileType.Ground)
-                    pos = neighbour;
-            }
-
-            postions.Add(pos);
+            pos = pos + Random.insideUnitSphere * GroupDistance;
 
             //Debug.Log("Creating gbolin at "+ pos.X +","+pos.Y);
 
-            next.transform.position = new Vector3(pos.X, 0, pos.Y);
+            next.transform.position = new Vector3(pos.x, 0, pos.z);
 
-            Members.Add(next.GetComponent<Goblin>());
+            var g = next.GetComponent<Goblin>();
+            g.InArea = a;
+            Members.Add(g);
 
 
             progress += charFact;
@@ -344,13 +339,15 @@ public class MapGenerator : MonoBehaviour
 
     private void CreateCharacter(GameObject go, Transform parent)
     {
+        var tile = GetRandomArea();
+        var pos = tile.GetRandomPosInArea();
 
-        var tile = GetRandomGroundTile();
-        var next = Instantiate(go, new Vector3(tile.X, 0, tile.Y),Quaternion.identity);
+        var next = Instantiate(go, pos,Quaternion.identity);
         next.transform.parent = parent;
+        next.GetComponent<Character>().InArea = tile;
 
         //next.name +=  "(" + tile.X + "," + tile.Y + ")";
-        
+
         //next.transform.position = 
     }
 
@@ -412,5 +409,9 @@ public class MapGenerator : MonoBehaviour
     {
         return movableTiles[Random.Range(0, movableTiles.Count)];
     }
-	
+    private Area GetRandomArea()
+    {
+        return Areas[Random.Range(0, Areas.Count)];
+    }
+
 }

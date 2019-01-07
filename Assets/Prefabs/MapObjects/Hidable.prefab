@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 114691825108400538}
   - component: {fileID: 208395386577737414}
   m_Layer: 0
-  m_Name: tree-orange
+  m_Name: Hidable
   m_TagString: Hidable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,6 +129,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8c69f3cd16f534bec8236a6484f500d4, type: 3}
   - {fileID: 21300000, guid: c008626f5108946299e1a584ba85fa5b, type: 3}
   - {fileID: 21300000, guid: db07cc93e21f1457d9a1364618027fbb, type: 3}
+  - {fileID: 21300000, guid: 37eaf6e537ca749adaaea0a3e900d411, type: 3}
+  - {fileID: 21300000, guid: dbc624f7b3a644dcf989e434e63d9a98, type: 3}
+  - {fileID: 21300000, guid: 606bc7833699b46bfb26e8141d2a64a7, type: 3}
+  - {fileID: 21300000, guid: aa94c6da14ecf4a8690f02549a9ac6a7, type: 3}
   SpriteRenderer: {fileID: 212548508743694226}
 --- !u!114 &114691825108400538
 MonoBehaviour:
