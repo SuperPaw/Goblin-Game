@@ -48,7 +48,7 @@ public abstract class Character : MonoBehaviour
         private int Max;
         //TODO: should decreases like damage be done with modifiers instead?
         
-        public List<StatMod> Modifiers;
+        private List<StatMod> Modifiers;
 
         public Stat(string name, int max) 
         {
@@ -69,12 +69,7 @@ public abstract class Character : MonoBehaviour
         //}
         public int GetStatMax()
         {
-            float x = Max;
-
-            foreach (var mod in Modifiers)
-            {
-                x += mod.Modifier;
-            }
+            float x = Max + Modifiers.Sum(mod => mod.Modifier);
 
             return x % 1 < 0.5f ? (int)x : (int)x + 1;
         }
