@@ -67,6 +67,10 @@ public class TeamController : MonoBehaviour
 
     public void Move(Vector3 target,Area a = null)
     {
+        if(a && a== Leader.InArea) //if already there
+            return;
+        
+
         var leaderPos = Leader.transform.position;
 
         targetPos = target;
@@ -77,11 +81,16 @@ public class TeamController : MonoBehaviour
         foreach (var gobbo in Members)
         {
             gobbo.ChangeState(Character.CharacterState.Travelling);
-            gobbo.Target = target + (gobbo.transform.position - leaderPos) * (Random.Range(0, RandomMoveFactor));
 
-
+            //if (a)
+            //    gobbo.Target = a.GetRandomPosInArea();
+            //else
+                gobbo.Target = target + (gobbo.transform.position - leaderPos).normalized * (Random.Range(0, RandomMoveFactor));
+            
             if (a)
                 gobbo.InArea = a;
+
+            Debug.Log(gobbo +" going to " + gobbo.Target);
 
             //TODO: should use a max distance from leader to include group them together if seperated
             //TODO: could just use a local instead of gloabl pos for the entire team and move that

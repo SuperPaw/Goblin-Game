@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
 
         if (!Cam) Cam = Camera.main;
         
+        UpdateFogOfWar();
         MoveToLeader();
     }
 
@@ -94,7 +95,7 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
 
-                if (hit.collider && hit.collider.GetComponent<Character>())
+                if (hit.collider && hit.collider.GetComponent<Character>()) //TODO:check visibility else just move there
                 {
 
 
@@ -127,6 +128,8 @@ public class PlayerController : MonoBehaviour
                     target.y = 0;
 
                     Team.Move(target,a);
+
+                    UpdateFogOfWar();
                 }
                 else
                 {
@@ -143,6 +146,21 @@ public class PlayerController : MonoBehaviour
             {
                 Action(mapping.Action);
             }
+        }
+    }
+
+    private void UpdateFogOfWar()
+    {
+        if (!Team.Leader.InArea)
+        {
+            Debug.LogWarning("Chief not present in any area");
+            return;
+        }
+
+        Team.Leader.InArea.RemoveFogOfWar(true);
+
+        foreach (var connecting in Team.Leader.InArea.ConnectsTo){     
+            connecting.RemoveFogOfWar(false);
         }
     }
 

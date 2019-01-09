@@ -34,6 +34,8 @@ public class MapGenerator : MonoBehaviour
     public int AreaSize;
     public List<Area> Areas;
 
+    public Area[,] AreaMap { get; private set; }
+
     public int ClustersOfNoWalking;
     public int MinClusterSize;
     public bool DistanceBetweenClusters;
@@ -60,6 +62,8 @@ public class MapGenerator : MonoBehaviour
     public int GoblinsToGenerate;
     public GameObject DefaultCharacter;
     public TeamController GoblinTeam;
+    private int noOfAreasX;
+    private int noOfAreasZ;
 
 
     // Use this for initialization
@@ -203,10 +207,11 @@ public class MapGenerator : MonoBehaviour
         }
         
         //Instantiating Area Tiles
-        var noOfAreasX = SizeX / AreaSize;
-        var noOfAreasZ = SizeZ / AreaSize;
+        noOfAreasX = SizeX / AreaSize;
+        noOfAreasZ = SizeZ / AreaSize;
 
         Areas = new List<Area>(noOfAreasZ*noOfAreasX);
+        AreaMap = new Area[noOfAreasX, noOfAreasZ];
 
         for (int x = 0; x < noOfAreasX; x++)
         {
@@ -216,6 +221,8 @@ public class MapGenerator : MonoBehaviour
                 var next = Instantiate(AreaTilePrefab, transform);
 
                 next.name = "Area (" + x + "," + z + ")";
+                next.X = x;
+                next.Z = z;
 
                 var posAdjust = AreaSize / 2;
 
@@ -223,11 +230,18 @@ public class MapGenerator : MonoBehaviour
                 next.Size = AreaSize;
                 next.transform.localScale = new Vector3(AreaSize,0.1f,AreaSize);
                 Areas.Add(next);
+                AreaMap[x, z] = next;
             }
         }
 
         //set up neighbors
-
+        foreach (var area in Areas)
+        {
+            foreach (var neightbour in GetNeightbours(area))
+            {
+                area.ConnectsTo.Add(neightbour);
+            }
+        }
 
 
 
@@ -279,8 +293,7 @@ public class MapGenerator : MonoBehaviour
 	        }
         }
 
-        List<Goblin> Members = new List<Goblin>();
-        int TilesToMoveFromFirst = 4;
+        List<Goblin> members = new List<Goblin>();
 
         var a = GetRandomArea();
         //find middle ish tile
@@ -315,7 +328,7 @@ public class MapGenerator : MonoBehaviour
 
             var g = next.GetComponent<Goblin>();
             g.InArea = a;
-            Members.Add(g);
+            members.Add(g);
 
 
             progress += charFact;
@@ -329,7 +342,7 @@ public class MapGenerator : MonoBehaviour
             }
 
         }
-        GoblinTeam.Initialize(Members);
+        GoblinTeam.Initialize(members);
 
         //TODO: give reference and move to overalle generation script
         FindObjectOfType<PlayerController>().Initialize();
@@ -378,6 +391,32 @@ public class MapGenerator : MonoBehaviour
         var neighbours = GetNeightbours(tile);
         
         return neighbours[(Random.Range(0, neighbours.Count))];
+    }
+
+
+    private List<Area> GetNeightbours(Area are, bool includeDiagonal = false)
+    {
+        var neighbours = new List<Area>(8);
+
+        var notTopX = are.X < noOfAreasX - 1;
+        var notBottomX = are.X > 0;
+        var notTopY = are.Z < noOfAreasZ - 1;
+        var notBottomY = are.Z > 0;
+
+        if (notTopX) neighbours.Add(AreaMap[are.X + 1, are.Z]);
+        if (notBottomX) neighbours.Add(AreaMap[are.X - 1, are.Z]);
+        if (notTopY) neighbours.Add(AreaMap[are.X, are.Z + 1]);
+        if (notBottomY) neighbours.Add(AreaMap[are.X, are.Z - 1]);
+
+        if (includeDiagonal)
+        {
+            if (notTopX && notTopY) neighbours.Add(AreaMap[are.X + 1, are.Z + 1]);
+            if (notBottomX && notTopY) neighbours.Add(AreaMap[are.X - 1, are.Z + 1]);
+            if (notTopX && notBottomY) neighbours.Add(AreaMap[are.X + 1, are.Z - 1]);
+            if (notBottomX && notBottomY) neighbours.Add(AreaMap[are.X - 1, are.Z - 1]);
+        }
+
+        return neighbours;
     }
 
     private List<Tile> GetNeightbours(Tile tile,bool includeDiagonal = false)

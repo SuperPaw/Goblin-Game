@@ -21,7 +21,7 @@ public class NameGenerator : MonoBehaviour
     };
     private static string[] surNameEnemies = new[] { "man","horse","orc","troll","spider","goat","elf","bear","bug","king","knight","dog","wolf","cow","pig","sheep","snake","book","word"};
     private static string[] surNameBodyParts = new[] {"mind","ear","ass","bottom","heart","foot","mouth","crotch","soul","marrow","bowel","head","shadow","tongue", "ankle","bone" };
-    private static string[] surNameAttacks = new[] {"thrasher", "burner","breaker","shanker","killer", "slayer","stabber", "slitter","shooter","chopper","hacker","kicker","whacker","gnawer","slapper","basher","biter", "cutter", "eater", };
+    private static string[] surNameAttacks = new[] {"thrasher", "burner","breaker","shanker","killer", "slayer","stabber", "slitter","shooter","chopper","hacker","kicker","whacker","gnawer","slapper","gnasher","basher","biter", "cutter", "eater", };
     
 
 
@@ -51,10 +51,10 @@ public class NameGenerator : MonoBehaviour
 
         TotalChance = TwotimesSyllabalChance +RhymingSyllabalChance + SingleSyllabalChance + DoubleSyllabalChance + ShortLongSyllabalChance;
 
-        //for (int i = 0; i < 20; i++)
-        //{
-        //    Debug.Log(GetName()+GetSurName());
-        //}
+        for (int i = 0; i < 20; i++)
+        {
+            Debug.Log(GetName() + GetSurName());
+        }
     }
 
     public static string GetName()
