@@ -8,6 +8,7 @@ public class Area : MonoBehaviour
     public int X;
     public int Z;
     public List<Character> PresentCharacters;
+    public List<Lootable> Lootables;
     public List<Area> ConnectsTo;
     public BoxCollider Collider;
 
@@ -31,5 +32,37 @@ public class Area : MonoBehaviour
         FogOfWarSprite.gameObject.SetActive(!InArea);
 
         FogOfWarSprite.color = LightFogColor;
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (!other.gameObject.GetComponent<Character>())
+        {
+            Debug.LogWarning(name + ": Object with no character collided; "+ other.gameObject);
+        }
+
+        Character c = other.gameObject.GetComponent<Character>();
+
+        //should be the only place we set InArea
+        c.InArea = this;
+        PresentCharacters.Add(c);
+
+        //TODO: check if leader
+        PlayerController.UpdateFog();
+
+        Debug.Log(c +" entered "+ name);
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        if (!other.gameObject.GetComponent<Character>())
+        {
+            Debug.LogWarning(name + ": Object with no character collided; " + other.gameObject);
+        }
+
+        Character c = other.gameObject.GetComponent<Character>();
+
+        Debug.Log(c + " left " + name);
+
+        PresentCharacters.Remove(c);
     }
 }

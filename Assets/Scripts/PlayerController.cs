@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance;
     public TeamController Team;
     public Camera Cam;
 
@@ -38,13 +39,16 @@ public class PlayerController : MonoBehaviour
 
     public void Initialize()
     {
+        if (!Instance)
+            Instance = this;
+
         Team = GetComponent<TeamController>();
 
         if(!Team) Debug.LogWarning("Unable to find team for player controls!");
 
         if (!Cam) Cam = Camera.main;
         
-        UpdateFogOfWar();
+        //UpdateFogOfWar();
         MoveToLeader();
     }
 
@@ -127,9 +131,15 @@ public class PlayerController : MonoBehaviour
                     var target = a.transform.position;//hit.point;
                     target.y = 0;
 
+                    if (!Team.Leader.InArea.ConnectsTo.Contains(a))
+                    {
+                        Debug.LogWarning("Not possible to move to "+ a + " from "+ Team.Leader.InArea);
+                        return;
+                    }
+
                     Team.Move(target,a);
 
-                    UpdateFogOfWar();
+                    //UpdateFogOfWar();
                 }
                 else
                 {
@@ -147,6 +157,11 @@ public class PlayerController : MonoBehaviour
                 Action(mapping.Action);
             }
         }
+    }
+
+    public static void UpdateFog()
+    {
+        Instance.UpdateFogOfWar();
     }
 
     private void UpdateFogOfWar()

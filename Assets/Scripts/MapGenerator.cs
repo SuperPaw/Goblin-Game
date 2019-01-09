@@ -11,13 +11,15 @@ using Random = UnityEngine.Random;
 
 public class MapGenerator : MonoBehaviour
 {
-    public enum TileType {Ground, Forest}
+    public enum TileType {Ground, Forest, Loot}
+    //TODO: turn into a struct
     public class Tile
     {
         public int X;
         public int Y;
         public TileType Type;
         public int Cluster;
+        public Area Area;
 
         public Tile(int x, int y)
         {
@@ -44,6 +46,8 @@ public class MapGenerator : MonoBehaviour
     public float Cohesion;
 
     public int BorderClusterSize;
+    [Range(0f, 1)]
+    public float LootableChance;
     private Tile[,] map;
     private readonly Dictionary<int, List<Tile>> clusters = new Dictionary<int, List<Tile>>();
     private List<Tile> movableTiles;
@@ -54,6 +58,7 @@ public class MapGenerator : MonoBehaviour
     [Header("References")]
     public GameObject[] Npcs;
     public GameObject[] HidableObjects;
+    public GameObject[] LootObjects;
 
     [Header("Character Generation")]
     public GameObject NpcHolder;
@@ -231,6 +236,49 @@ public class MapGenerator : MonoBehaviour
                 next.transform.localScale = new Vector3(AreaSize,0.1f,AreaSize);
                 Areas.Add(next);
                 AreaMap[x, z] = next;
+
+                //var walkabletilesInArea= new List<Tile>();
+
+                //for (int i = 0; i < AreaSize; i++)
+                //{
+                //    for (int j = 0; j < AreaSize; i++)
+                //    {
+                //        if (SizeX <= x * AreaSize + i || SizeZ <= z * AreaSize + j)
+                //        {
+
+                //            Debug.Log("not valid tile " + (x * AreaSize + i) + "," + (z * AreaSize + j));
+                //            //continue;
+                //        }
+                //        else
+                //        {
+                //            var tile = map[x * AreaSize + i, z * AreaSize + j];
+                //            tile.Area = next;
+                //            if (tile.Type == TileType.Ground)
+                //                walkabletilesInArea.Add(tile);
+                //            //map[x * AreaSize+i, z * AreaSize+j].Area = next;
+                //        }
+                //    }
+                //}
+
+                //ADDING LOOT
+                if (Random.value < LootableChance)
+                {
+                    //TODO: should only be in area 
+                    Tile tile = GetRandomGroundTile();//;walkabletilesInArea[Random.Range(0, walkabletilesInArea.Count)])];//GetRandomGroundTile(next);
+
+                    tile.Type = TileType.Loot;
+                    movableTiles.Remove(tile);
+
+                    var loot = Instantiate(LootObjects[Random.Range(0, LootObjects.Length)]);//, next.transform);
+
+                    loot.name = "Lootable";
+
+                    loot.transform.parent = next.transform;
+
+                    next.Lootables.Add(loot.GetComponent<Lootable>());
+
+                    loot.transform.position = new Vector3(tile.X, 1, tile.Y);
+                }
             }
         }
 
@@ -327,7 +375,7 @@ public class MapGenerator : MonoBehaviour
             next.transform.position = new Vector3(pos.x, 0, pos.z);
 
             var g = next.GetComponent<Goblin>();
-            g.InArea = a;
+            //g.InArea = a;
             members.Add(g);
 
 
@@ -357,7 +405,7 @@ public class MapGenerator : MonoBehaviour
 
         var next = Instantiate(go, pos,Quaternion.identity);
         next.transform.parent = parent;
-        next.GetComponent<Character>().InArea = tile;
+        //next.GetComponent<Character>().InArea = tile;
 
         //next.name +=  "(" + tile.X + "," + tile.Y + ")";
 
@@ -444,9 +492,16 @@ public class MapGenerator : MonoBehaviour
         return neighbours;
     }
 
-    private Tile GetRandomGroundTile()
+
+    //TODO: not working with area for some reason
+    private Tile GetRandomGroundTile(Area inArea = null)
     {
-        return movableTiles[Random.Range(0, movableTiles.Count)];
+        if(!inArea)
+            return movableTiles[Random.Range(0, movableTiles.Count)];
+
+        var areaTiles = movableTiles.Where(t => t.Area == inArea).ToList();
+
+        return areaTiles[Random.Range(0, areaTiles.Count)];
     }
     private Area GetRandomArea()
     {

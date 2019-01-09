@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -17,7 +16,7 @@ public abstract class Character : MonoBehaviour
     //Should we use different state for travelling and just looking at something clsoe by
     public enum CharacterState
     {
-        Idling, Attacking, Travelling, Fleeing, Hiding, Dead,Watching
+        Idling, Attacking, Travelling, Fleeing, Hiding, Dead,Watching,Searching
     }
 
     protected CharacterState State;
@@ -450,7 +449,7 @@ public abstract class Character : MonoBehaviour
 
             if (target.Health <= 0)
             {
-                Debug.Log(name + " killed " + AttackTarget.name);
+                //Debug.Log(name + " killed " + AttackTarget.name);
 
                 if (this as Goblin)
                 {
@@ -463,7 +462,7 @@ public abstract class Character : MonoBehaviour
 
             }
 
-            Debug.Log(gameObject.name + " hit " + AttackTarget.gameObject.name +" for " + Damage + " damage");
+            //Debug.Log(gameObject.name + " hit " + AttackTarget.gameObject.name +" for " + Damage + " damage");
 
             //should be tied to animation maybe?
             yield return new WaitForSeconds(AttackTime);

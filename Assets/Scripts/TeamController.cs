@@ -87,8 +87,8 @@ public class TeamController : MonoBehaviour
             //else
                 gobbo.Target = target + (gobbo.transform.position - leaderPos).normalized * (Random.Range(0, RandomMoveFactor));
             
-            if (a)
-                gobbo.InArea = a;
+            //if (a)
+            //    gobbo.InArea = a;
 
             Debug.Log(gobbo +" going to " + gobbo.Target);
 

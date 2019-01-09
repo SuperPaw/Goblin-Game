@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/GoblinMain.unity
+    guid: 610d31e7651dbf5438287a5a27240a74
   m_configObjects: {}

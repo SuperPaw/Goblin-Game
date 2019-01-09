@@ -11159,6 +11159,7 @@ MonoBehaviour:
   DamageColor: {r: 1, g: 0, b: 0, a: 1}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 0}
+  InArea: {fileID: 0}
   Awareness: 1
   ChiefImage: {fileID: 114764703591676486}
   StateImage: {fileID: 114716199431146400}
