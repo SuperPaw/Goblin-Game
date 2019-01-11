@@ -95,10 +95,10 @@ public class NameGenerator : MonoBehaviour
         //    Debug.Log(GetName() + GetSurName());
         //}
 
-        //for (int i = 0; i < 20; i++)
-        //{
-        //    Debug.Log(GetTreasureName());
-        //}
+        for (int i = 0; i < 20; i++)
+        {
+            Debug.Log("a "+GetTreasureName());
+        }
     }
 
     public static string GetName()
@@ -140,7 +140,6 @@ public class NameGenerator : MonoBehaviour
             //elf-stabber
             return " " + Rnd(surNameEnemies) + "-" + Rnd(surNameAttacks);
         }
-
     }
 
 
