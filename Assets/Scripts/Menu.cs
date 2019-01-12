@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
-    public Text Loading;
+    public TextMeshProUGUI Loading;
     public MapGenerator MapGen;
 
 	// Use this for initialization

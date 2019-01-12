@@ -138,8 +138,6 @@ public class PlayerController : MonoBehaviour
                     }
 
                     Team.Move(target,a);
-
-                    //UpdateFogOfWar();
                 }
                 else
                 {

@@ -236,49 +236,7 @@ public class MapGenerator : MonoBehaviour
                 next.transform.localScale = new Vector3(AreaSize,0.1f,AreaSize);
                 Areas.Add(next);
                 AreaMap[x, z] = next;
-
-                //var walkabletilesInArea= new List<Tile>();
-
-                //for (int i = 0; i < AreaSize; i++)
-                //{
-                //    for (int j = 0; j < AreaSize; i++)
-                //    {
-                //        if (SizeX <= x * AreaSize + i || SizeZ <= z * AreaSize + j)
-                //        {
-
-                //            Debug.Log("not valid tile " + (x * AreaSize + i) + "," + (z * AreaSize + j));
-                //            //continue;
-                //        }
-                //        else
-                //        {
-                //            var tile = map[x * AreaSize + i, z * AreaSize + j];
-                //            tile.Area = next;
-                //            if (tile.Type == TileType.Ground)
-                //                walkabletilesInArea.Add(tile);
-                //            //map[x * AreaSize+i, z * AreaSize+j].Area = next;
-                //        }
-                //    }
-                //}
-
-                //ADDING LOOT
-                if (Random.value < LootableChance)
-                {
-                    //TODO: should only be in area 
-                    Tile tile = GetRandomGroundTile();//;walkabletilesInArea[Random.Range(0, walkabletilesInArea.Count)])];//GetRandomGroundTile(next);
-
-                    tile.Type = TileType.Loot;
-                    movableTiles.Remove(tile);
-
-                    var loot = Instantiate(LootObjects[Random.Range(0, LootObjects.Length)]);//, next.transform);
-
-                    loot.name = "Lootable";
-
-                    loot.transform.parent = next.transform;
-
-                    next.Lootables.Add(loot.GetComponent<Lootable>());
-
-                    loot.transform.position = new Vector3(tile.X, 1, tile.Y);
-                }
+                
             }
         }
 
@@ -291,6 +249,29 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
+
+        //ADDING LOOT
+        for (int i = 0; i < noOfAreasX * noOfAreasZ; i++)
+        {
+            //TODO: should only be in area 
+            Tile tile = GetRandomGroundTile();//;walkabletilesInArea[Random.Range(0, walkabletilesInArea.Count)])];//GetRandomGroundTile(next);
+
+            tile.Type = TileType.Loot;
+            movableTiles.Remove(tile);
+
+            var loot = Instantiate(LootObjects[Random.Range(0, LootObjects.Length)]);//, next.transform);
+
+            loot.name = "Lootable";
+            
+            loot.transform.position = new Vector3(tile.X, 1, tile.Y);
+
+            var parentArea = GetAreaAtPoint(loot.transform.position);
+
+            loot.transform.parent = parentArea.transform;
+
+            parentArea.Lootables.Add(loot.GetComponent<Lootable>());
+
+        }
 
 
         //INSTANTIATING MAP
@@ -307,6 +288,12 @@ public class MapGenerator : MonoBehaviour
 
                 //TODO:check 
                 next.transform.position = new Vector3(tile.X, 1, tile.Y);
+                
+                var parentArea = GetAreaAtPoint(next.transform.position);
+
+                parentArea.Hidables.Add(next.GetComponent<Hidable>());
+
+                next.transform.parent = parentArea.transform;
 
                 int loc = (++progress * 100) / totalProgress;
                 if (loc != progressPct)
@@ -506,6 +493,17 @@ public class MapGenerator : MonoBehaviour
     private Area GetRandomArea()
     {
         return Areas[Random.Range(0, Areas.Count)];
+    }
+
+    private Area GetAreaAtPoint(Vector3 point)
+    {
+        if (point.x / AreaSize >= noOfAreasX || point.z / AreaSize >= noOfAreasZ)
+        {
+            Debug.LogError("not area at point: "+ point);
+            return GetRandomArea();
+        }
+
+        return AreaMap[(int)(point.x / AreaSize), (int)(point.z / AreaSize)];
     }
 
 }

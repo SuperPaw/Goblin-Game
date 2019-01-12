@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,6 +26,12 @@ public class TeamController : MonoBehaviour
             value = leader;
         }
     }
+
+    public TextMeshProUGUI TreasureText;
+    public TextMeshProUGUI FoodText;
+    //TODO: create triggers for when these change, so they can be highlighted for a while
+    public int Treasure = 0;
+    public int Food = 10;
 
     public Goblin Challenger;
     private Coroutine _challengeRoutine;
@@ -62,39 +69,31 @@ public class TeamController : MonoBehaviour
 
     }
 
-    
+    protected void FixedUpdate()
+    {
+        TreasureText.text = "Goblin TreasurES: " + Treasure;
+        FoodText.text = "FOod: " + Food;
+    }
+
+
     #region Orders
 
     public void Move(Vector3 target,Area a = null)
     {
-        if(a && a== Leader.InArea) //if already there
-            return;
+        //if(a && a== Leader.InArea) //if already there
+        //    return;
+        //var leaderPos = Leader.transform.position;
+        //targetPos = target;
         
-
-        var leaderPos = Leader.transform.position;
-
-        targetPos = target;
-
-
-        //TODO: check for distance so no move right next to group
-
         foreach (var gobbo in Members)
         {
             gobbo.ChangeState(Character.CharacterState.Travelling);
 
-            //if (a)
-            //    gobbo.Target = a.GetRandomPosInArea();
-            //else
-                gobbo.Target = target + (gobbo.transform.position - leaderPos).normalized * (Random.Range(0, RandomMoveFactor));
-            
-            //if (a)
-            //    gobbo.InArea = a;
+            gobbo.Target = a ? a.GetRandomPosInArea() : target;
 
+            gobbo.actionInProgress = true;
             Debug.Log(gobbo +" going to " + gobbo.Target);
-
-            //TODO: should use a max distance from leader to include group them together if seperated
-            //TODO: could just use a local instead of gloabl pos for the entire team and move that
-            gobbo.navMeshAgent.SetDestination(gobbo.Target);
+            
         }
     }
     

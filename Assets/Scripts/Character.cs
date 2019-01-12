@@ -19,6 +19,8 @@ public abstract class Character : MonoBehaviour
         Idling, Attacking, Travelling, Fleeing, Hiding, Dead,Watching,Searching
     }
 
+    public Lootable LootTarget { get; private set; }
+
     protected CharacterState State;
     
 
@@ -131,8 +133,8 @@ public abstract class Character : MonoBehaviour
     public int idleDistance;
     public bool Walking;
     public float AttackRange;
-    
-    private bool idleAction;
+
+    public bool actionInProgress;
 
     [HideInInspector]
     //should ignore z for 2d.
@@ -482,14 +484,15 @@ public abstract class Character : MonoBehaviour
         switch (State)
         {
             case CharacterState.Idling:
-                if (idleAction)
+                if (actionInProgress)
                 {
                     if(navMeshAgent.remainingDistance < 0.02f)
-                        idleAction = false;
+                        actionInProgress = false;
                 }
                 else if (Random.value < 0.015f) //selecting idle action
                 {
-                    idleAction = true;
+
+                    actionInProgress = true;
 
                     Vector3 dest;
 
@@ -507,6 +510,7 @@ public abstract class Character : MonoBehaviour
 
                     Walking = Random.value < 0.75f;
                 }
+                //TODO: use a different method for activity selection than else if
                 else if (this as Goblin && Team &! Team.Challenger &&Random.value < 1f && (Team.Leader as Goblin).CurrentLevel < ((Goblin) this).CurrentLevel)
                 {
                     //TODO: make it only appear after a while
@@ -514,6 +518,21 @@ public abstract class Character : MonoBehaviour
                     Debug.Log("Chief Fight!!");
                     Team.ChallengeForLeadership(this as Goblin);
                 }
+                //TODO: define better which characters should search stuff
+                else if (this as Goblin && !InArea.AnyEnemies() && InArea.Lootables.Any(l => !l.Searched))
+                {
+                    var loots = InArea.Lootables.Where(l => !l.Searched).ToArray();
+
+                    var loot = loots[Random.Range(0, loots.Count())];
+
+                    navMeshAgent.SetDestination(loot.transform.position);
+
+                    LootTarget = loot;
+
+                    State = CharacterState.Searching;
+
+                }
+
 
                 break;
             case CharacterState.Attacking:
@@ -529,11 +548,13 @@ public abstract class Character : MonoBehaviour
                 }
                 break;
             case CharacterState.Travelling:
+                navMeshAgent.SetDestination(Target);
                 //check for arrival and stop travelling
                 if (Vector3.Distance(transform.position, Target) < 3f)
                 {
                     Debug.Log(name +" arrived at target");
                     State = CharacterState.Idling;
+                    actionInProgress = false;
                     break;
                 }
                 
@@ -564,6 +585,23 @@ public abstract class Character : MonoBehaviour
                 if (Vector3.Distance(transform.position, Target) < 2f)
                 {
                     navMeshAgent.SetDestination(Target);
+                    break;
+                }
+                break;
+            case CharacterState.Searching:
+                //check for arrival and stop travelling
+                if (Vector3.Distance(transform.position, LootTarget.transform.position) < 2f)
+                {
+                    if (LootTarget.ContainsLoot)
+                    {
+                        Debug.Log(name +" found " + LootTarget.Loot);
+                        Team.Treasure++;
+                    }
+
+                    LootTarget.ContainsLoot = false;
+                    LootTarget.Searched = true;
+
+                    State = CharacterState.Idling;
                     break;
                 }
                 break;

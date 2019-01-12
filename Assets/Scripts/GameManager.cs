@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public enum Icon
     {
-        LevelUp, Chief, Healing, Idling, Fleeing, Travelling, Fighting, Hiding, Dead,
+        LevelUp, Chief, Healing, Idling, Fleeing, Travelling, Fighting, Hiding, Dead,Watching,Searching
     }
     [Serializable]
     public struct IconImg
@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour
     [Header("Game Rules")]
     public int XpOnKill = 10;
     public int XpOnTeamKill = 2;
+    //TODO: implement
+    public int XpOnTreasureFind = 1;
+    public int XpOnAreaMove = 1;
+
 
 
     void Start()
@@ -67,8 +71,12 @@ public class GameManager : MonoBehaviour
                 return GetIconImage(Icon.Hiding);
             case Character.CharacterState.Dead:
                 return GetIconImage(Icon.Dead);
+            case Character.CharacterState.Watching:
+                return GetIconImage(Icon.Watching);
+            case Character.CharacterState.Searching:
+                return GetIconImage(Icon.Searching);
             default:
-                throw new ArgumentOutOfRangeException("state", state, null);
+                return GetIconImage(Icon.Idling);
         }
         
     }

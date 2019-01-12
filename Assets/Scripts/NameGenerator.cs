@@ -57,10 +57,11 @@ public class NameGenerator : MonoBehaviour
     private static string[] animalParts = new[] { "skull", "claw","tooth", "fur",  "bone","horn" };
     private static string[] birdParts = new[] { "skull", "claw","feather", "beak", "bone","wing"};
     private static string[] colors = new[] { "red","blue","black","grey","brown","golden","green","yellow" };
-    private static string[] magicAttributes = new[] { "shiny","glowing","magic","engraved","radiant" };
-    private static string[] fancyStuff = new[] {"ring", "coin", "oil","crystal"};
+    private static string[] magicAttributes = new[] { "shiny","glowing","magic","engraved","radiant","shiny" };
+    private static string[] fancyStuff = new[] {"ring", "coin", "crystal","crown","armband"};
     private static string[] stuff = new[] { "rock", "stone", "stick","branch","leaf" };
     private static string[] containers = new[] { "bottle","bag","chest"};
+    private static string[] burnedStuff = new[] { "book", "piece of paper", "scroll" };
     private static string[] statues = new[] { "statue", "figure", "effigy","puppet" };
 
 
@@ -95,10 +96,10 @@ public class NameGenerator : MonoBehaviour
         //    Debug.Log(GetName() + GetSurName());
         //}
 
-        for (int i = 0; i < 20; i++)
-        {
-            Debug.Log("a "+GetTreasureName());
-        }
+        //for (int i = 0; i < 20; i++)
+        //{
+        //    Debug.Log("a "+GetTreasureName());
+        //}
     }
 
     public static string GetName()
@@ -176,7 +177,7 @@ public class NameGenerator : MonoBehaviour
                 treasure = AddAttribute(treasure, magicAttributes, 0.5f);
                 break;
             case treasureTypes.BURNEDBOOK:
-                treasure = "burned book";
+                treasure = "burned "+ Rnd(burnedStuff);
                 treasure = AddAttribute(treasure, colors, 0.25f);
                 break;
             case treasureTypes.EMPTYCONTAINER:

@@ -81,7 +81,8 @@ public class Goblin : Character
 
         Awareness = ATT.GetStatMax();
 
-        StartCoroutine(AwarenessLoop());
+        //TODO: make better or remove
+        //StartCoroutine(AwarenessLoop());
 
         OnLevelUp.AddListener(NextLevel);
     }
