@@ -22,6 +22,7 @@ public class TeamController : MonoBehaviour
             {
                 leader = value;
                 leader.name = "Chief " + leader.name + NameGenerator.GetSurName();
+                PopUpText.ShowText(leader.name +" is new chief!");
             }
             value = leader;
         }
@@ -222,7 +223,7 @@ public class TeamController : MonoBehaviour
         {
             SelectLeader();
         }
-        Debug.Log("Team member : "+ g.name + " died");
+        PopUpText.ShowText( g.name + " died");
 
         Members.ForEach(m=> m.Moral -= m.MoralLossOnFriendDeath);
     }

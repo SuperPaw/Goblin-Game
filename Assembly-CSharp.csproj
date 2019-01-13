@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\Area.cs" />
     <Compile Include="Assets\Imported\Knight\scripts\rotator.cs" />
+    <Compile Include="Assets\PopUpText.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
     <Compile Include="Assets\Scripts\CharacterView.cs" />
     <Compile Include="Assets\Scripts\DisableOnStart.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Assets\Scripts\WorldToScreenSpace.cs" />
     <Compile Include="Assets\Scripts\WorldToScreenText.cs" />
     <Compile Include="Assets\Scripts\ZoomBehaviour.cs" />
+    <Compile Include="Assets\SizeAnimation.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />

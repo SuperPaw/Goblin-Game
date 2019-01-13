@@ -319,7 +319,8 @@ public abstract class Character : MonoBehaviour
     private IEnumerator StateChangingRoutine(CharacterState newState, float wait)
     {
         yield return new WaitForSeconds(wait);
-        State = newState;
+        if (State != CharacterState.Dead)
+            State = newState;
     }
 
     public bool Travelling()
@@ -594,7 +595,7 @@ public abstract class Character : MonoBehaviour
                 {
                     if (LootTarget.ContainsLoot)
                     {
-                        Debug.Log(name +" found " + LootTarget.Loot);
+                        PopUpText.ShowText(name +" found " + LootTarget.Loot);
                         Team.Treasure++;
                     }
 
@@ -632,6 +633,9 @@ public abstract class Character : MonoBehaviour
 
         //TODO: remove listeners
         OnDamage.RemoveAllListeners();
+
+        if(tag == "Player")
+            PopUpText.ShowText(name + " is dead");
         
         State = CharacterState.Dead;
     }
