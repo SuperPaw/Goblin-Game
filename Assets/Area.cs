@@ -83,4 +83,22 @@ public class Area : MonoBehaviour
     {
         return PresentCharacters.Any(c => c.tag != "Player");
     }
+
+    internal Area GetClosestNeighbour(Vector3 position)
+    {
+        Area closest = null;
+        float distance = Mathf.Infinity;
+        foreach (var go in ConnectsTo)
+        {
+            Vector3 diff = go.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = go;
+                distance = curDistance;
+            }
+        }
+
+        return closest;
+    }
 }

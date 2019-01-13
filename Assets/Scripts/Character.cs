@@ -200,7 +200,11 @@ public abstract class Character : MonoBehaviour
             if (value == _moral) return;
             _moral = value;
             Debug.Log(gameObject.name + " lost " + value + " moral");
-            if (_moral <= 0) State = CharacterState.Fleeing;
+            if (_moral <= 0)
+            {
+                actionInProgress = false;
+                State = CharacterState.Fleeing;
+            }
         }
     }
 
@@ -311,6 +315,8 @@ public abstract class Character : MonoBehaviour
     {
         if(!Alive())
             return;
+
+        actionInProgress = false;
 
         //TODO: check if state is already being changed
         StartCoroutine(StateChangingRoutine(newState, Random.Range(0.2f, 2f)));
@@ -561,15 +567,20 @@ public abstract class Character : MonoBehaviour
                 
                 break;
             case CharacterState.Fleeing:
-                if (AttackTarget && AttackTarget.Alive())
+                if (!InArea.AnyEnemies())
                 {
-                    //TODO: choose a better flee destination and check once there
-                    navMeshAgent.SetDestination(AttackTarget.transform.position * -1);
+                    actionInProgress = false;
+                    ChangeState(CharacterState.Idling);
+                }
+                else if(!actionInProgress)
+                {
+                    Area a = InArea.GetClosestNeighbour(transform.position);
+
+                    navMeshAgent.SetDestination(a.GetRandomPosInArea());
 
                     Walking = false;
+                    actionInProgress = true;
                 }
-                else
-                    State = CharacterState.Idling;
                 break;
             case CharacterState.Dead:
                 break;

@@ -1,21 +1,11 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &100100000
-Prefab:
-  m_ObjectHideFlags: 1
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications: []
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1268618534227698}
-  m_IsPrefabAsset: 1
 --- !u!1 &1268618534227698
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4598158572664144}
@@ -29,9 +19,10 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &4598158572664144
 Transform:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268618534227698}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -42,9 +33,10 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114975237032567612
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268618534227698}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -55,7 +47,7 @@ MonoBehaviour:
   SizeX: 200
   SizeZ: 200
   AreaTilePrefab: {fileID: 114614147775462646, guid: e15f42e3c6199524da160032eae3127f,
-    type: 2}
+    type: 3}
   AreaSize: 25
   Areas: []
   ClustersOfNoWalking: 300
@@ -63,17 +55,17 @@ MonoBehaviour:
   DistanceBetweenClusters: 1
   Cohesion: 1.01
   BorderClusterSize: 5000
-  LootableChance: 1
+  LootableChance: 0.5
   PctOfImmovableAreas: 0.3
   Npcs:
-  - {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9, type: 2}
-  - {fileID: 1969145986120274, guid: f95d1a9483a8c6a4496c281ffd93702c, type: 2}
+  - {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9, type: 3}
+  - {fileID: 1969145986120274, guid: f95d1a9483a8c6a4496c281ffd93702c, type: 3}
   HidableObjects:
-  - {fileID: 1910571166180590, guid: 039038a2da993284dbd739d670e3a939, type: 2}
+  - {fileID: 1910571166180590, guid: 039038a2da993284dbd739d670e3a939, type: 3}
   LootObjects:
-  - {fileID: 1910571166180590, guid: ee5830f18c2be1244bb0fa764c0769a1, type: 2}
+  - {fileID: 1910571166180590, guid: ee5830f18c2be1244bb0fa764c0769a1, type: 3}
   NpcHolder: {fileID: 0}
-  NpcsToGenerate: 2
+  NpcsToGenerate: 10
   GoblinsToGenerate: 3
-  DefaultCharacter: {fileID: 100702, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe, type: 2}
+  DefaultCharacter: {fileID: 100702, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe, type: 3}
   GoblinTeam: {fileID: 0}
