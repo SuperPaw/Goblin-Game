@@ -526,7 +526,7 @@ public abstract class Character : MonoBehaviour
                     Walking = Random.value < 0.75f;
                 }
                 //TODO: use a different method for activity selection than else if
-                else if (this as Goblin && Team &! Team.Challenger &&Random.value < 1f && (Team.Leader as Goblin).CurrentLevel < ((Goblin) this).CurrentLevel)
+                else if ( this as Goblin && Team &! Team.Challenger &&Random.value < 1f && (Team.Leader as Goblin).CurrentLevel < ((Goblin) this).CurrentLevel)
                 {
                     //TODO: make it only appear after a while
                     
@@ -534,7 +534,7 @@ public abstract class Character : MonoBehaviour
                     Team.ChallengeForLeadership(this as Goblin);
                 }
                 //TODO: define better which characters should search stuff
-                else if (this as Goblin && !InArea.AnyEnemies() && InArea.Lootables.Any(l => !l.Searched))
+                else if (Random.value < 0.005f && this as Goblin && !InArea.AnyEnemies() && InArea.Lootables.Any(l => !l.Searched))
                 {
                     var loots = InArea.Lootables.Where(l => !l.Searched).ToArray();
 
