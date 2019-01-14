@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Controls")]
     public int MouseMoveKey = 1;
-    public enum MappableActions { Hide, Attack, Flee, Menu,FixCamOnLeader }
+    public enum MappableActions { Hide, Attack, Flee, Menu,FixCamOnLeader, Move } //TODO: move should contain direction maybe
     [Serializable]
     public struct KeyMapping
     {
@@ -23,6 +23,20 @@ public class PlayerController : MonoBehaviour
         public MappableActions Action;
     }
     public KeyMapping[] KeyMappings;
+    
+    [Serializable]
+    public struct OrderType
+    {
+        public MappableActions Order;
+        //TODO: create goblin speech struct for linking all goblin shouts with sounds
+        public string Speech;
+        public AudioClip GoblinSound;
+    }
+
+    public OrderType[] Orders;
+
+    public OrderType MoveOrder;
+
 
     private bool _mouseHeld;
     private Vector3 _mouseDragPos;
@@ -137,6 +151,8 @@ public class PlayerController : MonoBehaviour
                         return;
                     }
 
+                    Team.LeaderShout(MoveOrder);
+
                     Team.Move(target,a);
                 }
                 else
@@ -179,10 +195,13 @@ public class PlayerController : MonoBehaviour
 
     public void Action(MappableActions action)
     {
+        if (Orders.Any(o => o.Order == action))
+            Team.LeaderShout(Orders.First(o => o.Order == action));
+
         switch (action)
         {
             case MappableActions.Hide:
-                Debug.Log("Hiding");
+                //Shout from leader
                 Team.Hide();
                 break;
             case MappableActions.Attack:

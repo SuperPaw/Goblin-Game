@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -19,7 +20,13 @@ public abstract class Character : MonoBehaviour
         Idling, Attacking, Travelling, Fleeing, Hiding, Dead,Watching,Searching
     }
 
-    public Lootable LootTarget { get; private set; }
+    [Header("Voice")]
+    public AudioSource Voice;
+    [Range(1.2f,1.6f)]
+    public float VoicePitch;
+    public TextMeshProUGUI VoiceText;
+    public float ShoutTime = 2f;
+
 
     protected CharacterState State;
     
@@ -97,6 +104,7 @@ public abstract class Character : MonoBehaviour
     }
 
 
+    [HideInInspector] public Lootable LootTarget;
     [HideInInspector] public TeamController Team;
 
     [Header("Stats")]

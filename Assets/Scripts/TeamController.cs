@@ -207,6 +207,11 @@ public class TeamController : MonoBehaviour
 
     }
 
+    internal void LeaderShout(PlayerController.OrderType shout)
+    {
+        Leader.Shout(shout.Speech,shout.GoblinSound);
+    }
+
     #endregion
 
     //TODO: check if this is actually called

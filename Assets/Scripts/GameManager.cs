@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    
     public enum Icon
     {
         LevelUp, Chief, Healing, Idling, Fleeing, Travelling, Fighting, Hiding, Dead,Watching,Searching
@@ -22,7 +23,7 @@ public class GameManager : MonoBehaviour
         public Goblin.Class ClassType;
         public Sprite Image;
     }
-    [Header("Images")]
+    [Header("References")]
     public IconImg[] IconImages;
     public ClassImg[] ClassImgs;
 

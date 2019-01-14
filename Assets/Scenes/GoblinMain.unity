@@ -389,6 +389,16 @@ MonoBehaviour:
     Action: 0
   - Key: 99
     Action: 4
+  Orders:
+  - Order: 0
+    Speech: Hide in the trees!
+    GoblinSound: {fileID: 0}
+  - Order: 1
+    Speech: Attack!
+    GoblinSound: {fileID: 0}
+  - Order: 2
+    Speech: Run away!!
+    GoblinSound: {fileID: 0}
   ZoomMinBound: 2
   ZoomMaxBound: 18
   MouseZoomSpeed: 1
@@ -525,11 +535,6 @@ PrefabInstance:
       propertyPath: GoblinTeam
       value: 
       objectReference: {fileID: 904032341}
-    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
-        type: 3}
-      propertyPath: LootableChance
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 4598158572664144, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -844,30 +849,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7062973971520777893, guid: 9c662831f0f89a84985dc89b3f3e3c90,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7062973971520777893, guid: 9c662831f0f89a84985dc89b3f3e3c90,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7062973971520777893, guid: 9c662831f0f89a84985dc89b3f3e3c90,
-        type: 3}
-      propertyPath: m_textAlignment
-      value: 514
-      objectReference: {fileID: 0}
-    - target: {fileID: 7062973971520777893, guid: 9c662831f0f89a84985dc89b3f3e3c90,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 150.9
-      objectReference: {fileID: 0}
     - target: {fileID: 8039850125389637911, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
       propertyPath: m_Name
       value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8039850125389637911, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8039850125276326806, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
@@ -913,6 +903,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062973971520777893, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062973971520777893, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062973971520777893, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_textAlignment
+      value: 514
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062973971520777893, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 150.9
       objectReference: {fileID: 0}
     - target: {fileID: 8039850125389637908, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}

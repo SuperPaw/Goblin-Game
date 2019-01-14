@@ -1,8 +1,8 @@
 ﻿using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
-    using UnityEngine.Assertions.Must;
-    using UnityEngine.Events;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Assertions.Must;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Goblin : Character
@@ -158,5 +158,23 @@ public class Goblin : Character
 
         }
 
+    }
+    
+    //TODO: use struct to combine text to sound
+    public void Shout(string speech, AudioClip goblinSound, bool interrupt = false)
+    {
+        //TODO: check that we are not already shouting, maybe control with queue, otherwise just stop previuos shout.
+
+        if(Voice)
+            Voice.PlayOneShot(goblinSound);
+        StartCoroutine(ShoutRoutine(speech));
+    }
+
+    private IEnumerator ShoutRoutine(string text)
+    {
+        VoiceText.text = text;
+        yield return new WaitForSeconds(ShoutTime);
+
+        VoiceText.text = "";
     }
 }
