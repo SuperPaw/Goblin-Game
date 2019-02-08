@@ -54,8 +54,6 @@ MonoBehaviour:
   DistanceBetweenAreas: 60
   AreasToCreate: 45
   Areas: []
-  BorderThickness: 2
-  LootableChance: 1
   PctOfImmovableAreas: 0.3
   MeshBuilder: {fileID: 2604491388562873763}
   Npcs:

@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     public float ZoomMinBound= 2;
     public float ZoomMaxBound = 50;
-    public float ZoomSpeed = 0.1f;
+    public float ZoomSpeed;
     public bool FollowLeader;
 
     public Renderer FogOfWar;
@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (Input.GetTouch(0).tapCount  == 1 &&  Input.GetTouch(0).phase == TouchPhase.Stationary )
+        if (Input.GetTouch(0).phase  ==  TouchPhase.Began )
         {
             HandleClick(new Vector3(Input.GetTouch(0).position.x,0,Input.GetTouch(0).position.y));
         }
@@ -257,17 +257,20 @@ public class PlayerController : MonoBehaviour
 
     private void PanCamera(Vector2 newPanPosition)
     {
+        //To compensate for the 45 degree angle of the cam. TODO: Should have been calculated 
+        newPanPosition.y *= 2f;
+
+        var inWorld = Cam.ScreenToWorldPoint(new Vector3(newPanPosition.x, newPanPosition.y, Cam.nearClipPlane));
+
         //Sound.PlayMapCLick();
-        //_mouseDragPos = Cam.ScreenToWorldPoint(Input.mousePosition);
         if (!_mouseHeld)
         {
-            _mouseDragPos = Cam.ScreenToWorldPoint(newPanPosition);
+            _mouseDragPos =inWorld;
             _mouseHeld = true;
         }
         
-        var moveDelta = (_mouseDragPos - Cam.ScreenToWorldPoint(newPanPosition));
+        var moveDelta = (_mouseDragPos - inWorld);
         moveDelta.y = 0;
-        moveDelta.z *= 1.5f;
 
         //TODO: the z axis does not move correctly due to the rotation of the camera
 
@@ -286,7 +289,19 @@ public class PlayerController : MonoBehaviour
         //// Cache the position
         //lastPanPosition = newPanPosition;
     }
-    
+
+
+    //Vector3 GetPosOnPlane(Vector2 posOnViewport)
+    //{
+    //    Vector3 pt = new Vector3(posOnViewport.x, posOnViewport.y, 0);
+    //    Ray d = Cam.ViewportPointToRay(pt);
+    //    float t = (planePos.z - d.origin.z) / d.direction.z;
+    //    float x = d.direction.x * t + d.origin.x;
+    //    float y = d.direction.y * t + d.origin.y;
+    //    return new Vector3(x, y, planePos.z);
+    //}
+
+
     private void ClickedArea(Area a)
     {
         var target = a.transform.position;//hit.point;

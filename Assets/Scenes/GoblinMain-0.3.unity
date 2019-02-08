@@ -442,6 +442,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Team: {fileID: 0}
   Cam: {fileID: 1578144544}
+  CameraTransform: {fileID: 0}
   Sound: {fileID: 0}
   MouseMoveKey: 1
   HitMask:
@@ -475,7 +476,7 @@ MonoBehaviour:
   OrderCooldown: 3
   ZoomMinBound: 2
   ZoomMaxBound: 35
-  ZoomSpeed: 1
+  ZoomSpeed: 0.1
   FollowLeader: 0
   FogOfWar: {fileID: 151457449}
   MoveTime: 0.5
@@ -667,11 +668,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
-      propertyPath: EquipmentInLootChance
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
-        type: 3}
       propertyPath: AreasToCreate
       value: 25
       objectReference: {fileID: 0}
@@ -800,7 +796,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1578144542}
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalRotation: {x: 0.38268343, y: -0, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 50, z: -6.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1372,12 +1368,12 @@ PrefabInstance:
     - target: {fileID: 8039850125224368968, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8039850125224368968, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8039850125224368968, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
@@ -1881,13 +1877,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7062973971520777893, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
-      propertyPath: m_fontSize
-      value: 79.85
+      propertyPath: m_fontColor32.rgba
+      value: 4286250994
       objectReference: {fileID: 0}
     - target: {fileID: 7062973971520777893, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4286250994
+      propertyPath: m_fontSizeBase
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062973971520777893, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_isTextTruncated
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062973971520777893, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062973971520777893, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062973971520777893, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062973971520777893, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8039850125389637908, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
@@ -2852,12 +2873,12 @@ PrefabInstance:
     - target: {fileID: 8039850126367990220, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8039850126367990220, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8039850126367990220, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
