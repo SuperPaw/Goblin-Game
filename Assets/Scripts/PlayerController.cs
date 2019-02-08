@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     public float ZoomMinBound= 2;
     public float ZoomMaxBound = 50;
-    public float ZoomSpeed = 1;
+    public float ZoomSpeed = 0.1f;
     public bool FollowLeader;
 
     public Renderer FogOfWar;
@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleMouseKeys()
     {
-        Zoom(Input.mouseScrollDelta.y, ZoomSpeed);
+        Zoom(Input.mouseScrollDelta.y);
 
         if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
         {
@@ -166,7 +166,7 @@ public class PlayerController : MonoBehaviour
                     float oldDistance = Vector2.Distance(lastZoomPositions[0], lastZoomPositions[1]);
                     float offset = newDistance - oldDistance;
 
-                    Zoom(offset, ZoomSpeed);
+                    Zoom(offset);
 
                     lastZoomPositions = newPositions;
                 }
@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (Input.GetTouch(0).tapCount > 0)
+        if (Input.GetTouch(0).tapCount  == 1 &&  Input.GetTouch(0).phase == TouchPhase.Stationary )
         {
             HandleClick(new Vector3(Input.GetTouch(0).position.x,0,Input.GetTouch(0).position.y));
         }
@@ -267,6 +267,7 @@ public class PlayerController : MonoBehaviour
         
         var moveDelta = (_mouseDragPos - Cam.ScreenToWorldPoint(newPanPosition));
         moveDelta.y = 0;
+        moveDelta.z *= 1.5f;
 
         //TODO: the z axis does not move correctly due to the rotation of the camera
 
@@ -476,11 +477,11 @@ public class PlayerController : MonoBehaviour
     }
 
     //TODO: move top camera controller
-    public void Zoom(float deltaMagnitudeDiff, float speed)
+    public void Zoom(float deltaMagnitudeDiff)
     {
         if(Math.Abs(deltaMagnitudeDiff) < 0.001) return;
 
-        Cam.orthographicSize += deltaMagnitudeDiff * speed;
+        Cam.orthographicSize -= deltaMagnitudeDiff * ZoomSpeed;
         // set min and max value of Clamp function upon your requirement
         Cam.orthographicSize = Mathf.Clamp(Cam.orthographicSize, ZoomMinBound, ZoomMaxBound);
     }

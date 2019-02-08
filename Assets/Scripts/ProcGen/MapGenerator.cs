@@ -45,8 +45,6 @@ public class MapGenerator : MonoBehaviour
     //public Area[,] AreaMap { get; private set; }
 
         
-    [Range(0f, 1)]
-    public float LootableChance;
     private Tile[,] map;
     private List<Tile> movableTiles;
     private List<Tile> immovableTiles = new List<Tile>();
@@ -94,7 +92,7 @@ public class MapGenerator : MonoBehaviour
         //noOfAreasX = SizeX / totalAreaSize;
         //noOfAreasZ = SizeZ / totalAreaSize;
 
-        var amountOfLoot = 1;//noOfAreasX * noOfAreasZ;
+        var amountOfLoot = AreasToCreate;//noOfAreasX * noOfAreasZ;
 
 
         var totalProgress =  50000 +

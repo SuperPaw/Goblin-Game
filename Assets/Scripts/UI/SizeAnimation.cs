@@ -13,13 +13,13 @@ public class SizeAnimation : MonoBehaviour
     void Start()
     {
         RectTransform = GetComponent<RectTransform>();
-        Startsize = RectTransform.sizeDelta;
+        Startsize = RectTransform.localScale;
     }
 
     // Update is called once per frame
     void Update()
     {
-        RectTransform.sizeDelta = Startsize * Animation.Evaluate(Time.time % SizeAnimationTime);
+        RectTransform.localScale = Startsize * Animation.Evaluate(Time.time % SizeAnimationTime);
 
     }
 }
