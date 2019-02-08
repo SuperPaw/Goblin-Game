@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class Goblin : Character
 {
@@ -12,9 +14,12 @@ public class Goblin : Character
     //meaning how often they notice what other are doing
     //0-10
     public int Awareness;
-    private int goToLeaderDistance = 3;
+    
+    public GoblinWarrens Warrens;
 
     public Image ChiefImage;
+
+
     public Image StateImage;
 
     [Header("Levelling")]
@@ -26,20 +31,22 @@ public class Goblin : Character
 
     public LevelUp OnLevelUp = new LevelUp();
 
+    public AnimationCurve ProvokeScaredCurve;
+
     public static int GetLevel(int xp)
     {
         int level = 0;
 
-        while (LevelCaps[level++] < xp) { }
+        while (LevelCaps[level++] <= xp) { }
 
-        return level;
+        return level-1;
     }
 
     public ParticleSystem particles;
     private ParticleSystem.EmissionModule emission;
 
 
-    public bool WaitingOnLevelUp;
+    public int WaitingOnLevelUp;
     public bool WaitingOnClassSelection;
     private float xp = 0;
 
@@ -63,9 +70,12 @@ public class Goblin : Character
             }
         }
     }
+
+    public Character ProvokeTarget;
+
     public enum Class
     {
-        NoClass, Swarmer, Shooter, Ambusher, Scout, Slave, 
+        Goblin, Slave, Swarmer, Shooter, Ambusher, Scout,
         END
     }
 
@@ -90,30 +100,49 @@ public class Goblin : Character
     public new void FixedUpdate()
     {
         base.FixedUpdate();
-        //TODO: this could be handled with events instead of checking each frame
 
-        if(Team)
+        //TODO: this could be handled with events instead of checking each frame
+        if (Team)
+        {
             ChiefImage.enabled = Team.Leader == this;
 
-        StateImage.sprite = GameManager.GetIconImage(State);
+            StateImage.enabled = true;
+            StateImage.sprite = GameManager.GetIconImage(State);
 
-        emission.enabled = WaitingOnLevelUp || WaitingOnClassSelection;
+        }
+        else
+        {
+            ChiefImage.enabled = false;
+            StateImage.enabled = false;
+        }
+
+        if(!Alive())
+            this.enabled = false;
+
+        emission.enabled = WaitingOnLevelUp > 0|| WaitingOnClassSelection;
     }
 
+    internal void Rest()
+    {
+        Morale = COU.GetStatMax();
+        Health = HEA.GetStatMax();
+    }
 
     private void NextLevel()
     {
-        //Set some level icon active
-        
         //a sound
+        SoundController.PlayLevelup();
 
+        PopUpText.ShowText(name + " has gained a new level!");
+        
         //TODO: health should be handled differently than other stuff
         HEA.LevelUp();
 
         if (CurrentLevel == 2)
             WaitingOnClassSelection = true;
         
-        WaitingOnLevelUp = true;
+        
+        WaitingOnLevelUp++;
     }
 
     public void SelectClass(Class c)
@@ -121,7 +150,35 @@ public class Goblin : Character
         ClassType = c;
         WaitingOnClassSelection = false;
 
-        //TODO: add class modifiers
+        //Adding stat modifiers
+        switch (c)
+        {
+            case Class.Goblin:
+                break;
+            case Class.Slave:
+                COU.Modifiers.Add(new Stat.StatMod("Slave", 1));
+                break;
+            case Class.Swarmer:
+                MoralLossModifier = 0.5f;
+                DMG.Modifiers.Add(new Stat.StatMod("Swarmer",2));
+                SMA.Modifiers.Add(new Stat.StatMod("Swarmer", -1));
+                break;
+            case Class.Shooter:
+                AttackRange *= 5;
+                AIM.Modifiers.Add(new Stat.StatMod("Shooter", 2));
+                break;
+            case Class.Ambusher:
+                AmbushModifier = 2f;
+                SPE.Modifiers.Add(new Stat.StatMod("Ambusher", 2));
+                break;
+            case Class.Scout:
+                ATT.Modifiers.Add(new Stat.StatMod("Scout", 2));
+                break;
+            case Class.END:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException("c", c, null);
+        }
     }
 
     private IEnumerator AwarenessLoop()
@@ -139,42 +196,38 @@ public class Goblin : Character
     {
         if (!Team || !Alive())
             return;
-        
         //these could also all be more random dependant on Awareness
 
         //Debug.Log("checking leader distance ");
 
         // -------------- CHECK FOR LEADER DISTANCE AND MOVE TO HIM -----------------
-        //TODO: make a readyForOrder() method, instead of checking on each state every time
-        if (Team.Leader != this & !Attacking() & !Fleeing() &! Travelling() &&
-            (transform.position - Team.Leader.transform.position).magnitude > goToLeaderDistance)
-        {
-            //Debug.Log(name + " going to leader");
-            //TODO: make it disappear from at a certain range. Lost goblin...
-            var newDes = Team.Leader.transform.position + new Vector3(Random.Range(-0.1f,0.1f), 0, Random.Range(-0.1f,0.1f));
-
-
-            navMeshAgent.SetDestination(Team.Leader.transform.position);
-
-        }
-
     }
     
     //TODO: use struct to combine text to sound
-    public void Shout(string speech, AudioClip goblinSound, bool interrupt = false)
+    public void Shout(string speech, SoundBank.GoblinSound goblinSound)//, bool interrupt = false)
     {
-        //TODO: check that we are not already shouting, maybe control with queue, otherwise just stop previuos shout.
+        if (Fleeing())
+            return;
 
-        if(Voice)
-            Voice.PlayOneShot(goblinSound);
+
+        //TODO: check that we are not already shouting, maybe control with queue, otherwise just stop previuos shout.
+        Speak(goblinSound,true);
+
         StartCoroutine(ShoutRoutine(speech));
     }
 
     private IEnumerator ShoutRoutine(string text)
     {
+        navMeshAgent.isStopped = true;
+
         VoiceText.text = text;
         yield return new WaitForSeconds(ShoutTime);
 
+        if(navMeshAgent.isOnNavMesh)
+            navMeshAgent.isStopped = false;
+
         VoiceText.text = "";
     }
+
+
 }

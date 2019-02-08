@@ -4,18 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
-    public TeamController Team;
+    public PlayerTeam Team;
     public Camera Cam;
+    public SoundController Sound;
 
     [Header("Controls")]
     public int MouseMoveKey = 1;
-    public enum MappableActions { Hide, Attack, Flee, Menu,FixCamOnLeader, Move } //TODO: move should contain direction maybe
+    public enum MappableActions { Hide, Attack, Flee, Menu,FixCamOnLeader, Move, Camp,InvincibleMode, AddXp } //TODO: move should contain direction maybe
+    public LayerMask HitMask;
+
     [Serializable]
     public struct KeyMapping
     {
@@ -23,45 +27,58 @@ public class PlayerController : MonoBehaviour
         public MappableActions Action;
     }
     public KeyMapping[] KeyMappings;
-    
+
+
     [Serializable]
     public struct OrderType
     {
         public MappableActions Order;
         //TODO: create goblin speech struct for linking all goblin shouts with sounds
         public string Speech;
-        public AudioClip GoblinSound;
+        public SoundBank.GoblinSound GoblinSound;
     }
 
     public OrderType[] Orders;
 
     public OrderType MoveOrder;
 
+    public float OrderCooldown = 3f;
 
     private bool _mouseHeld;
     private Vector3 _mouseDragPos;
 
     public float ZoomMinBound= 2;
     public float ZoomMaxBound = 50;
-    public float MouseZoomSpeed = 1;
+    public float ZoomSpeed = 1;
     public bool FollowLeader;
+
+    public Renderer FogOfWar;
 
     [Header("Follow Animation")] public float MoveTime = 1;
     public AnimationCurve MoveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    private Vector2[] lastZoomPositions;
+    private bool wasZoomingLastFrame;
+    private Vector2 lastPanPosition;
+    private int panFingerId;
 
+    public float PanSpeed;
 
-
-    public void Initialize()
+    void Start()
     {
         if (!Instance)
             Instance = this;
+    }
 
-        Team = GetComponent<TeamController>();
+    public void Initialize()
+    {
+        Team = GetComponent<PlayerTeam>();
 
         if(!Team) Debug.LogWarning("Unable to find team for player controls!");
 
         if (!Cam) Cam = Camera.main;
-        
+
+        if (!Sound) Sound = FindObjectOfType<SoundController>();
+
         //UpdateFogOfWar();
         MoveToLeader();
     }
@@ -78,118 +95,254 @@ public class PlayerController : MonoBehaviour
     {
         //TODO: divide these into methods
         if (Input.touchSupported)
-        { }
-
-        
-        Zoom(Input.mouseScrollDelta.y, MouseZoomSpeed);
-        
-        if (Input.GetMouseButtonDown(0))
         {
-            _mouseHeld = true;
-            _mouseDragPos = Cam.ScreenToWorldPoint(Input.mousePosition);
-            FollowLeader = false;
+            HandleTouch();
+        }
+        else
+        {
+            HandleMouseKeys();
+        }
+    }
+
+    void HandleMouseKeys()
+    {
+        Zoom(Input.mouseScrollDelta.y, ZoomSpeed);
+
+        if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            PanCamera(Input.mousePosition);
         }
         if (Input.GetMouseButtonUp(0)) _mouseHeld = false;
+        
 
-        if (_mouseHeld)
+        if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
         {
-            var moveDelta = (_mouseDragPos - Cam.ScreenToWorldPoint(Input.mousePosition));
-            moveDelta.y = 0;
-
-            //TODO: the z axis does not move correctly due to the rotation of the camera
-
-            Cam.transform.position += moveDelta;
-
+            HandleClick(Input.mousePosition);
         }
-
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            //TODO Move this to a routine and insert a pause here and a shout from the Chief
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-
-                if (hit.collider && hit.collider.GetComponent<Character>()) //TODO:check visibility else just move there
-                {
-
-
-                        var c = hit.collider.GetComponent<Character>();
-                    if (c)
-                    {
-                        Debug.Log("Clicked charaacter " + c.name);
-
-                        if (c.tag != "Player")
-                        {
-                            if(c.InArea == Team.Leader.InArea)
-                                Team.Attack(c);
-                            else
-                            {
-                                Debug.LogWarning("Trying to attack character in another area");
-                            }
-                        }
-                        else 
-                        {
-                            CharacterView.ShowCharacter(c as Goblin);
-                        }
-                    }
-                }
-                else if (hit.collider && hit.collider.GetComponent<Area>())
-                {
-                    var a = hit.collider.GetComponent<Area>();
-                    //Debug.Log("Clicked Area : " + (a.name));
-
-                    var target = a.transform.position;//hit.point;
-                    target.y = 0;
-
-                    if (!Team.Leader.InArea.ConnectsTo.Contains(a))
-                    {
-                        Debug.LogWarning("Not possible to move to "+ a + " from "+ Team.Leader.InArea);
-                        return;
-                    }
-
-                    Team.LeaderShout(MoveOrder);
-
-                    Team.Move(target,a);
-                }
-                else
-                {
-                    Debug.LogWarning("Not a valid hit: "+hit.point);
-                }
-
-            }
-        }
-
 
         foreach (var mapping in KeyMappings)
         {
-            if (Input.GetKeyDown(mapping.Key) )
+            if (Input.GetKeyDown(mapping.Key))
             {
                 Action(mapping.Action);
             }
         }
     }
 
+    //ref: https://kylewbanks.com/blog/unity3d-panning-and-pinch-to-zoom-camera-with-touch-and-mouse-input
+    void HandleTouch()
+    {
+        switch (Input.touchCount)
+        {
+            case 1: // Panning
+                wasZoomingLastFrame = false;
+                // If the touch began, capture its position and its finger ID.
+                // Otherwise, if the finger ID of the touch doesn't match, skip it.
+                Touch touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Began)
+                {
+                    lastPanPosition = touch.position;
+                    panFingerId = touch.fingerId;
+                    _mouseHeld = false;
+                }
+                else if (touch.fingerId == panFingerId && touch.phase == TouchPhase.Moved)
+                {
+                    PanCamera(touch.position);
+                }
+                break;
+
+            case 2: // Zooming
+                Vector2[] newPositions = new Vector2[] { Input.GetTouch(0).position, Input.GetTouch(1).position };
+                if (!wasZoomingLastFrame)
+                {
+                    lastZoomPositions = newPositions;
+                    wasZoomingLastFrame = true;
+                }
+                else
+                {
+                    // Zoom based on the distance between the new positions compared to the 
+                    // distance between the previous positions.
+                    float newDistance = Vector2.Distance(newPositions[0], newPositions[1]);
+                    float oldDistance = Vector2.Distance(lastZoomPositions[0], lastZoomPositions[1]);
+                    float offset = newDistance - oldDistance;
+
+                    Zoom(offset, ZoomSpeed);
+
+                    lastZoomPositions = newPositions;
+                }
+                break;
+
+            default:
+                wasZoomingLastFrame = false;
+                break;
+        }
+
+
+        if (Input.GetTouch(0).tapCount > 0)
+        {
+            HandleClick(new Vector3(Input.GetTouch(0).position.x,0,Input.GetTouch(0).position.y));
+        }
+    }
+
+    private void HandleClick(Vector3 position)
+    {
+        Sound.PlayMapCLick();
+
+        //TODO Move this to a routine and insert a pause here and a shout from the Chief
+
+        Ray ray = Camera.main.ScreenPointToRay(position);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 1000, HitMask))
+        {
+
+            if (hit.collider && hit.collider.GetComponent<Character>()) //TODO:check visibility else just move there
+            {
+
+                var c = hit.collider.GetComponent<Character>();
+                if (c)
+                {
+                    //Debug.Log("Clicked charaacter " + c.name);
+
+                    if (c.tag == "Enemy" && c.Alive())
+                    {
+                        if (c.InArea.Visible())
+                            Team.Attack(c);
+                        else
+                        {
+                            ClickedArea(c.InArea);
+                        }
+                    }
+                    else if (c as Goblin)
+                    {
+                        CharacterView.ShowCharacter(c as Goblin);
+                    }
+                    else
+                        ClickedArea(c.InArea);
+                }
+            }
+            //TODO use parent class for these
+            else if (hit.collider && hit.collider.GetComponent<GoblinWarrens>())
+            {
+                var v = hit.collider.GetComponent<GoblinWarrens>();
+
+                if (v.InArea.Visible())
+                    VillageView.OpenVillageView(v, Team);
+                else
+                    ClickedArea(v.InArea);
+            }
+            else if (hit.collider && hit.collider.GetComponent<Monument>())
+            {
+                var monument = hit.collider.GetComponent<Monument>();
+
+                if (monument.InArea.Visible())
+                    BigStoneView.OpenStoneView(monument, Team);
+                else
+                    ClickedArea(monument.InArea);
+            }
+            else if (hit.collider && hit.collider.GetComponent<Area>())
+            {
+                var a = hit.collider.GetComponent<Area>();
+                //Debug.Log("Clicked Area : " + (a.name));
+
+                ClickedArea(a);
+            }
+            else
+            {
+                Debug.LogWarning("Not a valid hit: " + hit.point);
+            }
+
+        }
+    }
+
+    private void PanCamera(Vector2 newPanPosition)
+    {
+        //Sound.PlayMapCLick();
+        //_mouseDragPos = Cam.ScreenToWorldPoint(Input.mousePosition);
+        if (!_mouseHeld)
+        {
+            _mouseDragPos = Cam.ScreenToWorldPoint(newPanPosition);
+            _mouseHeld = true;
+        }
+        
+        var moveDelta = (_mouseDragPos - Cam.ScreenToWorldPoint(newPanPosition));
+        moveDelta.y = 0;
+
+        //TODO: the z axis does not move correctly due to the rotation of the camera
+
+        Cam.transform.position += moveDelta;
+
+        FollowLeader = false;
+        //Debug.Log("Draggingggg");
+
+        //// Determine how much to move the camera
+        //Vector3 offset = Cam.ScreenToViewportPoint(lastPanPosition - newPanPosition);
+        //Vector3 move = new Vector3(offset.x * PanSpeed, 0, offset.y * PanSpeed);
+
+        //// Perform the movement
+        //Cam.transform.Translate(move, Space.World);
+        
+        //// Cache the position
+        //lastPanPosition = newPanPosition;
+    }
+    
+    private void ClickedArea(Area a)
+    {
+        var target = a.transform.position;//hit.point;
+        target.y = 0;
+
+        if (!Team.Leader.InArea.Neighbours.Contains(a))
+        {
+            Debug.LogWarning("Not possible to move to " + a + " from " + Team.Leader.InArea);
+            return;
+        }
+
+        Team.LeaderShout(MoveOrder);
+
+        Team.Move(a);
+    }
+
     public static void UpdateFog()
     {
-        Instance.UpdateFogOfWar();
+        if(Instance && Instance.Team)
+            Instance.UpdateFogOfWar();
     }
 
     private void UpdateFogOfWar()
     {
         if (!Team.Leader.InArea)
         {
-            Debug.LogWarning("Chief not present in any area");
+            //Debug.LogWarning("Chief not present in any area");
             return;
         }
 
-        Team.Leader.InArea.RemoveFogOfWar(true);
+        var id = 1;
 
-        foreach (var connecting in Team.Leader.InArea.ConnectsTo){     
-            connecting.RemoveFogOfWar(false);
+        RemoveFogAtPos(Team.Leader.InArea.transform.position, id++);
+        Team.Leader.InArea.RemoveFogOfWar(true);
+        foreach (var n in Team.Leader.InArea.Neighbours)
+        {
+            RemoveFogAtPos(n.transform.position, id++);
+            n.RemoveFogOfWar(false);
+        }
+        
+    }
+
+    private void RemoveFogAtPos(Vector3 pos, int id)
+    {
+        if (id < 1 || id > 5)
+        {
+            Debug.Log("Unknown shader id: " + id);
+            return;
+        }
+
+        Vector3 screenPos = Cam.WorldToScreenPoint(pos);
+        Ray rayToPlayerPos = Cam.ScreenPointToRay(screenPos);
+        int layermask = (int)(1 << 8);
+        RaycastHit hit;
+        if (Physics.Raycast(rayToPlayerPos, out hit, 1000, layermask))
+        {
+            FogOfWar.material.SetVector("_Player" + id.ToString() + "_Pos", hit.point);
         }
     }
 
@@ -215,6 +368,15 @@ public class PlayerController : MonoBehaviour
             case MappableActions.FixCamOnLeader:
                 FollowLeader = true;
                 break;
+            case MappableActions.Camp:
+                Team.Camp();
+                break;
+            case MappableActions.InvincibleMode:
+                GameManager.Instance.InvincibleMode = !GameManager.Instance.InvincibleMode;
+                break;
+            case MappableActions.AddXp:
+                CharacterView.AddXp();
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -224,6 +386,93 @@ public class PlayerController : MonoBehaviour
     public void Action(string action)
     {
         Action((MappableActions)Enum.Parse(typeof(MappableActions),action,true) );
+    }
+
+    //TODO: seperate team stuff and interface into two classes
+    internal static void BuyFood(int amount, int price)
+    {
+        Instance.Team.Food += amount;
+        Instance.Team.Treasure -= price;
+
+        //TODO: play caching
+    }
+
+    internal static void SacTreasure(int amount)
+    {
+        Instance.Team.Treasure -= amount;
+
+        //TODO: effect
+    }
+
+    internal static void SacFood(int v)
+    {
+        Instance.Team.Food -= v;
+
+        //TODO: effect
+    }
+
+    internal static void StealTreasure(Monument stone)
+    {
+        Instance.Team.Treasure += stone.Treasure;
+        stone.Treasure = 0;
+
+        SoundController.PlayStinger(SoundBank.Stinger.Sneaking);
+
+        if (Random.value < 0.6f) stone.SpawnDead(Instance.Team);
+    }
+
+
+    internal static void SellFood(int amount, int price)
+    {
+        Instance.Team.Food -= amount;
+        Instance.Team.Treasure += price;
+
+        //TODO: play caching
+    }
+
+    internal static void SellGoblin(Goblin goblin, int price, GoblinWarrens newVillage)
+    {
+        Instance.Team.Members.Remove(goblin);
+        Instance.Team.Treasure += price;
+
+        goblin.Team = null;
+
+        goblin.transform.parent = newVillage.transform;
+
+        goblin.tag = "NPC";
+
+        newVillage.Members.Add(goblin);
+    }
+    internal static void SacGoblin(Goblin goblin, Monument sacrificeStone)
+    {
+        Instance.Team.Members.Remove(goblin);
+        
+        SoundController.PlayStinger(SoundBank.Stinger.Sacrifice);
+
+        goblin.Speak(SoundBank.GoblinSound.Death);
+
+        goblin.Team = null;
+
+        goblin.transform.parent = sacrificeStone.transform;
+
+        goblin.tag = "Enemy";
+
+        //goblin.CharacterRace = Character.Race.Undead;
+
+        goblin.Health = 0;
+        
+    }
+
+    internal static void BuyGoblin(Goblin goblin, int price, GoblinWarrens oldVillage)
+    {
+        Instance.Team.Treasure -= price;
+
+        //TODO: use method for these
+        Instance.Team.Members.Add(goblin);
+        goblin.transform.parent = Instance.Team.transform;
+        goblin.tag = "Player";
+
+        oldVillage.Members.Remove(goblin);
     }
 
     //TODO: move top camera controller

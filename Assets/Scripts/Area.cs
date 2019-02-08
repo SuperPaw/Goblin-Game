@@ -1,5 +1,4 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,13 +6,15 @@ using UnityEngine.AI;
 
 public class Area : MonoBehaviour
 {
-    public int X;
-    public int Z;
+    //public int X;
+    //public int Z;
     public List<Character> PresentCharacters;
     public List<Lootable> Lootables;
     public List<Hidable> Hidables;
-    public List<Area> ConnectsTo;
+    public List<MapGenerator.Tile> MovablePositions = new List<MapGenerator.Tile>();
+    public HashSet<Area> Neighbours = new HashSet<Area>();
     public BoxCollider Collider;
+    public PointOfInterest PointOfInterest;
 
     public SpriteRenderer FogOfWarSprite;
     public Color LightFogColor, UnseenFogColor;
@@ -22,20 +23,10 @@ public class Area : MonoBehaviour
 
     internal Vector3 GetRandomPosInArea()
     {
-        Vector3 v = transform.position + Random.insideUnitSphere * (Size/2);
+        var pos = MovablePositions[Random.Range(0, MovablePositions.Count)];
         
-        v.y = 0;
-        
-        NavMeshHit myNavHit;
-        if (NavMesh.SamplePosition(v, out myNavHit, 3, -1))
-        {
-            v = myNavHit.position;
-        }
-        else
-            Debug.Log("Not able to go to position: " + v);
 
-
-        return v;
+        return new Vector3(pos.X,0,pos.Y);
     }
 
 
@@ -59,6 +50,8 @@ public class Area : MonoBehaviour
         c.InArea = this;
         PresentCharacters.Add(c);
 
+        c.IrritationMeter = 0;
+
         //TODO: check if leader
         PlayerController.UpdateFog();
 
@@ -79,16 +72,19 @@ public class Area : MonoBehaviour
         PresentCharacters.Remove(c);
     }
 
-    public bool AnyEnemies()
+    public bool AnyEnemies(bool onlyConsiderWandering = false)
     {
-        return PresentCharacters.Any(c => c.tag != "Player");
+        if(onlyConsiderWandering)
+            return PresentCharacters.Any(c => c.tag == "Enemy" && c.Alive() && c.Wandering);
+
+        return PresentCharacters.Any(c => c.tag == "Enemy" && c.Alive());
     }
 
     internal Area GetClosestNeighbour(Vector3 position)
     {
         Area closest = null;
         float distance = Mathf.Infinity;
-        foreach (var go in ConnectsTo)
+        foreach (var go in Neighbours)
         {
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
@@ -100,5 +96,19 @@ public class Area : MonoBehaviour
         }
 
         return closest;
+    }
+
+    internal bool Visible()
+    {
+        return !FogOfWarSprite.gameObject.activeInHierarchy;
+    }
+
+    public bool PointIsInArea(Vector3 point)
+    {
+        var pos = transform.position;
+        var adj = Size / 2f;
+        
+        return point.x > pos.x - adj && point.x < pos.x + adj
+            && point.z > pos.z - adj && point.z < pos.z + adj;
     }
 }

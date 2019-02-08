@@ -7,6 +7,9 @@ public class Lootable : MonoBehaviour
     public bool ContainsLoot = true;
     public string Loot;
     public bool Searched;
+    public bool ContainsFood;
+    public string Food;
+    public List<Equipment> EquipmentLoot = new List<Equipment>();
 
     public void Start()
     {
