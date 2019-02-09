@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
     private int panFingerId;
 
     public float PanSpeed;
+    private float touchTime;
 
     void Start()
     {
@@ -141,6 +142,8 @@ public class PlayerController : MonoBehaviour
                 Touch touch = Input.GetTouch(0);
                 if (touch.phase == TouchPhase.Began)
                 {
+                    touchTime = Time.time;
+
                     lastPanPosition = touch.position;
                     panFingerId = touch.fingerId;
                     _mouseHeld = false;
@@ -148,6 +151,10 @@ public class PlayerController : MonoBehaviour
                 else if (touch.fingerId == panFingerId && touch.phase == TouchPhase.Moved)
                 {
                     PanCamera(touch.position);
+                }
+                else if (Input.GetTouch(0).phase == TouchPhase.Ended && touchTime +0.8f > Time.time &! IsPointerOverUIObject())
+                {
+                    HandleClick(Input.GetTouch(0).position);
                 }
                 break;
 
@@ -177,11 +184,15 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
+    }
 
-        if (Input.GetTouch(0).phase  ==  TouchPhase.Began )
-        {
-            HandleClick(new Vector3(Input.GetTouch(0).position.x,0,Input.GetTouch(0).position.y));
-        }
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 
     private void HandleClick(Vector3 position)
