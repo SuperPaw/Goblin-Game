@@ -151,8 +151,9 @@ public class PlayerController : MonoBehaviour
                 else if (touch.fingerId == panFingerId && touch.phase == TouchPhase.Moved)
                 {
                     PanCamera(touch.position);
+                    touchTime -= 1;
                 }
-                else if (Input.GetTouch(0).phase == TouchPhase.Ended && touchTime +0.8f > Time.time &! IsPointerOverUIObject())
+                else if (Input.GetTouch(0).phase == TouchPhase.Ended && touchTime +0.3f > Time.time &! IsPointerOverUIObject())
                 {
                     HandleClick(Input.GetTouch(0).position);
                 }
