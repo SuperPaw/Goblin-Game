@@ -446,7 +446,8 @@ public class PlayerController : MonoBehaviour
 
         SoundController.PlayStinger(SoundBank.Stinger.Sneaking);
 
-        if (Random.value < 0.6f) stone.SpawnDead(Instance.Team);
+        //if (Random.value < 0.6f)
+            stone.SpawnDead(Instance.Team);
     }
 
 
