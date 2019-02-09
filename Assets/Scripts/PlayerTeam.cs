@@ -142,7 +142,7 @@ public class PlayerTeam : MonoBehaviour
 
     public void Camp()
     {
-        if (Food < 2*Members.Count || Leader.InArea.AnyEnemies() || Leader.InArea.PointOfInterest)
+        if (Food < 2*Members.Count || Leader.InArea.AnyEnemies() || Leader.InArea.PointOfInterest ||Leader.Fleeing())
             return; //TODO: add message for this. Maybe just change camping icon
 
         //Create camping Gameobject gameobject 
