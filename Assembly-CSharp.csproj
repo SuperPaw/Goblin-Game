@@ -60,7 +60,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\FollowMainCamZoom.cs" />
     <Compile Include="Assets\Imported\Knight\scripts\rotator.cs" />
     <Compile Include="Assets\Imported\LowPoly Fantasy Monsters Pack Ver1.0_Demo\Environment\Scripts\Move.cs" />
     <Compile Include="Assets\Imported\LowPoly Fantasy Monsters Pack Ver1.0_Demo\Environment\Scripts\PointLight.cs" />
@@ -115,8 +114,11 @@
     <Compile Include="Assets\Scripts\DisableOnStart.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\Equipment.cs" />
+    <Compile Include="Assets\Scripts\FollowMainCamZoom.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Goblin.cs" />
+    <Compile Include="Assets\Scripts\GoblinListEntry.cs" />
+    <Compile Include="Assets\Scripts\GoblinUIList.cs" />
     <Compile Include="Assets\Scripts\GoblinWarrens.cs" />
     <Compile Include="Assets\Scripts\HealtBar.cs" />
     <Compile Include="Assets\Scripts\Hidable.cs" />

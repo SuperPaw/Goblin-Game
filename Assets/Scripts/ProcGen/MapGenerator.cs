@@ -451,6 +451,8 @@ public class MapGenerator : MonoBehaviour
 
         GameManager.Instance.GameStarted = true;
 
+        GoblinUIList.UpdateGoblinList();
+
         endCallback();
 
     }

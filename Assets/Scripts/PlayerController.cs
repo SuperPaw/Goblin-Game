@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     public float ZoomMinBound= 2;
     public float ZoomMaxBound = 50;
     public float ZoomSpeed;
-    public bool FollowLeader;
+    public static Goblin FollowGoblin;
 
     public Renderer FogOfWar;
 
@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 lastPanPosition;
     private int panFingerId;
 
+    public float FollowZoomSize = 8;
     public float PanSpeed;
     private float touchTime;
 
@@ -81,14 +82,14 @@ public class PlayerController : MonoBehaviour
         if (!Sound) Sound = FindObjectOfType<SoundController>();
 
         //UpdateFogOfWar();
-        MoveToLeader();
+        MoveToGoblin(Team.Leader);
     }
 
     void FixedUpdate()
     {
         //maybe at larger interval
-        if(FollowLeader)
-            MoveToLeader();
+        if(FollowGoblin)
+            MoveToGoblin(FollowGoblin);
     }
 
 
@@ -288,7 +289,7 @@ public class PlayerController : MonoBehaviour
 
         Cam.transform.position += moveDelta;
 
-        FollowLeader = false;
+        FollowGoblin = null;
         //Debug.Log("Draggingggg");
 
         //// Determine how much to move the camera
@@ -394,7 +395,7 @@ public class PlayerController : MonoBehaviour
             case MappableActions.Menu:
                 break;
             case MappableActions.FixCamOnLeader:
-                FollowLeader = true;
+                FollowGoblin = Team.Leader;
                 break;
             case MappableActions.Camp:
                 Team.Camp();
@@ -464,6 +465,8 @@ public class PlayerController : MonoBehaviour
         Instance.Team.Members.Remove(goblin);
         Instance.Team.Treasure += price;
 
+        GoblinUIList.UpdateGoblinList();
+
         goblin.Team = null;
 
         goblin.transform.parent = newVillage.transform;
@@ -495,11 +498,13 @@ public class PlayerController : MonoBehaviour
     internal static void BuyGoblin(Goblin goblin, int price, GoblinWarrens oldVillage)
     {
         Instance.Team.Treasure -= price;
-
+        
         //TODO: use method for these
         Instance.Team.Members.Add(goblin);
         goblin.transform.parent = Instance.Team.transform;
         goblin.tag = "Player";
+
+        GoblinUIList.UpdateGoblinList();
 
         oldVillage.Members.Remove(goblin);
     }
@@ -515,9 +520,9 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void MoveToLeader()
+    private void MoveToGoblin(Goblin g)
     {
-        StartCoroutine(MoveCamera(Team.Leader.transform.position));
+        StartCoroutine(MoveCamera(g.transform.position));
     }
 
     private IEnumerator MoveCamera(Vector3 loc)
@@ -526,11 +531,15 @@ public class PlayerController : MonoBehaviour
         var offset = 50;
 
         var start = Cam.transform.position;
+        var startSize = Cam.orthographicSize;
+        var endSize = FollowZoomSize;
         var end = new Vector3(loc.x, start.y,loc.z-offset);
         for (var t = 0f; t < MoveTime; t += Time.deltaTime)
         {
             yield return null;
             Cam.transform.position = Vector3.LerpUnclamped(start, end, MoveCurve.Evaluate(t / MoveTime));
+
+            Cam.orthographicSize = Mathf.LerpUnclamped(startSize, endSize, MoveCurve.Evaluate(t / MoveTime));
         }
 
         Cam.transform.position = end;

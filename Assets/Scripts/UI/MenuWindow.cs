@@ -45,5 +45,7 @@ public abstract class MenuWindow : MonoBehaviour
         {
             //GameManager.UnPause();
         }
+
+        PlayerController.FollowGoblin = null;
     }
 }

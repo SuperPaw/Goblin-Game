@@ -52,7 +52,7 @@ public class EquipmentGen : MonoBehaviour
         }
 
 
-        public string GetType()
+        public string GetClothes()
         {
             return Type[Random.Range(0, Type.Length)];
         }
@@ -101,15 +101,15 @@ public class EquipmentGen : MonoBehaviour
 
         //TODO: check that all types are covered
 
-        for (int i = 0; i < 10; i++)
-        {
-            var e = GetRandomEquipment();
-            Debug.Log(e.name + " ; " + e.EquipLocation);
-            foreach (var fx in e.Effects)
-            {
-                Debug.Log(fx.Stat + " : " + fx.Modifier.Name + " : " + fx.Modifier.Modifier);
-            }
-        }
+        //for (int i = 0; i < 10; i++)
+        //{
+        //    var e = GetRandomEquipment();
+        //    Debug.Log(e.name + " ; " + e.EquipLocation);
+        //    foreach (var fx in e.Effects)
+        //    {
+        //        Debug.Log(fx.Stat + " : " + fx.Modifier.Name + " : " + fx.Modifier.Modifier);
+        //    }
+        //}
     }
 
     public static Equipment GetRandomEquipment(Character.Race originRace = Character.Race.NoRace)
@@ -154,7 +154,7 @@ public class EquipmentGen : MonoBehaviour
         if (Random.value < 0.5f)
         {
             equip.name = ((originRace == Character.Race.NoRace) ? "" : originRace + " ") + Instance.LocationDescriptions
-                             .First(loc => loc.Location == equip.EquipLocation).GetType();
+                             .First(loc => loc.Location == equip.EquipLocation).GetClothes();
 
             equip.name = Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, false) + " " +
                          equip.name;
@@ -169,7 +169,7 @@ public class EquipmentGen : MonoBehaviour
         }
         else
         {
-            equip.name = ((originRace == Character.Race.NoRace) ? "" : originRace + " ") + Instance.LocationDescriptions.First(loc => loc.Location == equip.EquipLocation).GetType();
+            equip.name = ((originRace == Character.Race.NoRace) ? "" : originRace + " ") + Instance.LocationDescriptions.First(loc => loc.Location == equip.EquipLocation).GetClothes();
 
             equip.name = Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, true) + " " + equip.name;
 

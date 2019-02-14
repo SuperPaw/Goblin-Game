@@ -266,8 +266,9 @@ public class PlayerTeam : MonoBehaviour
         PlayerChoice.SetupPlayerChoice(new PlayerChoice.ChoiceOption[] {o1, o2, o3},
             Challenger.name + " challenge " + Leader.name + " to be new chief!");//.\n\nDo you want to choose a chief or let them fight for it?");
 
-        yield return new WaitUntil(()=>!Challenger.Alive() ||!Leader.Alive());
+        yield return new WaitUntil(()=>!Challenger || !Challenger.Alive() ||!Leader.Alive());
 
+        //TODO: probably unnescecary should be handled on selection
         if (Challenger.Alive()) Leader = Challenger;
 
 

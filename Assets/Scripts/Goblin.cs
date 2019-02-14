@@ -143,6 +143,8 @@ public class Goblin : Character
         
         
         WaitingOnLevelUp++;
+
+        GoblinUIList.UpdateGoblinList();
     }
 
     public void SelectClass(Class c)

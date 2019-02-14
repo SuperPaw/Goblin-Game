@@ -53,6 +53,8 @@ public class CharacterView : MenuWindow
 
         character = c;
 
+        PlayerController.FollowGoblin = c;
+
         foreach (var generatedObject in generatedObjects)
         {
             Destroy(generatedObject);
@@ -152,6 +154,8 @@ public class CharacterView : MenuWindow
         c.SelectClass(cl);
         Close();
 
+        GoblinUIList.UpdateGoblinList();
+
         showCharacter(c);
     }
 
@@ -171,6 +175,7 @@ public class CharacterView : MenuWindow
                     s.Value.text = stat.GetStatMax().ToString();
             }
         
+        GoblinUIList.UpdateGoblinList();
     }
 
     private string ClassName(Goblin.Class cl)
