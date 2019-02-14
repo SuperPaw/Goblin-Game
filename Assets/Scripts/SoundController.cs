@@ -56,21 +56,33 @@ public class SoundController : MonoBehaviour
         Instance.UiAudioSource.PlayOneShot(SoundBank.GetSound(type));
 
     }
-
-    public static void StartBattleMusic()
+    
+    //TODO: create fade
+    public static void ChangeMusic(SoundBank.Music type)
     {
-        Instance.MusicAudioSource.Play();
-    }
+        if (type == SoundBank.Music.NoMusic)
+        {
+            Instance.MusicAudioSource.clip = null;
+            Instance.MusicAudioSource.Stop();
+        }
 
-    public static void EndBattleMusic()
-    {
-        //TODO: fadedown
-        Instance.MusicAudioSource.Stop();
+        var f = SoundBank.GetSound(type);
+        
+        if (Instance.MusicAudioSource.clip != f)
+        {
+            Instance.MusicAudioSource.clip = f;
+            Instance.MusicAudioSource.Play();
+        }
     }
-
     public static void ChangeBackground(SoundBank.Background type)
     {
-        Instance.BackgroundAudioSource.clip = SoundBank.GetSound(type);
-        Instance.BackgroundAudioSource.Play();
+        var f = SoundBank.GetSound(type);
+
+
+        if (Instance.BackgroundAudioSource.clip != f)
+        {
+            Instance.BackgroundAudioSource.clip = f;
+            Instance.BackgroundAudioSource.Play();
+        }
     }
 }

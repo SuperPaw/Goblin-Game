@@ -19,14 +19,23 @@ public class EquipmentGen : MonoBehaviour
     public struct AttributeDescription
     {
         public Character.StatType Stat;
-        public string adjective;
-        public string noun;
+        public string[] adjective;
+        public string[] noun;
 
-        public AttributeDescription(Character.StatType stat, string adjective, string noun)
+        public AttributeDescription(Character.StatType stat, string[] adjective, string[] noun)
         {
             Stat = stat;
             this.adjective = adjective;
             this.noun = noun;
+        }
+
+        public string GetNoun()
+        {
+            return noun[Random.Range(0, noun.Length)];
+        }
+        public string GeAdjective()
+        {
+            return adjective[Random.Range(0, adjective.Length)];
         }
     }
 
@@ -34,46 +43,53 @@ public class EquipmentGen : MonoBehaviour
     public struct LocationType
     {
         public Equipment.EquipLocations Location;
-        public string Type;
+        public string[] Type;
 
-        public LocationType(Equipment.EquipLocations loc, string type)
+        public LocationType(Equipment.EquipLocations loc, string[] type)
         {
             Location = loc;
             Type = type;
         }
-        
+
+
+        public string GetType()
+        {
+            return Type[Random.Range(0, Type.Length)];
+        }
+
     }
     //DAMAGE, AIM, ATTENTION, COURAGE, HEALTH, SPEED, SMARTS
     //TODO: maybe more fun if materials...
-    public List<AttributeDescription> PositiveAttributes = new List<AttributeDescription>()
+    private List<AttributeDescription> PositiveAttributes = new List<AttributeDescription>()
     {
-        new AttributeDescription(Character.StatType.DAMAGE, "Spiked","Pain"),
-        new AttributeDescription(Character.StatType.AIM, "Wood","Whack"),
-        new AttributeDescription(Character.StatType.ATTENTION, "Bone","Eye"),
-        new AttributeDescription(Character.StatType.COURAGE, "Heart","Guts"),
-        new AttributeDescription(Character.StatType.HEALTH, "Strong","Stomach"),
-        new AttributeDescription(Character.StatType.SPEED, "Painted","Toes"),
-        new AttributeDescription(Character.StatType.SMARTS, "Smart","Head"),
+        new AttributeDescription(Character.StatType.DAMAGE, new []{"Spiked","Blood-stained"},new []{"Destroy","Kill-Kill","Pain"}),
+        new AttributeDescription(Character.StatType.AIM, new []{"Wood", "Striped"},new []{"Aim","Whack"}),
+        new AttributeDescription(Character.StatType.ATTENTION, new []{"Bone","Watching"},new []{"Find-stuff","Eye"}),
+        new AttributeDescription(Character.StatType.COURAGE, new []{"Great","Slave"},new []{"Guts","Great-Goblin"}),
+        new AttributeDescription(Character.StatType.HEALTH, new []{"Strong","Thick"},new []{"Stomach","Blood"}),
+        new AttributeDescription(Character.StatType.SPEED, new []{"Painted", "Quick"},new []{"Toes","Speed"}),
+        new AttributeDescription(Character.StatType.SMARTS, new []{"Smart","Brain"},new []{"Magic","Big-Brain","Head"}),
     };
 
 
-    public List<AttributeDescription> NegativeAttributes = new List<AttributeDescription>()
+    private List<AttributeDescription> NegativeAttributes = new List<AttributeDescription>()
     {
-        new AttributeDescription(Character.StatType.DAMAGE, "Dull","Friend"),
-        new AttributeDescription(Character.StatType.AIM, "Grey","Beer"),
-        new AttributeDescription(Character.StatType.ATTENTION, "Blind","Eye"),
-        new AttributeDescription(Character.StatType.COURAGE, "Yellow","Surrender"),
-        new AttributeDescription(Character.StatType.HEALTH, "Weak","Irritation"),
-        new AttributeDescription(Character.StatType.SPEED, "Slow","Lazy"),
-        new AttributeDescription(Character.StatType.SMARTS, "Stupid","Dumb"),
+        new AttributeDescription(Character.StatType.DAMAGE, new []{"Dull","Ugly"},new []{"Friend","Relax"}),
+        new AttributeDescription(Character.StatType.AIM, new []{"Grey","Blinding"},new []{"Beer","Drunk"}),
+        new AttributeDescription(Character.StatType.ATTENTION, new []{"Blind","Shiny"},new []{"Where","Eye"}),
+        new AttributeDescription(Character.StatType.COURAGE, new []{"Yellow","Insecure"},new []{"Surrender"}),
+        new AttributeDescription(Character.StatType.HEALTH, new []{"Weak", "Pale"},new []{"Sick","Irritation"}),
+        new AttributeDescription(Character.StatType.SPEED, new []{"Slow","Broken"},new []{"Wait","Lazy"}),
+        new AttributeDescription(Character.StatType.SMARTS, new []{"Stupid","Cursed"},new []{"Dumb","Idiots"}),
     };
 
-    public List<LocationType> LocationDescriptions = new List<LocationType>()
+    private List<LocationType> LocationDescriptions = new List<LocationType>()
     {
-        new LocationType(Equipment.EquipLocations.Hands,"gloves"),
-        new LocationType(Equipment.EquipLocations.Head,"hat"),
-        new LocationType(Equipment.EquipLocations.Torso,"shirt"),
-        new LocationType(Equipment.EquipLocations.Weapon,"club"),
+        new LocationType(Equipment.EquipLocations.Hands,new []{"gloves"}),
+        new LocationType(Equipment.EquipLocations.Head,new []{"hat","helmet"}),
+        new LocationType(Equipment.EquipLocations.Torso,new []{"shirt","armor","vest"}),
+        new LocationType(Equipment.EquipLocations.Weapon,new []{"club","stick","sword"}),
+        new LocationType(Equipment.EquipLocations.Feet,new []{"boots","shoes"}),
     };
 
     //TODO: create likely stat associations for types. Like damage -> weapon. 
@@ -85,15 +101,15 @@ public class EquipmentGen : MonoBehaviour
 
         //TODO: check that all types are covered
 
-        //for (int i = 0; i < 10; i++)
-        //{
-        //    var e = GetRandomEquipment();
-        //    Debug.Log(e.name + " ; " + e.EquipLocation);
-        //    foreach (var fx in e.Effects)
-        //    {
-        //        Debug.Log(fx.StatName + " : " + fx.Modifier.Name + " : " + fx.Modifier.Modifier);
-        //    }
-        //}
+        for (int i = 0; i < 10; i++)
+        {
+            var e = GetRandomEquipment();
+            Debug.Log(e.name + " ; " + e.EquipLocation);
+            foreach (var fx in e.Effects)
+            {
+                Debug.Log(fx.Stat + " : " + fx.Modifier.Name + " : " + fx.Modifier.Modifier);
+            }
+        }
     }
 
     public static Equipment GetRandomEquipment(Character.Race originRace = Character.Race.NoRace)
@@ -135,16 +151,35 @@ public class EquipmentGen : MonoBehaviour
         attributes = shuffledList;
 
         //NAME GENERATION
-        equip.name = ((originRace == Character.Race.NoRace) ? "" : originRace + " ") +Instance.LocationDescriptions.First(loc => loc.Location == equip.EquipLocation).Type;
+        if (Random.value < 0.5f)
+        {
+            equip.name = ((originRace == Character.Race.NoRace) ? "" : originRace + " ") + Instance.LocationDescriptions
+                             .First(loc => loc.Location == equip.EquipLocation).GetType();
 
-        equip.name = Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, true) + " "+equip.name;
+            equip.name = Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, false) + " " +
+                         equip.name;
 
-        if (attributes.Count > 1)
-            equip.name += " of " + Instance.GetStatDescription(attributes.ElementAt(1).Key, attributes.ElementAt(1).Value, false) ;
+            if (attributes.Count > 1)
+                equip.name = Instance.GetStatDescription(attributes.ElementAt(1).Key, attributes.ElementAt(1).Value, true) + " " +
+                             equip.name;
 
-        if (attributes.Count == 3)
-            equip.name += " and " + Instance.GetStatDescription(attributes.ElementAt(2).Key, attributes.ElementAt(2).Value, false) ;
+            if (attributes.Count == 3)
+                equip.name = Instance.GetStatDescription(attributes.ElementAt(2).Key, attributes.ElementAt(2).Value, false) + " " +
+                             equip.name;
+        }
+        else
+        {
+            equip.name = ((originRace == Character.Race.NoRace) ? "" : originRace + " ") + Instance.LocationDescriptions.First(loc => loc.Location == equip.EquipLocation).GetType();
 
+            equip.name = Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, true) + " " + equip.name;
+
+            if (attributes.Count > 1)
+                equip.name += " of " + Instance.GetStatDescription(attributes.ElementAt(1).Key, attributes.ElementAt(1).Value, false);
+
+            if (attributes.Count == 3)
+                equip.name += " and " + Instance.GetStatDescription(attributes.ElementAt(2).Key, attributes.ElementAt(2).Value, false);
+
+        }
 
 
         foreach (var stat in attributes)  {
@@ -159,14 +194,14 @@ public class EquipmentGen : MonoBehaviour
     {
         if (modifier > 0)
             return adjective
-                ? PositiveAttributes.First(s => s.Stat == stat).adjective
-                : PositiveAttributes.First(s => s.Stat == stat).noun;
+                ? PositiveAttributes.First(s => s.Stat == stat).GeAdjective()
+                : PositiveAttributes.First(s => s.Stat == stat).GetNoun();
         else
         {
 
             return adjective
-                ? NegativeAttributes.First(s => s.Stat == stat).adjective
-                : NegativeAttributes.First(s => s.Stat == stat).noun;
+                ? NegativeAttributes.First(s => s.Stat == stat).GeAdjective()
+                : NegativeAttributes.First(s => s.Stat == stat).GetNoun();
         }
     }
 }

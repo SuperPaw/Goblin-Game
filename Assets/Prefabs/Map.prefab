@@ -59,6 +59,8 @@ MonoBehaviour:
   Npcs:
   - {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9, type: 3}
   - {fileID: 1969145986120274, guid: f95d1a9483a8c6a4496c281ffd93702c, type: 3}
+  - {fileID: 925690161, guid: c20038e116842f141abc7551f9742b45, type: 3}
+  - {fileID: 180470, guid: f4864ffb159f30048a3bdafeae646afb, type: 3}
   HidableObjects:
   - {fileID: 1910571166180590, guid: 039038a2da993284dbd739d670e3a939, type: 3}
   Forest: {fileID: 1910571166180590, guid: 065255f1b6b2df545a5f52498b045976, type: 3}

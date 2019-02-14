@@ -22,7 +22,7 @@ public abstract class Character : MonoBehaviour
 
     public enum Race
     {
-        Goblin, Human, Spider, Undead,
+        Goblin, Human, Spider, Zombie, Ogre, Wolf,
         NoRace
     }
 
@@ -262,6 +262,7 @@ public abstract class Character : MonoBehaviour
     public class DeathEvent : UnityEvent<Character> { }
     public  DeathEvent OnDeath = new DeathEvent();
 
+    public Animation Animator;
     private Collider2D coll;
     private Coroutine _attackRoutine;
     private Hidable hiding;
@@ -296,7 +297,7 @@ public abstract class Character : MonoBehaviour
         {
             VoicePitch = Random.Range(PitchMin, PitchMax);
 
-            if (CharacterRace == Race.Undead)
+            if (CharacterRace == Race.Zombie)
                 VoicePitch /= 2;
 
             Voice.pitch = VoicePitch;
@@ -356,9 +357,11 @@ public abstract class Character : MonoBehaviour
     {
         if(!Alive() || !GameManager.Instance.GameStarted)
             return;
+        
+        HandleAnimation();
 
-        if(InArea && HolderGameObject)
-            HolderGameObject.SetActive(InArea.Visible());
+        //if (InArea && HolderGameObject)
+        //    HolderGameObject.SetActive(InArea.Visible());
 
         if (InArea && InArea.Visible() && MovementAudio && !MovementAudio.isPlaying)
             MovementAudio.Play();
@@ -380,6 +383,18 @@ public abstract class Character : MonoBehaviour
         {
             navMeshAgent.isStopped = false;
             Move();
+        }
+    }
+
+    private void HandleAnimation()
+    {
+
+        if (Animator)
+        {
+            if(navMeshAgent.desiredVelocity.sqrMagnitude < 0.1f)
+                GetComponent<Animation>().CrossFadeQueued("idle");
+            if (Animator.isPlaying)
+                Animator.Play();
         }
     }
 
@@ -824,7 +839,7 @@ public abstract class Character : MonoBehaviour
                     {
                         //TODO: create player choice for selecting goblin
                         Speak(SoundBank.GoblinSound.Laugh);
-                        PopUpText.ShowText(name + " found " + equipment);
+                        PopUpText.ShowText(name + " found " + equipment.name);
                         if (Team && Team.Members.Count > 1)
                             Team.EquipmentFound(equipment,this);
                         else

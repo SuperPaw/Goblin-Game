@@ -705,3 +705,13 @@ MonoBehaviour:
   - Type: 1
     Audio:
     - {fileID: 8300000, guid: d5c3a59fa55c1ce4997eaf4345d8315f, type: 3}
+  Musics:
+  - Type: 1
+    Audio:
+    - {fileID: 8300000, guid: f45a9b87ce2ef404d91fc419fd6c0dd6, type: 3}
+  - Type: 2
+    Audio:
+    - {fileID: 8300000, guid: 5d1acee96cfdec940972012ebebf1dfd, type: 3}
+  - Type: 3
+    Audio:
+    - {fileID: 8300000, guid: 3d5af77a44f50ac4aab06b0c8dcc533d, type: 3}

@@ -16,6 +16,7 @@ public class Sun : MonoBehaviour
     public static void Night()
     {
         SoundController.ChangeBackground(SoundBank.Background.Night);
+        SoundController.ChangeMusic(SoundBank.Music.NoMusic);
 
         Instance.StartCoroutine(Instance.ChangeLightToColor(Instance.NightColor));
     }
@@ -37,6 +38,7 @@ public class Sun : MonoBehaviour
     public static void Day()
     {
         SoundController.ChangeBackground(SoundBank.Background.Forest);
+        SoundController.ChangeMusic(SoundBank.Music.Explore);
         Instance.StartCoroutine(Instance.ChangeLightToColor(Instance.DayColor));
     }
 }

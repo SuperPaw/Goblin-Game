@@ -86,6 +86,8 @@ public class MapGenerator : MonoBehaviour
         var progressPct = 0;
 
         progressCallback(progressPct,"");
+        
+        yield return new WaitForFixedUpdate();
 
         totalAreaSize = AreaSize + AreaBufferSize;
 
@@ -444,6 +446,8 @@ public class MapGenerator : MonoBehaviour
         FindObjectOfType<PlayerController>().Initialize();
 
         SoundController.PlayGameStart();
+
+        SoundController.ChangeMusic(SoundBank.Music.Explore);
 
         GameManager.Instance.GameStarted = true;
 

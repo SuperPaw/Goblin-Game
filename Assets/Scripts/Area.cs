@@ -46,6 +46,12 @@ public class Area : MonoBehaviour
 
         Character c = other.gameObject.GetComponent<Character>();
 
+        if (!c)
+        {
+            Debug.LogWarning(other.gameObject +" does not have a character object.");
+            return;
+        }
+
         //should be the only place we set InArea
         c.InArea = this;
         PresentCharacters.Add(c);

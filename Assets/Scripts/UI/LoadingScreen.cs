@@ -23,6 +23,8 @@ public class LoadingScreen : MonoBehaviour
     {
         //could load different scenes instead of just running the generate
 
+        SoundController.ChangeMusic(SoundBank.Music.Menu);
+
         StartCoroutine(MapGen.GenerateMap(SetLoadingText, ()=>gameObject.SetActive(false)));
         //TODO: include gobbo creation in loading
 

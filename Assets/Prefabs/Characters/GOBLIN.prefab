@@ -11664,7 +11664,7 @@ Animation:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100702}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Animation: {fileID: 7400022, guid: 2de911d45fd8d124c90453569b0194ca, type: 3}
   m_Animations:
@@ -11740,6 +11740,7 @@ MonoBehaviour:
   DamageColor: {r: 1, g: 0, b: 0, a: 1}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 0}
+  Animator: {fileID: 0}
   IrritationMeter: 0
   IrritaionTolerance: 50
   provokeDistance: 10

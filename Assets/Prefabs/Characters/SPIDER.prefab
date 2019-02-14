@@ -1904,7 +1904,7 @@ MonoBehaviour:
   AmbushModifier: 1.2
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
-  Material: {fileID: 0}
+  Material: {fileID: 2100000, guid: 78d88e566e5f7b14aaa719c52b23bd6c, type: 2}
   IrritationMeter: 0
   IrritaionTolerance: 50
   provokeDistance: 8

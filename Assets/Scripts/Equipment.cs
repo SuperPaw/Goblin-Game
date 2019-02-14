@@ -9,7 +9,7 @@ public class Equipment : MonoBehaviour
 {
     public enum EquipLocations
     {
-        Head, Torso, Weapon, Hands,
+        Head, Torso, Weapon, Hands,Feet,
         COUNT
     }
     //public abstract class Effect{}

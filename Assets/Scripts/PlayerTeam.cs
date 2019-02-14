@@ -84,13 +84,13 @@ public class PlayerTeam : MonoBehaviour
             Members.Any(g => g.InArea == Leader.InArea && g.Attacking()))
         {
             if(!Fighting)
-                SoundController.StartBattleMusic();
+                SoundController.ChangeMusic(SoundBank.Music.Battle);
             Fighting = true;
         }
         else
         {
             if(Fighting)
-                SoundController.EndBattleMusic();
+                SoundController.ChangeMusic(SoundBank.Music.Explore);
 
             Fighting = false;
         }

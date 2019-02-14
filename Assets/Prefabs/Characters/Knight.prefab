@@ -3010,6 +3010,7 @@ MonoBehaviour:
   VoicePitch: 0
   VoiceText: {fileID: 0}
   ShoutTime: 2
+  MovementAudio: {fileID: 0}
   SurprisedTime: 4
   SurprisedStartTime: 0
   LootTarget: {fileID: 0}
@@ -3045,6 +3046,7 @@ MonoBehaviour:
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 0}
+  Animator: {fileID: 0}
   IrritationMeter: 0
   IrritaionTolerance: 50
   provokeDistance: 10
@@ -3255,7 +3257,7 @@ RectTransform:
   m_GameObject: {fileID: 2314668267344278583}
   m_LocalRotation: {x: -0, y: -0.3826834, z: -0, w: 0.9238796}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.97499996, z: 0.75}
+  m_LocalScale: {x: 0.5, y: 0.97499996, z: 0.5}
   m_Children:
   - {fileID: 8024768027415966908}
   m_Father: {fileID: 957100490109666006}

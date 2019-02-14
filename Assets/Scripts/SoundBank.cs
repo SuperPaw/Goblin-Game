@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -32,6 +31,14 @@ public class SoundBank : MonoBehaviour
     {
         Forest,
         Night
+    }
+
+    public enum Music
+    {
+        NoMusic,
+        Explore,
+        Battle,
+        Menu
     }
 
 
@@ -85,11 +92,18 @@ public class SoundBank : MonoBehaviour
         public Background Type;
         public AudioClip[] Audio;
     }
+    [System.Serializable]
+    public struct MusicRef
+    {
+        public Music Type;
+        public AudioClip[] Audio;
+    }
 
     public SoundReference[] GoblinSounds;
     public UiSoundReference[] UiSounds;
     public StingerSoundReference[] Stingers;
     public BackgroundSoundref[] Backgrounds;
+    public MusicRef[] Musics;
 
     private void Start()
     {
@@ -140,6 +154,17 @@ public class SoundBank : MonoBehaviour
         }
 
         return Rnd(Instance.UiSounds.First(s => s.Type == sound).Audio);
+    }
+
+    public static AudioClip GetSound(Music sound)
+    {
+        if (!Instance.Musics.Any(s => s.Type == sound))
+        {
+            Debug.LogWarning("No sound for " + sound);
+            return null;
+        }
+
+        return Rnd(Instance.Musics.First(s => s.Type == sound).Audio);
     }
 
 
