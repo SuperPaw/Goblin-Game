@@ -671,7 +671,14 @@ public abstract class Character : MonoBehaviour
 
                     if (InArea)
                     {
-                        if ((this as Goblin) &&tag == "Player" && GetClosestEnemy() && (GetClosestEnemy().transform.position - transform.position).magnitude < provokeDistance)
+                        if (GetClosestEnemy() &&
+                            InArea.PresentCharacters.Any(c => c.tag == tag && c.Alive() && c.Attacking()))
+                        {
+                            ChangeState(CharacterState.Attacking,true);
+                            Target = GetClosestEnemy().transform.position;
+                            dest = Target;
+                        }
+                        else if ((this as Goblin) &&tag == "Player" && GetClosestEnemy() && (GetClosestEnemy().transform.position - transform.position).magnitude < provokeDistance)
                         {
                             ChangeState(CharacterState.Provoking, true);
                             var ctx = GetClosestEnemy();

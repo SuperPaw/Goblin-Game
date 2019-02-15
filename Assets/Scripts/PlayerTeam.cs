@@ -347,6 +347,8 @@ public class PlayerTeam : MonoBehaviour
         {
             oldLeader.InArea.RemoveFogOfWar(false);
         }
+
+        GoblinUIList.UpdateGoblinList();
     }
 
     internal void Flee()
