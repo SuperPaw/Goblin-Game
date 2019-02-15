@@ -63,6 +63,8 @@ public class GoblinUIList : MonoBehaviour
 
         e.LevelUpReady.gameObject.SetActive(g.WaitingOnLevelUp > 0 || g.WaitingOnClassSelection);
 
+        g.OnDeath.AddListener(gob=>e.MarkAsDead());
+
         e.gameObject.SetActive(true);
         Entries.Add(e);
     }

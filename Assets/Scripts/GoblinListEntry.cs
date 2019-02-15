@@ -10,9 +10,15 @@ public class GoblinListEntry : MonoBehaviour
     public TextMeshProUGUI NameText;
     public Goblin Goblin;
     public Image LevelUpReady, ChiefImage;
+    public Sprite DeadGoblinSprite;
 
     public void SelectGoblin()
     {
         CharacterView.ShowCharacter(Goblin);
+    }
+
+    public void MarkAsDead()
+    {
+        ClassImage.sprite = DeadGoblinSprite;
     }
 }

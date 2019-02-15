@@ -15,6 +15,7 @@ public class CharacterView : MenuWindow
     public TextMeshProUGUI ClassLevelText;
     public TextMeshProUGUI EquipmentInfo;
     public TextMeshProUGUI ClassSelectText;
+    public GameObject ClassSelectionHolder;
     public Button ClassIcon;
     private static CharacterView Instance;
     private Goblin character;
@@ -72,6 +73,10 @@ public class CharacterView : MenuWindow
         var lvl = Goblin.GetLevel((int) c.Xp);
         ClassLevelText.text = "Level " + lvl + " " + ClassName(c.ClassType);
         ClassLevelText.GetComponent<OnValueHover>().Class = c.ClassType;
+        ClassLevelText.gameObject.SetActive(!c.WaitingOnClassSelection);
+        ClassSelectionHolder.SetActive(c.WaitingOnClassSelection);
+
+
         XpTextEntry.Value.text = c.Xp.ToString("F0") + "/" + Goblin.LevelCaps[lvl];
         HealthTextEntry.Value.text = c.Health + "/" +c.HEA.GetStatMax();
         HealthTextEntry.ValueHover.Stat = c.HEA;
@@ -116,36 +121,37 @@ public class CharacterView : MenuWindow
         }
 
         if (c.WaitingOnClassSelection)
+        {
+
+            if (generatedClassButtons == null || generatedClassButtons.Count == 0)
             {
-                if (generatedClassButtons == null || generatedClassButtons.Count == 0)
+                generatedClassButtons = new List<Button>();
+
+                for (Goblin.Class i = (Goblin.Class)1; i < Goblin.Class.END; i++)
                 {
-                    generatedClassButtons = new List<Button>();
+                    var clBut = Instantiate(ClassIcon,ClassIcon.transform.parent);
 
-                    for (Goblin.Class i = (Goblin.Class)1; i < Goblin.Class.END; i++)
-                    {
-                        var clBut = Instantiate(ClassIcon,ClassIcon.transform.parent);
+                    clBut.image.sprite = GameManager.GetClassImage(i);
 
-                        clBut.image.sprite = GameManager.GetClassImage(i);
+                    var cl = i;
 
-                        var cl = i;
-
-                        clBut.GetComponent<OnValueHover>().Class = i;
+                    clBut.GetComponent<OnValueHover>().Class = i;
                         
-                        generatedClassButtons.Add(clBut);
+                    generatedClassButtons.Add(clBut);
 
-                        clBut.onClick.AddListener(() =>SelectClass(c,cl));
+                    clBut.onClick.AddListener(() =>SelectClass(c,cl));
 
-                        clBut.gameObject.SetActive(true);
-                    }
+                    clBut.gameObject.SetActive(true);
                 }
-                ClassSelectText.text = "Select Class:";
-                ClassIcon.gameObject.SetActive(false);
             }
-            else
-            {
-                ClassIcon.gameObject.SetActive(true);
-                ClassSelectText.text = "";
-            }
+            ClassSelectText.text = "Select Class:";
+            ClassIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            ClassIcon.gameObject.SetActive(true);
+            ClassSelectText.text = "";
+        }
 
     }
 
