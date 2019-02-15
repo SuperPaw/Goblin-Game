@@ -5239,13 +5239,13 @@ GameObject:
   m_Component:
   - component: {fileID: 925690162}
   - component: {fileID: 5825662565625797639}
-  - component: {fileID: 925690166}
   - component: {fileID: 925690165}
   - component: {fileID: 925690164}
   - component: {fileID: 4784471807589823077}
+  - component: {fileID: 4456687315143079690}
   m_Layer: 0
   m_Name: Ogre
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5321,32 +5321,11 @@ MonoBehaviour:
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 2100000, guid: ec7b940140fe1fd48b9583049be0fe7b, type: 2}
-  Animator: {fileID: 925690166}
+  Animator: {fileID: 0}
   IrritationMeter: 0
   IrritaionTolerance: 75
   provokeDistance: 10
   InArea: {fileID: 0}
---- !u!111 &925690166
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 925690161}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 884609fd3666a0c41a93828ebcad2473, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: e5435d9171c843340be4ef907331af82, type: 2}
-  - {fileID: 7400000, guid: b2225efc3034ded45b5696fda2d17e72, type: 2}
-  - {fileID: 7400000, guid: 884609fd3666a0c41a93828ebcad2473, type: 2}
-  - {fileID: 7400000, guid: e4630a64c5865994e9f55f15f8ad842c, type: 2}
-  - {fileID: 7400000, guid: c4a4521005b9bf040aaf2e7e14cca926, type: 2}
-  - {fileID: 7400000, guid: b18c849c68979bf42b45595a4ed97a73, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!135 &925690165
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5398,6 +5377,25 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &4456687315143079690
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925690161}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 73ff16e92606e684c9c429608436430a, type: 3}
+  m_Controller: {fileID: 9100000, guid: 8c3cc79a2ba752549a6022f0663a6b43, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &926623052
 GameObject:
   m_ObjectHideFlags: 0
@@ -15174,7 +15172,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1447585195
 Transform:
   m_ObjectHideFlags: 0

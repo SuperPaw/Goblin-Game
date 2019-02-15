@@ -24700,8 +24700,8 @@ MonoBehaviour:
   CouMax: 50
   HeaMin: 10
   HeaMax: 10
-  SpeMin: 10
-  SpeMax: 10
+  SpeMin: 7
+  SpeMax: 7
   SmaMin: 5
   SmaMax: 5
   idleDistance: 4
