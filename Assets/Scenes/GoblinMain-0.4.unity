@@ -477,7 +477,7 @@ MonoBehaviour:
   ZoomMaxBound: 35
   ZoomSpeed: 0.025
   FogOfWar: {fileID: 151457449}
-  MoveTime: 0.2
+  MoveTime: 0.75
   MoveCurve:
     serializedVersion: 2
     m_Curve:
@@ -651,12 +651,12 @@ PrefabInstance:
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
       propertyPath: SizeX
-      value: 300
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
       propertyPath: SizeZ
-      value: 300
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
@@ -667,6 +667,26 @@ PrefabInstance:
         type: 3}
       propertyPath: AreaBufferSize
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 3}
+      propertyPath: PointOfInterests
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 3}
+      propertyPath: VillagesToGenerate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 3}
+      propertyPath: AreasToCreate
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 3}
+      propertyPath: NpcsToGenerate
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4598158572664144, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0, type: 3}
       propertyPath: m_LocalPosition.x

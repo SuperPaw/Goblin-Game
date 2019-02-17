@@ -105,7 +105,7 @@ public class SoundBank : MonoBehaviour
     public BackgroundSoundref[] Backgrounds;
     public MusicRef[] Musics;
 
-    private void Start()
+    private void Awake()
     {
         if (!Instance)
             Instance = this;

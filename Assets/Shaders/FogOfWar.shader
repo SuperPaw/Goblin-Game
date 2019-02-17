@@ -21,6 +21,9 @@ Shader "Custom/FogOfWar" {
 		_Player3_Pos("_Player3_Pos", Vector) = (0,0,0,1)
 		_Player4_Pos("_Player4_Pos", Vector) = (0,0,0,1)
 		_Player5_Pos("_Player5_Pos", Vector) = (0,0,0,1)
+		_Player6_Pos("_Player6_Pos", Vector) = (0,0,0,1)
+		_Player7_Pos("_Player7_Pos", Vector) = (0,0,0,1)
+		_Player8_Pos("_Player8_Pos", Vector) = (0,0,0,1)
 	}
 
 		SubShader{
@@ -42,6 +45,9 @@ Shader "Custom/FogOfWar" {
 	float4     _Player3_Pos;
 	float4     _Player4_Pos;
 	float4     _Player5_Pos;
+	float4     _Player6_Pos;
+	float4     _Player7_Pos;
+	float4     _Player8_Pos;
 
 	struct Input {
 		float2 uv_MainTex;
@@ -61,7 +67,8 @@ Shader "Custom/FogOfWar" {
 	void surf(Input IN, inout SurfaceOutput o) {
 		fixed4 baseColor = tex2D(_MainTex, IN.uv_MainTex) * _Color;
 
-		float alpha = (1.0 - (baseColor.a + powerForMainPos(_Player1_Pos, IN.location) + powerForPos(_Player2_Pos, IN.location) + powerForPos(_Player3_Pos, IN.location) + powerForPos(_Player4_Pos, IN.location)+ powerForPos(_Player5_Pos, IN.location)));
+		float alpha = (1.0 - (baseColor.a + powerForMainPos(_Player1_Pos, IN.location) + powerForPos(_Player2_Pos, IN.location) + powerForPos(_Player3_Pos, IN.location) + powerForPos(_Player4_Pos, IN.location)+ powerForPos(_Player5_Pos, IN.location)
+			+ powerForPos(_Player6_Pos, IN.location) + powerForPos(_Player7_Pos, IN.location) + powerForPos(_Player8_Pos, IN.location)));
 
 		o.Albedo = baseColor.rgb;
 		o.Alpha = alpha;

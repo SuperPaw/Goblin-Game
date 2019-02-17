@@ -87,7 +87,7 @@ public class NameGenerator : MonoBehaviour
     private int TotalChance;
 
     // Use this for initialization
-    void Start ()
+    void Awake ()
     {
         if (!Instance)
             Instance = this;

@@ -10,7 +10,7 @@ public class GoblinUIList : MonoBehaviour
     public static GoblinUIList Instance;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (!Team)
             Team = FindObjectOfType<PlayerTeam>();

@@ -22,9 +22,9 @@ public class VillageView : MenuWindow
         GoblinGameButton,
         ChallengeChiefButton;
 
-    new void Start()
+    new void Awake()
     {
-        base.Start();
+        base.Awake();
 
         Type = WindowType.LocationView;
 

@@ -64,8 +64,9 @@ public class PlayerController : MonoBehaviour
     public float FollowZoomSize = 8;
     public float PanSpeed;
     private float touchTime;
+    private Coroutine camMoveRoutine;
 
-    void Start()
+    void Awake()
     {
         if (!Instance)
             Instance = this;
@@ -88,7 +89,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         //maybe at larger interval
-        if(FollowGoblin)
+        if(FollowGoblin && camMoveRoutine == null)
             MoveToGoblin(FollowGoblin);
     }
 
@@ -359,7 +360,7 @@ public class PlayerController : MonoBehaviour
 
     private void RemoveFogAtPos(Vector3 pos, int id)
     {
-        if (id < 1 || id > 5)
+        if (id < 1 || id > 8)
         {
             Debug.Log("Unknown shader id: " + id);
             return;
@@ -447,6 +448,8 @@ public class PlayerController : MonoBehaviour
 
         SoundController.PlayStinger(SoundBank.Stinger.Sneaking);
 
+        BigStoneView.CloseStone();
+
         //if (Random.value < 0.6f)
             stone.SpawnDead(Instance.Team);
     }
@@ -492,12 +495,16 @@ public class PlayerController : MonoBehaviour
         //goblin.CharacterRace = Character.Race.Undead;
 
         goblin.Health = 0;
+
+        BigStoneView.CloseStone();
         
     }
 
     internal static void BuyGoblin(Goblin goblin, int price, GoblinWarrens oldVillage)
     {
         Instance.Team.Treasure -= price;
+
+        goblin.Team = Instance.Team;
         
         //TODO: use method for these
         Instance.Team.Members.Add(goblin);
@@ -522,27 +529,37 @@ public class PlayerController : MonoBehaviour
 
     private void MoveToGoblin(Goblin g)
     {
-        StartCoroutine(MoveCamera(g.transform.position));
+        camMoveRoutine = StartCoroutine(MoveCamera(g.transform));
     }
 
-    private IEnumerator MoveCamera(Vector3 loc)
+    private IEnumerator MoveCamera(Transform loc)
     {
         //currentLocation = loc;
-        var offset = 50;
+        var offset = 47;
 
         var start = Cam.transform.position;
         var startSize = Cam.orthographicSize;
         var endSize = FollowZoomSize;
-        var end = new Vector3(loc.x, start.y,loc.z-offset);
         for (var t = 0f; t < MoveTime; t += Time.deltaTime)
         {
             yield return null;
+            
+            var xz = loc.position;
+            var end = new Vector3(xz.x, Cam.transform.position.y, xz.z - offset);
             Cam.transform.position = Vector3.LerpUnclamped(start, end, MoveCurve.Evaluate(t / MoveTime));
 
             Cam.orthographicSize = Mathf.LerpUnclamped(startSize, endSize, MoveCurve.Evaluate(t / MoveTime));
         }
 
-        Cam.transform.position = end;
+        while (FollowGoblin)
+        {
+            var xz = FollowGoblin.transform.position;
+            Cam.transform.position = new Vector3(xz.x,Cam.transform.position.y,xz.z-offset);
+
+            yield return null;
+        }
+
+        camMoveRoutine = null;
     }
     
 }

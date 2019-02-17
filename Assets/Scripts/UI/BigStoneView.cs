@@ -19,9 +19,9 @@ public class BigStoneView : MenuWindow
         SacGobButton,
         StealTreasureButton;
 
-    new void Start()
+    new void Awake()
     {
-        base.Start();
+        base.Awake();
 
         Type = WindowType.LocationView;
 
@@ -42,6 +42,10 @@ public class BigStoneView : MenuWindow
         Instance.OpenWindow(stone,playerTeam);
     }
 
+    public static void CloseStone()
+    {
+        Instance.Close();
+    }
 
     private void OpenWindow(Monument stone, PlayerTeam playerTeam)
     {

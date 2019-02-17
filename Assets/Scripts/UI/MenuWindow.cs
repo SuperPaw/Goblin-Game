@@ -19,7 +19,7 @@ public abstract class MenuWindow : MonoBehaviour
 
     public static Dictionary<WindowType, bool> OpenWindows = new Dictionary<WindowType, bool>();
 
-    protected void Start()
+    protected void Awake()
     {
         for (int i = 0; i < (int)WindowType.COUNT; i++)
         {

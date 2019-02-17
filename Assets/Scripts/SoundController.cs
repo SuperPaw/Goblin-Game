@@ -10,7 +10,7 @@ public class SoundController : MonoBehaviour
     public AudioSource StingerAudioSource;
     public AudioSource MusicAudioSource;
 
-    void Start()
+    void Awake()
     {
         if (!Instance)
             Instance = this;

@@ -11,9 +11,9 @@ public class LoadingScreen : MonoBehaviour
     public TextMeshProUGUI LoadingDescription;
     public MapGenerator MapGen;
     
-	IEnumerator Start ()
+	void Start ()
 	{
-	    yield return new WaitForFixedUpdate();
+	    //yield return new WaitForFixedUpdate();
         
 		StartGame();
         

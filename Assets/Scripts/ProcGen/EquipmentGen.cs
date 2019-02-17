@@ -94,7 +94,7 @@ public class EquipmentGen : MonoBehaviour
 
     //TODO: create likely stat associations for types. Like damage -> weapon. 
 
-    private void Start()
+    private void Awake()
     {
         if (!Instance)
             Instance = this;

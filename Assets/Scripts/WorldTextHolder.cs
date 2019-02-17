@@ -20,7 +20,7 @@ public class WorldTextHolder : MonoBehaviour
     [SerializeField]
     private Color NegativeChangeColor = Color.red;
 
-    private void Start()
+    private void Awake()
     {
         if (!Instance)
             Instance = this;

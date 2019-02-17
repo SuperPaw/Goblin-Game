@@ -29,6 +29,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 513359284104875732}
+  - {fileID: 3955674803077501541}
+  - {fileID: 5215160201323482915}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -63,6 +65,8 @@ MonoBehaviour:
   - {fileID: 180470, guid: f4864ffb159f30048a3bdafeae646afb, type: 3}
   HidableObjects:
   - {fileID: 1910571166180590, guid: 039038a2da993284dbd739d670e3a939, type: 3}
+  ForestHolder: {fileID: 2032421715755256616}
+  AreaHolder: {fileID: 8276607899882374288}
   Forest: {fileID: 1910571166180590, guid: 065255f1b6b2df545a5f52498b045976, type: 3}
   LootObjects:
   - {fileID: 1910571166180590, guid: ee5830f18c2be1244bb0fa764c0769a1, type: 3}
@@ -79,6 +83,36 @@ MonoBehaviour:
   GoblinsToGenerate: 5
   DefaultCharacter: {fileID: 100702, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe, type: 3}
   GoblinTeam: {fileID: 0}
+--- !u!1 &2032421715755256616
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3955674803077501541}
+  m_Layer: 0
+  m_Name: Forests
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3955674803077501541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032421715755256616}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4598158572664144}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8117359875643797009
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +240,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Tracked: {fileID: 0}
   m_Size: {x: 200, y: 10, z: 200}
+--- !u!1 &8276607899882374288
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5215160201323482915}
+  m_Layer: 0
+  m_Name: Areas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5215160201323482915
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8276607899882374288}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4598158572664144}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &508947015221629182
 PrefabInstance:
   m_ObjectHideFlags: 0

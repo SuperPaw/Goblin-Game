@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     public int XpOnTreasureFind = 1;
     public int XpOnAreaMove = 1;
     
-    void Start()
+    void Awake()
     {
         if (!Instance) Instance = this;
     }

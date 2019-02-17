@@ -22,9 +22,9 @@ public class CharacterView : MenuWindow
     private readonly List<GameObject> generatedObjects = new List<GameObject>(10);
     private List<Button> generatedClassButtons = new List<Button>();
 
-    new void Start()
+    new void Awake()
     {
-        base.Start();
+        base.Awake();
 
         Type = WindowType.Character;
 

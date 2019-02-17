@@ -14,7 +14,7 @@ public class PopUpText : MonoBehaviour
     public float ShowTime = 4;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (!Instance)
             Instance = this;

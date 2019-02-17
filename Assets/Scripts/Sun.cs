@@ -8,7 +8,7 @@ public class Sun : MonoBehaviour
     public Light Light;
     public Color DayColor, NightColor;
 
-    private void Start()
+    private void Awake()
     {
         Instance = this;
     }

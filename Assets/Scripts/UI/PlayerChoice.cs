@@ -23,9 +23,9 @@ public class PlayerChoice : MenuWindow
     private List<Button> generatedObjects = new List<Button>();
     public TextMeshProUGUI DescriptionText;
 
-    new void Start()
+    new void Awake()
     {
-        base.Start();
+        base.Awake();
 
         Type = WindowType.PlayerChoice;
 

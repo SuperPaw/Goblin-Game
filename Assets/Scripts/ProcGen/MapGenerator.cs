@@ -48,14 +48,13 @@ public class MapGenerator : MonoBehaviour
     private Tile[,] map;
     private List<Tile> movableTiles;
     private List<Tile> immovableTiles = new List<Tile>();
-
-    [Range(0f, 1)]
-    public float PctOfImmovableAreas;
+    
 
     [Header("References")]
     public LocalNavMeshBuilder MeshBuilder; 
     public GameObject[] Npcs;
     public GameObject[] HidableObjects;
+    public GameObject ForestHolder, AreaHolder;
     public GameObject Forest;
     public GameObject[] LootObjects;
     public PointOfInterest[] PointOfInterestPrefabs;
@@ -87,7 +86,7 @@ public class MapGenerator : MonoBehaviour
 
         progressCallback(progressPct,"");
         
-        yield return new WaitForFixedUpdate();
+        yield return null;
 
         totalAreaSize = AreaSize + AreaBufferSize;
 
@@ -111,7 +110,7 @@ public class MapGenerator : MonoBehaviour
         MeshBuilder.transform.position = new Vector3(SizeX/2f,0,SizeZ/2f);
 
 
-        yield return new WaitForFixedUpdate();
+        yield return null;
 
         //Forest gen
 
@@ -158,6 +157,7 @@ public class MapGenerator : MonoBehaviour
         {
             int tries = 0;
             int maxTries = 500;
+            yield return null;
 
             Vector3 point;
             do
@@ -182,14 +182,14 @@ public class MapGenerator : MonoBehaviour
 
             var toConnect = Areas.Where(e => e != n).OrderBy(ne => (ne.transform.position - position).sqrMagnitude).Take(3).ToList();
 
+            yield return null;
+
             foreach (var area in toConnect)
             {
                 CreateRoad(n, area);
             }
         }
-
-
-        yield return new WaitForFixedUpdate();
+        
        
         Area goblinStartArea = center; // AreaMap[noOfAreasX / 2, noOfAreasZ / 2];
 
@@ -331,7 +331,7 @@ public class MapGenerator : MonoBehaviour
             if (GetNeightbours(tile).Any(n => n.Type != TileType.Forest))
             {
 
-                next = Instantiate(HidableObjects[Random.Range(0, HidableObjects.Length)], transform);
+                next = Instantiate(HidableObjects[Random.Range(0, HidableObjects.Length)], ForestHolder.transform);
             }
             else
             {
@@ -339,7 +339,7 @@ public class MapGenerator : MonoBehaviour
                 if (Random.value < 0.2)
                     continue;
 
-                next = Instantiate(Forest, transform);
+                next = Instantiate(Forest, ForestHolder.transform);
                 tile.Hidable = false;
             }
 
@@ -372,7 +372,7 @@ public class MapGenerator : MonoBehaviour
         //ground points at random a bunch of times and check that they are reachable
         //if not make a forest road
         
-        yield return new WaitForFixedUpdate();
+        yield return null;
 
         for (int i = 0; i < NpcsToGenerate; i++)
         {
@@ -438,7 +438,7 @@ public class MapGenerator : MonoBehaviour
 
         CreateTreeBorder(8);
 
-        yield return new WaitForFixedUpdate();
+        yield return null;
 
         GoblinTeam.Initialize(members);
 
@@ -452,6 +452,8 @@ public class MapGenerator : MonoBehaviour
         GameManager.Instance.GameStarted = true;
 
         GoblinUIList.UpdateGoblinList();
+
+        PlayerController.UpdateFog();
 
         endCallback();
 
@@ -472,7 +474,7 @@ public class MapGenerator : MonoBehaviour
                 if(Random.value < 0.2)
                     continue;
 
-                var next = Instantiate(Forest, transform);
+                var next = Instantiate(Forest, ForestHolder.transform);
 
                 next.transform.position = pos;
             }
@@ -480,7 +482,7 @@ public class MapGenerator : MonoBehaviour
             {
                 if (Random.value < 0.2)
                     continue;
-                var next = Instantiate(Forest, transform);
+                var next = Instantiate(Forest, ForestHolder.transform);
 
                 next.transform.position = pos;
             }
@@ -488,7 +490,7 @@ public class MapGenerator : MonoBehaviour
             {
                 if (Random.value < 0.2)
                     continue;
-                var next = Instantiate(Forest, transform);
+                var next = Instantiate(Forest, ForestHolder.transform);
 
                 next.transform.position = pos;
             }
@@ -496,7 +498,7 @@ public class MapGenerator : MonoBehaviour
             {
                 if (Random.value < 0.2)
                     continue;
-                var next = Instantiate(Forest, transform);
+                var next = Instantiate(Forest, ForestHolder.transform);
 
                 next.transform.position = pos;
             }
@@ -560,7 +562,7 @@ public class MapGenerator : MonoBehaviour
     private Area CreateArea(Vector3 position, List<Area> neighbour = null)
     {
         //TODO: use holders for these
-        var area = Instantiate(AreaTilePrefab, transform);
+        var area = Instantiate(AreaTilePrefab, AreaHolder.transform);
 
         //Debug.Log("Creating area at: " +position);
         
