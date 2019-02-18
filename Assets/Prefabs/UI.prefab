@@ -607,7 +607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rect: {fileID: 8523106097527212058}
   PopText: {fileID: 7062973971520777893}
-  ShowTime: 4
+  ShowTime: 5
 --- !u!114 &4273206821382666137
 MonoBehaviour:
   m_ObjectHideFlags: 0

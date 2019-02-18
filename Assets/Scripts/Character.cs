@@ -262,7 +262,7 @@ public abstract class Character : MonoBehaviour
     public class DeathEvent : UnityEvent<Character> { }
     public  DeathEvent OnDeath = new DeathEvent();
 
-    public Animation Animator;
+    public Animator Animator;
     private Collider2D coll;
     private Coroutine _attackRoutine;
     private Hidable hiding;
@@ -386,16 +386,12 @@ public abstract class Character : MonoBehaviour
         }
     }
 
+
+    //TODO: override in goblin class.
     private void HandleAnimation()
     {
-
-        if (Animator)
-        {
-            if(navMeshAgent.desiredVelocity.sqrMagnitude < 0.1f)
-                GetComponent<Animation>().CrossFadeQueued("idle");
-            if (Animator.isPlaying)
-                Animator.Play();
-        }
+        if (!Animator) return;
+        
     }
 
     /// <summary>
