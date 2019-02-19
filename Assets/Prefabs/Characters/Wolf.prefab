@@ -24591,7 +24591,7 @@ GameObject:
   m_Component:
   - component: {fileID: 480470}
   - component: {fileID: 9573564}
-  - component: {fileID: 13580392}
+  - component: {fileID: 2601718773316155501}
   - component: {fileID: 5480392}
   - component: {fileID: 6602415128770705127}
   - component: {fileID: 8617906192698219966}
@@ -24636,8 +24636,8 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!135 &13580392
-SphereCollider:
+--- !u!136 &2601718773316155501
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -24646,9 +24646,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 8.49
-  m_Center: {x: 0, y: 8.4, z: -0.6}
+  m_Radius: 10
+  m_Height: 20
+  m_Direction: 1
+  m_Center: {x: 0, y: 8, z: 0}
 --- !u!54 &5480392
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -24710,6 +24711,7 @@ MonoBehaviour:
   actionInProgress: 0
   Target: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 0}
+  EquipmentManager: {fileID: 0}
   _health: 10
   HealtBar: {fileID: 0}
   AttackTime: 3
@@ -24722,6 +24724,7 @@ MonoBehaviour:
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 2100000, guid: 78d88e566e5f7b14aaa719c52b23bd6c, type: 2}
   Animator: {fileID: 0}
+  SpeedAnimationThreshold: 0
   IrritationMeter: 0
   IrritaionTolerance: 50
   provokeDistance: 8

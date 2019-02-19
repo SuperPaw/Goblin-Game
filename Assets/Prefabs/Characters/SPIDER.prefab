@@ -1784,11 +1784,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 400108}
-  - component: {fileID: 11100000}
   - component: {fileID: 54439931233717000}
   - component: {fileID: 114311055515310312}
   - component: {fileID: 136731165325136334}
   - component: {fileID: 195416299030006310}
+  - component: {fileID: 2540776658341829585}
   m_Layer: 0
   m_Name: SPIDER
   m_TagString: Enemy
@@ -1811,28 +1811,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &11100000
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100108}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Animation: {fileID: 7400002, guid: 130cac6b96af6214296215324b5da188, type: 3}
-  m_Animations:
-  - {fileID: 7400002, guid: 130cac6b96af6214296215324b5da188, type: 3}
-  - {fileID: 7400004, guid: 130cac6b96af6214296215324b5da188, type: 3}
-  - {fileID: 7400006, guid: 130cac6b96af6214296215324b5da188, type: 3}
-  - {fileID: 7400008, guid: 130cac6b96af6214296215324b5da188, type: 3}
-  - {fileID: 7400010, guid: 130cac6b96af6214296215324b5da188, type: 3}
-  - {fileID: 7400012, guid: 130cac6b96af6214296215324b5da188, type: 3}
-  - {fileID: 7400014, guid: 130cac6b96af6214296215324b5da188, type: 3}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 1
 --- !u!54 &54439931233717000
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1894,6 +1872,7 @@ MonoBehaviour:
   actionInProgress: 0
   Target: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 0}
+  EquipmentManager: {fileID: 0}
   _health: 10
   HealtBar: {fileID: 0}
   AttackTime: 3
@@ -1905,6 +1884,8 @@ MonoBehaviour:
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 2100000, guid: 78d88e566e5f7b14aaa719c52b23bd6c, type: 2}
+  Animator: {fileID: 0}
+  SpeedAnimationThreshold: 0
   IrritationMeter: 0
   IrritaionTolerance: 50
   provokeDistance: 8
@@ -1945,6 +1926,25 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &2540776658341829585
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100108}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cb4e35bc64017754fb272a5ddf812e60, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1742740103934289522
 GameObject:
   m_ObjectHideFlags: 0

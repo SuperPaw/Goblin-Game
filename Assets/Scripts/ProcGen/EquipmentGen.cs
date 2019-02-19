@@ -43,16 +43,16 @@ public class EquipmentGen : MonoBehaviour
     public struct LocationType
     {
         public Equipment.EquipLocations Location;
-        public string[] Type;
+        public Equipment.EquipmentType[] Type;
 
-        public LocationType(Equipment.EquipLocations loc, string[] type)
+        public LocationType(Equipment.EquipLocations loc, Equipment.EquipmentType[] type)
         {
             Location = loc;
             Type = type;
         }
 
 
-        public string GetClothes()
+        public Equipment.EquipmentType GetClothes()
         {
             return Type[Random.Range(0, Type.Length)];
         }
@@ -85,11 +85,11 @@ public class EquipmentGen : MonoBehaviour
 
     private List<LocationType> LocationDescriptions = new List<LocationType>()
     {
-        new LocationType(Equipment.EquipLocations.Hands,new []{"gloves"}),
-        new LocationType(Equipment.EquipLocations.Head,new []{"hat","helmet"}),
-        new LocationType(Equipment.EquipLocations.Torso,new []{"shirt","armor","vest"}),
-        new LocationType(Equipment.EquipLocations.Weapon,new []{"club","stick","sword"}),
-        new LocationType(Equipment.EquipLocations.Feet,new []{"boots","shoes"}),
+        new LocationType(Equipment.EquipLocations.Hands,new []{Equipment.EquipmentType.Gloves}),
+        new LocationType(Equipment.EquipLocations.Head,new []{Equipment.EquipmentType.Skull,Equipment.EquipmentType.Cap}),
+        new LocationType(Equipment.EquipLocations.Torso,new []{Equipment.EquipmentType.Shirt,Equipment.EquipmentType.Armor,Equipment.EquipmentType.Cloth}),
+        new LocationType(Equipment.EquipLocations.Weapon,new []{Equipment.EquipmentType.Stick,Equipment.EquipmentType.Sword}),
+        new LocationType(Equipment.EquipLocations.Feet,new []{Equipment.EquipmentType.Boots,Equipment.EquipmentType.Shoes}),
     };
 
     //TODO: create likely stat associations for types. Like damage -> weapon. 
@@ -117,6 +117,9 @@ public class EquipmentGen : MonoBehaviour
         var equip = Instantiate<Equipment>(Instance.EquipmentPrefab);
 
         equip.EquipLocation = (Equipment.EquipLocations) Random.Range(0, (int) Equipment.EquipLocations.COUNT);
+
+        equip.Type = Instance.LocationDescriptions.First(loc => loc.Location == equip.EquipLocation).GetClothes();
+
 
         var amountOfAttributtes = Random.Range(1, 4);
         
@@ -153,8 +156,7 @@ public class EquipmentGen : MonoBehaviour
         //NAME GENERATION
         if (Random.value < 0.5f)
         {
-            equip.name = ((originRace == Character.Race.NoRace) ? "" : originRace + " ") + Instance.LocationDescriptions
-                             .First(loc => loc.Location == equip.EquipLocation).GetClothes();
+            equip.name = ((originRace == Character.Race.NoRace) ? "" : originRace + " ") + equip.Type;
 
             equip.name = Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, false) + " " +
                          equip.name;
@@ -169,7 +171,7 @@ public class EquipmentGen : MonoBehaviour
         }
         else
         {
-            equip.name = ((originRace == Character.Race.NoRace) ? "" : originRace + " ") + Instance.LocationDescriptions.First(loc => loc.Location == equip.EquipLocation).GetClothes();
+            equip.name = ((originRace == Character.Race.NoRace) ? "" : originRace + " ") + equip.Type;
 
             equip.name = Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, true) + " " + equip.name;
 

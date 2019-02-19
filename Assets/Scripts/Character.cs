@@ -174,6 +174,7 @@ public abstract class Character : MonoBehaviour
     public Vector3 Target;
     public NavMeshAgent navMeshAgent;
 
+    public EquipmentManager EquipmentManager;
     public Dictionary<Equipment.EquipLocations,Equipment> Equipped = new Dictionary<Equipment.EquipLocations, Equipment>();
 
     private Character _attackTarget;
@@ -262,7 +263,17 @@ public abstract class Character : MonoBehaviour
     public class DeathEvent : UnityEvent<Character> { }
     public  DeathEvent OnDeath = new DeathEvent();
 
+    [Header("Animation")]
     public Animator Animator;
+    public float SpeedAnimationThreshold;
+
+    private const string FLEE_ANIMATION_BOOL = "Fleeing";
+    private const string DEATH_ANIMATION_BOOL = "Dead";
+    private const string ATTACK_ANIMATION_BOOL = "Attacking";
+    private const string MOVE_ANIMATION_BOOL = "Walking";
+    private const string IDLE_ANIMATION_BOOL = "Idling";
+
+
     private Collider2D coll;
     private Coroutine _attackRoutine;
     private Hidable hiding;
@@ -347,7 +358,7 @@ public abstract class Character : MonoBehaviour
         if(!navMeshAgent)
             navMeshAgent = GetComponentInChildren<NavMeshAgent>();
 
-        navMeshAgent.speed = SPE.GetStatMax();
+        //navMeshAgent.speed = SPE.GetStatMax() /2f; Set in fixedupdate
         Morale = COU.GetStatMax();
 
         if(!navMeshAgent) Debug.LogWarning(name+ ": character does not have Nav Mesh Agent");
@@ -368,7 +379,7 @@ public abstract class Character : MonoBehaviour
         else if(InArea && !InArea.Visible() && MovementAudio && MovementAudio.isPlaying)
             MovementAudio.Stop();
 
-        navMeshAgent.speed = SPE.GetStatMax();
+        navMeshAgent.speed = SPE.GetStatMax() / 2f;
 
         //TODO: merge together with move's switch statement
         if (AttackTarget && AttackTarget.Alive() && InAttackRange()
@@ -392,6 +403,28 @@ public abstract class Character : MonoBehaviour
     {
         if (!Animator) return;
         
+        //Animator.SetFloat("Speed", navMeshAgent.desiredVelocity.magnitude);
+        
+        if (!Alive())
+        {
+            Animate(DEATH_ANIMATION_BOOL);
+        }
+        else if (Fleeing())
+        {
+            Animate(FLEE_ANIMATION_BOOL);
+        }
+        else if (_attackRoutine != null)
+        {
+            Animate(ATTACK_ANIMATION_BOOL);
+        }
+        else if (navMeshAgent.desiredVelocity.sqrMagnitude > SpeedAnimationThreshold)
+        {
+            Animate(MOVE_ANIMATION_BOOL);
+        }
+        else
+        {
+            Animate(IDLE_ANIMATION_BOOL);
+        }
     }
 
     /// <summary>
@@ -1068,4 +1101,22 @@ public abstract class Character : MonoBehaviour
         
         State = CharacterState.Hiding;
     }
+
+    private void Animate(string boolName)
+    {
+        DisableOtherAnimations(Animator, boolName);
+        Animator.SetBool(boolName, true);
+    }
+
+    private void DisableOtherAnimations(Animator animator, string animation)
+    {
+        foreach (AnimatorControllerParameter parameter in animator.parameters)
+        {
+            if (parameter.name != animation)
+            {
+                animator.SetBool(parameter.name, false);
+            }
+        }
+    }
+
 }

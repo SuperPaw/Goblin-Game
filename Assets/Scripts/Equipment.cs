@@ -12,6 +12,12 @@ public class Equipment : MonoBehaviour
         Head, Torso, Weapon, Hands,Feet,
         COUNT
     }
+
+    public enum EquipmentType
+    {
+        Gloves, Skull, Cap, Shirt, Armor, Cloth,  Stick, Sword, Boots, Shoes
+    }
+
     //public abstract class Effect{}
 
     [Serializable]
@@ -42,6 +48,7 @@ public class Equipment : MonoBehaviour
     public Sprite Model;
 
     public EquipLocations EquipLocation;
+    public EquipmentType Type;
 
     public List<StatEffect> Effects = new List<StatEffect>();
 
@@ -83,6 +90,10 @@ public class Equipment : MonoBehaviour
         }
 
         transform.parent = c.transform;
+
+        //if mapped to models
+        if (c.EquipmentManager)
+            c.EquipmentManager.Show(Type);
     }
 
     void DeEquip(Character c)
@@ -94,5 +105,8 @@ public class Equipment : MonoBehaviour
             if(st.Modifiers.Contains(fx.Modifier))
                 st.Modifiers.Remove(fx.Modifier);
         }
+        //if mapped to models
+        if(c.EquipmentManager)
+            c.EquipmentManager.Hide(Type);
     }
 }

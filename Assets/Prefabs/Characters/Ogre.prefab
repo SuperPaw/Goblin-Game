@@ -5239,10 +5239,10 @@ GameObject:
   m_Component:
   - component: {fileID: 925690162}
   - component: {fileID: 5825662565625797639}
-  - component: {fileID: 925690165}
   - component: {fileID: 925690164}
   - component: {fileID: 4784471807589823077}
   - component: {fileID: 4456687315143079690}
+  - component: {fileID: 7185190104662268003}
   m_Layer: 0
   m_Name: Ogre
   m_TagString: Enemy
@@ -5310,6 +5310,7 @@ MonoBehaviour:
   actionInProgress: 0
   Target: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 4784471807589823077}
+  EquipmentManager: {fileID: 0}
   _health: 10
   HealtBar: {fileID: 6218830197331520736}
   AttackTime: 2
@@ -5321,24 +5322,12 @@ MonoBehaviour:
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 2100000, guid: ec7b940140fe1fd48b9583049be0fe7b, type: 2}
-  Animator: {fileID: 0}
+  Animator: {fileID: 4456687315143079690}
+  SpeedAnimationThreshold: 0
   IrritationMeter: 0
   IrritaionTolerance: 75
   provokeDistance: 10
   InArea: {fileID: 0}
---- !u!135 &925690165
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 925690161}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 10
-  m_Center: {x: 0, y: 10, z: -1.2071486}
 --- !u!54 &925690164
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5396,6 +5385,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &7185190104662268003
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925690161}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 10
+  m_Height: 40
+  m_Direction: 1
+  m_Center: {x: 0, y: 10, z: 0}
 --- !u!1 &926623052
 GameObject:
   m_ObjectHideFlags: 0

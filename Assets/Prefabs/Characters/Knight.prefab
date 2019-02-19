@@ -2944,7 +2944,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4445584750326018}
-  - component: {fileID: 95825326649134560}
   - component: {fileID: 114479280790955412}
   - component: {fileID: 54649803752173894}
   - component: {fileID: 136331229541643926}
@@ -2971,25 +2970,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &95825326649134560
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969145986120274}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: ffaf641b210f5ea41952cf36f1379d66, type: 3}
-  m_Controller: {fileID: 9100000, guid: 275d021b988249d4e82293cc964c2ca9, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114479280790955412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3035,6 +3015,7 @@ MonoBehaviour:
   actionInProgress: 0
   Target: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 0}
+  EquipmentManager: {fileID: 0}
   _health: 10
   HealtBar: {fileID: 0}
   AttackTime: 2
@@ -3046,7 +3027,8 @@ MonoBehaviour:
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 0}
-  Animator: {fileID: 0}
+  Animator: {fileID: 8597391727556489719}
+  SpeedAnimationThreshold: 0
   IrritationMeter: 0
   IrritaionTolerance: 50
   provokeDistance: 10
@@ -3112,6 +3094,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8858414171983885322}
+  - component: {fileID: 8597391727556489719}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -3140,6 +3123,25 @@ Transform:
   m_Father: {fileID: 957100490109666006}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &8597391727556489719
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037381419520415525}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 45251441538fd87439ccb24fc0e3c6b4, type: 3}
+  m_Controller: {fileID: 9100000, guid: dad1b18695e08c049b903320225f229a, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1229580513527587397
 GameObject:
   m_ObjectHideFlags: 0

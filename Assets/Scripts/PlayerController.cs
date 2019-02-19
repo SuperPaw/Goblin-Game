@@ -321,15 +321,21 @@ public class PlayerController : MonoBehaviour
         var target = a.transform.position;//hit.point;
         target.y = 0;
 
-        if (!Team.Leader.InArea.Neighbours.Contains(a))
+        if (a == Team.Leader.InArea && Team.Leader.Travelling())
+        {
+            Team.Move(a);
+        }
+        else if (!Team.Leader.InArea.Neighbours.Contains(a))
         {
             Debug.LogWarning("Not possible to move to " + a + " from " + Team.Leader.InArea);
             return;
         }
-
-        Team.LeaderShout(MoveOrder);
-
-        Team.Move(a);
+        else
+        {
+            Team.LeaderShout(MoveOrder);
+            
+            Team.Move(a);
+        }
     }
 
     public static void UpdateFog()
