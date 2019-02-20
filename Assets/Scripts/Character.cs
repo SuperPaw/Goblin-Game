@@ -382,7 +382,7 @@ public abstract class Character : MonoBehaviour
         navMeshAgent.speed = SPE.GetStatMax() / 2f;
 
         //TODO: merge together with move's switch statement
-        if (AttackTarget && AttackTarget.Alive() && InAttackRange()
+        if (Attacking() && AttackTarget && AttackTarget.Alive() && InAttackRange()
         ) //has live enemy target and in attackrange
         {
             navMeshAgent.isStopped = true;
@@ -1024,28 +1024,29 @@ public abstract class Character : MonoBehaviour
 
         if (tag == "Player")
             PopUpText.ShowText(name + " is dead");
-        else //loot handling
-        {
-            var loot = gameObject.AddComponent<Lootable>();
 
-            loot.ContainsLoot = false;
+        //LOOT CREATIONS
+        var loot = gameObject.AddComponent<Lootable>();
+
+        loot.ContainsLoot = false;
+        if (CharacterRace != Race.Goblin)
+        {
             loot.ContainsFood = true;
 
             loot.Food = CharacterRace + " " + NameGenerator.GetFoodName();
-
-            var removeEquip = Equipped.Values.Where(e => e).ToArray();
-            
-            foreach (var eq in removeEquip)
-            {
-                RemoveEquipment(eq);
-
-                loot.EquipmentLoot.Add(eq);
-
-                eq.transform.parent = loot.transform.parent;
-            }
-
-            InArea.Lootables.Add(loot);
         }
+        var removeEquip = Equipped.Values.Where(e => e).ToArray();
+            
+        foreach (var eq in removeEquip)
+        {
+            RemoveEquipment(eq);
+
+            loot.EquipmentLoot.Add(eq);
+
+            eq.transform.parent = loot.transform.parent;
+        }
+
+        InArea.Lootables.Add(loot);
 
         //TODO: check if this create problems:
         navMeshAgent.enabled = false;

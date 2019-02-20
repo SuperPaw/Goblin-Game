@@ -24701,8 +24701,8 @@ MonoBehaviour:
   CouMax: 50
   HeaMin: 10
   HeaMax: 10
-  SpeMin: 7
-  SpeMax: 7
+  SpeMin: 8
+  SpeMax: 8
   SmaMin: 5
   SmaMax: 5
   idleDistance: 4
@@ -24723,7 +24723,7 @@ MonoBehaviour:
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 2100000, guid: 78d88e566e5f7b14aaa719c52b23bd6c, type: 2}
-  Animator: {fileID: 0}
+  Animator: {fileID: 9573564}
   SpeedAnimationThreshold: 0
   IrritationMeter: 0
   IrritaionTolerance: 50
