@@ -2,11 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Experimental.PlayerLoop;
-using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 public class MapGenerator : MonoBehaviour
@@ -54,8 +50,9 @@ public class MapGenerator : MonoBehaviour
     public LocalNavMeshBuilder MeshBuilder; 
     public GameObject[] Npcs;
     public GameObject[] HidableObjects;
-    public GameObject ForestHolder, AreaHolder;
+    public GameObject ForestHolder, AreaHolder, TileHolder;
     public GameObject Forest;
+    public GameObject TileArtObject;
     public GameObject[] LootObjects;
     public PointOfInterest[] PointOfInterestPrefabs;
     public int PointOfInterests;
@@ -321,6 +318,26 @@ public class MapGenerator : MonoBehaviour
 
         }
 
+        //creating ground tiles
+        foreach (var tile in map)
+        {
+            //TODO: no grass under trees, different if in area
+
+            GameObject next = Instantiate(TileArtObject, TileHolder.transform);
+            
+            next.name = "Tile " + tile.X + "," + tile.Y;
+
+            //TODO:check 
+            next.transform.position = new Vector3(tile.X, 0, tile.Y);
+            
+            int loc = (++progress * 100) / totalProgress;
+            if (loc != progressPct)
+            {
+                progressPct = loc;
+                yield return null;
+                progressCallback(progressPct, "Craeting gorund...");
+            }
+        }
 
         //INSTANTIATING MAP
         //y=1 for tree height

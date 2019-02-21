@@ -3030,7 +3030,7 @@ MonoBehaviour:
   Animator: {fileID: 8597391727556489719}
   SpeedAnimationThreshold: 0
   IrritationMeter: 0
-  IrritaionTolerance: 50
+  IrritaionTolerance: 100
   provokeDistance: 10
   InArea: {fileID: 0}
 --- !u!54 &54649803752173894

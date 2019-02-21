@@ -19,6 +19,6 @@ public class GoblinListEntry : MonoBehaviour
 
     public void MarkAsDead()
     {
-        ClassImage.sprite = DeadGoblinSprite;
+        if(ClassImage) ClassImage.sprite = DeadGoblinSprite;
     }
 }

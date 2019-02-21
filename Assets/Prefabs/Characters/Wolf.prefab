@@ -24597,7 +24597,7 @@ GameObject:
   - component: {fileID: 8617906192698219966}
   m_Layer: 0
   m_Name: Wolf
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24713,7 +24713,7 @@ MonoBehaviour:
   navMeshAgent: {fileID: 0}
   EquipmentManager: {fileID: 0}
   _health: 10
-  HealtBar: {fileID: 0}
+  HealtBar: {fileID: 5668572928229546375}
   AttackTime: 3
   MoralLossModifier: 1
   MoralLossOnFriendDeath: 5
