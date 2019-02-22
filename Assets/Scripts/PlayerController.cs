@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     public float ZoomMinBound= 2;
     public float ZoomMaxBound = 50;
     public float ZoomSpeed;
+    public float PcZoomSpeed;
     public static Goblin FollowGoblin;
 
     public Renderer FogOfWar;
@@ -109,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleMouseKeys()
     {
-        Zoom(Input.mouseScrollDelta.y);
+        Zoom(Input.mouseScrollDelta.y, false);
 
         if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
         {
@@ -176,7 +177,7 @@ public class PlayerController : MonoBehaviour
                     float oldDistance = Vector2.Distance(lastZoomPositions[0], lastZoomPositions[1]);
                     float offset = newDistance - oldDistance;
 
-                    Zoom(offset);
+                    Zoom(offset, true);
 
                     lastZoomPositions = newPositions;
                 }
@@ -523,11 +524,11 @@ public class PlayerController : MonoBehaviour
     }
 
     //TODO: move top camera controller
-    public void Zoom(float deltaMagnitudeDiff)
+    public void Zoom(float deltaMagnitudeDiff, bool touch)
     {
         if(Math.Abs(deltaMagnitudeDiff) < 0.001) return;
 
-        Cam.orthographicSize -= deltaMagnitudeDiff * ZoomSpeed;
+        Cam.orthographicSize -= deltaMagnitudeDiff * (touch ?  ZoomSpeed: PcZoomSpeed);
         // set min and max value of Clamp function upon your requirement
         Cam.orthographicSize = Mathf.Clamp(Cam.orthographicSize, ZoomMinBound, ZoomMaxBound);
     }

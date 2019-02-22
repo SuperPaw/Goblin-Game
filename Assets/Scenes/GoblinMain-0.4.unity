@@ -476,6 +476,7 @@ MonoBehaviour:
   ZoomMinBound: 2
   ZoomMaxBound: 35
   ZoomSpeed: 0.025
+  PcZoomSpeed: 3
   FogOfWar: {fileID: 151457449}
   MoveTime: 0.75
   MoveCurve:

@@ -366,10 +366,11 @@ public abstract class Character : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        if(!Alive() || !GameManager.Instance.GameStarted)
+        HandleAnimation();
+
+        if (!Alive() || !GameManager.Instance.GameStarted)
             return;
         
-        HandleAnimation();
 
         //if (InArea && HolderGameObject)
         //    HolderGameObject.SetActive(InArea.Visible());

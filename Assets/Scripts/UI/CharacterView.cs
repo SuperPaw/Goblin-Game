@@ -176,9 +176,12 @@ public class CharacterView : MenuWindow
             foreach (var ob in generatedObjects)
             {
                 var s =ob.GetComponent<StatEntry>();
-                s.LevelUpStat.gameObject.SetActive(false);
-                if(s.Name.text == stat.Type.ToString())
-                    s.Value.text = stat.GetStatMax().ToString();
+                if (s)
+                {
+                    s.LevelUpStat.gameObject.SetActive(false);
+                    if (s.Name.text == stat.Type.ToString())
+                        s.Value.text = stat.GetStatMax().ToString();
+                }
             }
         
         GoblinUIList.UpdateGoblinList();
