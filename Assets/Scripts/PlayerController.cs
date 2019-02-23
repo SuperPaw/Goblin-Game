@@ -92,6 +92,9 @@ public class PlayerController : MonoBehaviour
         //maybe at larger interval
         if(FollowGoblin && camMoveRoutine == null)
             MoveToGoblin(FollowGoblin);
+
+        if (Instance && Instance.Team && GameManager.Instance.GameStarted)
+            Instance.UpdateFogOfWar();
     }
 
 
@@ -292,29 +295,9 @@ public class PlayerController : MonoBehaviour
         Cam.transform.position += moveDelta;
 
         FollowGoblin = null;
-        //Debug.Log("Draggingggg");
-
-        //// Determine how much to move the camera
-        //Vector3 offset = Cam.ScreenToViewportPoint(lastPanPosition - newPanPosition);
-        //Vector3 move = new Vector3(offset.x * PanSpeed, 0, offset.y * PanSpeed);
-
-        //// Perform the movement
-        //Cam.transform.Translate(move, Space.World);
         
-        //// Cache the position
-        //lastPanPosition = newPanPosition;
     }
-
-
-    //Vector3 GetPosOnPlane(Vector2 posOnViewport)
-    //{
-    //    Vector3 pt = new Vector3(posOnViewport.x, posOnViewport.y, 0);
-    //    Ray d = Cam.ViewportPointToRay(pt);
-    //    float t = (planePos.z - d.origin.z) / d.direction.z;
-    //    float x = d.direction.x * t + d.origin.x;
-    //    float y = d.direction.y * t + d.origin.y;
-    //    return new Vector3(x, y, planePos.z);
-    //}
+    
 
 
     private void ClickedArea(Area a)
@@ -355,6 +338,7 @@ public class PlayerController : MonoBehaviour
 
         var id = 1;
 
+        RemoveFogAtPos(Team.Leader.transform.position, id++);
         RemoveFogAtPos(Team.Leader.InArea.transform.position, id++);
         Team.Leader.InArea.RemoveFogOfWar(true);
         foreach (var n in Team.Leader.InArea.Neighbours)

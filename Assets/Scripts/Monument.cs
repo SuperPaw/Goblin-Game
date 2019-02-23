@@ -23,7 +23,7 @@ public class Monument : PointOfInterest
 
         for (int i = 0; i < zs; i++)
         {
-            var z = MapGenerator.GenerateCharacter(ZombiePrefab.gameObject, InArea, transform).GetComponent<Character>();
+            var z = MapGenerator.GenerateCharacter(ZombiePrefab.gameObject, InArea, NpcHolder.Instance.transform).GetComponent<Character>();
 
             z.ChangeState(Character.CharacterState.Attacking);
 

@@ -63,7 +63,6 @@ public class MapGenerator : MonoBehaviour
     public float EquipmentInLootChance = 0f;
 
     [Header("Character Generation")]
-    public GameObject NpcHolder;
     public int NpcsToGenerate;
     [Range(0, 20)]
     public int GoblinsToGenerate;
@@ -394,7 +393,7 @@ public class MapGenerator : MonoBehaviour
         for (int i = 0; i < NpcsToGenerate; i++)
         {
             //TODO: create a number of spawn positions and check their connectivity.
-            CreateEnemyCharacter(Npcs[Random.Range(0, Npcs.Length)], NpcHolder.transform,goblinStartArea);
+            CreateEnemyCharacter(Npcs[Random.Range(0, Npcs.Length)], NpcHolder.Instance.transform,goblinStartArea);
             
             progress += charFact;
 
