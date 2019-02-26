@@ -215,6 +215,7 @@
     <None Include="Assets\PostProcessing\Resources\Shaders\EyeAdaptation.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
     <None Include="Assets\PostProcessing\Resources\Shaders\ColorGrading.cginc" />
+    <None Include="Assets\Shaders\Diffuse-Shadow.shader" />
     <None Include="Assets\Imported\Goblins Pack\readme.txt" />
     <None Include="Assets\Music\Angels and Demons (free)\readme.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />

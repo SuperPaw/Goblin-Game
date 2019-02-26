@@ -716,9 +716,14 @@ public abstract class Character : MonoBehaviour
                             Speak(SoundBank.GoblinSound.Laugh);
                             dest = ctx.transform.position;
                         }
-                        else if (Wandering && Random.value < 0.3f)
+                        else if (Wandering)
                         {
-                            dest = InArea.GetClosestNeighbour(transform.position).GetRandomPosInArea();
+                            var goingTo = InArea.GetClosestNeighbour(transform.position);
+
+                            dest = goingTo.GetRandomPosInArea();
+
+                            goingTo.PresentCharacters.ForEach(c => StartCoroutine(c.SpotArrivalCheck(this)));
+
                         }
                         else
                             dest = InArea.GetRandomPosInArea();
@@ -732,20 +737,6 @@ public abstract class Character : MonoBehaviour
                     navMeshAgent.SetDestination(dest);//new Vector3(Random.Range(-idleDistance, idleDistance), 0,Random.Range(-idleDistance, idleDistance)));
 
                     Walking = Random.value < 0.75f;
-                }
-                //TODO: make check dependant on
-                else if (InArea && !InArea.AnyEnemies() && Random.value < 0.02f && !actionInProgress && Team && this as Goblin && (this as Goblin).ClassType == Goblin.Class.Scout && InArea.Neighbours.Any(a => a.AnyEnemies(true)))
-                {
-                    //TODO: check if this is removed again
-                    StartCoroutine(ActionInProgressUntill(() => this.InArea.AnyEnemies()));
-
-                    //PopUpText.ShowText(name + " see enemy come to our area!!");
-
-                    (this as Goblin).Shout("Enemy on way!!", SoundBank.GoblinSound.EnemyComing);
-
-                    var enm = InArea.Neighbours.First(a => a.AnyEnemies(true)).PresentCharacters.First(e => e.Wandering);
-
-                    enm.MoveTo(InArea);
                 }
                 //TODO: use a different method for activity selection than else if
                 else if (Random.value < 0.0025f && this as Goblin && Team
@@ -773,7 +764,7 @@ public abstract class Character : MonoBehaviour
                 }
                 break;
             case CharacterState.Attacking:
-                if (AttackTarget && AttackTarget.Alive())
+                if (AttackTarget && AttackTarget.Alive() && AttackTarget.InArea == InArea)
                 {
                     navMeshAgent.SetDestination(AttackTarget.transform.position);
 
@@ -979,6 +970,16 @@ public abstract class Character : MonoBehaviour
                 break;
         }
 
+    }
+
+    private IEnumerator SpotArrivalCheck(Character character)
+    {
+        yield return new WaitForSeconds(Random.Range(0.5f,3f));
+
+        //if enemy and not fleeing or fighting and attentive enough
+        //TODO: double up chance as scout
+        if(!InArea.AnyEnemies() && this as Goblin &! Fleeing() &! Hiding() && Alive() &! Attacking() && character.tag == "Enemy" && Random.Range(0,15)< ATT.GetStatMax())
+            (this as Goblin).Shout("Enemy on way!!", SoundBank.GoblinSound.EnemyComing);
     }
 
     private IEnumerator ActionInProgressUntill(Func<bool> p)
