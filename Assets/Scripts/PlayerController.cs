@@ -526,7 +526,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator MoveCamera(Transform loc)
     {
         //currentLocation = loc;
-        var offset = 47;
+        var offset = 49;
 
         var start = Cam.transform.position;
         var startSize = Cam.orthographicSize;

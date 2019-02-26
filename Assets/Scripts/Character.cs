@@ -267,6 +267,10 @@ public abstract class Character : MonoBehaviour
     public Animator Animator;
     public float SpeedAnimationThreshold;
 
+    private Vector2 smoothDeltaPosition = Vector2.zero;
+    private Vector2 velocity = Vector2.zero;
+
+
     private const string FLEE_ANIMATION_BOOL = "Fleeing";
     private const string DEATH_ANIMATION_BOOL = "Dead";
     private const string ATTACK_ANIMATION_BOOL = "Attacking";
@@ -403,9 +407,33 @@ public abstract class Character : MonoBehaviour
     private void HandleAnimation()
     {
         if (!Animator) return;
-        
+
         //Animator.SetFloat("Speed", navMeshAgent.desiredVelocity.magnitude);
-        
+
+        Vector3 worldDeltaPosition = navMeshAgent.nextPosition - transform.position;
+
+        // Map 'worldDeltaPosition' to local space
+        float dx = Vector3.Dot(transform.right, worldDeltaPosition);
+        float dy = Vector3.Dot(transform.forward, worldDeltaPosition);
+        Vector2 deltaPosition = new Vector2(dx, dy);
+
+        // Low-pass filter the deltaMove
+        float smooth = Mathf.Min(1.0f, Time.deltaTime / 0.15f);
+        smoothDeltaPosition = Vector2.Lerp(smoothDeltaPosition, deltaPosition, smooth);
+
+        // Update velocity if time advances
+        if (Time.deltaTime > 1e-5f)
+            velocity = smoothDeltaPosition / Time.deltaTime;
+
+        bool shouldMove = velocity.magnitude > 0.5f && navMeshAgent.remainingDistance > navMeshAgent.radius;
+
+        // Update animation parameters
+        //Animator.SetBool("move", shouldMove);
+        Animator.SetFloat("velx", velocity.x);
+        Animator.SetFloat("vely", velocity.y);
+
+        //GetComponent<LookAt>().lookAtTargetPosition = agent.steeringTarget + transform.forward;
+
         if (!Alive())
         {
             Animate(DEATH_ANIMATION_BOOL);
