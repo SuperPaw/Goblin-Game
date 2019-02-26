@@ -979,7 +979,7 @@ public abstract class Character : MonoBehaviour
         //if enemy and not fleeing or fighting and attentive enough
         //TODO: double up chance as scout
         if(!InArea.AnyEnemies() && this as Goblin &! Fleeing() &! Hiding() && Alive() &! Attacking() && character.tag == "Enemy" && Random.Range(0,15)< ATT.GetStatMax())
-            (this as Goblin).Shout("Enemy on way!!", SoundBank.GoblinSound.EnemyComing);
+            (this as Goblin).Shout("I see enemy!!", SoundBank.GoblinSound.EnemyComing);
     }
 
     private IEnumerator ActionInProgressUntill(Func<bool> p)
