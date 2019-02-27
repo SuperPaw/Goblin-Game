@@ -13,8 +13,6 @@ public class Goblin : Character
     //consider removing to Character
     //meaning how often they notice what other are doing
     //0-10
-    public int Awareness;
-    
     public GoblinWarrens Warrens;
 
     public Image ChiefImage;
@@ -88,9 +86,7 @@ public class Goblin : Character
         
 
         emission = particles.emission;
-
-        Awareness = ATT.GetStatMax();
-
+        
         //TODO: make better or remove
         //StartCoroutine(AwarenessLoop());
 
@@ -183,28 +179,6 @@ public class Goblin : Character
         }
     }
 
-    private IEnumerator AwarenessLoop()
-    {
-        while (true && Alive())
-        {
-            yield return new WaitForSeconds(Mathf.Max(1, 10 - Awareness));
-
-            CheckWhatOthersAreDoing();
-        }
-    }
-    
-
-    private void CheckWhatOthersAreDoing()
-    {
-        if (!Team || !Alive())
-            return;
-        //these could also all be more random dependant on Awareness
-
-        //Debug.Log("checking leader distance ");
-
-        // -------------- CHECK FOR LEADER DISTANCE AND MOVE TO HIM -----------------
-    }
-    
     //TODO: use struct to combine text to sound
     public void Shout(string speech, SoundBank.GoblinSound goblinSound)//, bool interrupt = false)
     {
