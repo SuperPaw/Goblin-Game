@@ -4984,7 +4984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ViewHolder: {fileID: 4465102889148940124}
-  Type: 0
+  Type: 1
   OptionButtonEntry: {fileID: 735776988543355241}
   DescriptionText: {fileID: 357307195679451061}
 --- !u!223 &3009271196541506630
@@ -7203,7 +7203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ViewHolder: {fileID: 494377190302849761}
-  Type: 0
+  Type: 2
   ShowingVillage: {fileID: 0}
   BuyFoodButton: {fileID: 490538205410296753}
   BuyGobboButton: {fileID: 7105049460717573468}
@@ -10647,7 +10647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ViewHolder: {fileID: 3597075979957352891}
-  Type: 0
+  Type: 2
   Monument: {fileID: 0}
   SacFoodButton: {fileID: 4098886091118068092}
   SacTreasureButton: {fileID: 8023087959441451614}

@@ -65,6 +65,7 @@
     <Compile Include="Assets\Imported\Knight\scripts\rotator.cs" />
     <Compile Include="Assets\Imported\LowPoly Fantasy Monsters Pack Ver1.0_Demo\Environment\Scripts\Move.cs" />
     <Compile Include="Assets\Imported\LowPoly Fantasy Monsters Pack Ver1.0_Demo\Environment\Scripts\PointLight.cs" />
+    <Compile Include="Assets\OrderInLayerHack.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
