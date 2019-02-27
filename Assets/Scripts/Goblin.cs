@@ -163,7 +163,7 @@ public class Goblin : Character
             case Class.Swarmer:
                 MoralLossModifier = 0.5f;
                 DMG.Modifiers.Add(new Stat.StatMod("Swarmer",2));
-                ATT.Modifiers.Add(new Stat.StatMod("Swarmer", -1));
+                SMA.Modifiers.Add(new Stat.StatMod("Swarmer", -1));
                 break;
             case Class.Shooter:
                 AttackRange *= 5;

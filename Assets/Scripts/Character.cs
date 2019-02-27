@@ -119,7 +119,7 @@ public abstract class Character : MonoBehaviour
     [Serializable]
     public enum StatType
     {
-        DAMAGE, AIM, ATTENTION, COURAGE, HEALTH, SPEED
+        DAMAGE, AIM, ATTENTION, COURAGE, HEALTH, SPEED, SMARTS
         , COUNT
     }
 
@@ -132,6 +132,7 @@ public abstract class Character : MonoBehaviour
     public Stat COU;
     public Stat HEA;
     public Stat SPE;
+    public Stat SMA;
     [SerializeField]
     public Dictionary<StatType,Stat> Stats;
 
@@ -146,7 +147,9 @@ public abstract class Character : MonoBehaviour
         HeaMin,
         HeaMax,
         SpeMin,
-        SpeMax;
+        SpeMax,
+        SmaMin,
+        SmaMax;
 
 
     [Header("Movement")]
@@ -335,7 +338,8 @@ public abstract class Character : MonoBehaviour
         ATT = new Stat(StatType.ATTENTION, Random.Range(AttMin, AttMax));
         COU = new Stat(StatType.COURAGE, Random.Range(CouMin, CouMax));
         SPE = new Stat(StatType.SPEED, Random.Range(SpeMin, SpeMax));
-        Stats = new List<Stat>() {DMG,AIM,ATT,COU,SPE}.ToDictionary(s=> s.Type);
+        SMA = new Stat(StatType.SMARTS, Random.Range(SmaMin, SmaMax));
+        Stats = new List<Stat>() {DMG,AIM,ATT,COU,SPE,SMA}.ToDictionary(s=> s.Type);
 
         //Health is a special case
         HEA = new Stat(StatType.HEALTH, Random.Range(HeaMin, HeaMax));
