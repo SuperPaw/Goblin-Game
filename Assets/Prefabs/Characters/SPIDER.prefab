@@ -1884,7 +1884,7 @@ MonoBehaviour:
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 2100000, guid: 78d88e566e5f7b14aaa719c52b23bd6c, type: 2}
-  Animator: {fileID: 0}
+  Animator: {fileID: 2540776658341829585}
   SpeedAnimationThreshold: 0
   IrritationMeter: 0
   IrritaionTolerance: 50
@@ -1935,7 +1935,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100108}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 130cac6b96af6214296215324b5da188, type: 3}
   m_Controller: {fileID: 9100000, guid: cb4e35bc64017754fb272a5ddf812e60, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0

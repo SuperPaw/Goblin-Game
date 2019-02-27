@@ -21,7 +21,6 @@
 		LOD 200
 		Cull Off
 		Lighting On
-		ZWrite Off
 
 		CGPROGRAM
 #pragma surface surf Lambert addshadow alphatest:_Cutoff
