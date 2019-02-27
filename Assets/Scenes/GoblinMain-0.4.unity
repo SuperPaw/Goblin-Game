@@ -655,6 +655,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
+      propertyPath: Npcs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 3}
       propertyPath: NpcHolder
       value: 
       objectReference: {fileID: 71002400}
