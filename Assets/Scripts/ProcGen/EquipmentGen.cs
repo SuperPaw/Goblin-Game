@@ -68,7 +68,6 @@ public class EquipmentGen : MonoBehaviour
         new AttributeDescription(Character.StatType.COURAGE, new []{"Great","Slave"},new []{"Guts","Great-Goblin"}),
         new AttributeDescription(Character.StatType.HEALTH, new []{"Strong","Thick"},new []{"Stomach","Blood"}),
         new AttributeDescription(Character.StatType.SPEED, new []{"Painted", "Quick"},new []{"Toes","Speed"}),
-        new AttributeDescription(Character.StatType.SMARTS, new []{"Smart","Brain"},new []{"Magic","Big-Brain","Head"}),
     };
 
 
@@ -80,7 +79,6 @@ public class EquipmentGen : MonoBehaviour
         new AttributeDescription(Character.StatType.COURAGE, new []{"Yellow","Insecure"},new []{"Surrender"}),
         new AttributeDescription(Character.StatType.HEALTH, new []{"Weak", "Pale"},new []{"Sick","Irritation"}),
         new AttributeDescription(Character.StatType.SPEED, new []{"Slow","Broken"},new []{"Wait","Lazy"}),
-        new AttributeDescription(Character.StatType.SMARTS, new []{"Stupid","Cursed"},new []{"Dumb","Idiots"}),
     };
 
     private List<LocationType> LocationDescriptions = new List<LocationType>()
