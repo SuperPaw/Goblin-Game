@@ -10,7 +10,7 @@ public class CharacterView : MenuWindow
 {
     public StatEntry XpTextEntry;
     public StatEntry HealthTextEntry;
-    public StatEntry RightTextEntry;
+    public StatEntry LftTextEntry,RgtTextEntry;
     public TextMeshProUGUI Name;
     public TextMeshProUGUI ClassLevelText;
     public TextMeshProUGUI EquipmentInfo;
@@ -83,11 +83,14 @@ public class CharacterView : MenuWindow
         ClassIcon.image.sprite = GameManager.GetClassImage(c.ClassType);
         ClassIcon.GetComponent<OnValueHover>().Class = c.ClassType;
 
-
+        int lr = 0;
         //TODO: update current stats instead replacing
         foreach (var stat in c.Stats.Values)
         {
-            var entry = Instantiate(RightTextEntry, RightTextEntry.transform.parent);
+            var preEntry = lr++ % 2 == 0 ? LftTextEntry : RgtTextEntry;
+
+
+            var entry = Instantiate(preEntry, preEntry.transform.parent);
             entry.Name.text = stat.Type.ToString();
             entry.Value.text = stat.GetStatMax().ToString();
             entry.gameObject.SetActive(true);
