@@ -182,7 +182,7 @@ public class Goblin : Character
     //TODO: use struct to combine text to sound
     public void Shout(string speech, SoundBank.GoblinSound goblinSound)//, bool interrupt = false)
     {
-        if (Fleeing())
+        if (Fleeing() &! Team)
             return;
 
 

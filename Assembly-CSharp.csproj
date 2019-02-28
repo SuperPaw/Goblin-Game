@@ -112,6 +112,7 @@
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
     <Compile Include="Assets\Scripts\Area.cs" />
     <Compile Include="Assets\Scripts\CampfireObject.cs" />
+    <Compile Include="Assets\Scripts\Cave.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
     <Compile Include="Assets\Scripts\DisableOnStart.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Assets\Scripts\Sun.cs" />
     <Compile Include="Assets\Scripts\UI\AttackIconSelector.cs" />
     <Compile Include="Assets\Scripts\UI\BigStoneView.cs" />
+    <Compile Include="Assets\Scripts\UI\CaveView.cs" />
     <Compile Include="Assets\Scripts\UI\CharacterView.cs" />
     <Compile Include="Assets\Scripts\UI\GrayscaleFilter.cs" />
     <Compile Include="Assets\Scripts\UI\LoadingScreen.cs" />

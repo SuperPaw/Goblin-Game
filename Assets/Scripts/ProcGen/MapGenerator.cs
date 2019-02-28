@@ -75,7 +75,7 @@ public class MapGenerator : MonoBehaviour
     {
         var progress = 0;
         var charFact = 25;
-        var areaFact = 50;
+        var areaFact = 2500;
         var poiFact = 1000;
         //could use factors on the two last to make them more important than each tiles
         var progressPct = 0;
@@ -92,8 +92,8 @@ public class MapGenerator : MonoBehaviour
         var amountOfLoot = AreasToCreate;//noOfAreasX * noOfAreasZ;
 
 
-        var totalProgress =  50000 +
-            //noOfAreasX*noOfAreasZ * areaFact
+        var totalProgress =  SizeX * SizeZ +
+            AreasToCreate * areaFact * 2
             + VillagesToGenerate * poiFact
             + PointOfInterests * poiFact
             + amountOfLoot
@@ -131,15 +131,6 @@ public class MapGenerator : MonoBehaviour
         
         Area center = CreateArea(new Vector3(SizeX / 2f, 0, SizeZ / 2f));
 
-        progress += areaFact;
-        int loca = (progress * 100) / totalProgress;
-        if (loca != progressPct)
-        {
-            progressPct = loca;
-            yield return null;
-            progressCallback(progressPct, "Creating areas");
-        }
-        
         //set up neighbors
         //CreateNeighboursFromArea(center);
         //var n = center.Neighbours.Count;
@@ -151,6 +142,17 @@ public class MapGenerator : MonoBehaviour
         var adj = AreaSize / 2f;
         for (int i = 0; i < AreasToCreate; i++)
         {
+
+            progress += areaFact;
+            int loca = (progress * 100) / totalProgress;
+            if (loca != progressPct)
+            {
+                progressPct = loca;
+                yield return null;
+                progressCallback(progressPct, "Creating areas");
+            }
+
+
             int tries = 0;
             int maxTries = 500;
             yield return null;
@@ -264,7 +266,9 @@ public class MapGenerator : MonoBehaviour
             while (area.PointOfInterest || area == goblinStartArea)
                 area = GetRandomArea();
 
-            var next = Instantiate(PointOfInterestPrefabs[Random.Range(0,PointOfInterestPrefabs.Length)]); //TODO: generate village name
+            var x = i % PointOfInterestPrefabs.Length;
+
+            var next = Instantiate(PointOfInterestPrefabs[x]); //TODO: generate village name
 
             //keeping y position
             next.transform.position = new Vector3(area.transform.position.x, next.transform.position.y, area.transform.position.z);
@@ -452,7 +456,7 @@ public class MapGenerator : MonoBehaviour
 
         }
 
-        CreateTreeBorder(8);
+        CreateTreeBorder(25);
 
         yield return null;
 

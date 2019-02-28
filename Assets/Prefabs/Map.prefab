@@ -75,13 +75,14 @@ MonoBehaviour:
   - {fileID: 1910571166180590, guid: ee5830f18c2be1244bb0fa764c0769a1, type: 3}
   PointOfInterestPrefabs:
   - {fileID: 1510720524141754411, guid: 7cde1fc3eeb07ab41add50d71da38d93, type: 3}
+  - {fileID: 909367182681320238, guid: 69c2564b5439e0a4892a9240f5182bcc, type: 3}
   PointOfInterests: 4
   VillagesToGenerate: 2
   VillagePrefab: {fileID: 6920746842318355173, guid: 44755d817d47f524b8229f414246efa5,
     type: 3}
   GoblinsForSalePrVillage: 3
-  EquipmentInLootChance: 0
-  NpcsToGenerate: 16
+  EquipmentInLootChance: 0.25
+  NpcsToGenerate: 40
   GoblinsToGenerate: 5
   DefaultCharacter: {fileID: 100702, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe, type: 3}
   GoblinTeam: {fileID: 0}

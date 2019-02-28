@@ -410,27 +410,27 @@ public abstract class Character : MonoBehaviour
 
         //Animator.SetFloat("Speed", navMeshAgent.desiredVelocity.magnitude);
 
-        Vector3 worldDeltaPosition = navMeshAgent.nextPosition - transform.position;
+        //Vector3 worldDeltaPosition = navMeshAgent.nextPosition - transform.position;
 
-        // Map 'worldDeltaPosition' to local space
-        float dx = Vector3.Dot(transform.right, worldDeltaPosition);
-        float dy = Vector3.Dot(transform.forward, worldDeltaPosition);
-        Vector2 deltaPosition = new Vector2(dx, dy);
+        //// Map 'worldDeltaPosition' to local space
+        //float dx = Vector3.Dot(transform.right, worldDeltaPosition);
+        //float dy = Vector3.Dot(transform.forward, worldDeltaPosition);
+        //Vector2 deltaPosition = new Vector2(dx, dy);
 
-        // Low-pass filter the deltaMove
-        float smooth = Mathf.Min(1.0f, Time.deltaTime / 0.15f);
-        smoothDeltaPosition = Vector2.Lerp(smoothDeltaPosition, deltaPosition, smooth);
+        //// Low-pass filter the deltaMove
+        //float smooth = Mathf.Min(1.0f, Time.deltaTime / 0.15f);
+        //smoothDeltaPosition = Vector2.Lerp(smoothDeltaPosition, deltaPosition, smooth);
 
-        // Update velocity if time advances
-        if (Time.deltaTime > 1e-5f)
-            velocity = smoothDeltaPosition / Time.deltaTime;
+        //// Update velocity if time advances
+        //if (Time.deltaTime > 1e-5f)
+        //    velocity = smoothDeltaPosition / Time.deltaTime;
 
-        bool shouldMove = velocity.magnitude > 0.5f && navMeshAgent.remainingDistance > navMeshAgent.radius;
+        //bool shouldMove = velocity.magnitude > 0.5f && navMeshAgent.remainingDistance > navMeshAgent.radius;
 
-        // Update animation parameters
-        //Animator.SetBool("move", shouldMove);
-        Animator.SetFloat("velx", velocity.x);
-        Animator.SetFloat("vely", velocity.y);
+        //// Update animation parameters
+        ////Animator.SetBool("move", shouldMove);
+        //Animator.SetFloat("velx", velocity.x);
+        //Animator.SetFloat("vely", velocity.y);
 
         //GetComponent<LookAt>().lookAtTargetPosition = agent.steeringTarget + transform.forward;
 
@@ -729,8 +729,12 @@ public abstract class Character : MonoBehaviour
 
                     if (InArea)
                     {
-                        if (GetClosestEnemy() &&
-                            InArea.PresentCharacters.Any(c => c.tag == tag && c.Alive() && c.Attacking()))
+                        if (GetClosestEnemy() 
+                            && ( //ANY friends fighting
+                            InArea.PresentCharacters.Any(c => c.tag == tag && c.Alive() && c.Attacking())
+                            // I am aggressive wanderer
+                            || (Wandering && InArea.PresentCharacters.Any(c => c.tag == "Player" &! c.Hiding()))
+                            ))
                         {
                             ChangeState(CharacterState.Attacking,true);
                             Target = GetClosestEnemy().transform.position;
@@ -752,6 +756,7 @@ public abstract class Character : MonoBehaviour
 
                             goingTo.PresentCharacters.ForEach(c => StartCoroutine(c.SpotArrivalCheck(this)));
 
+                            ChangeState(CharacterState.Travelling,true);
                         }
                         else
                             dest = InArea.GetRandomPosInArea();
@@ -1006,8 +1011,16 @@ public abstract class Character : MonoBehaviour
 
         //if enemy and not fleeing or fighting and attentive enough
         //TODO: double up chance as scout
-        if(!InArea.AnyEnemies() && this as Goblin &! Fleeing() &! Hiding() && Alive() &! Attacking() && character.tag == "Enemy" && Random.Range(0,15)< ATT.GetStatMax())
-            (this as Goblin).Shout("I see enemy!!", SoundBank.GoblinSound.EnemyComing);
+        if(!InArea.AnyEnemies() && this as Goblin &! Fleeing() &! Hiding() && Alive() &! Attacking() && character.tag == "Enemy" )
+        {
+            if (Random.Range(0, 15) < ATT.GetStatMax())
+                (this as Goblin).Shout("I see enemy!!", SoundBank.GoblinSound.EnemyComing);
+            else
+            {
+                Debug.Log(name + " failed enemy spoting");
+            }
+            
+        }
     }
 
     private IEnumerator ActionInProgressUntill(Func<bool> p)
@@ -1087,9 +1100,15 @@ public abstract class Character : MonoBehaviour
         if (Fleeing())
             return;
 
+        MoveTo(a.GetRandomPosInArea(),immedeately);
+    }
+
+    public void MoveTo(Vector3 t, bool immedeately = false)
+    {
         ChangeState(Character.CharacterState.Travelling, immedeately);
 
-        Target = a.GetRandomPosInArea();
+        Target = t;
+        Target = t;
 
         actionInProgress = true;
     }

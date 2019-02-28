@@ -249,6 +249,7 @@ public class PlayerController : MonoBehaviour
                 else
                     ClickedArea(v.InArea);
             }
+            //TODO: handle the point of interest click generally. Replace BigstoneView and CaveView with a Poi view?
             else if (hit.collider && hit.collider.GetComponent<Monument>())
             {
                 var monument = hit.collider.GetComponent<Monument>();
@@ -257,6 +258,15 @@ public class PlayerController : MonoBehaviour
                     BigStoneView.OpenStoneView(monument, Team);
                 else
                     ClickedArea(monument.InArea);
+            }
+            else if (hit.collider && hit.collider.GetComponent<Cave>())
+            {
+                var cave = hit.collider.GetComponent<Cave>();
+
+                if (cave.InArea.Visible())
+                    CaveView.OpenCaveView(cave, Team);
+                else
+                    ClickedArea(cave.InArea);
             }
             else if (hit.collider && hit.collider.GetComponent<Area>())
             {

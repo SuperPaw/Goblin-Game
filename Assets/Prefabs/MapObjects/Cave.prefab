@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4081050876500789283}
   - component: {fileID: 4526848622528733997}
-  - component: {fileID: 1518246160178354466}
   - component: {fileID: 3279508761785604338}
+  - component: {fileID: 909367182681320238}
   m_Layer: 0
-  m_Name: Warrens
+  m_Name: Cave
   m_TagString: Hidable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,26 +44,12 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 0
-  m_Extents: {x: 6, y: 1, z: 6}
+  m_Extents: {x: 5, y: 1, z: 5}
   m_MoveThreshold: 1
   m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!114 &1518246160178354466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6920746842318355173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81682c003697a7b4abed377af7baa1e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InArea: {fileID: 0}
-  Members: []
 --- !u!65 &3279508761785604338
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -75,8 +61,26 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10, y: 6, z: 10}
+  m_Size: {x: 9, y: 10, z: 8}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &909367182681320238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6920746842318355173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d307b0506f5d69847a166a3739fa89f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InArea: {fileID: 0}
+  MonsterPrefab: {fileID: 114311055515310312, guid: 8c00db5be83e04b4c88b073e10fba9b9,
+    type: 3}
+  Difficulty: 3
+  Prize: 5
+  Explored: 0
 --- !u!1 &8503355671099633675
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,13 +105,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8503355671099633675}
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 5, z: 4}
+  m_LocalScale: {x: 6, y: 7.5, z: 4}
   m_Children: []
   m_Father: {fileID: 4081050876500789283}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &3393623537601953334
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -145,7 +149,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b12336ffd95ef6c4a840e23d56f4d9da, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cfa70002af370824e9d00a455b135bcb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
