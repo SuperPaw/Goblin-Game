@@ -1013,7 +1013,7 @@ public abstract class Character : MonoBehaviour
         //TODO: double up chance as scout
         if(!InArea.AnyEnemies() && this as Goblin &! Fleeing() &! Hiding() && Alive() &! Attacking() && character.tag == "Enemy" )
         {
-            if (Random.Range(0, 15) < ATT.GetStatMax())
+            if (Random.Range(0, 12) < ATT.GetStatMax())
                 (this as Goblin).Shout("I see enemy!!", SoundBank.GoblinSound.EnemyComing);
             else
             {
