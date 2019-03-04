@@ -33,7 +33,6 @@ public class MapGenerator : MonoBehaviour
     public int AreaSize;
     public int AreaBufferSize;
     //ONLY for runtime area gen
-    public int DistanceBetweenAreas = 72;
     public int AreasToCreate;
     private int totalAreaSize;
     public List<Area> Areas;
@@ -524,60 +523,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
-
-    private void CreateNeighboursFromArea(Area from)
-    {
-        var neighbours = from.Neighbours.ToList();
-
-        List<Area> newNeighbours = new List<Area>();
-
-        var neighboursToCreate = 5 - neighbours.Count;
-
-        for (int i = 0; i < neighboursToCreate; i++)
-        {
-            Vector3 pos;
-
-            do
-            {
-                pos = Random.onUnitSphere;
-
-                pos.y = 0;
-
-                pos = from.transform.position + pos.normalized * DistanceBetweenAreas;
-
-            } while (!AreaCanFitAtPosition(pos,neighbours));
-
-            Debug.Log("Creating area at: "+ pos);
-
-            var neighbour = CreateArea(pos);
-
-            CreateRoad(from, neighbour);
-
-            newNeighbours.Add(neighbour);
-        }
-
-        //Create roads
-        foreach (var n in newNeighbours)
-        {
-            var position = n.transform.position;
-
-            neighbours.AddRange(newNeighbours);
-            
-            var toConnect = neighbours.Where(e => e!= n).OrderBy(ne => (ne.transform.position - position).sqrMagnitude).Take(2).ToList();
-            
-            foreach (var area in toConnect)
-            {
-                CreateRoad(n,area);
-            }
-        }
-    }
     
-
-    private float DegreesBetweenVertices(Vector3 start, Vector3 point1, Vector3 point2)
-    {
-        return Vector3.Angle(start + point1, start + point2);
-    }
-
 
     private Area CreateArea(Vector3 position, List<Area> neighbour = null)
     {

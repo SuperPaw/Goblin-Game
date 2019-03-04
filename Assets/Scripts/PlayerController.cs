@@ -249,6 +249,16 @@ public class PlayerController : MonoBehaviour
                 else
                     ClickedArea(v.InArea);
             }
+            //TODO use parent class for these
+            else if (hit.collider && hit.collider.GetComponent<HumanSettlement>())
+            {
+                var v = hit.collider.GetComponent<HumanSettlement>();
+
+                if (v.InArea.Visible())
+                    PlayerChoice.SetupPlayerChoice(new PlayerChoice.ChoiceOption[] {}, "Do you want to attack the Human " + v.Name);
+                else
+                    ClickedArea(v.InArea);
+            }
             //TODO: handle the point of interest click generally. Replace BigstoneView and CaveView with a Poi view?
             else if (hit.collider && hit.collider.GetComponent<Monument>())
             {
