@@ -594,6 +594,12 @@ public abstract class Character : MonoBehaviour
         var playerChar = (gameObject.tag == "Player");
         var enemyTag = playerChar ? "Enemy" : "Player";
 
+        if (!InArea)
+        {
+            Debug.LogWarning(name + " is not in area!");
+            return null;
+        }
+
         //get these from a game or fight controller instead for maintenance
         var gos = InArea.PresentCharacters.Where(c => c.tag == enemyTag && c.Alive());//GameObject.FindGameObjectsWithTag(enemyTag).Select(g=>g.GetComponent<Character>());
         Character closest = null;

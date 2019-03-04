@@ -99,7 +99,6 @@ MonoBehaviour:
   IrritaionTolerance: 50
   provokeDistance: 10
   InArea: {fileID: 0}
-  Awareness: 1
   Warrens: {fileID: 0}
   ChiefImage: {fileID: 114764703591676486}
   StateImage: {fileID: 114716199431146400}
@@ -223,10 +222,13 @@ MonoBehaviour:
   - Type: 7
     Items:
     - {fileID: 5823732466604063345}
+  - Type: 8
+    Items:
+    - {fileID: 5823732466604063345}
   - Type: 6
     Items:
     - {fileID: 787605848061829386}
-  - Type: 8
+  - Type: 10
     Items: []
   - Type: 9
     Items: []

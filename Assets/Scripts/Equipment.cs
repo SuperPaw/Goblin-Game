@@ -15,7 +15,7 @@ public class Equipment : MonoBehaviour
 
     public enum EquipmentType
     {
-        Gloves, Skull, Cap, Shirt, Armor, Cloth,  Stick, Sword, Boots, Shoes
+        Gloves, Skull, Cap, Shirt, Armor, Cloth,  Stick, Sword, Blade, Boots, Shoes
     }
 
     //public abstract class Effect{}
