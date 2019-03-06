@@ -54,7 +54,6 @@ MonoBehaviour:
     type: 3}
   AreaSize: 30
   AreaBufferSize: 10
-  DistanceBetweenAreas: 60
   AreasToCreate: 35
   Areas: []
   MeshBuilder: {fileID: 2604491388562873763}

@@ -73,14 +73,14 @@ public class CharacterView : MenuWindow
         var lvl = Goblin.GetLevel((int) c.Xp);
         ClassLevelText.text = "Level " + lvl + " " + ClassName(c.ClassType);
         ClassLevelText.GetComponent<OnValueHover>().Class = c.ClassType;
-        ClassLevelText.gameObject.SetActive(!c.WaitingOnClassSelection);
-        ClassSelectionHolder.SetActive(c.WaitingOnClassSelection);
+        ClassLevelText.gameObject.SetActive(!c.WaitingOnClassSelection || !c.Alive());
+        ClassSelectionHolder.SetActive(c.WaitingOnClassSelection && c.Alive());
 
 
         XpTextEntry.Value.text = c.Xp.ToString("F0") + "/" + Goblin.LevelCaps[lvl];
         HealthTextEntry.Value.text = c.Health + "/" +c.HEA.GetStatMax();
         HealthTextEntry.ValueHover.Stat = c.HEA;
-        ClassIcon.image.sprite = GameManager.GetClassImage(c.ClassType);
+        ClassIcon.image.sprite = c.Alive() ? GameManager.GetClassImage(c.ClassType): GameManager.GetIconImage(GameManager.Icon.Dead);
         ClassIcon.GetComponent<OnValueHover>().Class = c.ClassType;
 
         int lr = 0;

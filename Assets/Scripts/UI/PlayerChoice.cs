@@ -39,27 +39,27 @@ public class PlayerChoice : MenuWindow
     {
         if (choices.Length < 1) return;
         
-        Instance.options = choices;
-        Instance.DescriptionText.text = optionText;
-
-        SoundController.PlayMenuPopup();
-
-        Instance.OpenWindow();
+        
+        Instance.StartCoroutine( Instance.OpenWhenReady(choices,optionText));
     }
 
-    private void OpenWindow()
-    {
-        StartCoroutine(OpenWhenReady());
-    }
+    //private void OpenWindow()
+    //{
+    //    StartCoroutine(OpenWhenReady());
+    //}
 
-    private IEnumerator OpenWhenReady()
+    private IEnumerator OpenWhenReady(ChoiceOption[] choices, string optionText)
     {
         yield return new WaitUntil(() => !OpenWindows[Type]);
 
+        options = choices;
+        DescriptionText.text = optionText;
+
+        SoundController.PlayMenuPopup();
 
         Open();
 
-        Instance.defaultOption = options.First();
+        defaultOption = options.First();
 
         ActionSelected = false;
 

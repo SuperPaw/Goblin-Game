@@ -344,7 +344,7 @@ public class PlayerController : MonoBehaviour
 
     public static void UpdateFog()
     {
-        if(Instance && Instance.Team)
+        if(Instance && Instance.Team && GameManager.Instance.GameStarted)
             Instance.UpdateFogOfWar();
     }
 

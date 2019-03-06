@@ -488,7 +488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f66362621b1ff7408227ef8b7435945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Team: {fileID: 0}
+  Team: {fileID: 904032341}
   Cam: {fileID: 1578144544}
   Sound: {fileID: 0}
   MouseMoveKey: 1
@@ -685,11 +685,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
-      propertyPath: PointOfInterestPrefabs.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
-        type: 3}
       propertyPath: NpcHolder
       value: 
       objectReference: {fileID: 71002400}
@@ -748,12 +743,6 @@ PrefabInstance:
       propertyPath: EquipmentInLootChance
       value: 0.25
       objectReference: {fileID: 0}
-    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
-        type: 3}
-      propertyPath: PointOfInterestPrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 909367182681320238, guid: 69c2564b5439e0a4892a9240f5182bcc,
-        type: 3}
     - target: {fileID: 4598158572664144, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6506,6 +6495,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3555543983642061126, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1563279522957105724, guid: 9c662831f0f89a84985dc89b3f3e3c90, type: 3}
