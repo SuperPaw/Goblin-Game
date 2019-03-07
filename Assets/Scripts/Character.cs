@@ -742,6 +742,7 @@ public abstract class Character : MonoBehaviour
                             || (Wandering && InArea.PresentCharacters.Any(c => c.tag == "Player" &! c.Hiding()))
                             ))
                         {
+                            Debug.Log(name + ": Joining attack without beeing attacked");
                             ChangeState(CharacterState.Attacking,true);
                             Target = GetClosestEnemy().transform.position;
                             dest = Target;
@@ -759,7 +760,10 @@ public abstract class Character : MonoBehaviour
                             var goingTo = InArea.GetClosestNeighbour(transform.position);
 
                             dest = goingTo.GetRandomPosInArea();
-
+                            
+                            Debug.Log(name + ": Wandering to "+ goingTo);
+                            Target = dest;
+                            
                             goingTo.PresentCharacters.ForEach(c => StartCoroutine(c.SpotArrivalCheck(this)));
 
                             ChangeState(CharacterState.Travelling,true);

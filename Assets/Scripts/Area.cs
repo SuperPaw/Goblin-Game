@@ -6,13 +6,31 @@ using UnityEngine.AI;
 
 public class Area : MonoBehaviour
 {
-    //public int X;
-    //public int Z;
+    public static readonly int MaxNeighbours = 6;
+
+    public int X, Y;
+
+    // calculated values while finding path
+    [HideInInspector]
+    public int gCost;
+    [HideInInspector]
+    public int hCost;
+    [HideInInspector]
+    public Area parent;
+    [HideInInspector]
+    public int fCost
+    {
+        get { return gCost + hCost; }
+    }
+
+    //public bool ContainsRoad;
+
     public List<Character> PresentCharacters;
     public List<Lootable> Lootables;
     public List<Hidable> Hidables;
     public List<MapGenerator.Tile> MovablePositions = new List<MapGenerator.Tile>();
     public HashSet<Area> Neighbours = new HashSet<Area>();
+    public HashSet<Area> RoadsTo = new HashSet<Area>();
     public BoxCollider Collider;
     public PointOfInterest PointOfInterest;
 
@@ -117,4 +135,6 @@ public class Area : MonoBehaviour
         return point.x > pos.x - adj && point.x < pos.x + adj
             && point.z > pos.z - adj && point.z < pos.z + adj;
     }
+
+    public bool HasMaximumConnections => Neighbours.Count >= MaxNeighbours;
 }

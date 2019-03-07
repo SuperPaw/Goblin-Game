@@ -159,6 +159,7 @@
     <Compile Include="Assets\Scripts\UI\SizeAnimation.cs" />
     <Compile Include="Assets\Scripts\UI\StatEntry.cs" />
     <Compile Include="Assets\Scripts\UI\VillageView.cs" />
+    <Compile Include="Assets\Scripts\Util\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\WorldTextHolder.cs" />
     <Compile Include="Assets\Scripts\WorldToScreenSpace.cs" />
     <Compile Include="Assets\Scripts\WorldToScreenText.cs" />

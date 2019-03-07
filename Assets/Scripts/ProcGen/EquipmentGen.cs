@@ -101,15 +101,15 @@ public class EquipmentGen : MonoBehaviour
 
         //TODO: check that all types are covered
 
-        for (int i = 0; i < 20; i++)
-        {
-            var e = GetRandomEquipment();
-            Debug.Log(e.name + " ; " + e.EquipLocation);
-            //foreach (var fx in e.Effects)
-            //{
-            //    Debug.Log(fx.Stat + " : " + fx.Modifier.Name + " : " + fx.Modifier.Modifier);
-            //}
-        }
+        //for (int i = 0; i < 20; i++)
+        //{
+        //    var e = GetRandomEquipment();
+        //    Debug.Log(e.name + " ; " + e.EquipLocation);
+        //    //foreach (var fx in e.Effects)
+        //    //{
+        //    //    Debug.Log(fx.Stat + " : " + fx.Modifier.Name + " : " + fx.Modifier.Modifier);
+        //    //}
+        //}
     }
 
     public static Equipment GetRandomEquipment(Character.Race originRace = Character.Race.NoRace)

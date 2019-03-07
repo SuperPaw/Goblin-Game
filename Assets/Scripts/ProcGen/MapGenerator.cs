@@ -7,7 +7,9 @@ using Random = UnityEngine.Random;
 
 public class MapGenerator : MonoBehaviour
 {
-    public enum TileType {Ground, Forest, Loot}
+    public enum TileType {Ground, Forest, Loot,
+        Road
+    }
     //TODO: turn into a struct
     public class Tile
     {
@@ -52,9 +54,13 @@ public class MapGenerator : MonoBehaviour
     public GameObject ForestHolder, AreaHolder, TileHolder;
     public GameObject Forest;
     public GameObject TileArtObject;
+    public GameObject RoadTileArtObject;
     public GameObject[] LootObjects;
     public PointOfInterest[] PointOfInterestPrefabs;
+    public HumanSettlement[] HumanSettlementPrefab;
+    [Header("Point of Interests")]
     public int PointOfInterests;
+    public int HumanSettlements;
     public int VillagesToGenerate;
     public GameObject VillagePrefab;
     public int GoblinsForSalePrVillage = 3;
@@ -67,6 +73,7 @@ public class MapGenerator : MonoBehaviour
     public int GoblinsToGenerate;
     public GameObject DefaultCharacter;
     public PlayerTeam GoblinTeam;
+
 
 
     // Use this for initialization
@@ -171,13 +178,28 @@ public class MapGenerator : MonoBehaviour
             if (tries <= maxTries)
                 CreateArea(point);
         }
+
+        if (Areas.Count < 2)
+        {
+            Debug.LogError("Map size too small for area gen");
+            yield break;
+        }
+
+
+        while (Areas.Count <= HumanSettlements + PointOfInterests+VillagesToGenerate)
+        {
+            Debug.LogWarning("Too few areas for desired POIs");
+            HumanSettlements--;
+            PointOfInterests--;
+            VillagesToGenerate--;
+        }
         
         //Create roads TODO: make this less expensive
         foreach (var n in Areas)
         {
             var position = n.transform.position;
 
-            var toConnect = Areas.Where(e => e != n).OrderBy(ne => (ne.transform.position - position).sqrMagnitude).Take(3).ToList();
+            var toConnect = Areas.Where(e => e != n && !e.HasMaximumConnections).OrderBy(ne => (ne.transform.position - position).sqrMagnitude).Take(3).ToList();
 
             yield return null;
 
@@ -221,6 +243,7 @@ public class MapGenerator : MonoBehaviour
             var village = next.GetComponent<GoblinWarrens>();
 
             area.PointOfInterest = village;
+            area.name += ": Warrens";
             village.InArea = area;
             
 
@@ -273,12 +296,61 @@ public class MapGenerator : MonoBehaviour
             next.transform.position = new Vector3(area.transform.position.x, next.transform.position.y, area.transform.position.z);
 
             next.transform.parent = area.transform;
-
-            //next.name += " " + area.X + "," + area.Z;
             
             area.PointOfInterest = next;
+            area.name += next.name;
             next.InArea = area;
         }
+
+        HumanSettlement last = null;
+
+        for (int i = 0; i < HumanSettlements; i++)
+        {
+            //progress += poiFact;
+            //int loc = (progress * 100) / totalProgress;
+            //if (loc != progressPct)
+            //{
+            //    progressPct = loc;
+            //    yield return null;
+            //    progressCallback(progressPct, "Building villages...");
+            //}
+
+            var area = GetRandomArea();
+
+            while (area.PointOfInterest || area == goblinStartArea)
+                area = GetRandomArea();
+
+            var x = i % HumanSettlementPrefab.Length;
+
+            var next = Instantiate(HumanSettlementPrefab[x]); //TODO: generate village name
+
+            //keeping y position
+            next.transform.position = new Vector3(area.transform.position.x, next.transform.position.y, area.transform.position.z);
+
+            next.transform.parent = area.transform;
+            
+            area.PointOfInterest = next;
+            area.name += next.name;
+            next.InArea = area;
+
+            if (last != null)
+            {
+                //TODO: handle no path
+                var path = Pathfinding.FindPath(last.InArea, next.InArea);
+
+                //Debug.Log("Creating road from " + last.InArea + " to " + next.InArea +"; "+ path.Count);
+
+                for (int j = 0; j +1< path.Count; j++)
+                {
+                    //Debug.Log("road: "+ path[j] + ", " + path[j+1]);
+                    CreateRoad(path[j], path[j+1],true);
+                }
+            }
+
+            last =next;
+        }
+
+
 
         //ADDING LOOT
         for (int i = 0; i < amountOfLoot; i++)
@@ -324,8 +396,9 @@ public class MapGenerator : MonoBehaviour
         foreach (var tile in map)
         {
             //TODO: no grass under trees, different if in area
+            var obj = tile.Type == TileType.Road ? RoadTileArtObject : TileArtObject;
 
-            GameObject next = Instantiate(TileArtObject, TileHolder.transform);
+            GameObject next = Instantiate(obj, TileHolder.transform);
             
             next.name = "Tile " + tile.X + "," + tile.Y;
 
@@ -384,7 +457,6 @@ public class MapGenerator : MonoBehaviour
                 progressCallback(progressPct,"Creating sneaky hiding locations...");
             }
         }
-        
 
         //HACK CHECK FOR AREA ACCESSIBILITY
         //select a middle point 
@@ -438,11 +510,9 @@ public class MapGenerator : MonoBehaviour
             var g = next.GetComponent<Goblin>();
 
             g.name = NameGenerator.GetName();
-
-
+            
             members.Add(g);
-
-
+            
             progress += charFact;
 
             int loc = (progress * 100) / totalProgress;
@@ -455,7 +525,7 @@ public class MapGenerator : MonoBehaviour
 
         }
 
-        CreateTreeBorder(25);
+        CreateTreeBorder(20);
 
         yield return null;
 
@@ -538,6 +608,12 @@ public class MapGenerator : MonoBehaviour
         area.Size = totalAreaSize;
         area.transform.localScale = new Vector3(AreaSize, 0.1f, AreaSize);
         area.FogOfWarSprite.transform.localScale *= (float)totalAreaSize / (float)AreaSize;
+
+        area.X = (int)position.x;
+        area.Y = (int)position.z;
+
+        area.name = "Area (" + area.X + "," + area.Y + ")";
+
         Areas.Add(area);
 
         //TODO check this
@@ -728,44 +804,70 @@ public class MapGenerator : MonoBehaviour
         return canFit;
     }
 
-    private void CreateRoad(Area from, Area to)
+
+
+    private void CreateRoad(Area from, Area to, bool drawRoad = false)
     {
+        if (from.RoadsTo.Contains(to))
+            return;
+
         from.Neighbours.Add(to);
         to.Neighbours.Add(from);
 
         var current =GetAreaMidPoint(from);
         var end = GetAreaMidPoint(to);
 
+        var wrongWayMod = drawRoad ? 0.075f : 0.35f;
+
+        if (drawRoad)
+        {
+            from.RoadsTo.Add(to);
+            to.RoadsTo.Add(from);        
+        }
+
         while (current != end)
         {
             //moce vertically or horizontally
-            var horizontally = Random.value < 0.5f;
-            var wrongDirection = Random.value < 0.4f;
+            var horizontally =  Random.value < 0.5f;
+            //if (drawRoad && horizontally && current.X == end.X)
+            //    horizontally = false;
+            //else if (drawRoad && !horizontally && current.Y == end.Y)
+            //    horizontally = true;
+
+            var wrongDirection = Random.value < wrongWayMod;
 
             var mod = wrongDirection ? -1 : 1;
 
             if (current.X >= SizeX - 2 || current.X <= 1 || current.Y >= SizeZ - 2 || current.Y <= 1)
                 mod = 1;
 
-            if (horizontally)
-            {
+            if (GetNeighbourTile(current, end, mod, horizontally).Type == TileType.Road)
+                horizontally = !horizontally;
 
-                current = current.X < end.X  ? map[current.X + mod, current.Y] : map[current.X -mod, current.Y];
-            }
-            else
-            {
-                current = current.Y < end.Y ? map[current.X , current.Y+mod] : map[current.X , current.Y-mod];
-            }
-
+            current = GetNeighbourTile(current, end, mod, horizontally);
+                //current.X < end.X  ? map[current.X + mod, current.Y] : map[current.X -mod, current.Y];
+            
             if (current.Type == TileType.Forest)
             {
                 current.Type = TileType.Ground;
                 movableTiles.Add(current);
                 immovableTiles.Remove(current);
             }
+
+            if (drawRoad) current.Type = TileType.Road;
         }
 
     }
 
-
+    private Tile GetNeighbourTile(Tile current,Tile end, int mod, bool horizontally)
+    {
+        if (horizontally)
+        {
+            return current.X < end.X  ? map[current.X + mod, current.Y] : map[current.X -mod, current.Y];
+        }
+        else
+        {
+            return current.Y < end.Y ? map[current.X, current.Y + mod] : map[current.X, current.Y - mod];
+        }
+    }
 }

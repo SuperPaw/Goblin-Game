@@ -373,7 +373,7 @@ public class PlayerController : MonoBehaviour
     {
         if (id < 1 || id > 8)
         {
-            Debug.Log("Unknown shader id: " + id);
+            //Debug.Log("Unknown shader id: " + id);
             return;
         }
 
