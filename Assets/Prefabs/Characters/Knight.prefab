@@ -2986,7 +2986,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HolderGameObject: {fileID: 2829638507195367860}
   CharacterRace: 1
-  Wandering: 1
+  StickToRoad: 1
   HasEquipment: 1
   Voice: {fileID: 0}
   VoicePitch: 0

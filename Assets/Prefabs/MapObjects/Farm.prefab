@@ -77,8 +77,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InArea: {fileID: 0}
   Name: Farm
-  SpawnEnemies: []
+  SpawnEnemies:
+  - {fileID: 1969145986120274, guid: 4a77b2ccf128b394e9e4c49eaa315810, type: 3}
   WinCondition: 0
+  InitialEnemies: 3
+  EnemiesOnAttack: 5
 --- !u!1 &8503355671099633675
 GameObject:
   m_ObjectHideFlags: 0

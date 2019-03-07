@@ -25,7 +25,8 @@ public class SoundBank : MonoBehaviour
         GameLoss,
         GameStart,
         Sneaking,
-        Sacrifice
+        Sacrifice,
+        GameWin
     }
     public enum Background
     {

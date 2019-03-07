@@ -99,16 +99,19 @@ public class Area : MonoBehaviour
     public bool AnyEnemies(bool onlyConsiderWandering = false)
     {
         if(onlyConsiderWandering)
-            return PresentCharacters.Any(c => c.tag == "Enemy" && c.Alive() && c.Wandering);
+            return PresentCharacters.Any(c => c.tag == "Enemy" && c.Alive() && c.StickToRoad);
 
         return PresentCharacters.Any(c => c.tag == "Enemy" && c.Alive());
     }
 
-    internal Area GetClosestNeighbour(Vector3 position)
+    internal Area GetClosestNeighbour(Vector3 position, bool useRoads = false)
     {
         Area closest = null;
         float distance = Mathf.Infinity;
-        foreach (var go in Neighbours)
+
+        var ns = useRoads && RoadsTo.Any() ? RoadsTo : Neighbours;
+
+        foreach (var go in ns)
         {
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
@@ -137,4 +140,6 @@ public class Area : MonoBehaviour
     }
 
     public bool HasMaximumConnections => Neighbours.Count >= MaxNeighbours;
+
+    public bool ContainsRoads => RoadsTo.Any();
 }

@@ -12,6 +12,12 @@ public class PlayerChoice : MenuWindow
     {
         public string Description;
         public Action Action;
+
+        public ChoiceOption(string desc, Action ac)
+        {
+            Description = desc;
+            Action = ac;
+        }
     }
 
     public static PlayerChoice Instance;
@@ -22,6 +28,7 @@ public class PlayerChoice : MenuWindow
     public Button OptionButtonEntry;
     private List<Button> generatedObjects = new List<Button>();
     public TextMeshProUGUI DescriptionText;
+    public ChoiceOption NoOption = new ChoiceOption("No", null);
 
     new void Awake()
     {
@@ -41,6 +48,14 @@ public class PlayerChoice : MenuWindow
         
         
         Instance.StartCoroutine( Instance.OpenWhenReady(choices,optionText));
+    }
+
+    public static void CreateDoChoice(Action doAction, string question)
+    {
+        var choices = new ChoiceOption[] {new ChoiceOption("Gob gob",doAction),Instance.NoOption };
+
+
+        Instance.StartCoroutine(Instance.OpenWhenReady(choices, question));
     }
 
     //private void OpenWindow()

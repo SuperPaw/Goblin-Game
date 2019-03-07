@@ -31,7 +31,7 @@ public abstract class Character : MonoBehaviour
     public Race CharacterRace;
 
     [Header("Enemy specific")]
-    public bool Wandering;
+    public bool StickToRoad;
     public bool HasEquipment;
 
     [Header("Voice")]
@@ -739,11 +739,13 @@ public abstract class Character : MonoBehaviour
                             && ( //ANY friends fighting
                             InArea.PresentCharacters.Any(c => c.tag == tag && c.Alive() && c.Attacking())
                             // I am aggressive wanderer
-                            || (Wandering && InArea.PresentCharacters.Any(c => c.tag == "Player" &! c.Hiding()))
+                            || (StickToRoad && InArea.PresentCharacters.Any(c => c.tag == "Player" &! c.Hiding()))
                             ))
                         {
                             Debug.Log(name + ": Joining attack without beeing attacked");
+
                             ChangeState(CharacterState.Attacking,true);
+                            Morale -= 5;
                             Target = GetClosestEnemy().transform.position;
                             dest = Target;
                         }
@@ -755,13 +757,13 @@ public abstract class Character : MonoBehaviour
                             Speak(SoundBank.GoblinSound.Laugh);
                             dest = ctx.transform.position;
                         }
-                        else if (Wandering)
+                        else if (StickToRoad)
                         {
-                            var goingTo = InArea.GetClosestNeighbour(transform.position);
+                            var goingTo = InArea.GetClosestNeighbour(transform.position,true);
 
-                            dest = goingTo.GetRandomPosInArea();
+                            dest = goingTo.PointOfInterest ? goingTo.GetRandomPosInArea(): goingTo.transform.position;
                             
-                            Debug.Log(name + ": Wandering to "+ goingTo);
+                            //Debug.Log(name + ": Wandering to "+ goingTo);
                             Target = dest;
                             
                             goingTo.PresentCharacters.ForEach(c => StartCoroutine(c.SpotArrivalCheck(this)));

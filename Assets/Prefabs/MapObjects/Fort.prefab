@@ -77,8 +77,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InArea: {fileID: 0}
   Name: Fort
-  SpawnEnemies: []
-  WinCondition: 0
+  SpawnEnemies:
+  - {fileID: 1969145986120274, guid: f95d1a9483a8c6a4496c281ffd93702c, type: 3}
+  WinCondition: 1
+  InitialEnemies: 2
+  EnemiesOnAttack: 10
 --- !u!1 &8503355671099633675
 GameObject:
   m_ObjectHideFlags: 0

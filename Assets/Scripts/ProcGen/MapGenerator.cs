@@ -73,6 +73,7 @@ public class MapGenerator : MonoBehaviour
     public int GoblinsToGenerate;
     public GameObject DefaultCharacter;
     public PlayerTeam GoblinTeam;
+    private int GroupDistance = 4;
 
 
 
@@ -270,38 +271,6 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-
-
-        for (int i = 0; i < PointOfInterests; i++)
-        {
-            progress += poiFact;
-            int loc = (progress * 100) / totalProgress;
-            if (loc != progressPct)
-            {
-                progressPct = loc;
-                yield return null;
-                progressCallback(progressPct, "Building villages...");
-            }
-
-            var area = GetRandomArea();
-
-            while (area.PointOfInterest || area == goblinStartArea)
-                area = GetRandomArea();
-
-            var x = i % PointOfInterestPrefabs.Length;
-
-            var next = Instantiate(PointOfInterestPrefabs[x]); //TODO: generate village name
-
-            //keeping y position
-            next.transform.position = new Vector3(area.transform.position.x, next.transform.position.y, area.transform.position.z);
-
-            next.transform.parent = area.transform;
-            
-            area.PointOfInterest = next;
-            area.name += next.name;
-            next.InArea = area;
-        }
-
         HumanSettlement last = null;
 
         for (int i = 0; i < HumanSettlements; i++)
@@ -333,6 +302,14 @@ public class MapGenerator : MonoBehaviour
             area.name += next.name;
             next.InArea = area;
 
+            //Create characters
+            for (int j = 0; j < next.InitialEnemies; j++)
+            {
+                var human = GenerateCharacter(next.SpawnEnemies[Random.Range(0, next.SpawnEnemies.Length)], next.InArea, NpcHolder.Instance.transform);//Instantiate(next.SpawnEnemies[Random.Range(0,next.SpawnEnemies.Length)],);
+                //var position = next.InArea.GetRandomPosInArea();
+                //human.transform.position = new Vector3(position.x, 0, position.z);
+            }
+
             if (last != null)
             {
                 //TODO: handle no path
@@ -349,7 +326,42 @@ public class MapGenerator : MonoBehaviour
 
             last =next;
         }
+        
+        for (int i = 0; i < PointOfInterests; i++)
+        {
+            progress += poiFact;
+            int loc = (progress * 100) / totalProgress;
+            if (loc != progressPct)
+            {
+                progressPct = loc;
+                yield return null;
+                progressCallback(progressPct, "Building villages...");
+            }
 
+            var area = GetRandomArea();
+            
+            int maxTries = 12;
+            int tries = 0;
+
+            while ((area.PointOfInterest || area == goblinStartArea || area.ContainsRoads) && tries++ < maxTries)
+                area = GetRandomArea();
+
+            if (tries >= maxTries)
+                Debug.Log("CHUBACUBHA Max tries reached..");
+
+            var x = i % PointOfInterestPrefabs.Length;
+
+            var next = Instantiate(PointOfInterestPrefabs[x]); //TODO: generate village name
+
+            //keeping y position
+            next.transform.position = new Vector3(area.transform.position.x, next.transform.position.y, area.transform.position.z);
+
+            next.transform.parent = area.transform;
+
+            area.PointOfInterest = next;
+            area.name += next.name;
+            next.InArea = area;
+        }
 
 
         //ADDING LOOT
@@ -492,7 +504,6 @@ public class MapGenerator : MonoBehaviour
         //Find suitable start position
         GoblinTeam.transform.position = new Vector3(pos.x,0,pos.z);
 
-        var GroupDistance = 4;
         //TODO: check that we are not initializinig in a too small area. could be done with connectivity check
         //TODO: Use create character
         for (int i = 0; i < GoblinsToGenerate; i++)
@@ -626,12 +637,17 @@ public class MapGenerator : MonoBehaviour
 
     private GameObject CreateEnemyCharacter(GameObject go, Transform parent, Area goblinStartArea)
     {
-        var tile = GetRandomArea();
-        
-        while (tile.PointOfInterest || tile == goblinStartArea)
-            tile = GetRandomArea();
+        var area = GetRandomArea();
+        int maxTries = 12;
+        int tries = 0;
 
-        return GenerateCharacter(go, tile, parent);
+        while ((area.PointOfInterest || area == goblinStartArea || area.ContainsRoads) && tries++ < maxTries)
+            area = GetRandomArea();
+
+        if(tries >= maxTries)
+            Debug.Log("CHUBACUBHA Max tries reached..");
+
+        return GenerateCharacter(go, area, parent);
     }
 
     public static GameObject GenerateCharacter(GameObject go, Area inArea, Transform parent)

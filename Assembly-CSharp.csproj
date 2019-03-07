@@ -62,9 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Farm.cs" />
-    <Compile Include="Assets\FPSDisplay.cs" />
-    <Compile Include="Assets\HumanSettlement.cs" />
     <Compile Include="Assets\Imported\Goblins Pack\Scripts\Gear.cs" />
     <Compile Include="Assets\Imported\Goblins Pack\Scripts\ItemState.cs" />
     <Compile Include="Assets\Imported\Knight\scripts\rotator.cs" />
@@ -123,6 +120,7 @@
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\Equipment.cs" />
     <Compile Include="Assets\Scripts\EquipmentManager.cs" />
+    <Compile Include="Assets\Scripts\Farm.cs" />
     <Compile Include="Assets\Scripts\FollowMainCamZoom.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Goblin.cs" />
@@ -131,6 +129,7 @@
     <Compile Include="Assets\Scripts\GoblinWarrens.cs" />
     <Compile Include="Assets\Scripts\HealtBar.cs" />
     <Compile Include="Assets\Scripts\Hidable.cs" />
+    <Compile Include="Assets\Scripts\HumanSettlement.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\Lootable.cs" />
     <Compile Include="Assets\Scripts\Monument.cs" />
@@ -159,6 +158,7 @@
     <Compile Include="Assets\Scripts\UI\SizeAnimation.cs" />
     <Compile Include="Assets\Scripts\UI\StatEntry.cs" />
     <Compile Include="Assets\Scripts\UI\VillageView.cs" />
+    <Compile Include="Assets\Scripts\Util\FPSDisplay.cs" />
     <Compile Include="Assets\Scripts\Util\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\WorldTextHolder.cs" />
     <Compile Include="Assets\Scripts\WorldToScreenSpace.cs" />

@@ -255,7 +255,7 @@ public class PlayerController : MonoBehaviour
                 var v = hit.collider.GetComponent<HumanSettlement>();
 
                 if (v.InArea.Visible())
-                    PlayerChoice.SetupPlayerChoice(new PlayerChoice.ChoiceOption[] {}, "Do you want to attack the Human " + v.Name);
+                    PlayerChoice.CreateDoChoice(()=> v.AttackSettlement(),"Do you want to attack the Human " + v.Name);
                 else
                     ClickedArea(v.InArea);
             }
@@ -373,7 +373,7 @@ public class PlayerController : MonoBehaviour
     {
         if (id < 1 || id > 8)
         {
-            //Debug.Log("Unknown shader id: " + id);
+            Debug.Log("Unknown shader id: " + id);
             return;
         }
 

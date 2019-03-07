@@ -698,6 +698,9 @@ MonoBehaviour:
   - Type: 3
     Audio:
     - {fileID: 8300000, guid: dcccc7c82cfcaba4cab1dab8407e9e56, type: 3}
+  - Type: 4
+    Audio:
+    - {fileID: 8300000, guid: 57a309863e238794f8f97b44b3257981, type: 3}
   Backgrounds:
   - Type: 0
     Audio:

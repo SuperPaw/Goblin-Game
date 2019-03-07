@@ -107,7 +107,7 @@ public abstract class Pathfinding
     {
         int dstX = Mathf.Abs(LocationInstanceA.X - LocationInstanceB.X);
         int dstY = Mathf.Abs(LocationInstanceA.Y - LocationInstanceB.Y);
-
+        
         if (dstX > dstY)
             return 14 * dstY + 10 * (dstX - dstY);
         return 14 * dstX + 10 * (dstY - dstX);

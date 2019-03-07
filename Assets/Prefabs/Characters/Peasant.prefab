@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HolderGameObject: {fileID: 2829638507195367860}
   CharacterRace: 1
-  Wandering: 1
+  StickToRoad: 1
   HasEquipment: 1
   Voice: {fileID: 0}
   VoicePitch: 0
@@ -251,6 +251,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 814aa3d3555f1ea47a1558108dba195c, type: 2}
+  - {fileID: 2100000, guid: 67b7ef1f7cf68f34d95f72b661e99f18, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -635,6 +636,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 8238870443b71dd4d9c9be39c2d43f92, type: 2}
+  - {fileID: 2100000, guid: 67b7ef1f7cf68f34d95f72b661e99f18, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
