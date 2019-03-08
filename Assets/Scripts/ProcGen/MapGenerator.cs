@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class MapGenerator : MonoBehaviour
 {
+    //TODO: separate into groundtype and tilecontent
     public enum TileType {Ground, Forest, Loot,
         Road
     }
@@ -20,6 +21,7 @@ public class MapGenerator : MonoBehaviour
         public bool Examined = false;
         public bool Hidable = false;
         public float ForestChance = 1f;
+        public bool NextToRoad;
 
         public Tile(int x, int y)
         {
@@ -55,6 +57,7 @@ public class MapGenerator : MonoBehaviour
     public GameObject Forest;
     public GameObject TileArtObject;
     public GameObject RoadTileArtObject;
+    public RoadEdgeTile NextToRoadTile;
     public GameObject[] LootObjects;
     public PointOfInterest[] PointOfInterestPrefabs;
     public HumanSettlement[] HumanSettlementPrefab;
@@ -213,6 +216,62 @@ public class MapGenerator : MonoBehaviour
        
         Area goblinStartArea = center; // AreaMap[noOfAreasX / 2, noOfAreasZ / 2];
 
+        HumanSettlement last = null;
+
+        for (int i = 0; i < HumanSettlements; i++)
+        {
+            //progress += poiFact;
+            //int loc = (progress * 100) / totalProgress;
+            //if (loc != progressPct)
+            //{
+            //    progressPct = loc;
+            //    yield return null;
+            //    progressCallback(progressPct, "Building villages...");
+            //}
+
+            var area = GetRandomArea();
+
+            while (area.PointOfInterest || area == goblinStartArea)
+                area = GetRandomArea();
+
+            var x = i % HumanSettlementPrefab.Length;
+
+            var next = Instantiate(HumanSettlementPrefab[x]); //TODO: generate village name
+
+            //keeping y position
+            next.transform.position = new Vector3(area.transform.position.x, next.transform.position.y, area.transform.position.z);
+
+            next.transform.parent = area.transform;
+
+            area.PointOfInterest = next;
+            area.name += next.name;
+            next.InArea = area;
+
+            //Create characters
+            for (int j = 0; j < next.InitialEnemies; j++)
+            {
+                var human = GenerateCharacter(next.SpawnEnemies[Random.Range(0, next.SpawnEnemies.Length)], next.InArea, NpcHolder.Instance.transform);//Instantiate(next.SpawnEnemies[Random.Range(0,next.SpawnEnemies.Length)],);
+                //var position = next.InArea.GetRandomPosInArea();
+                //human.transform.position = new Vector3(position.x, 0, position.z);
+            }
+
+            if (last != null)
+            {
+                //TODO: handle no path
+                var path = Pathfinding.FindPath(last.InArea, next.InArea);
+
+                //Debug.Log("Creating road from " + last.InArea + " to " + next.InArea +"; "+ path.Count);
+
+                for (int j = 0; j + 1 < path.Count; j++)
+                {
+                    //Debug.Log("road: "+ path[j] + ", " + path[j+1]);
+                    CreateRoad(path[j], path[j + 1], true);
+                }
+            }
+
+            last = next;
+        }
+
         //Setting up villages
 
         for (int i = 0; i < VillagesToGenerate; i++)
@@ -229,8 +288,14 @@ public class MapGenerator : MonoBehaviour
 
             var area = GetRandomArea();
 
-            while (area.PointOfInterest || area == goblinStartArea)
+            int maxTries = 12;
+            int tries = 0;
+
+            while ((area.PointOfInterest || area == goblinStartArea || area.ContainsRoads) && tries++ < maxTries)
                 area = GetRandomArea();
+
+            if (tries >= maxTries)
+                Debug.Log("CHUBACUBHA Max tries reached..");
 
             var next = Instantiate(VillagePrefab); //TODO: generate village name
 
@@ -271,62 +336,6 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        HumanSettlement last = null;
-
-        for (int i = 0; i < HumanSettlements; i++)
-        {
-            //progress += poiFact;
-            //int loc = (progress * 100) / totalProgress;
-            //if (loc != progressPct)
-            //{
-            //    progressPct = loc;
-            //    yield return null;
-            //    progressCallback(progressPct, "Building villages...");
-            //}
-
-            var area = GetRandomArea();
-
-            while (area.PointOfInterest || area == goblinStartArea)
-                area = GetRandomArea();
-
-            var x = i % HumanSettlementPrefab.Length;
-
-            var next = Instantiate(HumanSettlementPrefab[x]); //TODO: generate village name
-
-            //keeping y position
-            next.transform.position = new Vector3(area.transform.position.x, next.transform.position.y, area.transform.position.z);
-
-            next.transform.parent = area.transform;
-            
-            area.PointOfInterest = next;
-            area.name += next.name;
-            next.InArea = area;
-
-            //Create characters
-            for (int j = 0; j < next.InitialEnemies; j++)
-            {
-                var human = GenerateCharacter(next.SpawnEnemies[Random.Range(0, next.SpawnEnemies.Length)], next.InArea, NpcHolder.Instance.transform);//Instantiate(next.SpawnEnemies[Random.Range(0,next.SpawnEnemies.Length)],);
-                //var position = next.InArea.GetRandomPosInArea();
-                //human.transform.position = new Vector3(position.x, 0, position.z);
-            }
-
-            if (last != null)
-            {
-                //TODO: handle no path
-                var path = Pathfinding.FindPath(last.InArea, next.InArea);
-
-                //Debug.Log("Creating road from " + last.InArea + " to " + next.InArea +"; "+ path.Count);
-
-                for (int j = 0; j +1< path.Count; j++)
-                {
-                    //Debug.Log("road: "+ path[j] + ", " + path[j+1]);
-                    CreateRoad(path[j], path[j+1],true);
-                }
-            }
-
-            last =next;
-        }
-        
         for (int i = 0; i < PointOfInterests; i++)
         {
             progress += poiFact;
@@ -409,8 +418,36 @@ public class MapGenerator : MonoBehaviour
         {
             //TODO: no grass under trees, different if in area
             var obj = tile.Type == TileType.Road ? RoadTileArtObject : TileArtObject;
+            GameObject next;
+            if (tile.Type != TileType.Road && tile.NextToRoad)
+            {
+                var roadEdge = Instantiate(NextToRoadTile, TileHolder.transform);
 
-            GameObject next = Instantiate(obj, TileHolder.transform);
+                if (map[tile.X + 1, tile.Y].Type == TileType.Road)
+                {
+                    roadEdge.ERoad = true;
+                }
+                if (map[tile.X -1, tile.Y].Type == TileType.Road)
+                {
+                    roadEdge.WRoad = true;
+                }
+                if (map[tile.X, tile.Y+1].Type == TileType.Road)
+                {
+                    roadEdge.NRoad = true;
+                }
+                if (map[tile.X, tile.Y-1].Type == TileType.Road)
+                {
+                    roadEdge.SRoad = true;
+                }
+                roadEdge.SetupSprite();
+
+                next = roadEdge.gameObject;
+            }
+            else
+            {
+                next= Instantiate(obj, TileHolder.transform);
+
+            }
             
             next.name = "Tile " + tile.X + "," + tile.Y;
 
@@ -870,7 +907,14 @@ public class MapGenerator : MonoBehaviour
                 immovableTiles.Remove(current);
             }
 
-            if (drawRoad) current.Type = TileType.Road;
+            if (drawRoad)
+            {
+                current.Type = TileType.Road;
+                foreach (var neightbour in GetNeightbours(current))
+                {
+                    neightbour.NextToRoad = true;
+                }
+            }
         }
 
     }

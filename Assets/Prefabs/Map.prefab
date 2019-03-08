@@ -71,14 +71,16 @@ MonoBehaviour:
     type: 3}
   RoadTileArtObject: {fileID: 1221279314926800, guid: 6bc0dbcab52c8b846ad32513b91237d9,
     type: 3}
+  NextToRoadTile: {fileID: 1151737658520490563, guid: b5c8fe842ed95b942a52cc7ab1c7695e,
+    type: 3}
   LootObjects:
   - {fileID: 1910571166180590, guid: ee5830f18c2be1244bb0fa764c0769a1, type: 3}
   PointOfInterestPrefabs:
   - {fileID: 1510720524141754411, guid: 7cde1fc3eeb07ab41add50d71da38d93, type: 3}
   - {fileID: 909367182681320238, guid: 69c2564b5439e0a4892a9240f5182bcc, type: 3}
   HumanSettlementPrefab:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3172418170863198060, guid: 949060969851d48479664ba80b2eecef, type: 3}
+  - {fileID: 4214430656408830761, guid: 038fe9f5a3d519245832da7ff693b767, type: 3}
   PointOfInterests: 2
   HumanSettlements: 4
   VillagesToGenerate: 1
