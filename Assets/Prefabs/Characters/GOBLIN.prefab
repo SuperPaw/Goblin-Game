@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HolderGameObject: {fileID: 1218143795376610366}
   CharacterRace: 0
-  Wandering: 0
+  StickToRoad: 0
   HasEquipment: 0
   Voice: {fileID: 993784395133949661}
   VoicePitch: 0
@@ -131,7 +131,7 @@ MonoBehaviour:
   WaitingOnLevelUp: 0
   WaitingOnClassSelection: 0
   ProvokeTarget: {fileID: 0}
-  ClassType: 0
+  ClassType: 1
 --- !u!195 &4600599033896219243
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -232,6 +232,9 @@ MonoBehaviour:
     Items: []
   - Type: 9
     Items: []
+  - Type: 11
+    Items:
+    - {fileID: 3980995831355119253}
 --- !u!1 &1079555369244152
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,6 +1595,7 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
   UVModule:
+    serializedVersion: 2
     enabled: 0
     mode: 0
     timeMode: 0
@@ -1709,7 +1713,7 @@ ParticleSystem:
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
-    randomRow: 1
+    rowMode: 1
     sprites:
     - sprite: {fileID: 0}
     flipU: 0

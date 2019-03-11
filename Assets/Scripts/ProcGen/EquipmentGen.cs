@@ -44,11 +44,13 @@ public class EquipmentGen : MonoBehaviour
     {
         public Equipment.EquipLocations Location;
         public Equipment.EquipmentType[] Type;
+        public Goblin.Class UsableBy;
 
-        public LocationType(Equipment.EquipLocations loc, Equipment.EquipmentType[] type)
+        public LocationType(Equipment.EquipLocations loc, Equipment.EquipmentType[] type, Goblin.Class usableBy = Goblin.Class.ALL)
         {
             Location = loc;
             Type = type;
+            this.UsableBy = usableBy;
         }
 
 
@@ -88,7 +90,8 @@ public class EquipmentGen : MonoBehaviour
         new LocationType(Equipment.EquipLocations.Hands,new []{Equipment.EquipmentType.Gloves}),
         new LocationType(Equipment.EquipLocations.Head,new []{Equipment.EquipmentType.Skull,Equipment.EquipmentType.Cap}),
         new LocationType(Equipment.EquipLocations.Torso,new []{Equipment.EquipmentType.Shirt,Equipment.EquipmentType.Armor,Equipment.EquipmentType.Cloth}),
-        new LocationType(Equipment.EquipLocations.Weapon,new []{Equipment.EquipmentType.Stick,Equipment.EquipmentType.Sword,Equipment.EquipmentType.Blade}),
+        new LocationType(Equipment.EquipLocations.Weapon,new []{Equipment.EquipmentType.Stick,Equipment.EquipmentType.Sword,Equipment.EquipmentType.Blade}, Goblin.Class.ALL & (~Goblin.Class.Shooter) ),
+        new LocationType(Equipment.EquipLocations.Bow,new []{Equipment.EquipmentType.Bow},Goblin.Class.Shooter),
         new LocationType(Equipment.EquipLocations.Feet,new []{Equipment.EquipmentType.Boots,Equipment.EquipmentType.Shoes}),
     };
 
@@ -120,6 +123,7 @@ public class EquipmentGen : MonoBehaviour
 
         equip.Type = Instance.LocationDescriptions.First(loc => loc.Location == equip.EquipLocation).GetClothes();
 
+        equip.UsableBy = Instance.LocationDescriptions.First(loc => loc.Location == equip.EquipLocation).UsableBy;
 
         var amountOfAttributtes = Random.Range(1, 4);
         

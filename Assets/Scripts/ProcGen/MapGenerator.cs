@@ -907,12 +907,16 @@ public class MapGenerator : MonoBehaviour
                 immovableTiles.Remove(current);
             }
 
-            if (drawRoad)
+            if (!drawRoad) continue;
+            current.Type = TileType.Road;
+            foreach (var neightbour in GetNeightbours(current))
             {
-                current.Type = TileType.Road;
-                foreach (var neightbour in GetNeightbours(current))
+                neightbour.NextToRoad = true;
+                if (neightbour.Type == TileType.Forest)
                 {
-                    neightbour.NextToRoad = true;
+                    neightbour.Type = TileType.Ground;
+                    movableTiles.Add(neightbour);
+                    immovableTiles.Remove(neightbour);
                 }
             }
         }

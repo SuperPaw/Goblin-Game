@@ -274,6 +274,7 @@ public abstract class Character : MonoBehaviour
     private const string FLEE_ANIMATION_BOOL = "Fleeing";
     private const string DEATH_ANIMATION_BOOL = "Dead";
     private const string ATTACK_ANIMATION_BOOL = "Attacking";
+    private const string RANGED_ATTACK_ANIMATION_BOOL = "ArcherAttack";
     private const string MOVE_ANIMATION_BOOL = "Walking";
     private const string IDLE_ANIMATION_BOOL = "Idling";
 
@@ -444,7 +445,9 @@ public abstract class Character : MonoBehaviour
         }
         else if (_attackRoutine != null)
         {
-            Animate(ATTACK_ANIMATION_BOOL);
+            Animate(Equipped.Values.Any(e => e && e.Type == Equipment.EquipmentType.Bow)
+                ? RANGED_ATTACK_ANIMATION_BOOL
+                : ATTACK_ANIMATION_BOOL);
         }
         else if (navMeshAgent.desiredVelocity.sqrMagnitude > SpeedAnimationThreshold)
         {
@@ -523,15 +526,20 @@ public abstract class Character : MonoBehaviour
     {
         if (!Equipped.ContainsKey(e.EquipLocation))
         {
-            Debug.LogError("not a equip location: " + e.EquipLocation);
+            Debug.LogWarning("not a equip location: " + e.EquipLocation);
             return false;
         }
         if (Equipped[e.EquipLocation] != null)
         {
-            Debug.Log("already equipped at "+ e.EquipLocation);
+            Debug.LogWarning("already equipped at "+ e.EquipLocation);
             return false;
         }
-
+        if (this as Goblin && !e.IsUsableby(this as Goblin))
+        {
+            Debug.LogWarning(gameObject.name + ": Not usable by " + ((Goblin)this).ClassType);
+            return false;
+        }
+        
         //Debug.Log("Equipped "+ e.name + " to " + name);
 
         Equipped[e.EquipLocation] = e;
@@ -663,7 +671,7 @@ public abstract class Character : MonoBehaviour
 
     private IEnumerator AttackRoutine()
     {
-        Debug.Log(gameObject.name + " is Attacking " + AttackTarget.gameObject.name);
+        //Debug.Log(gameObject.name + " is Attacking " + AttackTarget.gameObject.name);
         
         State = CharacterState.Attacking;
         while (Attacking() && InAttackRange() && AttackTarget.Alive())
@@ -681,7 +689,7 @@ public abstract class Character : MonoBehaviour
 
             if (target.Health <= 0)
             {
-                Debug.Log(name + " killed " + target.name);
+                //Debug.Log(name + " killed " + target.name);
 
                 if (this as Goblin)
                 {
@@ -908,16 +916,17 @@ public abstract class Character : MonoBehaviour
                         PopUpText.ShowText(name + " found " + LootTarget.Food);
                         Team.Food += 5;
                     }
-                    foreach (var equipment in LootTarget.EquipmentLoot)
-                    {
-                        //TODO: create player choice for selecting goblin
-                        Speak(SoundBank.GoblinSound.Laugh);
-                        PopUpText.ShowText(name + " found " + equipment.name);
-                        if (Team && Team.Members.Count > 1)
-                            Team.EquipmentFound(equipment,this);
-                        else
-                            Equip(equipment);
-                    }
+                    if(this as Goblin)
+                        foreach (var equipment in LootTarget.EquipmentLoot)
+                        {
+                            //TODO: create player choice for selecting goblin
+                            Speak(SoundBank.GoblinSound.Laugh);
+                            PopUpText.ShowText(name + " found " + equipment.name);
+                            if (Team && Team.Members.Count > 1)
+                                Team.EquipmentFound(equipment,this as Goblin);
+                            else
+                                Equip(equipment);
+                        }
 
                     LootTarget.EquipmentLoot.Clear();
 

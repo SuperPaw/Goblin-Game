@@ -269,9 +269,7 @@ public class PlayerTeam : MonoBehaviour
         yield return new WaitUntil(()=>!Challenger || !Challenger.Alive() ||!Leader.Alive());
 
         //TODO: probably unnescecary should be handled on selection
-        if (Challenger.Alive()) Leader = Challenger;
-
-
+        //if (Challenger && Challenger.Alive()) Leader = Challenger;
     }
 
     internal void LeaderShout(PlayerController.OrderType shout)
@@ -360,23 +358,29 @@ public class PlayerTeam : MonoBehaviour
         }
     }
 
-    public void EquipmentFound(Equipment equipment, Character finder)
+    public void EquipmentFound(Equipment equipment, Goblin finder)
     {
         List<PlayerChoice.ChoiceOption> options = new List<PlayerChoice.ChoiceOption>();
 
         //TODO check for usability
+        var potential = new List<Character>();
 
-        options.Add(new PlayerChoice.ChoiceOption() {Action = () => finder.Equip(equipment),Description = finder.name});
+        if ( finder.CanEquip(equipment))
+            potential.Add(finder);
+        if (finder != Leader && Leader.CanEquip(equipment))
+            potential.Add(Leader);
+        potential.AddRange(Members.Where( g => g.CanEquip(equipment) && g != finder && g != Leader).OrderByDescending(g => g.Xp));
 
-        if(finder != Leader)
-            options.Add(new PlayerChoice.ChoiceOption() { Action = () => Leader.Equip(equipment), Description = Leader.name });
-
-        var pot = Members.Where(g=> g.ClassType != Goblin.Class.Slave && g != finder && g != Leader).OrderByDescending(g => g.Xp);
-
-        if(pot.Any())
-            options.Add(new PlayerChoice.ChoiceOption() { Action = () => pot.First().Equip(equipment), Description = pot.First().name });
-
-
-        PlayerChoice.SetupPlayerChoice(options.ToArray(),"Who gets to keep the " + equipment.name + "?");
+        foreach (var f in potential.Take(3))
+        {
+            options.Add(new PlayerChoice.ChoiceOption() { Action = () => f.Equip(equipment), Description = f.name });
+        }
+        if(options.Any())
+            PlayerChoice.SetupPlayerChoice(options.ToArray(),"Who gets to keep the " + equipment.name + "?");
+        else
+        {
+            Treasure++;
+            PopUpText.ShowText(finder.name + " broke the " + equipment.name + " and turned it into treasure");
+        }
     }
 }

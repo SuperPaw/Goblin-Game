@@ -130,7 +130,7 @@ public class CharacterView : MenuWindow
             {
                 generatedClassButtons = new List<Button>();
 
-                for (Goblin.Class i = (Goblin.Class)1; i < Goblin.Class.END; i++)
+                for (Goblin.Class i = (Goblin.Class) 2; i < Goblin.Class.END; i =(Goblin.Class) ((int)i * 2)) 
                 {
                     var clBut = Instantiate(ClassIcon,ClassIcon.transform.parent);
 
