@@ -121,7 +121,7 @@ public class Goblin : Character
         emission.enabled = WaitingOnLevelUp > 0|| WaitingOnClassSelection;
     }
 
-    internal void Rest()
+    internal void Heal()
     {
         Morale = COU.GetStatMax();
         Health = HEA.GetStatMax();

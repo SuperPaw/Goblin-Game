@@ -10,7 +10,6 @@ public class HumanSettlement : PointOfInterest
     public bool WinCondition;
     public int InitialEnemies;
     public int EnemiesOnAttack;
-    public bool HasBeenAttacked;
 
     public void AttackSettlement()
     {

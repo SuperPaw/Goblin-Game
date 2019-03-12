@@ -45,7 +45,7 @@ public class CampfireObject : MonoBehaviour
 
         foreach (var teamMember in Team.Members)
         {
-            teamMember.Rest();
+            teamMember.Heal();
         }
 
         Team.Campfire = null;

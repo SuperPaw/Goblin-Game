@@ -115,36 +115,45 @@ public class EquipmentGen : MonoBehaviour
         //}
     }
 
-    public static Equipment GetRandomEquipment(Character.Race originRace = Character.Race.NoRace)
+    public static Equipment GetRandomEquipment()
     {
-        var equip = Instantiate<Equipment>(Instance.EquipmentPrefab);
+        var e = (Equipment.EquipLocations) Random.Range(0, (int) Equipment.EquipLocations.COUNT);
 
-        equip.EquipLocation = (Equipment.EquipLocations) Random.Range(0, (int) Equipment.EquipLocations.COUNT);
+        return GetEquipment(Instance.LocationDescriptions.First(loc => loc.Location == e).GetClothes());
+        
+    }
 
-        equip.Type = Instance.LocationDescriptions.First(loc => loc.Location == equip.EquipLocation).GetClothes();
+    public static Equipment GetEquipment(Equipment.EquipmentType type)
+    {
+        var equip = Instantiate(Instance.EquipmentPrefab);
+
+        equip.Type = type;
+
+        equip.EquipLocation = Instance.LocationDescriptions.First(loc => loc.Type.Contains(type)).Location;
+
 
         equip.UsableBy = Instance.LocationDescriptions.First(loc => loc.Location == equip.EquipLocation).UsableBy;
 
         var amountOfAttributtes = Random.Range(1, 4);
-        
-        Dictionary<Character.StatType,int> attributes = new Dictionary<Character.StatType, int>(amountOfAttributtes);
+
+        Dictionary<Character.StatType, int> attributes = new Dictionary<Character.StatType, int>(amountOfAttributtes);
 
         for (int i = 0; i < amountOfAttributtes; i++)
         {
             Character.StatType stat;
             do
-                 stat = (Character.StatType) Random.Range(0, (int) Character.StatType.COUNT);
-            while 
+                stat = (Character.StatType)Random.Range(0, (int)Character.StatType.COUNT);
+            while
                 (attributes.ContainsKey(stat));
 
             if (i % 2 == 0) //positive
                 attributes[stat] = Random.Range(Instance.PositiveAttributeAdjustmentMin,
-                    Instance.PositiveAttributeAdjustmentMax+1);
+                    Instance.PositiveAttributeAdjustmentMax + 1);
             else
                 attributes[stat] = Instance.NegativeAttributeAdjustment;
         }
-        
-        var shuffledList = new Dictionary<Character.StatType,int>(amountOfAttributtes);
+
+        var shuffledList = new Dictionary<Character.StatType, int>(amountOfAttributtes);
 
         while (attributes.Any())
         {
@@ -161,7 +170,7 @@ public class EquipmentGen : MonoBehaviour
         var x = Random.value;
         if (x < 0.33f)
         {
-            equip.name = ((originRace == Character.Race.NoRace) ? "" : originRace + " ") + equip.Type;
+            equip.name = equip.Type.ToString();
 
             equip.name = Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, false) + " " +
                          equip.name;
@@ -177,9 +186,9 @@ public class EquipmentGen : MonoBehaviour
         else if (x < 0.67)
         {
 
-            equip.name = ((originRace == Character.Race.NoRace) ? "" : originRace + " ") + equip.Type;
+            equip.name = "" + equip.Type;
 
-            equip.name = Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, false) + "-"+ Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, false) + " " + equip.name;
+            equip.name = Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, false) + "-" + Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, false) + " " + equip.name;
 
             if (attributes.Count > 1)
                 equip.name = Instance.GetStatDescription(attributes.ElementAt(1).Key, attributes.ElementAt(1).Value, true) + " " +
@@ -190,7 +199,7 @@ public class EquipmentGen : MonoBehaviour
         }
         else
         {
-            equip.name = ((originRace == Character.Race.NoRace) ? "" : originRace + " ") + equip.Type;
+            equip.name = "" + equip.Type;
 
             equip.name = Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, true) + " " + equip.name;
 
@@ -203,11 +212,12 @@ public class EquipmentGen : MonoBehaviour
         }
 
 
-        foreach (var stat in attributes)  {
+        foreach (var stat in attributes)
+        {
             //TODO: effects should not use strings
-            equip.Effects.Add(new Equipment.StatEffect(stat.Key, "", new Character.Stat.StatMod(equip.name,stat.Value)));
+            equip.Effects.Add(new Equipment.StatEffect(stat.Key, "", new Character.Stat.StatMod(equip.name, stat.Value)));
         }
-        
+
         return equip;
     }
 

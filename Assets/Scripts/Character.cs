@@ -347,7 +347,7 @@ public abstract class Character : MonoBehaviour
         Health = HEA.GetStatMax();
         
         Material = GetComponentInChildren<Renderer>().material;
-        if(Material)
+        if(Material &&Material.HasProperty("_Color"))
             NormalColor = Material.color;
         DamageColor = Color.red;
         

@@ -278,6 +278,15 @@ public class PlayerController : MonoBehaviour
                 else
                     ClickedArea(cave.InArea);
             }
+            else if (hit.collider && hit.collider.GetComponent<WitchHut>())
+            {
+                var hut = hit.collider.GetComponent<WitchHut>();
+
+                if (hut.InArea.Visible())
+                    WitchHutView.OpenWitchView(hut, Team);
+                else
+                    ClickedArea(hut.InArea);
+            }
             else if (hit.collider && hit.collider.GetComponent<Area>())
             {
                 var a = hit.collider.GetComponent<Area>();

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Cave : PointOfInterest
 {
-    public Character MonsterPrefab;
     public int Difficulty;
     public int Prize;
     public bool Explored;
@@ -18,21 +17,6 @@ public class Cave : PointOfInterest
         StartCoroutine(Spawning(team));
     }
 
-    private IEnumerator Spawning(PlayerTeam team)
-    {
-        yield return new WaitForSeconds(1.5f);
-        
-        var zs = Random.Range(1, 4);
-
-        for (int i = 0; i < zs; i++)
-        {
-            var z = MapGenerator.GenerateCharacter(MonsterPrefab.gameObject, InArea, NpcHolder.Instance.transform).GetComponent<Character>();
-
-            z.ChangeState(Character.CharacterState.Attacking);
-
-            yield return new WaitForSeconds(Random.Range(0, 1.5f));
-        }
-    }
 
     public void SendInGoblin(Goblin g)
     {
