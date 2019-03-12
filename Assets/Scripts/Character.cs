@@ -846,12 +846,11 @@ public abstract class Character : MonoBehaviour
                 if (fleeingToArea == InArea && navMeshAgent.remainingDistance < 0.1f)
                 {
                     actionInProgress = false;
-                    ChangeState(CharacterState.Idling);
+                    ChangeState(CharacterState.Idling,true);
                 }
                 else if (!actionInProgress)
                 {
-                     fleeingToArea = InArea.GetClosestNeighbour(transform.position);
-
+                    fleeingToArea = InArea.GetClosestNeighbour(transform.position,StickToRoad);
                     navMeshAgent.SetDestination(fleeingToArea.GetRandomPosInArea());
 
                     Walking = false;
