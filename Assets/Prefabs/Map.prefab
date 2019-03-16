@@ -78,6 +78,7 @@ MonoBehaviour:
   PointOfInterestPrefabs:
   - {fileID: 1510720524141754411, guid: 7cde1fc3eeb07ab41add50d71da38d93, type: 3}
   - {fileID: 909367182681320238, guid: 69c2564b5439e0a4892a9240f5182bcc, type: 3}
+  - {fileID: 799393227371411339, guid: e68521ac0ca9f3d42970ef4e5885b4d4, type: 3}
   HumanSettlementPrefab:
   - {fileID: 3172418170863198060, guid: 949060969851d48479664ba80b2eecef, type: 3}
   - {fileID: 4214430656408830761, guid: 038fe9f5a3d519245832da7ff693b767, type: 3}

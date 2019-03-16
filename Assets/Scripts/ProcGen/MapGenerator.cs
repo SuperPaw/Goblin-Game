@@ -250,9 +250,8 @@ public class MapGenerator : MonoBehaviour
             //Create characters
             for (int j = 0; j < next.InitialEnemies; j++)
             {
-                var human = GenerateCharacter(next.SpawnEnemies[Random.Range(0, next.SpawnEnemies.Length)], next.InArea, NpcHolder.Instance.transform);//Instantiate(next.SpawnEnemies[Random.Range(0,next.SpawnEnemies.Length)],);
-                //var position = next.InArea.GetRandomPosInArea();
-                //human.transform.position = new Vector3(position.x, 0, position.z);
+                GenerateCharacter(next.SpawnEnemies[Random.Range(0, next.SpawnEnemies.Length)], next.InArea, NpcHolder.Instance.transform, true);//Instantiate(next.SpawnEnemies[Random.Range(0,next.SpawnEnemies.Length)],);
+                
             }
 
             if (last != null)
@@ -578,15 +577,8 @@ public class MapGenerator : MonoBehaviour
         yield return null;
 
         GoblinTeam.Initialize(members);
-
-        //TODO: give reference and move to overalle generation script
-        FindObjectOfType<PlayerController>().Initialize();
-
-        SoundController.PlayGameStart();
-
-        SoundController.ChangeMusic(SoundBank.Music.Explore);
-
-        GameManager.Instance.GameStarted = true;
+        
+        GameManager.StartGame();
 
         GoblinUIList.UpdateGoblinList();
 
@@ -687,9 +679,15 @@ public class MapGenerator : MonoBehaviour
         return GenerateCharacter(go, area, parent);
     }
 
-    public static GameObject GenerateCharacter(GameObject go, Area inArea, Transform parent)
+    public static GameObject GenerateCharacter(GameObject go, Area inArea, Transform parent, bool pointOfInterest = false)
     {
         var pos = inArea.GetRandomPosInArea();
+        if (pointOfInterest)
+        {
+            pos = inArea.transform.position + Random.onUnitSphere * 5;
+
+            pos.y = 0; // = new Vector3(vector3.x, 0, vector3.z);
+        }
 
         var next = Instantiate(go, pos, Quaternion.identity);
         next.transform.parent = parent;

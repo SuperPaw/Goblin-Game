@@ -30,7 +30,7 @@ public class HumanSettlement : PointOfInterest
 
         for (int i = 0; i < EnemiesOnAttack; i++)
         {
-            var z = MapGenerator.GenerateCharacter(SpawnEnemies[Random.Range(0,SpawnEnemies.Length)], InArea, NpcHolder.Instance.transform).GetComponent<Character>();
+            var z = MapGenerator.GenerateCharacter(SpawnEnemies[Random.Range(0,SpawnEnemies.Length)], InArea, NpcHolder.Instance.transform,true).GetComponent<Character>();
 
             z.ChangeState(Character.CharacterState.Attacking);
 

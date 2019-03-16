@@ -435,6 +435,9 @@ public abstract class Character : MonoBehaviour
 
         //GetComponent<LookAt>().lookAtTargetPosition = agent.steeringTarget + transform.forward;
 
+        if (navMeshAgent)
+            Animator.SetFloat("Speed",navMeshAgent.speed);
+
         if (!Alive())
         {
             Animate(DEATH_ANIMATION_BOOL);
@@ -1035,10 +1038,10 @@ public abstract class Character : MonoBehaviour
         {
             if (Random.Range(0, 12) < ATT.GetStatMax())
                 (this as Goblin).Shout("I see enemy!!", SoundBank.GoblinSound.EnemyComing);
-            else
-            {
-                Debug.Log(name + " failed enemy spoting");
-            }
+            //else
+            //{
+            //    Debug.Log(name + " failed enemy spoting");
+            //}
             
         }
     }
@@ -1182,7 +1185,7 @@ public abstract class Character : MonoBehaviour
     {
         foreach (AnimatorControllerParameter parameter in animator.parameters)
         {
-            if (parameter.name != animation)
+            if (parameter.name != animation && parameter.type == AnimatorControllerParameterType.Bool)
             {
                 animator.SetBool(parameter.name, false);
             }
