@@ -508,9 +508,9 @@ MonoBehaviour:
     Action: 7
   - Key: 102
     Action: 2
-  - Key: 43
+  - Key: 112
     Action: 9
-  - Key: 45
+  - Key: 108
     Action: 10
   Orders:
   - Order: 0
@@ -560,7 +560,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  FollowZoomSize: 5
   PanSpeed: 20
 --- !u!114 &904032341
 MonoBehaviour:

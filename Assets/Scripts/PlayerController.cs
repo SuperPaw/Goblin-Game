@@ -16,8 +16,10 @@ public class PlayerController : MonoBehaviour
     public SoundController Sound;
 
     [Header("Controls")]
+    public bool DragToPan;
+    public bool ZoomEnabled;
     public int MouseMoveKey = 1;
-    public enum MappableActions { Hide, Attack, Flee, Menu,FixCamOnLeader, Move, Camp,InvincibleMode, AddXp } //TODO: move should contain direction maybe
+    public enum MappableActions { Hide, Attack, Flee, Menu,FixCamOnLeader, Move, Camp,InvincibleMode, AddXp, ZoomIn, ZoomOut } //TODO: move should contain direction maybe
     public LayerMask HitMask;
 
     [Serializable]
@@ -42,10 +44,16 @@ public class PlayerController : MonoBehaviour
 
     public OrderType MoveOrder;
 
+    //TODO: use this
     public float OrderCooldown = 3f;
 
     private bool _mouseHeld;
     private Vector3 _mouseDragPos;
+
+    [Header("Zooming")]
+    public int GoblinViewSize;
+    public int AreaViewSize;
+    public int MapViewSize;
 
     public float ZoomMinBound= 2;
     public float ZoomMaxBound = 50;
@@ -61,11 +69,13 @@ public class PlayerController : MonoBehaviour
     private bool wasZoomingLastFrame;
     private Vector2 lastPanPosition;
     private int panFingerId;
-
-    public float FollowZoomSize = 8;
+    
     public float PanSpeed;
     private float touchTime;
     private Coroutine camMoveRoutine;
+
+    private enum ZoomLevel {GoblinView, AreaView, MapView}
+    private ZoomLevel currentZoomLevel;
 
     void Awake()
     {
@@ -84,7 +94,7 @@ public class PlayerController : MonoBehaviour
         if (!Sound) Sound = FindObjectOfType<SoundController>();
 
         //UpdateFogOfWar();
-        MoveToGoblin(Team.Leader);
+        ChangeZoomLevel(ZoomLevel.AreaView);
     }
 
     void FixedUpdate()
@@ -191,6 +201,39 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
+    }
+
+    private void ZoomOut()
+    {
+        ChangeZoomLevel( currentZoomLevel+1);
+    }
+    private void ZoomIn()
+    {
+        ChangeZoomLevel(currentZoomLevel - 1);
+    }
+
+    private void ChangeZoomLevel(ZoomLevel newLevel)
+    {
+        if(newLevel == currentZoomLevel)
+            return;
+
+        switch (newLevel)
+        {
+            case ZoomLevel.GoblinView:
+                if (!FollowGoblin)
+                    FollowGoblin = Team.Leader;
+                camMoveRoutine = StartCoroutine(MoveCamera(FollowGoblin.transform, GoblinViewSize));
+                break;
+            case ZoomLevel.AreaView:
+                camMoveRoutine = StartCoroutine(MoveCamera(Team.Leader.InArea.transform, AreaViewSize));
+                break;
+            case ZoomLevel.MapView:
+                camMoveRoutine = StartCoroutine(MoveCamera(Team.Leader.InArea.transform, MapViewSize));
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(newLevel), newLevel, null);
+        }
+        currentZoomLevel = newLevel;
     }
 
     private bool IsPointerOverUIObject()
@@ -304,6 +347,9 @@ public class PlayerController : MonoBehaviour
 
     private void PanCamera(Vector2 newPanPosition)
     {
+        if(!DragToPan)
+            return;
+
         //To compensate for the 45 degree angle of the cam. TODO: Should have been calculated 
         newPanPosition.y *= 2f;
 
@@ -427,6 +473,15 @@ public class PlayerController : MonoBehaviour
             case MappableActions.AddXp:
                 CharacterView.AddXp();
                 break;
+            case MappableActions.Move:
+                Debug.LogWarning("Move command called without location!");
+                break;
+            case MappableActions.ZoomIn:
+                ZoomIn();
+                break;
+            case MappableActions.ZoomOut:
+                ZoomOut();
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -539,6 +594,8 @@ public class PlayerController : MonoBehaviour
     //TODO: move top camera controller
     public void Zoom(float deltaMagnitudeDiff, bool touch)
     {
+        if(!ZoomEnabled) return;
+
         if(Math.Abs(deltaMagnitudeDiff) < 0.001) return;
 
         Cam.orthographicSize -= deltaMagnitudeDiff * (touch ?  ZoomSpeed: PcZoomSpeed);
@@ -549,17 +606,16 @@ public class PlayerController : MonoBehaviour
 
     private void MoveToGoblin(Goblin g)
     {
-        camMoveRoutine = StartCoroutine(MoveCamera(g.transform));
+        camMoveRoutine = StartCoroutine(MoveCamera(g.transform,GoblinViewSize));
     }
 
-    private IEnumerator MoveCamera(Transform loc)
+    private IEnumerator MoveCamera(Transform loc, int endSize)
     {
         //currentLocation = loc;
         var offset = 49;
 
         var start = Cam.transform.position;
         var startSize = Cam.orthographicSize;
-        var endSize = FollowZoomSize;
         for (var t = 0f; t < MoveTime; t += Time.deltaTime)
         {
             yield return null;
