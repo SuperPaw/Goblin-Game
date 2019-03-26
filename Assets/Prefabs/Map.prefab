@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RandomSeed: 0
-  SizeX: 300
-  SizeZ: 300
+  SizeX: 400
+  SizeZ: 400
   AreaTilePrefab: {fileID: 114614147775462646, guid: e15f42e3c6199524da160032eae3127f,
     type: 3}
   AreaSize: 30

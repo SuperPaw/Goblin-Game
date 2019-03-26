@@ -75,7 +75,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6207cf3e41e8b7c40b3ce753e9e1e94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AreaName: Human Fort
+  MinSpawns: 1
+  MaxSpawns: 4
+  MonsterPrefab: {fileID: 0}
   InArea: {fileID: 0}
+  HasBeenAttacked: 0
+  IconSprite: {fileID: 21300000, guid: 1102d1c69eaca4a41b86260c4c6fa22a, type: 3}
   Name: Fort
   SpawnEnemies:
   - {fileID: 1969145986120274, guid: f95d1a9483a8c6a4496c281ffd93702c, type: 3}

@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Area : MonoBehaviour
 {
@@ -32,12 +34,42 @@ public class Area : MonoBehaviour
     public HashSet<Area> Neighbours = new HashSet<Area>();
     public HashSet<Area> RoadsTo = new HashSet<Area>();
     public BoxCollider Collider;
+
+    public Sprite BasicAreaSprite, RoadAreaSprite;
+
     public PointOfInterest PointOfInterest;
+    public PlayerController Controller;
 
     public SpriteRenderer FogOfWarSprite;
     public Color LightFogColor, UnseenFogColor;
     //should be the size of x and z of the box collider
     public int Size;
+
+    public GameObject AreaUIObject;
+    public Image AreaIcon;
+    public TextMeshProUGUI AreaText;
+
+    public void SetUpUI()
+    {
+        if (!Controller)
+            Controller = FindObjectOfType<PlayerController>();
+
+        if (PointOfInterest)
+        {
+            AreaIcon.sprite = PointOfInterest.IconSprite;
+            AreaText.text = PointOfInterest.AreaName;
+        }
+        else if(RoadsTo.Any())
+        {
+            AreaIcon.sprite = RoadAreaSprite;
+            AreaText.text = "";
+        }
+        else
+        {
+            AreaIcon.sprite = BasicAreaSprite;
+            AreaText.text = "";
+        }
+    }
 
     internal Vector3 GetRandomPosInArea()
     {
@@ -48,9 +80,9 @@ public class Area : MonoBehaviour
     }
 
 
-    public void RemoveFogOfWar(bool InArea)
+    public void RemoveFogOfWar(bool inArea)
     {
-        FogOfWarSprite.gameObject.SetActive(!InArea);
+        FogOfWarSprite.gameObject.SetActive(!inArea);
 
         FogOfWarSprite.color = LightFogColor;
     }
@@ -94,6 +126,11 @@ public class Area : MonoBehaviour
         //Debug.Log(c + " left " + name);
 
         PresentCharacters.Remove(c);
+    }
+
+    public void MoveTo()
+    {
+        Controller.ClickedArea(this);
     }
 
     public bool AnyEnemies(bool onlyConsiderWandering = false)
@@ -142,4 +179,15 @@ public class Area : MonoBehaviour
     public bool HasMaximumConnections => Neighbours.Count >= MaxNeighbours;
 
     public bool ContainsRoads => RoadsTo.Any();
+
+    public void EnableAreaUI()
+    {
+        AreaUIObject.SetActive(true);
+    }
+
+    //TODO: should this just be handled by events
+    public void DisableAreaUI()
+    {
+        AreaUIObject.SetActive(false);
+    }
 }

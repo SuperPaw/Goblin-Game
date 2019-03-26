@@ -75,11 +75,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c068caa43bd7a6144a94c9d2b2cae4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AreaName: Witch Hut
   MinSpawns: 1
   MaxSpawns: 1
   MonsterPrefab: {fileID: 114479280790955412, guid: a41febb9abb65c949b38b226685a2ff7,
     type: 3}
   InArea: {fileID: 0}
+  HasBeenAttacked: 0
+  IconSprite: {fileID: 21300000, guid: f24aaf3d4500eda4fa6dba91e4e3877b, type: 3}
 --- !u!1 &8503355671099633675
 GameObject:
   m_ObjectHideFlags: 0

@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
 
     private enum ZoomLevel {GoblinView, AreaView, MapView}
     private ZoomLevel currentZoomLevel;
+    private bool showingMoveView;
 
     void Awake()
     {
@@ -205,6 +206,7 @@ public class PlayerController : MonoBehaviour
 
     private void ZoomOut()
     {
+        FollowGoblin = null;
         ChangeZoomLevel( currentZoomLevel+1);
     }
     private void ZoomIn()
@@ -216,6 +218,8 @@ public class PlayerController : MonoBehaviour
     {
         if(newLevel == currentZoomLevel)
             return;
+        if (newLevel > ZoomLevel.GoblinView)
+            FollowGoblin = null;
 
         switch (newLevel)
         {
@@ -231,7 +235,7 @@ public class PlayerController : MonoBehaviour
                 camMoveRoutine = StartCoroutine(MoveCamera(Team.Leader.InArea.transform, MapViewSize));
                 break;
             default:
-                throw new ArgumentOutOfRangeException(nameof(newLevel), newLevel, null);
+                return;
         }
         currentZoomLevel = newLevel;
     }
@@ -271,7 +275,7 @@ public class PlayerController : MonoBehaviour
                             Team.Attack(c);
                         else
                         {
-                            ClickedArea(c.InArea);
+                            //ClickedArea(c.InArea);
                         }
                     }
                     else if (c as Goblin)
@@ -279,7 +283,9 @@ public class PlayerController : MonoBehaviour
                         CharacterView.ShowCharacter(c as Goblin);
                     }
                     else
-                        ClickedArea(c.InArea);
+                    {
+                        //ClickedArea(c.InArea);
+                    }
                 }
             }
             //TODO use parent class for these
@@ -290,7 +296,9 @@ public class PlayerController : MonoBehaviour
                 if (v.InArea.Visible())
                     VillageView.OpenVillageView(v, Team);
                 else
-                    ClickedArea(v.InArea);
+                {
+                    //ClickedArea(v.InArea);
+                }
             }
             //TODO use parent class for these
             else if (hit.collider && hit.collider.GetComponent<HumanSettlement>())
@@ -299,8 +307,8 @@ public class PlayerController : MonoBehaviour
 
                 if (v.InArea.Visible())
                     PlayerChoice.CreateDoChoice(()=> v.AttackSettlement(),"Do you want to attack the Human " + v.Name);
-                else
-                    ClickedArea(v.InArea);
+                //else
+                  //  ClickedArea(v.InArea);
             }
             //TODO: handle the point of interest click generally. Replace BigstoneView and CaveView with a Poi view?
             else if (hit.collider && hit.collider.GetComponent<Monument>())
@@ -309,8 +317,8 @@ public class PlayerController : MonoBehaviour
 
                 if (monument.InArea.Visible())
                     BigStoneView.OpenStoneView(monument, Team);
-                else
-                    ClickedArea(monument.InArea);
+                //else
+                //    ClickedArea(monument.InArea);
             }
             else if (hit.collider && hit.collider.GetComponent<Cave>())
             {
@@ -318,8 +326,8 @@ public class PlayerController : MonoBehaviour
 
                 if (cave.InArea.Visible())
                     CaveView.OpenCaveView(cave, Team);
-                else
-                    ClickedArea(cave.InArea);
+                //else
+                //    ClickedArea(cave.InArea);
             }
             else if (hit.collider && hit.collider.GetComponent<WitchHut>())
             {
@@ -327,15 +335,15 @@ public class PlayerController : MonoBehaviour
 
                 if (hut.InArea.Visible())
                     WitchHutView.OpenWitchView(hut, Team);
-                else
-                    ClickedArea(hut.InArea);
+                //else
+                //    ClickedArea(hut.InArea);
             }
             else if (hit.collider && hit.collider.GetComponent<Area>())
             {
                 var a = hit.collider.GetComponent<Area>();
                 //Debug.Log("Clicked Area : " + (a.name));
 
-                ClickedArea(a);
+                //ClickedArea(a);
             }
             else
             {
@@ -374,8 +382,8 @@ public class PlayerController : MonoBehaviour
     }
     
 
-
-    private void ClickedArea(Area a)
+    //TODO: only from button click
+    public void ClickedArea(Area a)
     {
         var target = a.transform.position;//hit.point;
         target.y = 0;
@@ -388,12 +396,15 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogWarning("Not possible to move to " + a + " from " + Team.Leader.InArea);
             return;
-        }
-        else
+        } //TODO: replace with ready for order
+        else if(!Team.Leader.Fleeing() || Team.Leader.Attacking())
         {
             Team.LeaderShout(MoveOrder);
             
             Team.Move(a);
+
+            ChangeZoomLevel(ZoomLevel.AreaView);
+            FollowGoblin = Team.Leader;
         }
     }
 
@@ -416,12 +427,15 @@ public class PlayerController : MonoBehaviour
         RemoveFogAtPos(Team.Leader.transform.position, id++);
         RemoveFogAtPos(Team.Leader.InArea.transform.position, id++);
         Team.Leader.InArea.RemoveFogOfWar(true);
-        foreach (var n in Team.Leader.InArea.Neighbours)
+        if (showingMoveView)
         {
-            RemoveFogAtPos(n.transform.position, id++);
-            n.RemoveFogOfWar(false);
+            foreach (var n in Team.Leader.InArea.Neighbours)
+            {
+                RemoveFogAtPos(n.transform.position, id++);
+                n.RemoveFogOfWar(false);
+            }
         }
-        
+
     }
 
     private void RemoveFogAtPos(Vector3 pos, int id)
@@ -474,7 +488,7 @@ public class PlayerController : MonoBehaviour
                 CharacterView.AddXp();
                 break;
             case MappableActions.Move:
-                Debug.LogWarning("Move command called without location!");
+                MoveView();
                 break;
             case MappableActions.ZoomIn:
                 ZoomIn();
@@ -591,6 +605,14 @@ public class PlayerController : MonoBehaviour
         oldVillage.Members.Remove(goblin);
     }
 
+    public bool ReadyForInput()
+    {
+        if (!Team.Leader)
+            return false;
+
+        return Team.Leader.Idling();
+    }
+
     //TODO: move top camera controller
     public void Zoom(float deltaMagnitudeDiff, bool touch)
     {
@@ -606,6 +628,7 @@ public class PlayerController : MonoBehaviour
 
     private void MoveToGoblin(Goblin g)
     {
+        currentZoomLevel = ZoomLevel.GoblinView;
         camMoveRoutine = StartCoroutine(MoveCamera(g.transform,GoblinViewSize));
     }
 
@@ -616,15 +639,24 @@ public class PlayerController : MonoBehaviour
 
         var start = Cam.transform.position;
         var startSize = Cam.orthographicSize;
-        for (var t = 0f; t < MoveTime; t += Time.deltaTime)
+        if (GameManager.Instance.GamePaused)
         {
-            yield return null;
-            
             var xz = loc.position;
-            var end = new Vector3(xz.x, Cam.transform.position.y, xz.z - offset);
-            Cam.transform.position = Vector3.LerpUnclamped(start, end, MoveCurve.Evaluate(t / MoveTime));
+            Cam.transform.position = new Vector3(xz.x, Cam.transform.position.y, xz.z - offset);
+            Cam.orthographicSize = endSize;
+        }
+        else
+        {
+            for (var t = 0f; t < MoveTime; t += Time.deltaTime)
+            {
+                yield return null;
 
-            Cam.orthographicSize = Mathf.LerpUnclamped(startSize, endSize, MoveCurve.Evaluate(t / MoveTime));
+                var xz = loc.position;
+                var end = new Vector3(xz.x, Cam.transform.position.y, xz.z - offset);
+                Cam.transform.position = Vector3.LerpUnclamped(start, end, MoveCurve.Evaluate(t / MoveTime));
+
+                Cam.orthographicSize = Mathf.LerpUnclamped(startSize, endSize, MoveCurve.Evaluate(t / MoveTime));
+            }
         }
 
         while (FollowGoblin)
@@ -637,5 +669,29 @@ public class PlayerController : MonoBehaviour
 
         camMoveRoutine = null;
     }
-    
+
+    private void MoveView()
+    {
+        var l = Team.Leader.InArea.Neighbours.ToList();
+
+        foreach (var movable in l)
+        {
+            movable.EnableAreaUI();
+        }
+
+        showingMoveView = true;
+
+        ChangeZoomLevel(ZoomLevel.MapView);
+
+        StartCoroutine(DisableAreaUIOnAction(l));
+    }
+
+    private IEnumerator DisableAreaUIOnAction(List<Area> toDisable)
+    {
+        yield return new WaitUntil(() => currentZoomLevel != ZoomLevel.MapView);
+        
+        showingMoveView = false;
+
+        toDisable.ForEach(d => d.DisableAreaUI());
+    }
 }

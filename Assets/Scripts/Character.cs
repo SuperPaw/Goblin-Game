@@ -47,7 +47,7 @@ public abstract class Character : MonoBehaviour
     public float SurprisedTime = 4;
     public float SurprisedStartTime;
 
-    protected CharacterState State;
+    public CharacterState State;
     
 
     public class Stat
@@ -399,7 +399,7 @@ public abstract class Character : MonoBehaviour
         else
         {
             navMeshAgent.isStopped = false;
-            Move();
+            SelectAction();
         }
     }
 
@@ -720,7 +720,7 @@ public abstract class Character : MonoBehaviour
         return State != CharacterState.Dead;
     }
 
-    private  void Move()
+    private  void SelectAction()
     {
 
         switch (State)
@@ -753,12 +753,16 @@ public abstract class Character : MonoBehaviour
                             || (StickToRoad && InArea.PresentCharacters.Any(c => c.tag == "Player" &! c.Hiding()))
                             ))
                         {
-                            Debug.Log(name + ": Joining attack without beeing attacked");
+                            //Debug.Log(name + ": Joining attack without beeing attacked");
 
                             ChangeState(CharacterState.Attacking,true);
                             Morale -= 5;
                             Target = GetClosestEnemy().transform.position;
                             dest = Target;
+                        }
+                        else if ((this as Goblin) && Team && Team.Leader.InArea != InArea && Team.Leader.Idling())
+                        {
+                            dest = Team.Leader.InArea.GetRandomPosInArea();
                         }
                         else if ((this as Goblin) &&tag == "Player" && GetClosestEnemy() && (GetClosestEnemy().transform.position - transform.position).magnitude < provokeDistance)
                         {
@@ -822,6 +826,13 @@ public abstract class Character : MonoBehaviour
             case CharacterState.Attacking:
                 if (AttackTarget && AttackTarget.Alive() && AttackTarget.InArea == InArea)
                 {
+                    if (AttackTarget.Fleeing())
+                    {
+                        var c = GetClosestEnemy();
+                        if (c)
+                            AttackTarget = c;
+                    }
+
                     navMeshAgent.SetDestination(AttackTarget.transform.position);
 
                     //TODO: add random factor
@@ -884,6 +895,8 @@ public abstract class Character : MonoBehaviour
             case CharacterState.Watching:
                 if (!Team || !Team.Challenger)
                 {
+                    //cheer
+                    Speak(SoundBank.GoblinSound.Laugh);
                     ChangeState(CharacterState.Idling, true);
                 }
                 else
@@ -1120,7 +1133,7 @@ public abstract class Character : MonoBehaviour
 
     public void MoveTo(Area a, bool immedeately = false)
     {
-        if (Fleeing())
+        if (Fleeing() || Attacking())
             return;
 
         MoveTo(a.GetRandomPosInArea(),immedeately);

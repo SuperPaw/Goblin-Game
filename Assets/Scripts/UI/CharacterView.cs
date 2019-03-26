@@ -33,7 +33,7 @@ public class CharacterView : MenuWindow
 
     public static void ShowCharacter(Goblin c)
     {
-        if (!c)
+        if (!c || !c.Team || c.Team.Leader.InArea != c.InArea)
             return;
 
         Instance.showCharacter(c);

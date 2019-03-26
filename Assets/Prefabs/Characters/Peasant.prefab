@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 54649803752173894}
   - component: {fileID: 136331229541643926}
   - component: {fileID: 195122366507032248}
+  - component: {fileID: 6003596044765673084}
   m_Layer: 0
   m_Name: Peasant
   m_TagString: Enemy
@@ -58,6 +59,7 @@ MonoBehaviour:
   MovementAudio: {fileID: 0}
   SurprisedTime: 4
   SurprisedStartTime: 0
+  State: 0
   LootTarget: {fileID: 0}
   Team: {fileID: 0}
   DamMin: 3
@@ -92,7 +94,7 @@ MonoBehaviour:
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 0}
-  Animator: {fileID: 1118844754197598127}
+  Animator: {fileID: 6003596044765673084}
   SpeedAnimationThreshold: 0
   IrritationMeter: 0
   IrritaionTolerance: 100
@@ -150,6 +152,25 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &6003596044765673084
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969145986120274}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: b53c8dcaba88c204a898b17ea1b57305, type: 3}
+  m_Controller: {fileID: 9100000, guid: dad1b18695e08c049b903320225f229a, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 0
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &156615491998231938
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +180,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7764107430451759508}
-  - component: {fileID: 1118844754197598127}
   m_Layer: 0
   m_Name: Character_A_Plain_Leather
   m_TagString: Untagged
@@ -183,25 +203,6 @@ Transform:
   m_Father: {fileID: 957100490109666006}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1118844754197598127
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 156615491998231938}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: b53c8dcaba88c204a898b17ea1b57305, type: 3}
-  m_Controller: {fileID: 9100000, guid: dad1b18695e08c049b903320225f229a, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 0
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &974270532808425838
 GameObject:
   m_ObjectHideFlags: 0

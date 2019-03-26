@@ -529,6 +529,11 @@ public class MapGenerator : MonoBehaviour
 	        }
         }
 
+        foreach (var ar in Areas)
+        {
+            ar.SetUpUI();
+        }
+
         List<Goblin> members = new List<Goblin>();
 
         var a = goblinStartArea;
@@ -646,7 +651,7 @@ public class MapGenerator : MonoBehaviour
 
         area.transform.position = position;
         area.Size = totalAreaSize;
-        area.transform.localScale = new Vector3(AreaSize, 0.1f, AreaSize);
+        area.GetComponent<BoxCollider>().size = new Vector3(AreaSize, 0.1f, AreaSize);
         area.FogOfWarSprite.transform.localScale *= (float)totalAreaSize / (float)AreaSize;
 
         area.X = (int)position.x;

@@ -4,11 +4,13 @@ using UnityEngine;
 
 public abstract class PointOfInterest : MonoBehaviour
 {
+    public string AreaName;
     public int MinSpawns = 1;
     public int MaxSpawns = 4;
     public Character MonsterPrefab;
     public Area InArea;
     public bool HasBeenAttacked;
+    public Sprite IconSprite;
 
     public IEnumerator Spawning(PlayerTeam team)
     {

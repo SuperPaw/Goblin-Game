@@ -142,8 +142,20 @@ public class PlayerTeam : MonoBehaviour
 
     public void Camp()
     {
-        if (Food < 2*Members.Count || Leader.InArea.AnyEnemies() || Leader.InArea.PointOfInterest ||Leader.Fleeing())
+        if (Food < 2*Members.Count)
+        {
+            PopUpText.ShowText("Goblins need more food to camp!");
+            return; 
+        }
+        if (Leader.InArea.PointOfInterest )
+        {
+            PopUpText.ShowText("Goblins need space to camp");
+            return; //TODO: Maybe just change camping icon
+        }
+        if ( Leader.InArea.AnyEnemies() || Leader.Fleeing())
+        {
             return; //TODO: add message for this. Maybe just change camping icon
+        }
 
         //Create camping Gameobject gameobject 
         Campfire = Instantiate(CampfirePrefab);
@@ -267,6 +279,8 @@ public class PlayerTeam : MonoBehaviour
             Challenger.name + " challenge " + Leader.name + " to be new chief!");//.\n\nDo you want to choose a chief or let them fight for it?");
 
         yield return new WaitUntil(()=>!Challenger || !Challenger.Alive() ||!Leader.Alive());
+
+        Challenger = null;
 
         //TODO: probably unnescecary should be handled on selection
         //if (Challenger && Challenger.Alive()) Leader = Challenger;

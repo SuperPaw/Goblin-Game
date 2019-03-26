@@ -1806,7 +1806,7 @@ Transform:
   m_GameObject: {fileID: 100108}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.04, y: 0, z: -3}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 4731463890425719894}
   m_Father: {fileID: 0}
@@ -1842,7 +1842,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HolderGameObject: {fileID: 6941942447532623408}
   CharacterRace: 2
-  Wandering: 0
+  StickToRoad: 0
   HasEquipment: 0
   Voice: {fileID: 0}
   VoicePitch: 0
@@ -1851,6 +1851,7 @@ MonoBehaviour:
   MovementAudio: {fileID: 8120271307407292857}
   SurprisedTime: 4
   SurprisedStartTime: 0
+  State: 0
   LootTarget: {fileID: 0}
   Team: {fileID: 0}
   DamMin: 6
@@ -2092,7 +2093,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1.7, y: 0.4}
+  m_SizeDelta: {x: 2, y: 0.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &398197108750682375
 CanvasRenderer:
@@ -2179,7 +2180,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1.7, y: 0.4}
+  m_SizeDelta: {x: 2, y: 0.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6903023928988456806
 CanvasRenderer:
