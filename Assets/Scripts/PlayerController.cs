@@ -229,7 +229,7 @@ public class PlayerController : MonoBehaviour
                 camMoveRoutine = StartCoroutine(MoveCamera(FollowGoblin.transform, GoblinViewSize));
                 break;
             case ZoomLevel.AreaView:
-                camMoveRoutine = StartCoroutine(MoveCamera(Team.Leader.InArea.transform, AreaViewSize));
+                camMoveRoutine = StartCoroutine(MoveCamera(Team.Leader.InArea?.transform, AreaViewSize));
                 break;
             case ZoomLevel.MapView:
                 camMoveRoutine = StartCoroutine(MoveCamera(Team.Leader.InArea.transform, MapViewSize));

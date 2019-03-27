@@ -14,6 +14,14 @@ using Random = UnityEngine.Random;
 //TODO: Should be divided into smaller classes
 public abstract class Character : MonoBehaviour
 {
+    [Header("Debug Values")]
+    public float AgentVelocity;
+    public float DesiredVelocity;
+    public bool HasPath;
+    public bool PathStale;
+    public bool IsOnNavMesh;
+
+
     //Should we use different state for travelling and just looking at something clsoe by
     public enum CharacterState
     {
@@ -231,6 +239,7 @@ public abstract class Character : MonoBehaviour
             //Debug.Log(gameObject.name + " lost " + value + " moral");
             if (_morale <= 0)
             {
+                Debug.Log(name+" fleeing now!");
                 actionInProgress = false;
                 ChangeState(CharacterState.Fleeing,true);
             }
@@ -304,6 +313,7 @@ public abstract class Character : MonoBehaviour
 
     public Area InArea;
     private Area fleeingToArea;
+    private Coroutine agentStuckRoutine;
 
     public void Start()
     {
@@ -377,15 +387,21 @@ public abstract class Character : MonoBehaviour
             return;
         
 
-        //if (InArea && HolderGameObject)
-        //    HolderGameObject.SetActive(InArea.Visible());
-
         if (InArea && InArea.Visible() && MovementAudio && !MovementAudio.isPlaying)
             MovementAudio.Play();
         else if(InArea && !InArea.Visible() && MovementAudio && MovementAudio.isPlaying)
             MovementAudio.Stop();
 
         navMeshAgent.speed = SPE.GetStatMax() / 2f;
+
+        DesiredVelocity = navMeshAgent.desiredVelocity.sqrMagnitude;
+        AgentVelocity = navMeshAgent.velocity.sqrMagnitude;
+        HasPath = navMeshAgent.hasPath;
+        PathStale = navMeshAgent.isPathStale;
+        IsOnNavMesh = navMeshAgent.isOnNavMesh;
+
+        if (IncoherentNavAgentSpeed() && agentStuckRoutine == null)
+            agentStuckRoutine = StartCoroutine(CheckForNavAgentStuck(0.1f));
 
         //TODO: merge together with move's switch statement
         if (Attacking() && AttackTarget && AttackTarget.Alive() && InAttackRange()
@@ -857,7 +873,14 @@ public abstract class Character : MonoBehaviour
             case CharacterState.Fleeing:
                 Speak(SoundBank.GoblinSound.PanicScream);
 
-                if (fleeingToArea == InArea && navMeshAgent.remainingDistance < 0.1f)
+                //if (actionInProgress &! navMeshAgent.hasPath)
+                //{
+                //    //TODO: move into next if statement, if correct
+                //    Debug.Log("stuck fleeing resolved");
+                //    actionInProgress = false;
+                //    ChangeState(CharacterState.Idling, true);
+                //}
+                if (fleeingToArea == InArea && navMeshAgent.remainingDistance < 0.1f )
                 {
                     actionInProgress = false;
                     ChangeState(CharacterState.Idling,true);
@@ -1205,4 +1228,23 @@ public abstract class Character : MonoBehaviour
         }
     }
 
+    private IEnumerator CheckForNavAgentStuck(float time)
+    {
+        var start = Time.time;
+
+        while (start + time > Time.time && IncoherentNavAgentSpeed())
+        {
+            yield return null;
+        }
+        if(IncoherentNavAgentSpeed())
+        {
+            //TODO: test that this is working
+            Debug.Log(name + ": Bump");
+            navMeshAgent.ResetPath();
+        }
+        agentStuckRoutine = null;
+    }
+
+    private bool IncoherentNavAgentSpeed() =>
+        (navMeshAgent.desiredVelocity.sqrMagnitude > navMeshAgent.speed/3 && navMeshAgent.velocity.sqrMagnitude < 0.001f);
 }
