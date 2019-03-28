@@ -102,11 +102,11 @@ public class Area : MonoBehaviour
             return;
         }
 
-        //if character is not supposed to go there
-        if(c.Idling())
-            return;
+        //if character is not supposed to go there. This hack Creates problems 
+        //if(c.Idling())
+        //    return;
 
-        c.InArea.PresentCharacters.Remove(c);
+        c.InArea?.PresentCharacters.Remove(c);
 
         //should be the only place we set InArea
         c.InArea = this;

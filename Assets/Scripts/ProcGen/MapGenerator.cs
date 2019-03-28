@@ -572,6 +572,8 @@ public class MapGenerator : MonoBehaviour
             g.name = NameGenerator.GetName();
             
             members.Add(g);
+
+            g.InArea = a;
             
             progress += charFact;
 
