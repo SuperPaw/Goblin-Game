@@ -314,6 +314,7 @@ public abstract class Character : MonoBehaviour
     public Area InArea;
     private Area fleeingToArea;
     private Coroutine agentStuckRoutine;
+    private Coroutine stateChangeRoutine;
 
     public void Start()
     {
@@ -401,7 +402,7 @@ public abstract class Character : MonoBehaviour
         IsOnNavMesh = navMeshAgent.isOnNavMesh;
 
         if (IncoherentNavAgentSpeed() && agentStuckRoutine == null)
-            agentStuckRoutine = StartCoroutine(CheckForNavAgentStuck(0.1f));
+            agentStuckRoutine = StartCoroutine(CheckForNavAgentStuck(0.25f));
 
         //TODO: merge together with move's switch statement
         if (Attacking() && AttackTarget && AttackTarget.Alive() && InAttackRange()
@@ -488,8 +489,11 @@ public abstract class Character : MonoBehaviour
         if(!Alive())
             return;
         
-        //TODO: check if state is already being changed
-        StartCoroutine(immedeately
+        //check if state is already being changed
+        if(stateChangeRoutine != null)
+            Debug.Log(name + ": Changing State is already being changed");
+
+        stateChangeRoutine = StartCoroutine(immedeately
             ? StateChangingRoutine(newState, 0)
             : StateChangingRoutine(newState, Random.Range(0.2f, 2f)));
     }
@@ -514,6 +518,7 @@ public abstract class Character : MonoBehaviour
                 Speak(SoundBank.GoblinSound.Roar);
         }
 
+        stateChangeRoutine = null;
     }
 
     public bool Travelling()
@@ -1068,6 +1073,11 @@ public abstract class Character : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(0.5f,3f));
 
+        if (InArea == null)
+        {
+            Debug.LogError(name + " not in Area");
+            yield break;     }
+
         //if enemy and not fleeing or fighting and attentive enough
         //TODO: double up chance as scout
         if(!InArea.AnyEnemies() && this as Goblin &! Fleeing() &! Hiding() && Alive() &! Attacking() && character.tag == "Enemy" )
@@ -1240,11 +1250,11 @@ public abstract class Character : MonoBehaviour
         {
             //TODO: test that this is working
             Debug.Log(name + ": Bump");
-            navMeshAgent.ResetPath();
+            ChangeState(CharacterState.Idling,true);
         }
         agentStuckRoutine = null;
     }
 
     private bool IncoherentNavAgentSpeed() =>
-        (navMeshAgent.desiredVelocity.sqrMagnitude > navMeshAgent.speed/3 && navMeshAgent.velocity.sqrMagnitude < 0.001f);
+        (navMeshAgent.hasPath && navMeshAgent.desiredVelocity.sqrMagnitude > navMeshAgent.speed/3 && navMeshAgent.velocity.sqrMagnitude < navMeshAgent.desiredVelocity.sqrMagnitude /2);
 }

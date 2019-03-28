@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class MapGenerator : MonoBehaviour
 {
     //TODO: separate into groundtype and tilecontent
-    public enum TileType {Ground, Forest, Loot,
+    public enum TileType {Ground, Forest, Loot, Building,
         Road
     }
     //TODO: turn into a struct
@@ -109,6 +109,8 @@ public class MapGenerator : MonoBehaviour
             + amountOfLoot
             + NpcsToGenerate * charFact 
             + GoblinsToGenerate * charFact;
+
+        totalProgress = (int)(totalProgress * 0.83f);
         
         //Setting up mesh builder
         MeshBuilder.transform.localScale = new Vector3(SizeX /8f, 1, SizeZ /8f);
@@ -197,7 +199,7 @@ public class MapGenerator : MonoBehaviour
             PointOfInterests--;
             VillagesToGenerate--;
         }
-        
+
         //Create roads TODO: make this less expensive
         foreach (var n in Areas)
         {
@@ -212,9 +214,6 @@ public class MapGenerator : MonoBehaviour
                 CreateRoad(n, area);
             }
         }
-        
-       
-        Area goblinStartArea = center; // AreaMap[noOfAreasX / 2, noOfAreasZ / 2];
 
         HumanSettlement last = null;
 
@@ -231,7 +230,7 @@ public class MapGenerator : MonoBehaviour
 
             var area = GetRandomArea();
 
-            while (area.PointOfInterest || area == goblinStartArea)
+            while (area.PointOfInterest)
                 area = GetRandomArea();
 
             var x = i % HumanSettlementPrefab.Length;
@@ -243,7 +242,8 @@ public class MapGenerator : MonoBehaviour
 
             next.transform.parent = area.transform;
 
-            area.PointOfInterest = next;
+            AddAreaPoi(area,next);
+
             area.name += next.name;
             next.InArea = area;
 
@@ -290,7 +290,7 @@ public class MapGenerator : MonoBehaviour
             int maxTries = 12;
             int tries = 0;
 
-            while ((area.PointOfInterest || area == goblinStartArea || area.ContainsRoads) && tries++ < maxTries)
+            while ((area.PointOfInterest || area.ContainsRoads) && tries++ < maxTries)
                 area = GetRandomArea();
 
             if (tries >= maxTries)
@@ -307,7 +307,7 @@ public class MapGenerator : MonoBehaviour
             
             var village = next.GetComponent<GoblinWarrens>();
 
-            area.PointOfInterest = village;
+            AddAreaPoi(area,village);
             area.name += ": Warrens";
             village.InArea = area;
             
@@ -334,6 +334,13 @@ public class MapGenerator : MonoBehaviour
                 village.Members.Add(g);
             }
         }
+
+        //Create goblin start area
+        Area goblinStartArea = center; // AreaMap[noOfAreasX / 2, noOfAreasZ / 2];
+
+        while ((goblinStartArea.PointOfInterest || goblinStartArea.ContainsRoads))
+            goblinStartArea = GetRandomArea();
+
 
         for (int i = 0; i < PointOfInterests; i++)
         {
@@ -365,8 +372,8 @@ public class MapGenerator : MonoBehaviour
             next.transform.position = new Vector3(area.transform.position.x, next.transform.position.y, area.transform.position.z);
 
             next.transform.parent = area.transform;
-
-            area.PointOfInterest = next;
+            
+            AddAreaPoi(area,next);
             area.name += next.name;
             next.InArea = area;
         }
@@ -375,31 +382,29 @@ public class MapGenerator : MonoBehaviour
         //ADDING LOOT
         for (int i = 0; i < amountOfLoot; i++)
         {
+            var parentArea = GetRandomArea();
+
             //TODO: should only be in area 
-            Tile tile = GetRandomGroundTile();//;walkabletilesInArea[Random.Range(0, walkabletilesInArea.Count)])];//GetRandomGroundTile(next);
+            Tile tile = GetRandomGroundTile(parentArea);
 
             tile.Type = TileType.Loot;
             movableTiles.Remove(tile);
 
-            var loot = Instantiate(LootObjects[Random.Range(0, LootObjects.Length)]);//, next.transform);
+            var loot = Instantiate(LootObjects[Random.Range(0, LootObjects.Length)]);
 
             loot.name = "Lootable";
             
             loot.transform.position = new Vector3(tile.X, 1, tile.Y);
+            
+            loot.transform.parent = parentArea.transform;
+            var l = loot.GetComponent<Lootable>();
 
-            var parentArea = GetAreaAtPoint(loot.transform.position);
+            parentArea.Lootables.Add(l);
+            parentArea.MovablePositions.Remove(tile);
 
-            if (parentArea)
+            if (EquipmentInLootChance > Random.value)
             {
-                loot.transform.parent = parentArea.transform;
-                var l = loot.GetComponent<Lootable>();
-
-                parentArea.Lootables.Add(l);
-
-                if (EquipmentInLootChance > Random.value)
-                {
-                    l.EquipmentLoot.Add(EquipmentGen.GetRandomEquipment());
-                }
+                l.EquipmentLoot.Add(EquipmentGen.GetRandomEquipment());
             }
 
             int loc = (++progress * 100) / totalProgress;
@@ -467,6 +472,9 @@ public class MapGenerator : MonoBehaviour
         foreach (var tile in immovableTiles)
         {
             GameObject next;
+            //TODO: test this is not problematic?
+            if(tile.Type != TileType.Forest)
+                continue;
 
             if (GetNeightbours(tile).Any(n => n.Type != TileType.Forest))
             {
@@ -593,6 +601,28 @@ public class MapGenerator : MonoBehaviour
 
     }
 
+    private void AddAreaPoi(Area area ,PointOfInterest next)
+    {
+        area.PointOfInterest = next;
+
+        var ctr = GetAreaMidPoint(area);
+
+        //81 tiles of unmovables to prevent forest and 
+        int dgr = 4;
+        for (int x = ctr.X- dgr; x <= ctr.X+ dgr; x++)
+        {
+            for (int y = ctr.Y- dgr; y <= ctr.Y+dgr; y++)
+            {
+                var t = map[x, y];
+
+                immovableTiles.Add(t);
+                movableTiles.Remove(t);
+                t.Type = TileType.Building;
+            }
+        }
+    }
+
+
     private void CreateTreeBorder(int thickness)
     {
         for (int i = 1; i <= thickness; i++)
@@ -675,11 +705,13 @@ public class MapGenerator : MonoBehaviour
         int maxTries = 12;
         int tries = 0;
 
-        while ((area.PointOfInterest || area == goblinStartArea || area.ContainsRoads) && tries++ < maxTries)
+        var type = go.GetComponent<Character>().CharacterRace;
+
+        while ((area.PointOfInterest || area == goblinStartArea || area.ContainsRoads ||area.PresentCharacters.Any(c => c.CharacterRace != type)) && tries++ < maxTries)
             area = GetRandomArea();
 
         if(tries >= maxTries)
-            Debug.Log("CHUBACUBHA Max tries reached..");
+            Debug.Log("CHUBACUBHA Max enm tries reached..");
 
         return GenerateCharacter(go, area, parent);
     }
@@ -687,6 +719,11 @@ public class MapGenerator : MonoBehaviour
     public static GameObject GenerateCharacter(GameObject go, Area inArea, Transform parent, bool pointOfInterest = false)
     {
         var pos = inArea.GetRandomPosInArea();
+
+        var c = go.GetComponent<Character>();
+
+        inArea.PresentCharacters.Add(c);
+
         if (pointOfInterest)
         {
             pos = inArea.transform.position + Random.onUnitSphere * 5;
@@ -696,6 +733,8 @@ public class MapGenerator : MonoBehaviour
 
         var next = Instantiate(go, pos, Quaternion.identity);
         next.transform.parent = parent;
+
+        c.InArea = inArea;
         
         return next;
     }
@@ -817,10 +856,12 @@ public class MapGenerator : MonoBehaviour
         if(!inArea)
             return movableTiles[Random.Range(0, movableTiles.Count)];
 
-        var areaTiles = movableTiles.Where(t => t.Area == inArea).ToList();
+        var areaTiles = inArea.MovablePositions;
+            //movableTiles.Where(t => t.Area == inArea).ToList();
 
         return areaTiles[Random.Range(0, areaTiles.Count)];
     }
+
     private Area GetRandomArea()
     {
         return Areas[Random.Range(0, Areas.Count)];

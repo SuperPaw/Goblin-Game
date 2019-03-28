@@ -102,31 +102,39 @@ public class Area : MonoBehaviour
             return;
         }
 
+        //if character is not supposed to go there
+        if(c.Idling())
+            return;
+
+        c.InArea.PresentCharacters.Remove(c);
+
         //should be the only place we set InArea
         c.InArea = this;
-        PresentCharacters.Add(c);
+        if(!PresentCharacters.Contains(c))
+            PresentCharacters.Add(c);
 
         c.IrritationMeter = 0;
+        if(c.Fleeing() || c.Travelling())
+            c.ChangeState(Character.CharacterState.Idling);
 
         //TODO: check if leader
         PlayerController.UpdateFog();
-
-        //Debug.Log(c +" entered "+ name);
+        
     }
     
-    public void OnTriggerExit(Collider other)
-    {
-        if (!other.gameObject.GetComponent<Character>())
-        {
-            Debug.LogWarning(name + ": Object with no character collided; " + other.gameObject);
-        }
+    //public void OnTriggerExit(Collider other)
+    //{
+    //    if (!other.gameObject.GetComponent<Character>())
+    //    {
+    //        Debug.LogWarning(name + ": Object with no character collided; " + other.gameObject);
+    //    }
 
-        Character c = other.gameObject.GetComponent<Character>();
+    //    Character c = other.gameObject.GetComponent<Character>();
 
-        //Debug.Log(c + " left " + name);
+    //    //Debug.Log(c + " left " + name);
 
-        PresentCharacters.Remove(c);
-    }
+    //    PresentCharacters.Remove(c);
+    //}
 
     public void MoveTo()
     {

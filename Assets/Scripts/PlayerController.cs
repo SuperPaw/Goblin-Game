@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
     private enum ZoomLevel {GoblinView, AreaView, MapView}
     private ZoomLevel currentZoomLevel;
     private bool showingMoveView;
+    private readonly int FogPoints = 8;
 
     void Awake()
     {
@@ -436,13 +437,25 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //removing unused fog points TODO: make it actually remove instead of just hiding
+        for (; id <= FogPoints; id++)
+        {
+            RemoveFogAtPos(new Vector3(), id,true);
+        }
+
     }
 
-    private void RemoveFogAtPos(Vector3 pos, int id)
+    private void RemoveFogAtPos(Vector3 pos, int id,bool unused = false)
     {
-        if (id < 1 || id > 8)
+        if (id < 1 || id > FogPoints)
         {
             Debug.Log("Unknown shader id: " + id);
+            return;
+        }
+
+        if (unused)
+        {
+            FogOfWar.material.SetVector("_Player" + id.ToString() + "_Pos",new Vector4(-100,-100,-100,-100));
             return;
         }
 
