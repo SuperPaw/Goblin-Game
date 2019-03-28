@@ -207,6 +207,8 @@ public class PlayerController : MonoBehaviour
 
     private void ZoomOut()
     {
+        if (currentZoomLevel > ZoomLevel.GoblinView) return;
+
         FollowGoblin = null;
         ChangeZoomLevel( currentZoomLevel+1);
     }

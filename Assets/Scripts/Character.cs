@@ -491,7 +491,7 @@ public abstract class Character : MonoBehaviour
         
         //check if state is already being changed
         if(stateChangeRoutine != null)
-            Debug.Log(name + ": Changing State is already being changed");
+            Debug.Log(name + ": Changing State already: newState "+newState + ", old: "+ State);
 
         stateChangeRoutine = StartCoroutine(immedeately
             ? StateChangingRoutine(newState, 0)
@@ -505,10 +505,13 @@ public abstract class Character : MonoBehaviour
         //TODO: maybe sounds on specific states
         //if (Voice&& !Voice.isPlaying)
         //    Voice.PlayOneShot(SoundBank.GetSound(SoundBank.GoblinSound.Grunt));
-        
+
+        if (State == newState)
+            yield break;
+
         if (State != CharacterState.Dead)
             State = newState;
-        
+
         actionInProgress = false;
 
         if (State == CharacterState.Attacking)

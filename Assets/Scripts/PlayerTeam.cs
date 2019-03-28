@@ -35,7 +35,7 @@ public class PlayerTeam : MonoBehaviour
 
     internal bool AllHidden()
     {
-        return Members.All(g => g.Hiding());
+        return Members.All(g => g.InArea != Leader.InArea || g.Hiding());
     }
 
     public TextMeshProUGUI TreasureText;
@@ -89,8 +89,16 @@ public class PlayerTeam : MonoBehaviour
         }
         else
         {
-            if(Fighting)
+            if (Fighting)
+            {
+                foreach (var m in Members.Where(g => g.Fleeing() && g.InArea == Leader.InArea))
+                {
+                    m.ChangeState(Character.CharacterState.Idling);
+                }
+                
+                SoundController.PlayStinger(SoundBank.Stinger.BattleWon);
                 SoundController.ChangeMusic(SoundBank.Music.Explore);
+            }
 
             Fighting = false;
         }

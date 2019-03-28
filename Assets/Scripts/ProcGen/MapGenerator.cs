@@ -722,10 +722,6 @@ public class MapGenerator : MonoBehaviour
     {
         var pos = inArea.GetRandomPosInArea();
 
-        var c = go.GetComponent<Character>();
-
-        inArea.PresentCharacters.Add(c);
-
         if (pointOfInterest)
         {
             pos = inArea.transform.position + Random.onUnitSphere * 5;
@@ -735,6 +731,10 @@ public class MapGenerator : MonoBehaviour
 
         var next = Instantiate(go, pos, Quaternion.identity);
         next.transform.parent = parent;
+
+        var c = next.GetComponent<Character>();
+
+        inArea.PresentCharacters.Add(c);
 
         c.InArea = inArea;
         

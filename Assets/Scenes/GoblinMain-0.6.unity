@@ -1489,9 +1489,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7301989481906405786, guid: 68c95507853e8b14b8b6f95d1d678e74,
         type: 3}
+      propertyPath: Stingers.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7301989481906405786, guid: 68c95507853e8b14b8b6f95d1d678e74,
+        type: 3}
+      propertyPath: Stingers.Array.data[5].Audio.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7301989481906405786, guid: 68c95507853e8b14b8b6f95d1d678e74,
+        type: 3}
       propertyPath: Stingers.Array.data[4].Audio.Array.data[1]
       value: 
       objectReference: {fileID: 8300000, guid: 57a309863e238794f8f97b44b3257981, type: 3}
+    - target: {fileID: 7301989481906405786, guid: 68c95507853e8b14b8b6f95d1d678e74,
+        type: 3}
+      propertyPath: Stingers.Array.data[5].Type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7301989481906405786, guid: 68c95507853e8b14b8b6f95d1d678e74,
+        type: 3}
+      propertyPath: Stingers.Array.data[5].Audio.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1051d6caf472cfd49b979064624be0de, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68c95507853e8b14b8b6f95d1d678e74, type: 3}
 --- !u!1001 &8039850126836150550
