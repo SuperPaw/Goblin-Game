@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4467384537960578526}
   - component: {fileID: 4342134675093776154}
   - component: {fileID: 8600238114990287779}
+  - component: {fileID: 9200039782062432997}
   m_Layer: 0
   m_Name: GOBLIN
   m_TagString: Player
@@ -50,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HolderGameObject: {fileID: 1218143795376610366}
   CharacterRace: 0
-  Wandering: 0
+  StickToRoad: 0
   HasEquipment: 0
   Voice: {fileID: 993784395133949661}
   VoicePitch: 0
@@ -93,13 +94,12 @@ MonoBehaviour:
   DamageColor: {r: 1, g: 0, b: 0, a: 1}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 0}
-  Animator: {fileID: 5823732466605086153}
+  Animator: {fileID: 9200039782062432997}
   SpeedAnimationThreshold: 0.1
   IrritationMeter: 0
   IrritaionTolerance: 50
   provokeDistance: 10
   InArea: {fileID: 0}
-  Awareness: 1
   Warrens: {fileID: 0}
   ChiefImage: {fileID: 114764703591676486}
   StateImage: {fileID: 114716199431146400}
@@ -132,7 +132,7 @@ MonoBehaviour:
   WaitingOnLevelUp: 0
   WaitingOnClassSelection: 0
   ProvokeTarget: {fileID: 0}
-  ClassType: 0
+  ClassType: 1
 --- !u!195 &4600599033896219243
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -223,13 +223,38 @@ MonoBehaviour:
   - Type: 7
     Items:
     - {fileID: 5823732466604063345}
+  - Type: 8
+    Items:
+    - {fileID: 5823732466604063345}
   - Type: 6
     Items:
     - {fileID: 787605848061829386}
-  - Type: 8
+  - Type: 10
     Items: []
   - Type: 9
     Items: []
+  - Type: 11
+    Items:
+    - {fileID: 3980995831355119253}
+--- !u!95 &9200039782062432997
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100702}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 45251441538fd87439ccb24fc0e3c6b4, type: 3}
+  m_Controller: {fileID: 9100000, guid: dad1b18695e08c049b903320225f229a, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1079555369244152
 GameObject:
   m_ObjectHideFlags: 0
@@ -1590,6 +1615,7 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
   UVModule:
+    serializedVersion: 2
     enabled: 0
     mode: 0
     timeMode: 0
@@ -1707,7 +1733,7 @@ ParticleSystem:
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
-    randomRow: 1
+    rowMode: 1
     sprites:
     - sprite: {fileID: 0}
     flipU: 0
@@ -6268,7 +6294,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5823732466597302869}
-  - component: {fileID: 5823732466605086153}
   m_Layer: 0
   m_Name: Goblin Normal
   m_TagString: Untagged
@@ -6292,25 +6317,6 @@ Transform:
   m_Father: {fileID: 6870857566145020839}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &5823732466605086153
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5823732466597505741}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 45251441538fd87439ccb24fc0e3c6b4, type: 3}
-  m_Controller: {fileID: 9100000, guid: dad1b18695e08c049b903320225f229a, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5823732466597511933
 GameObject:
   m_ObjectHideFlags: 0

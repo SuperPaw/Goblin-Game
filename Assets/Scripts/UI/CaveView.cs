@@ -55,7 +55,7 @@ public class CaveView : MenuWindow
         //TODO: maybe shuffle first
         if (!Cave.Explored)
         {
-            var options = team.Members.Take(4).Select(g =>
+            var options = team.Members.Where(ge=> ge.InArea == Cave.InArea).Take(4).Select(g =>
                 new PlayerChoice.ChoiceOption()
                 {
                     Action = () => Cave.SendInGoblin(g),

@@ -62,7 +62,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2eecc5d6040adb47aef9ee89c10e485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AreaName: Big Stone
+  MinSpawns: 1
+  MaxSpawns: 4
+  MonsterPrefab: {fileID: 0}
   InArea: {fileID: 0}
+  HasBeenAttacked: 0
+  IconSprite: {fileID: 21300000, guid: 2eb82ac66de274383af71b2eb2c75da0, type: 3}
   ZombiePrefab: {fileID: 2577060322627594553, guid: 33cae0a0b31c5f74fac564eb302b96fe,
     type: 3}
   Treasure: 3

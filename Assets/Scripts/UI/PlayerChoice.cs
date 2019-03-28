@@ -12,6 +12,12 @@ public class PlayerChoice : MenuWindow
     {
         public string Description;
         public Action Action;
+
+        public ChoiceOption(string desc, Action ac)
+        {
+            Description = desc;
+            Action = ac;
+        }
     }
 
     public static PlayerChoice Instance;
@@ -22,6 +28,7 @@ public class PlayerChoice : MenuWindow
     public Button OptionButtonEntry;
     private List<Button> generatedObjects = new List<Button>();
     public TextMeshProUGUI DescriptionText;
+    public ChoiceOption NoOption = new ChoiceOption("No", null);
 
     new void Awake()
     {
@@ -39,27 +46,35 @@ public class PlayerChoice : MenuWindow
     {
         if (choices.Length < 1) return;
         
-        Instance.options = choices;
-        Instance.DescriptionText.text = optionText;
-
-        SoundController.PlayMenuPopup();
-
-        Instance.OpenWindow();
+        
+        Instance.StartCoroutine( Instance.OpenWhenReady(choices,optionText));
     }
 
-    private void OpenWindow()
+    public static void CreateDoChoice(Action doAction, string question)
     {
-        StartCoroutine(OpenWhenReady());
+        var choices = new ChoiceOption[] {new ChoiceOption("Gob gob",doAction),Instance.NoOption };
+
+
+        Instance.StartCoroutine(Instance.OpenWhenReady(choices, question));
     }
 
-    private IEnumerator OpenWhenReady()
+    //private void OpenWindow()
+    //{
+    //    StartCoroutine(OpenWhenReady());
+    //}
+
+    private IEnumerator OpenWhenReady(ChoiceOption[] choices, string optionText)
     {
         yield return new WaitUntil(() => !OpenWindows[Type]);
 
+        options = choices;
+        DescriptionText.text = optionText;
+
+        SoundController.PlayMenuPopup();
 
         Open();
 
-        Instance.defaultOption = options.First();
+        defaultOption = options.First();
 
         ActionSelected = false;
 

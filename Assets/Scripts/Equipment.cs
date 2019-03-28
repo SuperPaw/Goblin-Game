@@ -9,13 +9,13 @@ public class Equipment : MonoBehaviour
 {
     public enum EquipLocations
     {
-        Head, Torso, Weapon, Hands,Feet,
+        Head, Torso, Weapon, Hands,Feet,Bow,
         COUNT
     }
 
     public enum EquipmentType
     {
-        Gloves, Skull, Cap, Shirt, Armor, Cloth,  Stick, Sword, Boots, Shoes
+        Gloves, Skull, Cap, Shirt, Armor, Cloth,  Stick, Sword, Blade, Boots, Shoes,Bow
     }
 
     //public abstract class Effect{}
@@ -58,7 +58,9 @@ public class Equipment : MonoBehaviour
     }
 
     //TODO: use this for instance for bows
-    public Goblin.Class UsableBy;
+    //All
+    [HideInInspector]
+    public Goblin.Class UsableBy = Goblin.Class.ALL;
     
     void Start()
     {
@@ -108,5 +110,10 @@ public class Equipment : MonoBehaviour
         //if mapped to models
         if(c.EquipmentManager)
             c.EquipmentManager.Hide(Type);
+    }
+
+    public bool IsUsableby(Goblin g)
+    {
+        return UsableBy == Goblin.Class.ALL || (UsableBy & g.ClassType) != 0;
     }
 }

@@ -36,7 +36,7 @@ public abstract class MenuWindow : MonoBehaviour
         OpenWindows[Type] = true;
     }
 
-    protected void Close()
+    public void Close()
     {
         ViewHolder.SetActive(false);
         OpenWindows[Type] = false;
@@ -46,6 +46,6 @@ public abstract class MenuWindow : MonoBehaviour
             //GameManager.UnPause();
         }
 
-        PlayerController.FollowGoblin = null;
+        //PlayerController.FollowGoblin = null;
     }
 }

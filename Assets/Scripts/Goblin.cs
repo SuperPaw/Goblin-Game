@@ -71,10 +71,13 @@ public class Goblin : Character
 
     public Character ProvokeTarget;
 
+    [Flags]
     public enum Class
     {
-        Goblin, Slave, Swarmer, Shooter, Ambusher, Scout,
-        END
+        NoClass = 0,
+        Goblin = 1, Slave = 2, Swarmer = 4, Shooter = 8, Ambusher = 16, Scout = 32,
+        END = 64,
+        ALL = Goblin | Slave | Swarmer |Shooter |Ambusher | Scout
     }
 
     public Class ClassType;
@@ -118,7 +121,7 @@ public class Goblin : Character
         emission.enabled = WaitingOnLevelUp > 0|| WaitingOnClassSelection;
     }
 
-    internal void Rest()
+    internal void Heal()
     {
         Morale = COU.GetStatMax();
         Health = HEA.GetStatMax();
@@ -177,7 +180,18 @@ public class Goblin : Character
             default:
                 throw new ArgumentOutOfRangeException("c", c, null);
         }
+
+        foreach (var equipment in Equipped.Values)
+        {
+            if (equipment && !equipment.IsUsableby(this))
+            {
+                RemoveEquipment(equipment);
+                Team.EquipmentFound(equipment,this);
+            }
+        }
     }
+
+    public bool CanEquip(Equipment e) => e.IsUsableby(this) && Equipped[e.EquipLocation] == null;
 
     //TODO: use struct to combine text to sound
     public void Shout(string speech, SoundBank.GoblinSound goblinSound)//, bool interrupt = false)

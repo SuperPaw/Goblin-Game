@@ -44,7 +44,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 0
-  m_Extents: {x: 6, y: 1, z: 6}
+  m_Extents: {x: 5, y: 1, z: 5}
   m_MoveThreshold: 1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -62,7 +62,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81682c003697a7b4abed377af7baa1e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AreaName: Goblin Village
+  MinSpawns: 1
+  MaxSpawns: 4
+  MonsterPrefab: {fileID: 0}
   InArea: {fileID: 0}
+  HasBeenAttacked: 0
+  IconSprite: {fileID: 21300000, guid: b12336ffd95ef6c4a840e23d56f4d9da, type: 3}
   Members: []
 --- !u!65 &3279508761785604338
 BoxCollider:
@@ -75,7 +81,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10, y: 6, z: 10}
+  m_Size: {x: 9, y: 6, z: 8}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8503355671099633675
 GameObject:
@@ -101,13 +107,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8503355671099633675}
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 5, z: 4}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 10, z: -8}
+  m_LocalScale: {x: 3, y: 4, z: 3}
   m_Children: []
   m_Father: {fileID: 4081050876500789283}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3393623537601953334
 SpriteRenderer:
   m_ObjectHideFlags: 0

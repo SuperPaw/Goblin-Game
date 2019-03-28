@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
     public bool GameStarted;
     public bool GamePaused;
     public bool InvincibleMode;
+    public GameObject[] TurnOnOnStart;
     
     public enum Icon
     {
@@ -113,6 +115,23 @@ public class GameManager : MonoBehaviour
         Instance.GameStarted = false;
 
         SoundController.PlayGameLoss();
+    }
+
+    internal static void StartGame()
+    {
+        foreach (var go in Instance.TurnOnOnStart)
+        {
+            go.SetActive(true);
+        }
+
+        FindObjectOfType<PlayerController>().Initialize();
+
+        SoundController.PlayGameStart();
+
+        SoundController.ChangeMusic(SoundBank.Music.Explore);
+
+        Instance.GameStarted = true;
+
     }
 
     public void PauseButton()

@@ -48,21 +48,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RandomSeed: 0
-  SizeX: 300
-  SizeZ: 300
+  SizeX: 400
+  SizeZ: 400
   AreaTilePrefab: {fileID: 114614147775462646, guid: e15f42e3c6199524da160032eae3127f,
     type: 3}
   AreaSize: 30
   AreaBufferSize: 10
-  DistanceBetweenAreas: 60
   AreasToCreate: 35
   Areas: []
   MeshBuilder: {fileID: 2604491388562873763}
   Npcs:
   - {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9, type: 3}
-  - {fileID: 1969145986120274, guid: f95d1a9483a8c6a4496c281ffd93702c, type: 3}
-  - {fileID: 925690161, guid: c20038e116842f141abc7551f9742b45, type: 3}
   - {fileID: 180470, guid: f4864ffb159f30048a3bdafeae646afb, type: 3}
+  - {fileID: 925690161, guid: c20038e116842f141abc7551f9742b45, type: 3}
   HidableObjects:
   - {fileID: 1910571166180590, guid: 039038a2da993284dbd739d670e3a939, type: 3}
   ForestHolder: {fileID: 2032421715755256616}
@@ -71,18 +69,27 @@ MonoBehaviour:
   Forest: {fileID: 1910571166180590, guid: 065255f1b6b2df545a5f52498b045976, type: 3}
   TileArtObject: {fileID: 1221279314926800, guid: 3518a8719b3bb2149862033b643037e9,
     type: 3}
+  RoadTileArtObject: {fileID: 1221279314926800, guid: 6bc0dbcab52c8b846ad32513b91237d9,
+    type: 3}
+  NextToRoadTile: {fileID: 1151737658520490563, guid: b5c8fe842ed95b942a52cc7ab1c7695e,
+    type: 3}
   LootObjects:
   - {fileID: 1910571166180590, guid: ee5830f18c2be1244bb0fa764c0769a1, type: 3}
   PointOfInterestPrefabs:
   - {fileID: 1510720524141754411, guid: 7cde1fc3eeb07ab41add50d71da38d93, type: 3}
   - {fileID: 909367182681320238, guid: 69c2564b5439e0a4892a9240f5182bcc, type: 3}
-  PointOfInterests: 4
-  VillagesToGenerate: 2
+  - {fileID: 799393227371411339, guid: e68521ac0ca9f3d42970ef4e5885b4d4, type: 3}
+  HumanSettlementPrefab:
+  - {fileID: 3172418170863198060, guid: 949060969851d48479664ba80b2eecef, type: 3}
+  - {fileID: 4214430656408830761, guid: 038fe9f5a3d519245832da7ff693b767, type: 3}
+  PointOfInterests: 2
+  HumanSettlements: 4
+  VillagesToGenerate: 1
   VillagePrefab: {fileID: 6920746842318355173, guid: 44755d817d47f524b8229f414246efa5,
     type: 3}
   GoblinsForSalePrVillage: 3
   EquipmentInLootChance: 0.25
-  NpcsToGenerate: 40
+  NpcsToGenerate: 20
   GoblinsToGenerate: 5
   DefaultCharacter: {fileID: 100702, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe, type: 3}
   GoblinTeam: {fileID: 0}

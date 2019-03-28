@@ -35,7 +35,7 @@ public class PlayerTeam : MonoBehaviour
 
     internal bool AllHidden()
     {
-        return Members.All(g => g.Hiding());
+        return Members.All(g => g.InArea != Leader.InArea || g.Hiding());
     }
 
     public TextMeshProUGUI TreasureText;
@@ -89,8 +89,16 @@ public class PlayerTeam : MonoBehaviour
         }
         else
         {
-            if(Fighting)
+            if (Fighting)
+            {
+                foreach (var m in Members.Where(g => g.Fleeing() && g.InArea == Leader.InArea))
+                {
+                    m.ChangeState(Character.CharacterState.Idling);
+                }
+                
+                SoundController.PlayStinger(SoundBank.Stinger.BattleWon);
                 SoundController.ChangeMusic(SoundBank.Music.Explore);
+            }
 
             Fighting = false;
         }
@@ -142,8 +150,20 @@ public class PlayerTeam : MonoBehaviour
 
     public void Camp()
     {
-        if (Food < 2*Members.Count || Leader.InArea.AnyEnemies() || Leader.InArea.PointOfInterest ||Leader.Fleeing())
+        if (Food < 2*Members.Count)
+        {
+            PopUpText.ShowText("Goblins need more food to camp!");
+            return; 
+        }
+        if (Leader.InArea.PointOfInterest )
+        {
+            PopUpText.ShowText("Goblins need space to camp");
+            return; //TODO: Maybe just change camping icon
+        }
+        if ( Leader.InArea.AnyEnemies() || Leader.Fleeing())
+        {
             return; //TODO: add message for this. Maybe just change camping icon
+        }
 
         //Create camping Gameobject gameobject 
         Campfire = Instantiate(CampfirePrefab);
@@ -268,10 +288,10 @@ public class PlayerTeam : MonoBehaviour
 
         yield return new WaitUntil(()=>!Challenger || !Challenger.Alive() ||!Leader.Alive());
 
+        Challenger = null;
+
         //TODO: probably unnescecary should be handled on selection
-        if (Challenger.Alive()) Leader = Challenger;
-
-
+        //if (Challenger && Challenger.Alive()) Leader = Challenger;
     }
 
     internal void LeaderShout(PlayerController.OrderType shout)
@@ -360,23 +380,29 @@ public class PlayerTeam : MonoBehaviour
         }
     }
 
-    public void EquipmentFound(Equipment equipment, Character finder)
+    public void EquipmentFound(Equipment equipment, Goblin finder)
     {
         List<PlayerChoice.ChoiceOption> options = new List<PlayerChoice.ChoiceOption>();
 
         //TODO check for usability
+        var potential = new List<Character>();
 
-        options.Add(new PlayerChoice.ChoiceOption() {Action = () => finder.Equip(equipment),Description = finder.name});
+        if ( finder.CanEquip(equipment))
+            potential.Add(finder);
+        if (finder != Leader && Leader.CanEquip(equipment))
+            potential.Add(Leader);
+        potential.AddRange(Members.Where( g => g.CanEquip(equipment) && g != finder && g != Leader).OrderByDescending(g => g.Xp));
 
-        if(finder != Leader)
-            options.Add(new PlayerChoice.ChoiceOption() { Action = () => Leader.Equip(equipment), Description = Leader.name });
-
-        var pot = Members.Where(g=> g.ClassType != Goblin.Class.Slave && g != finder && g != Leader).OrderByDescending(g => g.Xp);
-
-        if(pot.Any())
-            options.Add(new PlayerChoice.ChoiceOption() { Action = () => pot.First().Equip(equipment), Description = pot.First().name });
-
-
-        PlayerChoice.SetupPlayerChoice(options.ToArray(),"Who gets to keep the " + equipment.name + "?");
+        foreach (var f in potential.Take(3))
+        {
+            options.Add(new PlayerChoice.ChoiceOption() { Action = () => f.Equip(equipment), Description = f.name });
+        }
+        if(options.Any())
+            PlayerChoice.SetupPlayerChoice(options.ToArray(),"Who gets to keep the " + equipment.name + "?");
+        else
+        {
+            Treasure++;
+            PopUpText.ShowText(finder.name + " broke the " + equipment.name + " and turned it into treasure");
+        }
     }
 }
