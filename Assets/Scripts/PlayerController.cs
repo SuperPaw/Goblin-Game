@@ -284,6 +284,7 @@ public class PlayerController : MonoBehaviour
                     else if (c as Goblin)
                     {
                         CharacterView.ShowCharacter(c as Goblin);
+                        ChangeZoomLevel(ZoomLevel.GoblinView);
                     }
                     else
                     {
@@ -634,6 +635,8 @@ public class PlayerController : MonoBehaviour
         if(!ZoomEnabled) return;
 
         if(Math.Abs(deltaMagnitudeDiff) < 0.001) return;
+
+        if (currentZoomLevel > ZoomLevel.AreaView) currentZoomLevel = ZoomLevel.AreaView;
 
         Cam.orthographicSize -= deltaMagnitudeDiff * (touch ?  ZoomSpeed: PcZoomSpeed);
         // set min and max value of Clamp function upon your requirement

@@ -492,7 +492,7 @@ MonoBehaviour:
   Cam: {fileID: 929748374}
   Sound: {fileID: 0}
   DragToPan: 1
-  ZoomEnabled: 0
+  ZoomEnabled: 1
   MouseMoveKey: 1
   HitMask:
     serializedVersion: 2
@@ -531,7 +531,7 @@ MonoBehaviour:
   AreaViewSize: 14
   MapViewSize: 45
   ZoomMinBound: 2
-  ZoomMaxBound: 35
+  ZoomMaxBound: 14
   ZoomSpeed: 0.025
   PcZoomSpeed: 3
   FogOfWar: {fileID: 151457449}
@@ -902,6 +902,11 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8117359875643797009, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8552797219536149722, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
       propertyPath: m_IsActive
       value: 1

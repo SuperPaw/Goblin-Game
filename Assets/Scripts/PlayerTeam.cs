@@ -81,7 +81,7 @@ public class PlayerTeam : MonoBehaviour
         FoodText.text = "FOod: " + Food;
 
         if (GameManager.Instance.GameStarted && Leader.InArea.AnyEnemies() &&
-            Members.Any(g => g.InArea == Leader.InArea && g.Attacking()))
+            Members.Any(g => g.InArea == Leader.InArea && (g.Attacking() || g.Fleeing())))
         {
             if(!Fighting)
                 SoundController.ChangeMusic(SoundBank.Music.Battle);
