@@ -401,8 +401,8 @@ public abstract class Character : MonoBehaviour
         PathStale = navMeshAgent.isPathStale;
         IsOnNavMesh = navMeshAgent.isOnNavMesh;
 
-        if (IncoherentNavAgentSpeed() && agentStuckRoutine == null)
-            agentStuckRoutine = StartCoroutine(CheckForNavAgentStuck(0.25f));
+        //if (IncoherentNavAgentSpeed() && agentStuckRoutine == null)
+        //    agentStuckRoutine = StartCoroutine(CheckForNavAgentStuck(0.25f));
 
         //TODO: merge together with move's switch statement
         if (Attacking() && AttackTarget && AttackTarget.Alive() && InAttackRange()
