@@ -263,8 +263,14 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 1000, HitMask))
         {
+            if (hit.collider && hit.collider.GetComponent<Lootable>())
+            {
+                var loot = hit.collider.GetComponent<Lootable>();
 
-            if (hit.collider && hit.collider.GetComponent<Character>()) //TODO:check visibility else just move there
+                if (loot.InArea && loot.InArea.Visible() )
+                    Team.Leader.Search(loot);
+            }
+            else if (hit.collider && hit.collider.GetComponent<Character>()) //TODO:check visibility else just move there
             {
 
                 var c = hit.collider.GetComponent<Character>();

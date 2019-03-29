@@ -402,6 +402,8 @@ public class MapGenerator : MonoBehaviour
             parentArea.Lootables.Add(l);
             parentArea.MovablePositions.Remove(tile);
 
+            l.InArea = parentArea;
+
             if (EquipmentInLootChance > Random.value)
             {
                 l.EquipmentLoot.Add(EquipmentGen.GetRandomEquipment());

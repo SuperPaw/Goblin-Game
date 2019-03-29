@@ -11,6 +11,8 @@ public class Lootable : MonoBehaviour
     public string Food;
     public List<Equipment> EquipmentLoot = new List<Equipment>();
 
+    public Area InArea;
+
     public void Start()
     {
         //TODO: could be handled when found, so it 

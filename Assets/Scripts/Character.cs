@@ -839,12 +839,7 @@ public abstract class Character : MonoBehaviour
 
                     var loot = loots[Random.Range(0, loots.Count())];
 
-                    navMeshAgent.SetDestination(loot.transform.position);
-
-                    LootTarget = loot;
-
-                    State = CharacterState.Searching;
-
+                    (this as Goblin).Search(loot);
                 }
                 break;
             case CharacterState.Attacking:

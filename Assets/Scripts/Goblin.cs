@@ -219,5 +219,16 @@ public class Goblin : Character
         VoiceText.text = "";
     }
 
+    internal void Search(Lootable loot)
+    {
+        if (!Idling()) return;
 
+        Speak(SoundBank.GoblinSound.Grunt);
+
+        navMeshAgent.SetDestination(loot.transform.position);
+
+        LootTarget = loot;
+
+        ChangeState(CharacterState.Searching, true);
+    }
 }
