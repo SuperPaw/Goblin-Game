@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9bf34e6c23a7e14c982d3b16861e1dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaximumThreads: 8
   RandomSeed: 0
   SizeX: 400
   SizeZ: 400

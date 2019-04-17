@@ -528,10 +528,10 @@ MonoBehaviour:
     GoblinSound: 11
   OrderCooldown: 3
   GoblinViewSize: 5
-  AreaViewSize: 14
+  AreaViewSize: 12
   MapViewSize: 45
   ZoomMinBound: 2
-  ZoomMaxBound: 14
+  ZoomMaxBound: 12
   ZoomSpeed: 0.025
   PcZoomSpeed: 3
   FogOfWar: {fileID: 151457449}
@@ -681,7 +681,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 2.8125
   m_Depth: -3
   m_CullingMask:
     serializedVersion: 2
@@ -827,7 +827,7 @@ PrefabInstance:
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
       propertyPath: SizeZ
-      value: 300
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
@@ -852,7 +852,7 @@ PrefabInstance:
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
       propertyPath: NpcsToGenerate
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
