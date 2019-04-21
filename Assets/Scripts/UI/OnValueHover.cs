@@ -20,21 +20,11 @@ public class OnValueHover : MonoBehaviour
  
     void Awake()
     {
+        if(!UIManager.Instance)
+            return;
+
         guiStyleFore = UIManager.Instance.HoverStyle;
         guiStyleBack = UIManager.Instance.HoverStyleBack;
-        //guiStyleFore = new GUIStyle
-        //{
-        //    normal = {textColor = Color.black},
-        //    alignment = TextAnchor.UpperCenter,
-        //    wordWrap = true
-        //};
-        //guiStyleBack = new GUIStyle
-        //{
-        //    normal = {textColor = Color.white},
-        //    alignment = TextAnchor.UpperCenter,
-        //    wordWrap = true
-        //};
-
     }
 
     public void OnMouseEnter()
