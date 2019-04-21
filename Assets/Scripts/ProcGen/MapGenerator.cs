@@ -188,7 +188,7 @@ public class MapGenerator : MonoBehaviour
         yield return new WaitUntil(() => pathGenDone);
         StartCoroutine(GroundGenRoutine());
 
-        yield return new WaitUntil(() => poiGenDone);// && areasExpanding <= 0);
+        yield return new WaitUntil(() => poiGenDone && areasExpanding <= 0);
         StartCoroutine(ForestGenRoutine());
         
         //HACK CHECK FOR AREA ACCESSIBILITY
