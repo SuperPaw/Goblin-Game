@@ -101,11 +101,14 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(!GameManager.Instance.GameStarted)
+            return;
+
         //maybe at larger interval
         if(FollowGoblin && camMoveRoutine == null)
             MoveToGoblin(FollowGoblin);
 
-        if (Instance && Instance.Team && GameManager.Instance.GameStarted)
+        if (Instance && Instance.Team)
             Instance.UpdateFogOfWar();
     }
 

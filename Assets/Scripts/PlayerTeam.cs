@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,10 +77,13 @@ public class PlayerTeam : MonoBehaviour
     
     protected void FixedUpdate()
     {
+        if (!GameManager.Instance.GameStarted)
+            return;
+
         TreasureText.text = "Goblin TreasurES: " + Treasure;
         FoodText.text = "FOod: " + Food;
 
-        if (GameManager.Instance.GameStarted && Leader.InArea.AnyEnemies() &&
+        if (Leader.InArea.AnyEnemies() &&
             Members.Any(g => g.InArea == Leader.InArea && (g.Attacking() || g.Fleeing())))
         {
             if(!Fighting)

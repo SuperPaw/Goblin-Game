@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +41,7 @@ public class MapGenerator : MonoBehaviour
     public int AreaSize;
     public int AreaBufferSize;
     //ONLY for runtime area gen
-    public int AreasToCreate;
+    //public int AreasToCreate;
     private int totalAreaSize;
     private int amountOfLoot;
     public List<Area> Areas;
@@ -91,39 +91,53 @@ public class MapGenerator : MonoBehaviour
     private bool forestGenDone;
     private bool groundGenDone;
     private int areasExpanding;
-
+    private Action<int, string> progressCallback;
+    private int progress;
+    private int charFact;
+    private int areaFact;
+    private int poiFact;
+    private int progressPct;
+    private int totalProgress;
 
 
     // Use this for initialization
-    public IEnumerator GenerateMap(Action<int,string> progressCallback, Action endCallback)
+    public IEnumerator GenerateMap(Action<int,string> callback, Action endCallback)
     {
         Debug.Log("Setting max threads to number of cores: "+ SystemInfo.processorCount);
 
         MaximumThreads = SystemInfo.processorCount;
 
+        progressCallback = callback;
+
         startTime = Time.time;
 
-        var progress = 0;
-        var charFact = 25;
-        var areaFact = 2500;
-        var poiFact = 1000;
+        progress = 0;
+        charFact = 25;
+        areaFact = 2500;
+        poiFact = 1000;
         //could use factors on the two last to make them more important than each tiles
-        var progressPct = 0;
+        progressPct = 0;
 
-        progressCallback(progressPct,"");
+        callback(progressPct,"");
         
         yield return null;
 
         totalAreaSize = AreaSize + AreaBufferSize;
 
-        //noOfAreasX = SizeX / totalAreaSize;
-        //noOfAreasZ = SizeZ / totalAreaSize;
+        var areasToCreate = (SizeX / totalAreaSize) * (SizeZ / totalAreaSize);
+        
+        if (areasToCreate < 2)
+        {
+            Debug.LogError("Map size too small for area gen");
+            yield break;
+        }
 
-        amountOfLoot = AreasToCreate;//noOfAreasX * noOfAreasZ;
+        Debug.Log("Creating "+ areasToCreate + " areas");
 
-
-        var totalProgress =  SizeX * SizeZ +
-            AreasToCreate * areaFact * 2
+        amountOfLoot = areasToCreate;//noOfAreasX * noOfAreasZ;
+        
+        totalProgress =  SizeX * SizeZ +
+            areasToCreate * areaFact * 2
             + VillagesToGenerate * poiFact
             + PointOfInterests * poiFact
             + amountOfLoot
@@ -131,12 +145,11 @@ public class MapGenerator : MonoBehaviour
             + GoblinsToGenerate * charFact;
 
         totalProgress = (int)(totalProgress * 0.83f);
-        
-        //Setting up mesh builder
-        MeshBuilder.transform.localScale = new Vector3(SizeX /8f, 1, SizeZ /8f);
-        MeshBuilder.m_Size = new Vector3(SizeX,10,SizeZ);
-        MeshBuilder.transform.position = new Vector3(SizeX/2f,0,SizeZ/2f);
 
+        //Setting up mesh builder
+        MeshBuilder.transform.localScale = new Vector3(SizeX / 8f, 1, SizeZ / 8f);
+        MeshBuilder.m_Size = new Vector3(SizeX, 10, SizeZ);
+        MeshBuilder.transform.position = new Vector3(SizeX / 2f, 0, SizeZ / 2f);
 
         yield return null;
 
@@ -165,22 +178,19 @@ public class MapGenerator : MonoBehaviour
 
         yield return new WaitUntil(() => areaGenDone);
 
-        StartCoroutine(PathGenRoutine());
+        PathGenRoutine();
 
         //Probably need dependency
         StartCoroutine(POIGenRoutine());
 
         StartCoroutine(LootGenRoutine());
 
-        //TODO: maybe forest and ground are in the wrong order
-
         yield return new WaitUntil(() => pathGenDone);
         StartCoroutine(GroundGenRoutine());
 
-        yield return new WaitUntil(() => poiGenDone && areasExpanding <= 0);
+        yield return new WaitUntil(() => poiGenDone);// && areasExpanding <= 0);
         StartCoroutine(ForestGenRoutine());
-
-
+        
         //HACK CHECK FOR AREA ACCESSIBILITY
         //select a middle point 
         //ground points at random a bunch of times and check that they are reachable
@@ -198,7 +208,7 @@ public class MapGenerator : MonoBehaviour
 	        {
 	            progressPct = loc;
 	            yield return null;
-	            progressCallback(progressPct, "Warming up enemies...");
+	            callback(progressPct, "Warming up enemies...");
 	        }
         }
 
@@ -211,8 +221,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         List<Goblin> members = new List<Goblin>();
-
-
+        
         yield return new WaitUntil(() => goblinStartArea!= null);
         var pos = goblinStartArea.transform.position;
 
@@ -250,7 +259,7 @@ public class MapGenerator : MonoBehaviour
             {
                 progressPct = loc;
                 yield return null;
-                progressCallback(progressPct, "Giving birth to beatiful goblins...");
+                callback(progressPct, "Giving birth to beatiful goblins...");
             }
         }
         
@@ -281,58 +290,37 @@ public class MapGenerator : MonoBehaviour
 
         Debug.Log("Started Area gen : " + (Time.time - startTime) + " seconds");
 
-        center = CreateArea(new Vector3(SizeX / 2f, 0, SizeZ / 2f));
 
-        //set up neighbors
-        //CreateNeighboursFromArea(center);
-        //var n = center.Neighbours.Count;
-        //for (int i = 0; i < n; i++)
-        //{
-        //    CreateNeighboursFromArea(center.Neighbours.ElementAt(i));
-        //}
+        var noOfAreasX = SizeX / totalAreaSize;
+        var noOfAreasZ = SizeZ / totalAreaSize;
+        
+        var adj = totalAreaSize / 2f;
 
-        var adj = AreaSize / 2f;
-        for (int i = 0; i < AreasToCreate; i++)
+        for (int i = 0; i < noOfAreasX; i++)
         {
-            //progress += areaFact;
-            //int loca = (progress * 100) / totalProgress;
-            //if (loca != progressPct)
-            //{
-            //    progressPct = loca;
-            //    yield return null;
-            //    progressCallback(progressPct, "Creating areas");
-            //}
-
-
-            int tries = 0;
-            int maxTries = 500;
-            yield return null;
-
-            Vector3 point;
-            do
+            for (int j = 0; j < noOfAreasZ; j++)
             {
-                point = new Vector3(Random.Range(adj, SizeX - adj), 0, Random.Range(adj, SizeZ - adj));
-                if (tries++ > maxTries)
+
+                progress += areaFact;
+                int loca = (progress * 100) / totalProgress;
+                if (loca != progressPct)
                 {
-                    Debug.Log("Failed to create area: " + i + " !");
-                    break;
+                    progressPct = loca;
+                    yield return null;
+                    progressCallback(progressPct, "Creating areas");
                 }
 
-            } while (!AreaCanFitAtPosition(point, Areas));
+                var x = i * totalAreaSize + adj+ Random.Range(-AreaBufferSize, AreaBufferSize);
+                var z = j * totalAreaSize + adj + Random.Range(-AreaBufferSize, AreaBufferSize);
 
-            if (tries <= maxTries)
-            {
                 yield return new WaitUntil((() => areasExpanding < MaximumThreads));
-                CreateArea(point);
+                CreateArea(new Vector3(x,0,z));
+                
             }
         }
-
-        if (Areas.Count < 2)
-        {
-            Debug.LogError("Map size too small for area gen");
-            yield break;
-        }
-
+        
+        center = Areas[(noOfAreasX * noOfAreasZ) / 2];
+        
 
         while (Areas.Count <= HumanSettlements + PointOfInterests + VillagesToGenerate)
         {
@@ -346,7 +334,7 @@ public class MapGenerator : MonoBehaviour
         Debug.Log("Finished Area gen : " + (Time.time - startTime) + " seconds");
     }
 
-    private IEnumerator PathGenRoutine()
+    private void PathGenRoutine()
     {
         //Create roads TODO: make this less expensive
         foreach (var n in Areas)
@@ -355,7 +343,7 @@ public class MapGenerator : MonoBehaviour
 
             var toConnect = Areas.Where(e => e != n && !e.HasMaximumConnections).OrderBy(ne => (ne.transform.position - position).sqrMagnitude).Take(3).ToList();
 
-            yield return null;
+            //yield return null;
 
             foreach (var area in toConnect)
             {
@@ -374,14 +362,14 @@ public class MapGenerator : MonoBehaviour
 
         for (int i = 0; i < HumanSettlements; i++)
         {
-            //progress += poiFact;
-            //int loc = (progress * 100) / totalProgress;
-            //if (loc != progressPct)
-            //{
-            //    progressPct = loc;
+            progress += poiFact;
+            int loc = (progress * 100) / totalProgress;
+            if (loc != progressPct)
+            {
+                progressPct = loc;
                 yield return null;
-            //    progressCallback(progressPct, "Building villages...");
-            //}
+                progressCallback(progressPct, "Building villages...");
+            }
 
             var area = GetRandomArea();
 
@@ -430,14 +418,14 @@ public class MapGenerator : MonoBehaviour
 
         for (int i = 0; i < VillagesToGenerate; i++)
         {
-            //progress += poiFact;
-            //int loc = (progress * 100) / totalProgress;
-            //if (loc != progressPct)
-            //{
-            //    progressPct = loc;
+            progress += poiFact;
+            int loc = (progress * 100) / totalProgress;
+            if (loc != progressPct)
+            {
+                progressPct = loc;
                 yield return null;
-            //    progressCallback(progressPct, "Building villages...");
-            //}
+                progressCallback(progressPct, "Building villages...");
+            }
 
 
             var area = GetRandomArea();
@@ -499,14 +487,14 @@ public class MapGenerator : MonoBehaviour
 
         for (int i = 0; i < PointOfInterests; i++)
         {
-            //progress += poiFact;
-            //int loc = (progress * 100) / totalProgress;
-            //if (loc != progressPct)
-            //{
-            //    progressPct = loc;
-            //    yield return null;
-            //    progressCallback(progressPct, "Building villages...");
-            //}
+            progress += poiFact;
+            int loc = (progress * 100) / totalProgress;
+            if (loc != progressPct)
+            {
+                progressPct = loc;
+                yield return null;
+                progressCallback(progressPct, "Building villages...");
+            }
 
             var area = GetRandomArea();
 
@@ -571,13 +559,13 @@ public class MapGenerator : MonoBehaviour
                 l.EquipmentLoot.Add(EquipmentGen.GetRandomEquipment());
             }
 
-            //int loc = (++progress * 100) / totalProgress;
-            //if (loc != progressPct)
-            //{
-            //    progressPct = loc;
+            int loc = (++progress * 100) / totalProgress;
+            if (loc != progressPct)
+            {
+                progressPct = loc;
                 yield return null;
-            //    progressCallback(progressPct, "Hiding goblin treasures...");
-            //}
+                progressCallback(progressPct, "Hiding goblin treasures...");
+            }
 
         }
 
@@ -588,7 +576,7 @@ public class MapGenerator : MonoBehaviour
 
     private IEnumerator GroundGenRoutine()
     {
-        yield return null;
+        //yield return null;
         Debug.Log("Ground gen started");
 
         //creating ground tiles
@@ -632,13 +620,13 @@ public class MapGenerator : MonoBehaviour
             //TODO:check 
             next.transform.position = new Vector3(tile.X, 0, tile.Y);
 
-            //int loc = (++progress * 100) / totalProgress;
-            //if (loc != progressPct)
-            //{
-            //    progressPct = loc;
-                //yield return null;
-            //    progressCallback(progressPct, "Craeting gorund...");
-            //}
+            int loc = (++progress * 100) / totalProgress;
+            if (loc != progressPct)
+            {
+                progressPct = loc;
+                yield return null;
+                progressCallback(progressPct, "Craeting gorund...");
+            }
         }
 
         groundGenDone = true;
@@ -647,7 +635,7 @@ public class MapGenerator : MonoBehaviour
 
     private IEnumerator ForestGenRoutine()
     {
-        yield return null;
+        //yield return null;
         Debug.Log("Forest gen started");
 
         //INSTANTIATING MAP
@@ -688,13 +676,13 @@ public class MapGenerator : MonoBehaviour
 
                 next.transform.parent = parentArea.transform;
             }
-            //int loc = (++progress * 100) / totalProgress;
-            //if (loc != progressPct)
-            //{
-            //    progressPct = loc;
-            //    yield return null;
-            //    progressCallback(progressPct, "Creating sneaky hiding locations...");
-            //}
+            int loc = (++progress * 100) / totalProgress;
+            if (loc != progressPct)
+            {
+                progressPct = loc;
+                yield return null;
+                progressCallback(progressPct, "Creating sneaky hiding locations...");
+            }
         }
 
         forestGenDone = true;
@@ -865,9 +853,9 @@ public class MapGenerator : MonoBehaviour
         startTile.Examined = true;
         startTile.ForestChance = 0f;
 
-        var growthChance = 0.05f;
+        var growthChance = 0.02f;
 
-        var increase = growthChance /2 ;
+        var increase = growthChance *2 ;
 
         startTile.Type = TileType.Ground;
 
@@ -878,9 +866,13 @@ public class MapGenerator : MonoBehaviour
         //last ring = areamiddle;
         List <Tile> lastRing = new List<Tile>() {startTile};
 
+        int rings = 0;
+
         //while (!last.all forest chance == 100)
-        while (lastRing.Any(t=>t.ForestChance < 1f))
+        while (rings < AreaSize/2 && lastRing.Any(t=>t.ForestChance < 1f))
         {
+            rings++;
+
             List<Tile> nextRing = new List<Tile>(lastRing.Count*2);
 
             //Increase growthchance
@@ -918,6 +910,8 @@ public class MapGenerator : MonoBehaviour
             lastRing = nextRing;
 
         }
+
+        //Debug.Log("finshings area in "+ rings + " rings");
 
         areasExpanding--;
         //Debug.Log("Finishing area gen in thread");
@@ -961,7 +955,7 @@ public class MapGenerator : MonoBehaviour
     //TODO: not working with area for some reason
     private Tile GetRandomGroundTile(Area inArea = null)
     {
-        if(!inArea)
+        if(!inArea || !inArea.MovablePositions.Any())
             return movableTiles[Random.Range(0, movableTiles.Count)];
 
         var areaTiles = inArea.MovablePositions;

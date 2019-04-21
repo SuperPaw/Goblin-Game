@@ -382,9 +382,10 @@ public abstract class Character : MonoBehaviour
 
     protected void FixedUpdate()
     {
+
         HandleAnimation();
 
-        if (!Alive() || !GameManager.Instance.GameStarted)
+        if (!Alive() || !GameManager.Instance.GameStarted || !navMeshAgent.isOnNavMesh)
             return;
         
 
