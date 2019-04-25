@@ -40,6 +40,7 @@ public class MapGenerator : MonoBehaviour
     public Area AreaTilePrefab;
     public int AreaSize;
     public int AreaBufferSize;
+    public AnimationCurve WeightedBufferChance;
     //ONLY for runtime area gen
     //public int AreasToCreate;
     private int totalAreaSize;
@@ -90,7 +91,11 @@ public class MapGenerator : MonoBehaviour
     private bool poiGenDone;
     private bool forestGenDone;
     private bool groundGenDone;
+
+    //to track coroutines
     private int areasExpanding;
+    private int roadsBeingBuilt;
+
     private Action<int, string> progressCallback;
     private int progress;
     private int charFact;
@@ -98,7 +103,6 @@ public class MapGenerator : MonoBehaviour
     private int poiFact;
     private int progressPct;
     private int totalProgress;
-
 
     // Use this for initialization
     public IEnumerator GenerateMap(Action<int,string> callback, Action endCallback)
@@ -181,14 +185,15 @@ public class MapGenerator : MonoBehaviour
         PathGenRoutine();
 
         //Probably need dependency
+
         StartCoroutine(POIGenRoutine());
 
         StartCoroutine(LootGenRoutine());
 
-        yield return new WaitUntil(() => pathGenDone);
+        yield return new WaitUntil(() => pathGenDone && roadsBeingBuilt <= 0);
         StartCoroutine(GroundGenRoutine());
 
-        yield return new WaitUntil(() => poiGenDone && areasExpanding <= 0);
+        yield return new WaitUntil(() => poiGenDone && areasExpanding <= 0 );
         StartCoroutine(ForestGenRoutine());
         
         //HACK CHECK FOR AREA ACCESSIBILITY
@@ -310,8 +315,10 @@ public class MapGenerator : MonoBehaviour
                     progressCallback(progressPct, "Creating areas");
                 }
 
-                var x = i * totalAreaSize + adj+ Random.Range(-AreaBufferSize, AreaBufferSize);
-                var z = j * totalAreaSize + adj + Random.Range(-AreaBufferSize, AreaBufferSize);
+                //Debug.Log("Weight: " + WeightedBufferChance.Evaluate(Random.Range(-1, 1)));
+
+                var x = i * totalAreaSize + adj + WeightedBufferChance.Evaluate(Random.Range(-1f, 1f)) * AreaBufferSize / 2;
+                var z = j * totalAreaSize + adj + WeightedBufferChance.Evaluate(Random.Range(-1f, 1f)) * AreaBufferSize / 2;
 
                 yield return new WaitUntil((() => areasExpanding < MaximumThreads));
                 CreateArea(new Vector3(x,0,z));
@@ -345,9 +352,10 @@ public class MapGenerator : MonoBehaviour
 
             //yield return null;
 
+            //TODO: use threads. maybe just for each area
             foreach (var area in toConnect)
             {
-                CreateRoad(n, area);
+                StartCoroutine(CreateRoad(n, area));
             }
         }
 
@@ -407,7 +415,7 @@ public class MapGenerator : MonoBehaviour
                 for (int j = 0; j + 1 < path.Count; j++)
                 {
                     //Debug.Log("road: "+ path[j] + ", " + path[j+1]);
-                    CreateRoad(path[j], path[j + 1], true);
+                    StartCoroutine(CreateRoad(path[j], path[j + 1], true));
                 }
             }
 
@@ -766,12 +774,10 @@ public class MapGenerator : MonoBehaviour
 
         //Debug.Log("Creating area at: " +position);
         
-        var posAdjust = totalAreaSize / 2;
-
         area.transform.position = position;
-        area.Size = totalAreaSize;
+        area.Size = AreaSize;
         area.GetComponent<BoxCollider>().size = new Vector3(AreaSize, 0.1f, AreaSize);
-        area.FogOfWarSprite.transform.localScale *= (float)totalAreaSize / (float)AreaSize;
+        //area.FogOfWarSprite.transform.localScale *= (float)totalAreaSize / (float)AreaSize;
 
         area.X = (int)position.x;
         area.Y = (int)position.z;
@@ -1005,11 +1011,13 @@ public class MapGenerator : MonoBehaviour
 
 
 
-    private void CreateRoad(Area from, Area to, bool drawRoad = false)
+    private IEnumerator CreateRoad(Area from, Area to, bool drawRoad = false)
     {
         if (from.RoadsTo.Contains(to))
-            return;
-
+            yield break;
+        
+        roadsBeingBuilt++;
+        
         from.Neighbours.Add(to);
         to.Neighbours.Add(from);
 
@@ -1026,6 +1034,7 @@ public class MapGenerator : MonoBehaviour
 
         while (current != end)
         {
+
             //moce vertically or horizontally
             var horizontally =  Random.value < 0.5f;
             //if (drawRoad && horizontally && current.X == end.X)
@@ -1067,6 +1076,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
+        roadsBeingBuilt--;
     }
 
     private Tile GetNeighbourTile(Tile current,Tile end, int mod, bool horizontally)

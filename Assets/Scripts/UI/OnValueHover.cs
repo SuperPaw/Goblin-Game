@@ -18,15 +18,6 @@ public class OnValueHover : MonoBehaviour
     private GUIStyle guiStyleFore;
     private GUIStyle guiStyleBack;
  
-    void Awake()
-    {
-        if(!UIManager.Instance)
-            return;
-
-        guiStyleFore = UIManager.Instance.HoverStyle;
-        guiStyleBack = UIManager.Instance.HoverStyleBack;
-    }
-
     public void OnMouseEnter()
     {
         //Debug.Log("Hovering: " + Stat.GetStatDescription());
@@ -45,6 +36,12 @@ public class OnValueHover : MonoBehaviour
 
     void OnGUI()
     {
+        if (guiStyleBack == null || guiStyleFore == null)
+        {
+            guiStyleFore = UIManager.Instance.HoverStyle;
+            guiStyleBack = UIManager.Instance.HoverStyleBack;
+        }
+
         if (currentToolTipText != "")
         {
             var x = Event.current.mousePosition.x;

@@ -10,4 +10,5 @@ public class StatEntry : MonoBehaviour
     public TextMeshProUGUI Value;
     public Button LevelUpStat;
     public OnValueHover ValueHover;
+    public Image FillImage;
 }

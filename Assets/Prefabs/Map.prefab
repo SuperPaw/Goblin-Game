@@ -55,7 +55,39 @@ MonoBehaviour:
     type: 3}
   AreaSize: 30
   AreaBufferSize: 10
-  AreasToCreate: 35
+  WeightedBufferChance:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.99495035
+      value: -1.0075835
+      inSlope: 0.2504576
+      outSlope: 0.2504576
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.43736425
+    - serializedVersion: 3
+      time: 0.005189821
+      value: 0.004898621
+      inSlope: 3.2645895
+      outSlope: 3.2645895
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.09482014
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.40581715
+      outSlope: 0.40581715
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.23527423
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   Areas: []
   MeshBuilder: {fileID: 2604491388562873763}
   Npcs:
