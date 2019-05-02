@@ -769,7 +769,7 @@ PrefabInstance:
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
       propertyPath: SizeX
-      value: 240
+      value: 280
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
@@ -815,26 +815,6 @@ PrefabInstance:
         type: 3}
       propertyPath: VillagesToGenerate
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
-        type: 3}
-      propertyPath: WeightedBufferChance.m_Curve.Array.data[1].inSlope
-      value: 4.0243225
-      objectReference: {fileID: 0}
-    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
-        type: 3}
-      propertyPath: WeightedBufferChance.m_Curve.Array.data[1].outSlope
-      value: 4.0243225
-      objectReference: {fileID: 0}
-    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
-        type: 3}
-      propertyPath: WeightedBufferChance.m_Curve.Array.data[1].inWeight
-      value: 0.054444853
-      objectReference: {fileID: 0}
-    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
-        type: 3}
-      propertyPath: WeightedBufferChance.m_Curve.Array.data[1].outWeight
-      value: 0.09464675
       objectReference: {fileID: 0}
     - target: {fileID: 4598158572664144, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0, type: 3}
       propertyPath: m_LocalPosition.x
