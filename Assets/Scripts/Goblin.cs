@@ -123,7 +123,7 @@ public class Goblin : Character
 
     internal void Heal()
     {
-        Morale = COU.GetStatMax();
+        Morale = COU.GetStatMax() *2;
         Health = HEA.GetStatMax();
     }
 
@@ -173,7 +173,7 @@ public class Goblin : Character
                 SPE.Modifiers.Add(new Stat.StatMod("Ambusher", 2));
                 break;
             case Class.Scout:
-                ATT.Modifiers.Add(new Stat.StatMod("Scout", 2));
+                SMA.Modifiers.Add(new Stat.StatMod("Scout", 2));
                 break;
             case Class.END:
                 break;

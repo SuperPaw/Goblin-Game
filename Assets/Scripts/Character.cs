@@ -127,7 +127,7 @@ public abstract class Character : MonoBehaviour
     [Serializable]
     public enum StatType
     {
-        DAMAGE, AIM, ATTENTION, COURAGE, HEALTH, SPEED, SMARTS
+        DAMAGE, AIM, COURAGE, HEALTH, SPEED, SMARTS
         , COUNT
     }
 
@@ -136,7 +136,6 @@ public abstract class Character : MonoBehaviour
     //TODO: use a max for stats;
     public Stat DMG;
     public Stat AIM;
-    public Stat ATT;
     public Stat COU;
     public Stat HEA;
     public Stat SPE;
@@ -347,11 +346,10 @@ public abstract class Character : MonoBehaviour
         //------------------------- STAT SET-UP --------------------------
         DMG = new Stat(StatType.DAMAGE, Random.Range(DamMin, DamMax));
         AIM = new Stat(StatType.AIM, Random.Range(AimMin, AimMax));
-        ATT = new Stat(StatType.ATTENTION, Random.Range(AttMin, AttMax));
         COU = new Stat(StatType.COURAGE, Random.Range(CouMin, CouMax));
         SPE = new Stat(StatType.SPEED, Random.Range(SpeMin, SpeMax));
         SMA = new Stat(StatType.SMARTS, Random.Range(SmaMin, SmaMax));
-        Stats = new List<Stat>() {DMG,AIM,ATT,COU,SPE,SMA}.ToDictionary(s=> s.Type);
+        Stats = new List<Stat>() {DMG,AIM,COU,SPE,SMA}.ToDictionary(s=> s.Type);
 
         //Health is a special case
         HEA = new Stat(StatType.HEALTH, Random.Range(HeaMin, HeaMax));
@@ -375,7 +373,7 @@ public abstract class Character : MonoBehaviour
             navMeshAgent = GetComponentInChildren<NavMeshAgent>();
 
         //navMeshAgent.speed = SPE.GetStatMax() /2f; Set in fixedupdate
-        Morale = COU.GetStatMax();
+        Morale = COU.GetStatMax()*2;
 
         if(!navMeshAgent) Debug.LogWarning(name+ ": character does not have Nav Mesh Agent");
     }
@@ -747,12 +745,11 @@ public abstract class Character : MonoBehaviour
 
     private  void SelectAction()
     {
-
         switch (State)
         {
             case CharacterState.Idling:
                 //reset morale
-                Morale = COU.GetStatMax();
+                Morale = COU.GetStatMax()*2;
 
                 if (actionInProgress)
                 {
@@ -834,7 +831,7 @@ public abstract class Character : MonoBehaviour
                     Team.ChallengeForLeadership(this as Goblin);
                 }
                 //TODO: define better which characters should search stuff
-                else if (Random.value < 0.001f * ATT.GetStatMax() && Team && this as Goblin && !InArea.AnyEnemies() && InArea.Lootables.Any(l => !l.Searched))
+                else if (Random.value < 0.001f * SMA.GetStatMax() && Team && this as Goblin && !InArea.AnyEnemies() && InArea.Lootables.Any(l => !l.Searched))
                 {
                     var loots = InArea.Lootables.Where(l => !l.Searched).ToArray();
 
@@ -1081,7 +1078,7 @@ public abstract class Character : MonoBehaviour
         //TODO: double up chance as scout
         if(!InArea.AnyEnemies() && this as Goblin &! Fleeing() &! Hiding() && Alive() &! Attacking() && character.tag == "Enemy" )
         {
-            if (Random.Range(0, 12) < ATT.GetStatMax())
+            if (Random.Range(0, 12) < SMA.GetStatMax())
                 (this as Goblin).Shout("I see enemy!!", SoundBank.GoblinSound.EnemyComing);
             //else
             //{

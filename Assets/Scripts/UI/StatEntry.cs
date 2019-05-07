@@ -11,4 +11,6 @@ public class StatEntry : MonoBehaviour
     public Button LevelUpStat;
     public OnValueHover ValueHover;
     public Image FillImage;
+    public Color LowStatColor;
+    public Color HighStatColor;
 }

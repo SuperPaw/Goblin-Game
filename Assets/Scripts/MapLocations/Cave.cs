@@ -40,7 +40,7 @@ public class Cave : PointOfInterest
         yield return new WaitForSeconds(2);
 
         //Arrive back with treasure or Remove goblin
-        if (Random.Range(0, g.ATT.GetStatMax()) >= Difficulty)
+        if (Random.Range(0, g.SMA.GetStatMax()) >= Difficulty)
         {
             g.Xp += 10;
             g.Team.Treasure += Prize;

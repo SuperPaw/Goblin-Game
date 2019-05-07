@@ -66,23 +66,21 @@ public class EquipmentGen : MonoBehaviour
     {
         new AttributeDescription(Character.StatType.DAMAGE, new []{"Spiked","Bloody"},new []{"Hurt","Kill","Krank"}),
         new AttributeDescription(Character.StatType.AIM, new []{"Wooden", "Striped", "Grim"},new []{"Knark","Whack","Mok"}),
-        new AttributeDescription(Character.StatType.ATTENTION, new []{"Bone","Super"},new []{"Find","Eye","Bok"}),
         new AttributeDescription(Character.StatType.COURAGE, new []{"Great","Metal","Big"},new []{"Klonk","Top"}),
-        new AttributeDescription(Character.StatType.HEALTH, new []{"Strong","Brown"},new []{"Gut","Blood"}),
-        new AttributeDescription(Character.StatType.SPEED, new []{"Painted", "Red"},new []{"Run","Sneak","Do"}),
-        new AttributeDescription(Character.StatType.SMARTS, new []{"Smart","Black","Magic"},new []{"Brain","Head","Tink"}),
+        new AttributeDescription(Character.StatType.HEALTH, new []{ "Bone","Strong","Brown"},new []{"Gut","Blood","Bok"}),
+        new AttributeDescription(Character.StatType.SPEED, new []{ "Super","Painted", "Red"},new []{"Run","Sneak","Do"}),
+        new AttributeDescription(Character.StatType.SMARTS, new []{"Smart","Black","Magic"},new []{ "Find", "Eye","Brain","Head","Tink"}),
     };
 
 
     private List<AttributeDescription> NegativeAttributes = new List<AttributeDescription>()
     {
-        new AttributeDescription(Character.StatType.DAMAGE, new []{"Green","Ugly"},new []{"Friend","Relax"}),
+        new AttributeDescription(Character.StatType.DAMAGE, new []{"Green","Ugly"},new []{"Friend","Relax","Tokk"}),
         new AttributeDescription(Character.StatType.AIM, new []{"Grey","Blue"},new []{"Beer","Drunk","Frak"}),
-        new AttributeDescription(Character.StatType.ATTENTION, new []{"White", "Shiny"},new []{"Tikk","Tokk"}),
         new AttributeDescription(Character.StatType.COURAGE, new []{"Yellow","Wet"},new []{"Yield","Pak","Pok"}),
         new AttributeDescription(Character.StatType.HEALTH, new []{"Weak", "Pale"},new []{"Sokk","Sakk"}),
-        new AttributeDescription(Character.StatType.SPEED, new []{ "Greasy", "Broken"},new []{"Wait","Lazy"}),
-        new AttributeDescription(Character.StatType.SMARTS, new []{"Stupid","Cursed"},new []{"Dumb","Idiot"}),
+        new AttributeDescription(Character.StatType.SPEED, new []{ "Greasy", "White","Broken" },new []{"Wait","Lazy"}),
+        new AttributeDescription(Character.StatType.SMARTS, new []{"Stupid","Cursed","Shiny"},new []{ "Tikk", "Dumb", "Idiot" }),
     };
 
     private List<LocationType> LocationDescriptions = new List<LocationType>()

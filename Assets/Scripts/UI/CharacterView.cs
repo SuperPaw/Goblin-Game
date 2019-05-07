@@ -16,6 +16,7 @@ public class CharacterView : MenuWindow
     public TextMeshProUGUI EquipmentInfo;
     public TextMeshProUGUI ClassSelectText;
     public GameObject ClassSelectionHolder;
+    public GameObject LevelUpScreenHolder;
     public Button ClassIcon;
     private static CharacterView Instance;
     private Goblin character;
@@ -100,8 +101,14 @@ public class CharacterView : MenuWindow
 
 
             var entry = Instantiate(preEntry, preEntry.transform.parent);
+
+            var val = stat.GetStatMax();
+
             entry.Name.text = stat.Type.ToString();
-            entry.Value.text = stat.GetStatMax().ToString();
+            entry.Value.text = val.ToString();
+            var style = val > 3 ? FontStyles.Bold : FontStyles.Normal;
+            entry.Name.fontStyle = style;
+            entry.Value.fontStyle = style;
             entry.gameObject.SetActive(true);
             entry.ValueHover.Stat = stat;
             generatedObjects.Add(entry.gameObject);
