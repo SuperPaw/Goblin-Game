@@ -14,14 +14,17 @@ public class CharacterView : MenuWindow
     public TextMeshProUGUI Name;
     public TextMeshProUGUI ClassLevelText;
     public TextMeshProUGUI EquipmentInfo;
-    public TextMeshProUGUI ClassSelectText;
-    public GameObject ClassSelectionHolder;
+    //public TextMeshProUGUI ClassSelectText;
+    //public GameObject ClassSelectionHolder;
     public GameObject LevelUpScreenHolder;
-    public Button ClassIcon;
+    public Image ClassIcon;
     private static CharacterView Instance;
     private Goblin character;
     private readonly List<GameObject> generatedObjects = new List<GameObject>(10);
-    private List<Button> generatedClassButtons = new List<Button>();
+    [SerializeField]
+    private Button levelUpButton;
+
+    [SerializeField] private LevelUpView levelUpScreen;
 
     new void Awake()
     {
@@ -29,7 +32,15 @@ public class CharacterView : MenuWindow
 
         Type = WindowType.Character;
 
+        levelUpButton.onClick.AddListener(OpenLevelUp);
+
         if (!Instance) Instance = this;
+    }
+
+    private void OpenLevelUp()
+    {
+        levelUpScreen.SetupLevelScreen(character);
+
     }
 
     public static void ShowCharacter(Goblin c)
@@ -62,25 +73,19 @@ public class CharacterView : MenuWindow
             Destroy(generatedObject);
         }
         generatedObjects.Clear();
-
-        foreach (var generatedClassButton in generatedClassButtons)
-        {
-            Destroy(generatedClassButton.gameObject);
-        }
-        generatedClassButtons.Clear();
-
-
+        
         Name.text = c.name;
         var lvl = Goblin.GetLevel((int) c.Xp);
         ClassLevelText.text = "Level " + lvl + " " + ClassName(c.ClassType);
         ClassLevelText.GetComponent<OnValueHover>().Class = c.ClassType;
         ClassLevelText.gameObject.SetActive(!c.WaitingOnClassSelection || !c.Alive());
-        ClassSelectionHolder.SetActive(c.WaitingOnClassSelection && c.Alive());
+        //ClassSelectionHolder.SetActive(c.WaitingOnClassSelection && c.Alive());
 
         if (c.WaitingOnLevelUp > 0 || c.WaitingOnClassSelection)
         {
             XpTextEntry.Value.text = "Level up!";
             XpTextEntry.FillImage.fillAmount = 1;
+            levelUpButton.interactable = true;
         }
         else
         {
@@ -90,7 +95,7 @@ public class CharacterView : MenuWindow
         HealthTextEntry.Value.text = c.Health + "/" +c.HEA.GetStatMax();
         HealthTextEntry.FillImage.fillAmount = c.Health / (float) c.HEA.GetStatMax();
         HealthTextEntry.ValueHover.Stat = c.HEA;
-        ClassIcon.image.sprite = c.Alive() ? GameManager.GetClassImage(c.ClassType): GameManager.GetIconImage(GameManager.Icon.Dead);
+        ClassIcon.sprite = c.Alive() ? GameManager.GetClassImage(c.ClassType): GameManager.GetIconImage(GameManager.Icon.Dead);
         ClassIcon.GetComponent<OnValueHover>().Class = c.ClassType;
 
         int lr = 0;
@@ -107,20 +112,13 @@ public class CharacterView : MenuWindow
             entry.Name.text = stat.Type.ToString();
             entry.Value.text = val.ToString();
             var style = val > 3 ? FontStyles.Bold : FontStyles.Normal;
-            entry.Name.fontStyle = style;
-            entry.Value.fontStyle = style;
+            var color = val > 3 ? entry.HighStatColor : val < 3 ? entry.LowStatColor : entry.Value.color;
+            entry.Value.color = color;
+            entry.Name.fontStyle = entry.Value.fontStyle = style;
             entry.gameObject.SetActive(true);
             entry.ValueHover.Stat = stat;
             generatedObjects.Add(entry.gameObject);
-            //TODO: create level up which happens when pressing level up button
-
-            if (c.WaitingOnLevelUp > 0)
-            {
-                entry.LevelUpStat.onClick.AddListener(() => LevelUp(c, stat));
-                entry.LevelUpStat.gameObject.SetActive(true);
-
-            }
-            else entry.LevelUpStat.gameObject.SetActive(false);
+            
         }
 
         //TODO: update current stats instead replacing
@@ -139,72 +137,9 @@ public class CharacterView : MenuWindow
             generatedObjects.Add(entry.gameObject);
         }
 
-        if (c.WaitingOnClassSelection)
-        {
-
-            if (generatedClassButtons == null || generatedClassButtons.Count == 0)
-            {
-                generatedClassButtons = new List<Button>();
-
-                for (Goblin.Class i = (Goblin.Class) 2; i < Goblin.Class.END; i =(Goblin.Class) ((int)i * 2)) 
-                {
-                    var clBut = Instantiate(ClassIcon,ClassIcon.transform.parent);
-
-                    clBut.image.sprite = GameManager.GetClassImage(i);
-
-                    var cl = i;
-
-                    clBut.GetComponent<OnValueHover>().Class = i;
-                        
-                    generatedClassButtons.Add(clBut);
-
-                    clBut.onClick.AddListener(() =>SelectClass(c,cl));
-
-                    clBut.gameObject.SetActive(true);
-                }
-            }
-            ClassSelectText.text = "Select Class:";
-            ClassIcon.gameObject.SetActive(false);
-        }
-        else
-        {
-            ClassIcon.gameObject.SetActive(true);
-            ClassSelectText.text = "";
-        }
 
     }
 
-    private void SelectClass(Goblin c, Goblin.Class cl)
-    {
-        c.SelectClass(cl);
-        Close();
-
-        GoblinUIList.UpdateGoblinList();
-
-        showCharacter(c);
-    }
-
-    //TODO: move to character or game manager
-    private void LevelUp(Goblin gob, Character.Stat stat)
-    {
-
-        stat.LevelUp();
-
-        gob.WaitingOnLevelUp--;
-        if(gob.WaitingOnLevelUp < 1)
-            foreach (var ob in generatedObjects)
-            {
-                var s =ob.GetComponent<StatEntry>();
-                if (s)
-                {
-                    s.LevelUpStat.gameObject.SetActive(false);
-                    if (s.Name.text == stat.Type.ToString())
-                        s.Value.text = stat.GetStatMax().ToString();
-                }
-            }
-        
-        GoblinUIList.UpdateGoblinList();
-    }
 
     private string ClassName(Goblin.Class cl)
     {

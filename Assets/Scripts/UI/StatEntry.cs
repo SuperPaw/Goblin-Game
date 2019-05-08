@@ -8,7 +8,6 @@ public class StatEntry : MonoBehaviour
 {
     public TextMeshProUGUI Name;
     public TextMeshProUGUI Value;
-    public Button LevelUpStat;
     public OnValueHover ValueHover;
     public Image FillImage;
     public Color LowStatColor;

@@ -9,7 +9,7 @@ public abstract class MenuWindow : MonoBehaviour
 
     public enum WindowType
     {
-        Character,PlayerChoice, LocationView ,
+        Character,PlayerChoice, LocationView ,LevelUp,
         COUNT
     }
 
