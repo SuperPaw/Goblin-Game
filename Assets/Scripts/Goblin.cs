@@ -40,11 +40,16 @@ public class Goblin : Character
         return level-1;
     }
 
+    internal bool WaitingOnLevelup()
+    {
+        return LevelUps < CurrentLevel;
+    }
+
     public ParticleSystem particles;
     private ParticleSystem.EmissionModule emission;
 
 
-    public int WaitingOnLevelUp;
+    public int LevelUps = 1;
     public bool WaitingOnClassSelection;
     private float xp = 0;
 
@@ -118,7 +123,7 @@ public class Goblin : Character
         if(!Alive())
             this.enabled = false;
 
-        emission.enabled = WaitingOnLevelUp > 0|| WaitingOnClassSelection;
+        emission.enabled = WaitingOnLevelup();//LevelUps > 0|| WaitingOnClassSelection;
     }
 
     internal void Heal()
@@ -140,9 +145,6 @@ public class Goblin : Character
         if (CurrentLevel == 2)
             WaitingOnClassSelection = true;
         
-        
-        WaitingOnLevelUp++;
-
         GoblinUIList.UpdateGoblinList();
     }
 

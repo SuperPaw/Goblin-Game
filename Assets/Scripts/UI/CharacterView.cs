@@ -10,7 +10,7 @@ public class CharacterView : MenuWindow
 {
     public StatEntry XpTextEntry;
     public StatEntry HealthTextEntry;
-    public StatEntry LftTextEntry,RgtTextEntry;
+    public StatEntry StatEntry;
     public TextMeshProUGUI Name;
     public TextMeshProUGUI ClassLevelText;
     public TextMeshProUGUI EquipmentInfo;
@@ -78,23 +78,25 @@ public class CharacterView : MenuWindow
         var lvl = Goblin.GetLevel((int) c.Xp);
         ClassLevelText.text = "Level " + lvl + " " + ClassName(c.ClassType);
         ClassLevelText.GetComponent<OnValueHover>().Class = c.ClassType;
-        ClassLevelText.gameObject.SetActive(!c.WaitingOnClassSelection || !c.Alive());
+        //ClassLevelText.gameObject.SetActive(!c.WaitingOnClassSelection || !c.Alive());
         //ClassSelectionHolder.SetActive(c.WaitingOnClassSelection && c.Alive());
 
-        if (c.WaitingOnLevelUp > 0 || c.WaitingOnClassSelection)
+        levelUpButton.interactable = c.WaitingOnLevelup();
+
+        if (c.WaitingOnLevelup())//LevelUps > 0 || c.WaitingOnClassSelection)
         {
-            XpTextEntry.Value.text = "Level up!";
+            XpTextEntry.Value.text = "LVL up";
             XpTextEntry.FillImage.fillAmount = 1;
             levelUpButton.interactable = true;
         }
         else
         {
-            XpTextEntry.Value.text = c.Xp.ToString("F0") + "/" + Goblin.LevelCaps[lvl];
+            XpTextEntry.Value.text = c.Xp.ToString("F0") + "\n - \n" + Goblin.LevelCaps[lvl];
             XpTextEntry.FillImage.fillAmount = c.Xp / Goblin.LevelCaps[lvl];
         }
-        HealthTextEntry.Value.text = c.Health + "/" +c.HEA.GetStatMax();
+        HealthTextEntry.Value.text = c.Health + "\n - \n" + c.HEA.GetStatMax();
         HealthTextEntry.FillImage.fillAmount = c.Health / (float) c.HEA.GetStatMax();
-        HealthTextEntry.ValueHover.Stat = c.HEA;
+        //HealthTextEntry.ValueHover.Stat = c.HEA;
         ClassIcon.sprite = c.Alive() ? GameManager.GetClassImage(c.ClassType): GameManager.GetIconImage(GameManager.Icon.Dead);
         ClassIcon.GetComponent<OnValueHover>().Class = c.ClassType;
 
@@ -102,10 +104,10 @@ public class CharacterView : MenuWindow
         //TODO: update current stats instead replacing
         foreach (var stat in c.Stats.Values)
         {
-            var preEntry = lr++ % 2 == 0 ? LftTextEntry : RgtTextEntry;
+            
 
 
-            var entry = Instantiate(preEntry, preEntry.transform.parent);
+            var entry = Instantiate(StatEntry, StatEntry.transform.parent);
 
             var val = stat.GetStatMax();
 

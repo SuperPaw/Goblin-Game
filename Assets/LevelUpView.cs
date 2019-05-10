@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelUpView : MenuWindow
 {
-    public Goblin Character;
+    private Goblin character;
     //public GameObject LevelUpViewHolder;
+    public LevelController.LevelUpChoice[] Choices;
     public LevelController.LevelUpChoice SelectedChoice;
     public TextMeshProUGUI ChoiceExplanantion;
+    //public TextMeshProUGUI SelectText;
     private List<Button> generatedClassButtons = new List<Button>();
     [SerializeField] private Button LevelUpClassIcon;
+    public LevelController.LevelUpChoice[] ClassChoices;
+    public Button ConfirmButton;
 
 
     new void Awake()
@@ -24,6 +29,8 @@ public class LevelUpView : MenuWindow
     public void SetupLevelScreen(Goblin character)
     {
         if(!character) return;
+
+        ConfirmButton.interactable = false;
         
         foreach (var generatedClassButton in generatedClassButtons)
         {
@@ -33,62 +40,104 @@ public class LevelUpView : MenuWindow
 
         ViewHolder.SetActive(true);
 
-        Character = character;
+        this.character = character;
+        
+        ChoiceExplanantion.text = character.WaitingOnClassSelection ? "Select a Class": "Select level up";
 
-        if (character.WaitingOnClassSelection)
+        //TODO: use progression system instead
+        Choices = character.WaitingOnClassSelection ? ClassChoices : LevelController.GetLevelUpChoices(character.ClassType, character.LevelUps);
+
+        if (!Choices.Any())
         {
+            Debug.LogError("no Choices for level: " + (character.LevelUps + 1));
+            return;
+        }
 
-            if (generatedClassButtons == null || generatedClassButtons.Count == 0)
+        if (generatedClassButtons == null || generatedClassButtons.Count == 0)
+        {
+            generatedClassButtons = new List<Button>();
+
+            foreach (var choice in Choices)
             {
-                generatedClassButtons = new List<Button>();
+                var clBut = Instantiate(LevelUpClassIcon, LevelUpClassIcon.transform.parent);
 
-                for (Goblin.Class i = (Goblin.Class)2; i < Goblin.Class.END; i = (Goblin.Class)((int)i * 2))
+                //TODO: merge attribute and class images
+                switch (choice.Type)
                 {
-                    var clBut = Instantiate(LevelUpClassIcon, LevelUpClassIcon.transform.parent);
-
-                    clBut.image.sprite = GameManager.GetClassImage(i);
-
-                    var cl = i;
-
-                    clBut.GetComponent<OnValueHover>().Class = i;
-
-                    generatedClassButtons.Add(clBut);
-
-                    clBut.onClick.AddListener(() => SelectClass(character, cl));
-
-                    clBut.gameObject.SetActive(true);
+                    case LevelController.ChoiceType.Attribute:
+                        clBut.image.sprite = GameManager.GetAttributeImage(choice.Attribute);
+                        break;
+                    case LevelController.ChoiceType.Class:
+                        clBut.image.sprite = GameManager.GetClassImage(choice.Class);
+                        break;
+                    case LevelController.ChoiceType.Skill:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
+
+                generatedClassButtons.Add(clBut);
+
+                clBut.onClick.AddListener(() => SelectChoice(choice));
+
+                clBut.gameObject.SetActive(true);
             }
-            //ClassSelectText.text = "Select Class:";
-            LevelUpClassIcon.gameObject.SetActive(false);
         }
-        else
-        {
-            LevelUpClassIcon.gameObject.SetActive(true);
-            //ClassSelectText.text = "";
-        }
+        LevelUpClassIcon.gameObject.SetActive(false);
+        
+        //ClassSelectText.text = "";
+
     }
 
     public void SelectChoice(LevelController.LevelUpChoice c)
     {
         SelectedChoice = c;
-    }
 
-    public void ConfirmChoice()
-    {
-        Debug.Log("Selection confirmed");
-
-        switch (SelectedChoice.Type)
+        switch (c.Type)
         {
             case LevelController.ChoiceType.Attribute:
+                ChoiceExplanantion.text = GameManager.GetAttributeDescription(c.Attribute);
                 break;
             case LevelController.ChoiceType.Class:
+                ChoiceExplanantion.text = GameManager.GetClassDescription(c.Class);
                 break;
             case LevelController.ChoiceType.Skill:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        
+        ConfirmButton.interactable = true;
+    }
+
+    public void ConfirmChoice()
+    {
+        Debug.Log("Selection confirmed: "+SelectedChoice.Attribute);
+        
+
+        switch (SelectedChoice.Type)
+        {
+            case LevelController.ChoiceType.Attribute:
+                LevelUp(character,character.Stats[SelectedChoice.Attribute]);
+                break;
+            case LevelController.ChoiceType.Class:
+                SelectClass(character,SelectedChoice.Class);
+                break;
+            case LevelController.ChoiceType.Skill:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        Close();
+        
+        character.LevelUps++;
+
+        //TODO: use goblin change event
+        GoblinUIList.UpdateGoblinList();
+
+        //TODO: use a character stat change event instead.
+        CharacterView.ShowCharacter(character);
 
         ViewHolder.SetActive(false);
     }
@@ -97,13 +146,6 @@ public class LevelUpView : MenuWindow
     private void SelectClass(Goblin c, Goblin.Class cl)
     {
         c.SelectClass(cl);
-        Close();
-
-        //TODO: use goblin change event
-        GoblinUIList.UpdateGoblinList();
-
-        //TODO: use a character stat change event instead.
-        CharacterView.ShowCharacter(c);
     }
 
 
@@ -111,22 +153,6 @@ public class LevelUpView : MenuWindow
     //TODO: move to character or game manager
     private void LevelUp(Goblin gob, Character.Stat stat)
     {
-
         stat.LevelUp();
-
-        gob.WaitingOnLevelUp--;
-        //if (gob.WaitingOnLevelUp < 1)
-        //    foreach (var ob in generatedObjects)
-        //    {
-        //        var s = ob.GetComponent<StatEntry>();
-        //        if (s)
-        //        {
-        //            s.LevelUpStat.gameObject.SetActive(false);
-        //            if (s.Name.text == stat.Type.ToString())
-        //                s.Value.text = stat.GetStatMax().ToString();
-        //        }
-        //    }
-
-        GoblinUIList.UpdateGoblinList();
     }
 }

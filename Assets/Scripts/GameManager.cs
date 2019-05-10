@@ -30,9 +30,18 @@ public class GameManager : MonoBehaviour
         public Sprite Image;
         public string Description;
     }
+    [Serializable]
+    public struct AttributeImg
+    {
+        public Character.StatType Stat;
+        public Sprite Image;
+        //TODO: use this instead of on the stat
+        public string Description;
+    }
     [Header("References")]
     public IconImg[] IconImages;
     public ClassImg[] ClassImgs;
+    public AttributeImg[] AttributeImages;
 
     [Header("Game Rules")]
     public int XpOnKill = 10;
@@ -60,11 +69,25 @@ public class GameManager : MonoBehaviour
 
         return Instance.ClassImgs.First().Image;
     }
+    public static Sprite GetAttributeImage(Character.StatType type)
+    {
+        if (Instance.AttributeImages.Any(im => im.Stat == type))
+            return Instance.AttributeImages.First(im => im.Stat == type).Image;
+
+        return Instance.AttributeImages.First().Image;
+    }
 
     public static string GetClassDescription(Goblin.Class type)
     {
         if (Instance.ClassImgs.Any(im => im.ClassType == type))
             return Instance.ClassImgs.First(im => im.ClassType == type).Description;
+        return "Goblins are cool!!";
+    }
+
+    public static string GetAttributeDescription(Character.StatType type)
+    {
+        if (Instance.AttributeImages.Any(im => im.Stat == type))
+            return Instance.AttributeImages.First(im => im.Stat == type).Description;
         return "Goblins are cool!!";
     }
 

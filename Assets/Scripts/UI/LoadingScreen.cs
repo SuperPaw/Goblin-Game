@@ -1,6 +1,7 @@
 ﻿
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,10 @@ public class LoadingScreen : MonoBehaviour
     public TextMeshProUGUI Loading;
     public TextMeshProUGUI LoadingDescription;
     public MapGenerator MapGen;
+    public RectTransform[] ZoomRects;
+    private int imageStartSize;
+    public int imageEndSize;
+    public AnimationCurve ImageAnimationCurve;
     
 	void Start ()
 	{
@@ -24,6 +29,7 @@ public class LoadingScreen : MonoBehaviour
         //could load different scenes instead of just running the generate
 
         SoundController.ChangeMusic(SoundBank.Music.Menu);
+        
 
         StartCoroutine(MapGen.GenerateMap(SetLoadingText, ()=>gameObject.SetActive(false)));
         //TODO: include gobbo creation in loading
@@ -34,5 +40,12 @@ public class LoadingScreen : MonoBehaviour
     {
         Loading.text = pct + "%";
         LoadingDescription.text = descrip;
+
+        var sz = 1+ImageAnimationCurve.Evaluate((float)pct / 100);
+        
+        foreach (var rectTransform in ZoomRects)
+        {
+            rectTransform.localScale = new Vector3(sz, sz, sz);
+        }
     }
 }

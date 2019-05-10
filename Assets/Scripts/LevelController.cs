@@ -12,10 +12,17 @@ public class LevelController : MonoBehaviour
         AmbusherProgression,
         ScoutProgression;
 
+    public static LevelController Instance;
+
+    void Awake()
+    {
+        if (!Instance) Instance = this;
+    }
 
     [Serializable]
     public struct ClassLevelChoice
     {
+        public ChoiceType Type;
         public LevelUpChoice[] Choices;
     }
 
@@ -28,5 +35,10 @@ public class LevelController : MonoBehaviour
         public LevelController.ChoiceType Type;
         public Character.StatType Attribute;
         public Goblin.Class Class;
+    }
+
+    public static LevelUpChoice[] GetLevelUpChoices(Goblin.Class classType, int level)
+    {
+        return Instance.SlaveProgression[level].Choices;
     }
 }

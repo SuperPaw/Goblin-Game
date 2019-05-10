@@ -381,8 +381,12 @@ public class MapGenerator : MonoBehaviour
 
             var area = GetRandomArea();
 
-            while (area.PointOfInterest)
+            while (area.PointOfInterest | !area.MovablePositions.Any())
+            {
                 area = GetRandomArea();
+                yield return null;
+            }
+
 
             var x = i % HumanSettlementPrefab.Length;
 
