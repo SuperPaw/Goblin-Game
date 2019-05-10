@@ -74,7 +74,6 @@
     <Compile Include="Assets\Imported\Thread Ninja\Task.cs" />
     <Compile Include="Assets\Imported\Thread Ninja\TaskState.cs" />
     <Compile Include="Assets\Imported\Thread Ninja\ThreadNinjaMonoBehaviourExtensions.cs" />
-    <Compile Include="Assets\LevelUpView.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
@@ -131,10 +130,12 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Goblin.cs" />
     <Compile Include="Assets\Scripts\GoblinListEntry.cs" />
+    <Compile Include="Assets\Scripts\GreatestGoblins.cs" />
     <Compile Include="Assets\Scripts\HealtBar.cs" />
     <Compile Include="Assets\Scripts\Hidable.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\LevelController.cs" />
+    <Compile Include="Assets\Scripts\LevelUpView.cs" />
     <Compile Include="Assets\Scripts\Lootable.cs" />
     <Compile Include="Assets\Scripts\MapLocations\Area.cs" />
     <Compile Include="Assets\Scripts\MapLocations\Cave.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Assets\Scripts\UI\CharacterView.cs" />
     <Compile Include="Assets\Scripts\UI\GoblinUIList.cs" />
     <Compile Include="Assets\Scripts\UI\GrayscaleFilter.cs" />
+    <Compile Include="Assets\Scripts\UI\LevelUpChoiceEntry.cs" />
     <Compile Include="Assets\Scripts\UI\LoadingScreen.cs" />
     <Compile Include="Assets\Scripts\UI\MenuWindow.cs" />
     <Compile Include="Assets\Scripts\UI\OnValueHover.cs" />

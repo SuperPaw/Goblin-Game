@@ -254,6 +254,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  Background: {fileID: 522264548226097035}
+  StartColor: {r: 1, g: 1, b: 1, a: 1}
+  EndColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!223 &522264547562529681
 Canvas:
   m_ObjectHideFlags: 0

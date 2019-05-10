@@ -14,9 +14,16 @@ public class LoadingScreen : MonoBehaviour
     public RectTransform[] ZoomRects;
     private int imageStartSize;
     public int imageEndSize;
-    public AnimationCurve ImageAnimationCurve;
-    
-	void Start ()
+    [SerializeField]
+    private AnimationCurve ImageAnimationCurve;
+
+    [SerializeField] private Image Background;
+
+    [SerializeField] private Color StartColor;
+    [SerializeField] private Color EndColor;
+
+
+    void Start ()
 	{
 	    //yield return new WaitForFixedUpdate();
         
@@ -42,6 +49,8 @@ public class LoadingScreen : MonoBehaviour
         LoadingDescription.text = descrip;
 
         var sz = 1+ImageAnimationCurve.Evaluate((float)pct / 100);
+
+        Background.color = Color.Lerp(StartColor, EndColor, sz - 1);
         
         foreach (var rectTransform in ZoomRects)
         {

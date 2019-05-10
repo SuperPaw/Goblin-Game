@@ -1,0 +1,603 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6057858525446187769
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6057858525446187771}
+  - component: {fileID: 6057858525446187770}
+  - component: {fileID: 6057858525446187768}
+  - component: {fileID: 6057858525446187765}
+  - component: {fileID: 6057858525446187764}
+  - component: {fileID: 6057858525446187767}
+  - component: {fileID: 1904222527947742187}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6057858525446187771
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6057858525446187769}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -72.85245, y: -25.519602, z: 2295.6309}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6057858525446187770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6057858525446187769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c31ba6d6070b4a47b96fe9dd4de38da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TwotimesSyllabalChance: 2
+  RhymingSyllabalChance: 3
+  SingleSyllabalChance: 2
+  DoubleSyllabalChance: 1
+  ShortLongSyllabalChance: 2
+--- !u!114 &6057858525446187768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6057858525446187769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ead7df1dbcdd3584cbb5f67ddb5bca19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameStarted: 0
+  GamePaused: 0
+  InvincibleMode: 0
+  TurnOnOnStart:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  IconImages:
+  - IconType: 0
+    Image: {fileID: 21300000, guid: e3c0ced939ade584eb258c335d0dbea4, type: 3}
+  - IconType: 1
+    Image: {fileID: 21300000, guid: 444ae49ac92ff7948b1cdd27d275f1a3, type: 3}
+  - IconType: 3
+    Image: {fileID: 21300000, guid: e9d7252764b7746458de22437e68edd9, type: 3}
+  - IconType: 6
+    Image: {fileID: 21300000, guid: dd2938e95c1f7c84ea4c05699ff786ca, type: 3}
+  - IconType: 8
+    Image: {fileID: 21300000, guid: 1f1bfc0f692170048bb0b66eb94b5dd3, type: 3}
+  - IconType: 5
+    Image: {fileID: 21300000, guid: cb2e16dbd8e51e24e93e316eecb5d6a5, type: 3}
+  - IconType: 7
+    Image: {fileID: 21300000, guid: 1877022404ed8ba4282871b589fa597e, type: 3}
+  - IconType: 2
+    Image: {fileID: 21300000, guid: 26864bb0031ff104bb06e2adb6c3c808, type: 3}
+  - IconType: 4
+    Image: {fileID: 21300000, guid: 73d14250e314f38459ef904f64dd16eb, type: 3}
+  - IconType: 9
+    Image: {fileID: 21300000, guid: b5693b4edaf94774f969e311bdb8cb76, type: 3}
+  - IconType: 10
+    Image: {fileID: 21300000, guid: b5693b4edaf94774f969e311bdb8cb76, type: 3}
+  - IconType: 11
+    Image: {fileID: 21300000, guid: 6eef878946942cc44a7ab779000934fb, type: 3}
+  - IconType: 12
+    Image: {fileID: 21300000, guid: 1814ef9594218d947b33fb618e386da4, type: 3}
+  ClassImgs:
+  - ClassType: 1
+    Image: {fileID: 21300000, guid: 78dc59c8441d1524091a52788eda3ba1, type: 3}
+    Description: 
+  - ClassType: 2
+    Image: {fileID: 21300000, guid: 093af69e5375beb4f86c1a4915d6570e, type: 3}
+    Description: Slave never challenges the chief
+  - ClassType: 4
+    Image: {fileID: 21300000, guid: 9af384c8520f2bf41a312fa13674adb1, type: 3}
+    Description: Swarmers hit hard and less likely to flee when attacking together
+  - ClassType: 8
+    Image: {fileID: 21300000, guid: 59f0c76ad3675ff49adb4b4382e9af6a, type: 3}
+    Description: Shooters can kill stuff from far away
+  - ClassType: 16
+    Image: {fileID: 21300000, guid: 1877022404ed8ba4282871b589fa597e, type: 3}
+    Description: Ambushers are fast. Good at ambushing
+  - ClassType: 32
+    Image: {fileID: 21300000, guid: f9b08119c36400742afe7efea5d2e93d, type: 3}
+    Description: Scout can scout for enemies. To set up ambushes
+  AttributeImages:
+  - Stat: 0
+    Image: {fileID: 21300000, guid: 73c58ef9dc6db424db58515b59eb1231, type: 3}
+    Description: DAMAGE - How hard goblin hit enemy
+  - Stat: 1
+    Image: {fileID: 21300000, guid: ca4056f918578ba46a580f7bbdf24f4a, type: 3}
+    Description: AIM - How often goblin hit enemy
+  - Stat: 2
+    Image: {fileID: 21300000, guid: bcc9fdd7156fd684eb9572a9de969342, type: 3}
+    Description: COURAGE - Makes goblin not run away from big enemy
+  - Stat: 3
+    Image: {fileID: 21300000, guid: 26864bb0031ff104bb06e2adb6c3c808, type: 3}
+    Description: HEALTH
+  - Stat: 5
+    Image: {fileID: 21300000, guid: 9286577b8bb28e041ab95e0143ae31f7, type: 3}
+    Description: SMARTS - How good goblin is at finding stuff and not doing stupid
+      stuff
+  - Stat: 4
+    Image: {fileID: 21300000, guid: 1381c04e043ab2b4b99d8624ea888154, type: 3}
+    Description: SPEED - How fast goblin is
+  XpOnKill: 10
+  XpOnTeamKill: 2
+  XpOnTreasureFind: 1
+  XpOnAreaMove: 1
+--- !u!114 &6057858525446187765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6057858525446187769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1400e2789756d742a42ee1a8b9f9704, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EquipmentPrefab: {fileID: 1956440210939899579, guid: 050302e5878f1824883385dec3c41e2f,
+    type: 3}
+  PositiveAttributeAdjustmentMin: 2
+  PositiveAttributeAdjustmentMax: 3
+  NegativeAttributeAdjustment: -1
+--- !u!114 &6057858525446187764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6057858525446187769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e530a6300d6fbc42adde866af5b7f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6057858525446187767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6057858525446187769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cae30d4febed2c458a3af800d7789ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SlaveProgression:
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  SwarmerProgression:
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 2
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 2
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 2
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 2
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 2
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 2
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 2
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 2
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 2
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 2
+      Class: 0
+  ShooterProgression:
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  AmbusherProgression:
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  ScoutProgression:
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 5
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 5
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 5
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 5
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 5
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 5
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 5
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 5
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 5
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 5
+      Class: 0
+    - Type: 0
+      Attribute: 1
+      Class: 0
+--- !u!114 &1904222527947742187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6057858525446187769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1d667eb63d39384f853e599cb82aafd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

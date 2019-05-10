@@ -10,14 +10,20 @@ public class LevelUpView : MenuWindow
 {
     private Goblin character;
     //public GameObject LevelUpViewHolder;
-    public LevelController.LevelUpChoice[] Choices;
-    public LevelController.LevelUpChoice SelectedChoice;
-    public TextMeshProUGUI ChoiceExplanantion;
+    private LevelController.LevelUpChoice[] Choices;
+    private LevelController.LevelUpChoice SelectedChoice;
+    [SerializeField]
+    private TextMeshProUGUI ChoiceExplanantion;
     //public TextMeshProUGUI SelectText;
-    private List<Button> generatedClassButtons = new List<Button>();
-    [SerializeField] private Button LevelUpClassIcon;
-    public LevelController.LevelUpChoice[] ClassChoices;
-    public Button ConfirmButton;
+    private List<LevelUpChoiceEntry> generatedChoiceEntries = new List<LevelUpChoiceEntry>();
+    [SerializeField]
+    private LevelUpChoiceEntry levelUpChoiceEntry;
+    [SerializeField]
+    private LevelController.LevelUpChoice[] ClassChoices;
+    [SerializeField]
+    private Button ConfirmButton;
+    private Vector3 normalScale = Vector3.one;
+    private Vector3 HighlightScale = Vector3.one * 1.3f;
 
 
     new void Awake()
@@ -32,11 +38,11 @@ public class LevelUpView : MenuWindow
 
         ConfirmButton.interactable = false;
         
-        foreach (var generatedClassButton in generatedClassButtons)
+        foreach (var generatedClassButton in generatedChoiceEntries)
         {
             Destroy(generatedClassButton.gameObject);
         }
-        generatedClassButtons.Clear();
+        generatedChoiceEntries.Clear();
 
         ViewHolder.SetActive(true);
 
@@ -53,22 +59,24 @@ public class LevelUpView : MenuWindow
             return;
         }
 
-        if (generatedClassButtons == null || generatedClassButtons.Count == 0)
+        if (generatedChoiceEntries == null || generatedChoiceEntries.Count == 0)
         {
-            generatedClassButtons = new List<Button>();
+            generatedChoiceEntries = new List<LevelUpChoiceEntry>();
 
             foreach (var choice in Choices)
             {
-                var clBut = Instantiate(LevelUpClassIcon, LevelUpClassIcon.transform.parent);
+                var entry = Instantiate(levelUpChoiceEntry, levelUpChoiceEntry.transform.parent);
+
+                entry.LevelUpChoice = choice;
 
                 //TODO: merge attribute and class images
                 switch (choice.Type)
                 {
                     case LevelController.ChoiceType.Attribute:
-                        clBut.image.sprite = GameManager.GetAttributeImage(choice.Attribute);
+                        entry.Image.sprite = GameManager.GetAttributeImage(choice.Attribute);
                         break;
                     case LevelController.ChoiceType.Class:
-                        clBut.image.sprite = GameManager.GetClassImage(choice.Class);
+                        entry.Image.sprite = GameManager.GetClassImage(choice.Class);
                         break;
                     case LevelController.ChoiceType.Skill:
                         break;
@@ -76,39 +84,47 @@ public class LevelUpView : MenuWindow
                         throw new ArgumentOutOfRangeException();
                 }
 
-                generatedClassButtons.Add(clBut);
+                generatedChoiceEntries.Add(entry);
 
-                clBut.onClick.AddListener(() => SelectChoice(choice));
+                entry.Button.onClick.AddListener(() => SelectChoice(entry));
 
-                clBut.gameObject.SetActive(true);
+                entry.gameObject.SetActive(true);
             }
         }
-        LevelUpClassIcon.gameObject.SetActive(false);
+        levelUpChoiceEntry.gameObject.SetActive(false);
         
         //ClassSelectText.text = "";
 
     }
 
-    public void SelectChoice(LevelController.LevelUpChoice c)
+    public void SelectChoice(LevelUpChoiceEntry c)
     {
-        SelectedChoice = c;
+        SelectedChoice = c.LevelUpChoice;
 
-        switch (c.Type)
+        switch (SelectedChoice.Type)
         {
             case LevelController.ChoiceType.Attribute:
-                ChoiceExplanantion.text = GameManager.GetAttributeDescription(c.Attribute);
+                ChoiceExplanantion.text = GameManager.GetAttributeDescription(SelectedChoice.Attribute);
                 break;
             case LevelController.ChoiceType.Class:
-                ChoiceExplanantion.text = GameManager.GetClassDescription(c.Class);
+                ChoiceExplanantion.text = GameManager.GetClassDescription(SelectedChoice.Class);
                 break;
             case LevelController.ChoiceType.Skill:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
+
+        foreach (var g in generatedChoiceEntries.Where(gc => gc != c))
+        {
+            g.Image.rectTransform.localScale = normalScale;
+        }
+
+        c.Image.rectTransform.localScale = HighlightScale;
         
         ConfirmButton.interactable = true;
     }
+    
 
     public void ConfirmChoice()
     {
