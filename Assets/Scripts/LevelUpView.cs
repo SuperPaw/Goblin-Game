@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class LevelUpView : MenuWindow
 {
     private Goblin character;
-    //public GameObject LevelUpViewHolder;
     private LevelController.LevelUpChoice[] Choices;
     private LevelController.LevelUpChoice SelectedChoice;
     [SerializeField]

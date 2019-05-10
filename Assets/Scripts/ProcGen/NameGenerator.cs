@@ -20,7 +20,7 @@ public class NameGenerator : MonoBehaviour
     private static string[] surNameCompliments = new[]
     {
         "pretty", "strong", "great", "green", "loud", "smart", "small", "sneaky", "beautiful", "many-teethed", "fierce",
-        "scarred",
+        "scarred", "half", "stabby",
         "immortal", "dirty", "hungry", "muddy", "heavy", "nasty", "greasy", "greedy", "sharp", "big", "good", "smelly",
         "silent", "bad", "dark", "bright"
     };
