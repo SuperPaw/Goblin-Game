@@ -2985,8 +2985,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f367bc6751787434fbe6a314f8bf8281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HolderGameObject: {fileID: 2829638507195367860}
-  CharacterRace: 1
+  AgentVelocity: 0
+  DesiredVelocity: 0
+  HasPath: 0
+  PathStale: 0
+  IsOnNavMesh: 0
   StickToRoad: 1
   HasEquipment: 1
   Voice: {fileID: 0}
@@ -2996,6 +2999,9 @@ MonoBehaviour:
   MovementAudio: {fileID: 0}
   SurprisedTime: 4
   SurprisedStartTime: 0
+  CharacterRace: 1
+  IrritationMeter: 0
+  IrritaionTolerance: 100
   State: 0
   LootTarget: {fileID: 0}
   Team: {fileID: 0}
@@ -3013,12 +3019,14 @@ MonoBehaviour:
   SpeMax: 4
   SmaMin: 5
   SmaMax: 5
+  WalkingSpeed: 3
   idleDistance: 50
   Walking: 0
   AttackRange: 0
   actionInProgress: 0
   Target: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 0}
+  HolderGameObject: {fileID: 2829638507195367860}
   EquipmentManager: {fileID: 0}
   _health: 10
   HealtBar: {fileID: 0}
@@ -3033,8 +3041,6 @@ MonoBehaviour:
   Material: {fileID: 0}
   Animator: {fileID: 2001377320644695465}
   SpeedAnimationThreshold: 0
-  IrritationMeter: 0
-  IrritaionTolerance: 100
   provokeDistance: 10
   InArea: {fileID: 0}
 --- !u!54 &54649803752173894

@@ -54,8 +54,6 @@ MonoBehaviour:
   HasPath: 0
   PathStale: 0
   IsOnNavMesh: 0
-  HolderGameObject: {fileID: 1218143795376610366}
-  CharacterRace: 0
   StickToRoad: 0
   HasEquipment: 0
   Voice: {fileID: 993784395133949661}
@@ -65,6 +63,9 @@ MonoBehaviour:
   MovementAudio: {fileID: 0}
   SurprisedTime: 4
   SurprisedStartTime: 0
+  CharacterRace: 0
+  IrritationMeter: 0
+  IrritaionTolerance: 50
   State: 0
   LootTarget: {fileID: 0}
   Team: {fileID: 0}
@@ -76,18 +77,20 @@ MonoBehaviour:
   AttMax: 5
   CouMin: 2
   CouMax: 5
-  HeaMin: 5
-  HeaMax: 15
-  SpeMin: 2
-  SpeMax: 5
+  HeaMin: 6
+  HeaMax: 11
+  SpeMin: 4
+  SpeMax: 4
   SmaMin: 2
   SmaMax: 5
+  WalkingSpeed: 3
   idleDistance: 0
   Walking: 1
   AttackRange: 1
   actionInProgress: 0
   Target: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 4600599033896219243}
+  HolderGameObject: {fileID: 1218143795376610366}
   EquipmentManager: {fileID: 8600238114990287779}
   _health: 5
   HealtBar: {fileID: 8627913087637334291}
@@ -102,13 +105,13 @@ MonoBehaviour:
   Material: {fileID: 0}
   Animator: {fileID: 9200039782062432997}
   SpeedAnimationThreshold: 0.1
-  IrritationMeter: 0
-  IrritaionTolerance: 50
   provokeDistance: 10
   InArea: {fileID: 0}
   Warrens: {fileID: 0}
   ChiefImage: {fileID: 114764703591676486}
   StateImage: {fileID: 114716199431146400}
+  ProvokeTarget: {fileID: 0}
+  ClassType: 1
   CurrentLevel: 1
   ProvokeScaredCurve:
     serializedVersion: 2
@@ -135,10 +138,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   particles: {fileID: 198664184989041772}
-  WaitingOnLevelUp: 0
+  LevelUps: 1
   WaitingOnClassSelection: 0
-  ProvokeTarget: {fileID: 0}
-  ClassType: 1
 --- !u!195 &4600599033896219243
 NavMeshAgent:
   m_ObjectHideFlags: 0

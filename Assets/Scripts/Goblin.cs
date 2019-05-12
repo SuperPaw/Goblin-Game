@@ -20,6 +20,20 @@ public class Goblin : Character
 
     public Image StateImage;
 
+    public Character ProvokeTarget;
+
+    [Flags]
+    public enum Class
+    {
+        NoClass = 0,
+        Goblin = 1, Slave = 2, Swarmer = 4, Shooter = 8, Ambusher = 16, Scout = 32,
+        END = 64,
+        ALL = Goblin | Slave | Swarmer | Shooter | Ambusher | Scout
+    }
+
+    public Class ClassType;
+
+
     [Header("Levelling")]
     public int CurrentLevel = GetLevel(0);
     public static int[] LevelCaps = { 0, 10, 20, 30, 50, 80, 130, 210, 340, 550, 890, 20000 };
@@ -74,18 +88,6 @@ public class Goblin : Character
         }
     }
 
-    public Character ProvokeTarget;
-
-    [Flags]
-    public enum Class
-    {
-        NoClass = 0,
-        Goblin = 1, Slave = 2, Swarmer = 4, Shooter = 8, Ambusher = 16, Scout = 32,
-        END = 64,
-        ALL = Goblin | Slave | Swarmer |Shooter |Ambusher | Scout
-    }
-
-    public Class ClassType;
         
 
     new void Start()

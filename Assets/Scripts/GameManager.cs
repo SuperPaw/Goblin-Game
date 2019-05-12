@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 public class GameManager : MonoBehaviour
@@ -42,6 +44,8 @@ public class GameManager : MonoBehaviour
     public IconImg[] IconImages;
     public ClassImg[] ClassImgs;
     public AttributeImg[] AttributeImages;
+    public Image BlackscreenImage;
+    public GameObject HighScoreScreen;
 
     [Header("Game Rules")]
     public int XpOnKill = 10;
@@ -138,6 +142,8 @@ public class GameManager : MonoBehaviour
         Instance.GameStarted = false;
 
         SoundController.PlayGameLoss();
+
+        Instance.StartCoroutine(Instance.FadeToHighScoreRoutine());
     }
 
     internal static void StartGame()
@@ -176,5 +182,25 @@ public class GameManager : MonoBehaviour
     {
         Instance.GamePaused = false;
         Time.timeScale = 1f;
+    }
+
+    public IEnumerator FadeToHighScoreRoutine()
+    {
+        var start = Time.time;
+        var duration = 4f;
+        var end = start + duration;
+
+        var endColor = BlackscreenImage.color;
+        var startColor = new Color(0,0,0,0);
+
+        BlackscreenImage.gameObject.SetActive(true);
+
+        while (Time.time < end)
+        {
+            BlackscreenImage.color = Color.Lerp(startColor, endColor, (Time.time - start) / duration);
+            yield return new WaitForFixedUpdate();
+        }
+
+        HighScoreScreen.gameObject.SetActive(true);
     }
 }

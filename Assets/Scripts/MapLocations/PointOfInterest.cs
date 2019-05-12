@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public abstract class PointOfInterest : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public abstract class PointOfInterest : MonoBehaviour
     public Area InArea;
     public bool HasBeenAttacked;
     public Sprite IconSprite;
+
+    public Poi PoiType;
+
+    public enum Poi { BigStone,Cave,Warrens,HumanFarm,HumanFort,Withchut,
+        Count }
 
     public IEnumerator Spawning(PlayerTeam team)
     {

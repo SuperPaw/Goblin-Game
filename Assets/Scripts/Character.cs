@@ -33,11 +33,7 @@ public abstract class Character : MonoBehaviour
         Goblin, Human, Spider, Zombie, Ogre, Wolf,
         NoRace
     }
-
-    public GameObject HolderGameObject;
-
-    public Race CharacterRace;
-
+    
     [Header("Enemy specific")]
     public bool StickToRoad;
     public bool HasEquipment;
@@ -52,15 +48,20 @@ public abstract class Character : MonoBehaviour
     public float ShoutTime = 2f;
     public AudioSource MovementAudio;
 
+    [Header("AI Values")]
     public float SurprisedTime = 4;
     public float SurprisedStartTime;
 
+    public Race CharacterRace;
+
+    public int IrritationMeter = 0;
+    public int IrritaionTolerance = 50;
+
+
     public CharacterState State;
     
-
     public class Stat
     {
-
         [Serializable]
         public struct StatMod
         {
@@ -131,9 +132,8 @@ public abstract class Character : MonoBehaviour
         , COUNT
     }
 
-    [Header("Stats")]
-
     //TODO: use a max for stats;
+    [Header("Stats")]
     public Stat DMG;
     public Stat AIM;
     public Stat COU;
@@ -160,7 +160,7 @@ public abstract class Character : MonoBehaviour
 
 
     [Header("Movement")]
-
+    public int WalkingSpeed = 2;
     public int idleDistance;
     public bool Walking;
     public float AttackRange;
@@ -180,6 +180,7 @@ public abstract class Character : MonoBehaviour
 
     public Vector3 Target;
     public NavMeshAgent navMeshAgent;
+    public GameObject HolderGameObject;
 
     public EquipmentManager EquipmentManager;
     public Dictionary<Equipment.EquipLocations,Equipment> Equipped = new Dictionary<Equipment.EquipLocations, Equipment>();
@@ -305,9 +306,6 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    public int IrritationMeter = 0;
-    public int IrritaionTolerance = 50;
-
     public int provokeDistance = 10;
 
     public Area InArea;
@@ -392,7 +390,10 @@ public abstract class Character : MonoBehaviour
         else if(InArea && !InArea.Visible() && MovementAudio && MovementAudio.isPlaying)
             MovementAudio.Stop();
 
-        navMeshAgent.speed = SPE.GetStatMax() / 2f;
+        if(SPE.GetStatMax() < 1)
+            Debug.LogWarning("Speed is 0");
+
+        navMeshAgent.speed = Walking ? Mathf.Min(WalkingSpeed,SPE.GetStatMax())/2f : SPE.GetStatMax() / 2f;
 
         DesiredVelocity = navMeshAgent.desiredVelocity.sqrMagnitude;
         AgentVelocity = navMeshAgent.velocity.sqrMagnitude;
@@ -512,6 +513,8 @@ public abstract class Character : MonoBehaviour
             State = newState;
 
         actionInProgress = false;
+
+        Walking = State == CharacterState.Travelling || State == CharacterState.Idling;
 
         if (State == CharacterState.Attacking)
         {
@@ -817,8 +820,7 @@ public abstract class Character : MonoBehaviour
                     }
 
                     navMeshAgent.SetDestination(dest);//new Vector3(Random.Range(-idleDistance, idleDistance), 0,Random.Range(-idleDistance, idleDistance)));
-
-                    Walking = Random.value < 0.75f;
+                    
                 }
                 //TODO: use a different method for activity selection than else if
                 else if (Random.value < 0.0025f && this as Goblin && Team
@@ -890,8 +892,7 @@ public abstract class Character : MonoBehaviour
                 {
                     fleeingToArea = InArea.GetClosestNeighbour(transform.position,StickToRoad);
                     navMeshAgent.SetDestination(fleeingToArea.GetRandomPosInArea());
-
-                    Walking = false;
+                    
                     actionInProgress = true;
                 }
                 break;

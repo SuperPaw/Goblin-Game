@@ -40,6 +40,16 @@ public class PlayerController : MonoBehaviour
         public SoundBank.GoblinSound GoblinSound;
     }
 
+
+    [Serializable]
+    public struct LocationReaction
+    {
+        public PointOfInterest Order;
+        //TODO: create goblin speech struct for linking all goblin shouts with sounds
+        public string Speech;
+        public SoundBank.GoblinSound GoblinSound;
+    }
+
     public OrderType[] Orders;
 
     public OrderType MoveOrder;
