@@ -603,3 +603,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d667eb63d39384f853e599cb82aafd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HighScores:
+  - Name: Ib Halfheart
+    Kills: 10
+    Treasures: 3
+    GoblinsInTribe: 5
+    AreasExplored: 10
+    LeaderLevel: 6
+    EquipmentFound: 3
+  - Name: Kiki-jiki the Mirror-breaker
+    Kills: 2
+    Treasures: 1
+    GoblinsInTribe: 2
+    AreasExplored: 1
+    LeaderLevel: 2
+    EquipmentFound: 0
+  - Name: Grenzo Havoc-Raiser
+    Kills: 4
+    Treasures: 3
+    GoblinsInTribe: 2
+    AreasExplored: 1
+    LeaderLevel: 6
+    EquipmentFound: 2
+  ActiveScore:
+    Name: 
+    Kills: 0
+    Treasures: 0
+    GoblinsInTribe: 0
+    AreasExplored: 0
+    LeaderLevel: 0
+    EquipmentFound: 0
+  HighScoreEntry: {fileID: 0}

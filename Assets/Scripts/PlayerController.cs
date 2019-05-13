@@ -580,29 +580,29 @@ public class PlayerController : MonoBehaviour
     //TODO: seperate team stuff and interface into two classes
     internal static void BuyFood(int amount, int price)
     {
-        Instance.Team.Food += amount;
-        Instance.Team.Treasure -= price;
+        Instance.Team.OnFoodFound.Invoke(amount);
+        Instance.Team.OnTreasureFound.Invoke(-price);
 
         //TODO: play caching
     }
 
     internal static void SacTreasure(int amount)
     {
-        Instance.Team.Treasure -= amount;
+        Instance.Team.OnTreasureFound.Invoke(-amount);
 
         //TODO: effect
     }
 
     internal static void SacFood(int v)
     {
-        Instance.Team.Food -= v;
+        Instance.Team.OnFoodFound.Invoke(-v);
 
         //TODO: effect
     }
 
     internal static void StealTreasure(Monument stone)
     {
-        Instance.Team.Treasure += stone.Treasure;
+        Instance.Team.OnTreasureFound.Invoke(stone.Treasure);
         stone.Treasure = 0;
 
         SoundController.PlayStinger(SoundBank.Stinger.Sneaking);
@@ -616,8 +616,8 @@ public class PlayerController : MonoBehaviour
 
     internal static void SellFood(int amount, int price)
     {
-        Instance.Team.Food -= amount;
-        Instance.Team.Treasure += price;
+        Instance.Team.OnFoodFound.Invoke(-price); 
+        Instance.Team.OnTreasureFound.Invoke(amount);
 
         //TODO: play caching
     }
@@ -625,7 +625,7 @@ public class PlayerController : MonoBehaviour
     internal static void SellGoblin(Goblin goblin, int price, GoblinWarrens newVillage)
     {
         Instance.Team.Members.Remove(goblin);
-        Instance.Team.Treasure += price;
+        Instance.Team.OnTreasureFound.Invoke(price);
 
         GoblinUIList.UpdateGoblinList();
 
@@ -661,12 +661,12 @@ public class PlayerController : MonoBehaviour
 
     internal static void BuyGoblin(Goblin goblin, int price, GoblinWarrens oldVillage)
     {
-        Instance.Team.Treasure -= price;
+        Instance.Team.OnTreasureFound.Invoke(-price); 
 
         goblin.Team = Instance.Team;
         
         //TODO: use method for these
-        Instance.Team.Members.Add(goblin);
+        Instance.Team.AddMember(goblin);
         goblin.transform.parent = Instance.Team.transform;
         goblin.tag = "Player";
 

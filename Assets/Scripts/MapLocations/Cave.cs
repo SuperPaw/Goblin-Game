@@ -10,7 +10,7 @@ public class Cave : PointOfInterest
 
     public void LureMonster(PlayerTeam team, int food)
     {
-        team.Food -= food;
+        team.OnFoodFound.Invoke(-food);
 
         CaveView.CloseCave();
 
@@ -43,7 +43,7 @@ public class Cave : PointOfInterest
         if (Random.Range(0, g.SMA.GetStatMax()) >= Difficulty)
         {
             g.Xp += 10;
-            g.Team.Treasure += Prize;
+            g.Team.OnTreasureFound.Invoke(Prize);
             PopUpText.ShowText(g.name + " found many goblin treasures in Cave!");
             g.gameObject.SetActive(true);
             g.ChangeState(Character.CharacterState.Idling,true);

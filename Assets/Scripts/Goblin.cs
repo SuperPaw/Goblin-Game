@@ -196,7 +196,7 @@ public class Goblin : Character
             if (equipment && !equipment.IsUsableby(this))
             {
                 RemoveEquipment(equipment);
-                Team.EquipmentFound(equipment,this);
+                Team.OnEquipmentFound.Invoke(equipment,this);
             }
         }
     }

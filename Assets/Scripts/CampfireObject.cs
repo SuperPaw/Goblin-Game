@@ -21,7 +21,7 @@ public class CampfireObject : MonoBehaviour
         var MaxEatPrGob = 4;
 
 
-        Team.Food -= Mathf.Min(Team.Food, Team.Members.Count * MaxEatPrGob);
+        Team.OnFoodFound.Invoke(-Mathf.Min(Team.Food, Team.Members.Count * MaxEatPrGob));
 
         Sun.Night();
 

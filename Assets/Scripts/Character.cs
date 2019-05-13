@@ -728,7 +728,7 @@ public abstract class Character : MonoBehaviour
                 {
                     ((Goblin) this).Xp += GameManager.XpKill();
                     if (Team)
-                        Team.AddXp(GameManager.XpTeamKill());
+                        Team.OnTeamKill.Invoke();
                     (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
                 }
 
@@ -957,13 +957,13 @@ public abstract class Character : MonoBehaviour
                     {
                         (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
                         PopUpText.ShowText(name + " found " + LootTarget.Loot);
-                        Team.Treasure++;
+                        Team.OnTreasureFound.Invoke(1);
                     }
                     if (LootTarget.ContainsFood)
                     {
                         (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
                         PopUpText.ShowText(name + " found " + LootTarget.Food);
-                        Team.Food += 5;
+                        Team.OnFoodFound.Invoke(5);
                     }
                     if(this as Goblin)
                         foreach (var equipment in LootTarget.EquipmentLoot)
@@ -972,7 +972,7 @@ public abstract class Character : MonoBehaviour
                             (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
                             PopUpText.ShowText(name + " found " + equipment.name);
                             if (Team && Team.Members.Count > 1)
-                                Team.EquipmentFound(equipment,this as Goblin);
+                                Team.OnEquipmentFound.Invoke(equipment,this as Goblin);
                             else
                                 Equip(equipment);
                         }

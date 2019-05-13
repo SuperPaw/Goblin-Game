@@ -201,6 +201,8 @@ public class GameManager : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+        GreatestGoblins.ShowHighscores();
+        //TODO: move to above method
         HighScoreScreen.gameObject.SetActive(true);
     }
 }

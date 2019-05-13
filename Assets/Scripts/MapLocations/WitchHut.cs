@@ -14,20 +14,21 @@ public class WitchHut : PointOfInterest
     public void PayToHeal(int i, PlayerTeam team)
     {
         team.Members.ForEach(g=>g.Heal());
-        team.Treasure -= i;
+        team.OnTreasureFound.Invoke(i);
+        
     }
 
     public void BuyStaff(int amount, PlayerTeam team)
     {
-        team.EquipmentFound(EquipmentGen.GetEquipment(Equipment.EquipmentType.Stick),team.Leader);
+        team.OnEquipmentFound.Invoke(EquipmentGen.GetEquipment(Equipment.EquipmentType.Stick),team.Leader);
 
-        team.Treasure -= amount;
+        team.OnTreasureFound.Invoke(- amount);
     }
 
     public void BuySkull(int amount, PlayerTeam team)
     {
-        team.EquipmentFound(EquipmentGen.GetEquipment(Equipment.EquipmentType.Skull), team.Leader);
+        team.OnEquipmentFound.Invoke(EquipmentGen.GetEquipment(Equipment.EquipmentType.Skull), team.Leader);
 
-        team.Treasure -= amount;
+        team.OnTreasureFound.Invoke(-amount);
     }
 }

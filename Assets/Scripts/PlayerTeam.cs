@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class PlayerTeam : MonoBehaviour
 {
+    //Make private to control add and remove events
     public List<Goblin> Members;
     private Goblin _leader;
     
@@ -22,9 +24,18 @@ public class PlayerTeam : MonoBehaviour
             if (value != _leader)
             {
                 _leader = value;
-                _leader.name = "Chief " + _leader.name + NameGenerator.GetSurName();
+                do
+                {
+                    _leader.name = "Chief " + _leader.name + NameGenerator.GetSurName();
+                } while (GreatestGoblins.ScoresContainName(_leader.name)); //TODO: check that this works
+
                 PopUpText.ShowText(_leader.name +" is new chief!");
+
+                //TODO: use event instead of having all this here
+                GreatestGoblins.NewLeader(_leader);
+
                 _leader.Xp += 5;
+
                 PlayerController.UpdateFog();
             }
             value = _leader;
@@ -41,8 +52,8 @@ public class PlayerTeam : MonoBehaviour
     public TextMeshProUGUI TreasureText;
     public TextMeshProUGUI FoodText;
     //TODO: create triggers for when these change, so they can be highlighted for a while
-    public int Treasure = 0;
-    public int Food = 10;
+    public int Treasure { get; private set; }
+    public int Food { get; private set; }
 
     public Goblin Challenger;
     private bool updatedListeners;
@@ -52,12 +63,24 @@ public class PlayerTeam : MonoBehaviour
 
     public CampfireObject Campfire;
     public CampfireObject CampfirePrefab;
-    
+
+    //Events
+    //TODO: use these properly
+    public UnityEvent OnTeamKill = new UnityEvent();
+    public UnityEvent OnMemberAdded = new UnityEvent();
+    public StuffFoundEvent OnTreasureFound = new StuffFoundEvent();
+    public EquipmentFoundEvent OnEquipmentFound = new EquipmentFoundEvent();
+    public StuffFoundEvent OnFoodFound = new StuffFoundEvent();
+    public UnityEvent OnBattleWon = new UnityEvent();
+
+    public class StuffFoundEvent : UnityEvent<int> { }
+    public class EquipmentFoundEvent : UnityEvent<Equipment,Goblin> { }
 
     // Use this for initialization
     public void Initialize (List<Goblin> members)
     {
-
+        Treasure = 0;
+        Food = 10;
         Members = members;
         
         if (Members.Count == 0) Members = GetComponentsInChildren<Goblin>().ToList();
@@ -66,22 +89,50 @@ public class PlayerTeam : MonoBehaviour
         {
             character.Team = this;
 
-            if (character.OnDeath == null) continue;
-            character.OnDeath.AddListener(MemberDied);
+            character.OnDeath?.AddListener(MemberDied);
         }
+
+        OnTeamKill.AddListener(TeamKill);
+        OnEquipmentFound.AddListener(EquipmentFound);
+        OnTreasureFound.AddListener(TreasureChange);
+        OnFoodFound.AddListener(FoodChange);
+
+        UpdateFoodAndTreasure();
 
         if (!Leader)
             Leader = Members.First();
 
     }
-    
+
+    private void FoodChange(int i)
+    {
+        Food += i;
+        UpdateFoodAndTreasure();
+    }
+
+    private void TreasureChange(int i)
+    {
+        Food += i;
+        UpdateFoodAndTreasure();
+    }
+
+    private void UpdateFoodAndTreasure()
+    {
+        TreasureText.text = "Goblin TreasurES: " + Treasure;
+        FoodText.text = "FOod: " + Food;
+    }
+
+    private void TeamKill()
+    {
+        AddXp(GameManager.XpTeamKill());
+    }
+
     protected void FixedUpdate()
     {
         if (!GameManager.Instance.GameStarted)
             return;
 
-        TreasureText.text = "Goblin TreasurES: " + Treasure;
-        FoodText.text = "FOod: " + Food;
+        //TODO: use methods for this
 
         if (Leader.InArea.AnyEnemies() &&
             Members.Any(g => g.InArea == Leader.InArea && (g.Attacking() || g.Fleeing())))
@@ -107,10 +158,14 @@ public class PlayerTeam : MonoBehaviour
         }
     }
 
-    
+
+    public void AddMember(Goblin g)
+    {
+        Members.Add(g);
+        OnMemberAdded.Invoke();
+    }
 
     #region Orders
-    
 
     public void Move(Area a )
     {
@@ -373,7 +428,7 @@ public class PlayerTeam : MonoBehaviour
         {
             oldLeader.InArea.RemoveFogOfWar(false);
         }
-
+        
         GoblinUIList.UpdateGoblinList();
     }
 
@@ -386,7 +441,7 @@ public class PlayerTeam : MonoBehaviour
         }
     }
 
-    public void EquipmentFound(Equipment equipment, Goblin finder)
+    private void EquipmentFound(Equipment equipment, Goblin finder)
     {
         List<PlayerChoice.ChoiceOption> options = new List<PlayerChoice.ChoiceOption>();
 
