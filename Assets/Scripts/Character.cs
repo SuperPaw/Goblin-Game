@@ -286,6 +286,7 @@ public abstract class Character : MonoBehaviour
     private const string RANGED_ATTACK_ANIMATION_BOOL = "ArcherAttack";
     private const string MOVE_ANIMATION_BOOL = "Walking";
     private const string IDLE_ANIMATION_BOOL = "Idling";
+    private const string RUN_ANIMATION_BOOL = "Running";
 
 
     private Collider2D coll;
@@ -471,7 +472,7 @@ public abstract class Character : MonoBehaviour
         }
         else if (navMeshAgent.desiredVelocity.sqrMagnitude > SpeedAnimationThreshold)
         {
-            Animate(MOVE_ANIMATION_BOOL);
+            Animate(Walking ?MOVE_ANIMATION_BOOL: RUN_ANIMATION_BOOL);
         }
         else
         {

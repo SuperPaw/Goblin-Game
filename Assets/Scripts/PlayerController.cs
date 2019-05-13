@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
         public Shout[] GoblinShouts;
     }
 
-    public enum DynamicState { Idle, ChiefBattle, FoundStuff, Mocking}
+    public enum DynamicState { Idle, ChiefBattleCheer, FoundStuff, Mocking, ChallengingChief}
 
     [Header("Shouts")]
     public OrderType[] Orders;

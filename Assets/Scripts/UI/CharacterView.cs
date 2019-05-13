@@ -64,6 +64,8 @@ public class CharacterView : MenuWindow
     {
         Open();
 
+        levelUpScreen.Close();
+
         character = c;
 
         PlayerController.FollowGoblin = c;
