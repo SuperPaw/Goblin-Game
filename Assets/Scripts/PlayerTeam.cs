@@ -249,6 +249,7 @@ public class PlayerTeam : MonoBehaviour
 
         //while (Challenger && Challenger.Alive() && Leader.Alive())
         
+        Challenger.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.ChallengingChief),true);
 
         Debug.Log("Setting up options");
 
@@ -276,6 +277,8 @@ public class PlayerTeam : MonoBehaviour
                 goblin.navMeshAgent.SetDestination(fightPos + rndDirection);
             }
         }
+
+        yield return new WaitForSeconds(2f);
 
         //CreateChoice
 

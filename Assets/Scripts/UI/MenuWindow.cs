@@ -38,6 +38,8 @@ public abstract class MenuWindow : MonoBehaviour
 
     public void Close()
     {
+        //Debug.Log("Closing view: " +Type);
+
         ViewHolder.SetActive(false);
         OpenWindows[Type] = false;
 

@@ -937,7 +937,7 @@ public abstract class Character : MonoBehaviour
                     if (Vector3.Distance(transform.position, Team.Challenger.transform.position) < 3f && Team.Challenger != this && Team.Leader != this)
                     {
                         //cheer
-                        (this as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.ChiefBattle));
+                        (this as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.ChiefBattleCheer));
 
                         navMeshAgent.ResetPath();
                     }

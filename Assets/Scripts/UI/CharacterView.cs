@@ -16,15 +16,14 @@ public class CharacterView : MenuWindow
     public TextMeshProUGUI EquipmentInfo;
     //public TextMeshProUGUI ClassSelectText;
     //public GameObject ClassSelectionHolder;
-    public GameObject LevelUpScreenHolder;
     public Image ClassIcon;
     private static CharacterView Instance;
     private Goblin character;
     private readonly List<GameObject> generatedObjects = new List<GameObject>(10);
     [SerializeField]
     private Button levelUpButton;
-
-    [SerializeField] private LevelUpView levelUpScreen;
+    [SerializeField]
+    private LevelUpView levelUpScreen;
 
     new void Awake()
     {
@@ -40,7 +39,6 @@ public class CharacterView : MenuWindow
     private void OpenLevelUp()
     {
         levelUpScreen.SetupLevelScreen(character);
-
     }
 
     public static void ShowCharacter(Goblin c)

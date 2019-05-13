@@ -35,6 +35,8 @@ public class LevelUpView : MenuWindow
     {
         if(!character) return;
 
+        Open();
+        
         ConfirmButton.interactable = false;
         
         foreach (var generatedClassButton in generatedChoiceEntries)
@@ -42,8 +44,6 @@ public class LevelUpView : MenuWindow
             Destroy(generatedClassButton.gameObject);
         }
         generatedChoiceEntries.Clear();
-
-        ViewHolder.SetActive(true);
 
         this.character = character;
         
@@ -91,8 +91,10 @@ public class LevelUpView : MenuWindow
             }
         }
         levelUpChoiceEntry.gameObject.SetActive(false);
-        
-        //ClassSelectText.text = "";
+
+
+        //ViewHolder.SetActive(true);
+
 
     }
 
@@ -154,6 +156,8 @@ public class LevelUpView : MenuWindow
         //TODO: use a character stat change event instead.
         CharacterView.ShowCharacter(character);
 
+
+        Debug.Log("Closing level view");
         ViewHolder.SetActive(false);
     }
 

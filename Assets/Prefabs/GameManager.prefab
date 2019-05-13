@@ -131,14 +131,14 @@ MonoBehaviour:
     Description: COURAGE - Makes goblin not run away from big enemy
   - Stat: 3
     Image: {fileID: 21300000, guid: 26864bb0031ff104bb06e2adb6c3c808, type: 3}
-    Description: HEALTH
+    Description: HEALTH - How much damage goblin can take
   - Stat: 5
     Image: {fileID: 21300000, guid: 9286577b8bb28e041ab95e0143ae31f7, type: 3}
     Description: SMARTS - How good goblin is at finding stuff and not doing stupid
       stuff
   - Stat: 4
     Image: {fileID: 21300000, guid: 1381c04e043ab2b4b99d8624ea888154, type: 3}
-    Description: SPEED - How fast goblin is
+    Description: SPEED - How fast goblin run
   BlackscreenImage: {fileID: 0}
   HighScoreScreen: {fileID: 0}
   XpOnKill: 10
@@ -279,10 +279,42 @@ MonoBehaviour:
   - Type: 0
     Choices:
     - Type: 0
-      Attribute: 0
+      Attribute: 1
       Class: 0
     - Type: 0
       Attribute: 2
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 5
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 5
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 5
       Class: 0
   - Type: 0
     Choices:
@@ -295,7 +327,15 @@ MonoBehaviour:
   - Type: 0
     Choices:
     - Type: 0
-      Attribute: 0
+      Attribute: 4
+      Class: 0
+    - Type: 0
+      Attribute: 5
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 3
       Class: 0
     - Type: 0
       Attribute: 2
@@ -306,47 +346,7 @@ MonoBehaviour:
       Attribute: 0
       Class: 0
     - Type: 0
-      Attribute: 2
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 0
-      Class: 0
-    - Type: 0
-      Attribute: 2
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 0
-      Class: 0
-    - Type: 0
-      Attribute: 2
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 0
-      Class: 0
-    - Type: 0
-      Attribute: 2
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 0
-      Class: 0
-    - Type: 0
-      Attribute: 2
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 0
-      Class: 0
-    - Type: 0
-      Attribute: 2
+      Attribute: 3
       Class: 0
   ShooterProgression:
   - Type: 0
@@ -355,6 +355,70 @@ MonoBehaviour:
       Attribute: 1
       Class: 0
     - Type: 0
+      Attribute: 2
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 0
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 2
+      Class: 0
+    - Type: 0
+      Attribute: 5
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 3
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 2
+      Class: 0
+    - Type: 0
+      Attribute: 0
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 5
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 0
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 3
+      Class: 0
+    - Type: 0
       Attribute: 4
       Class: 0
   - Type: 0
@@ -363,71 +427,7 @@ MonoBehaviour:
       Attribute: 1
       Class: 0
     - Type: 0
-      Attribute: 4
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 1
-      Class: 0
-    - Type: 0
-      Attribute: 4
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 1
-      Class: 0
-    - Type: 0
-      Attribute: 4
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 1
-      Class: 0
-    - Type: 0
-      Attribute: 4
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 1
-      Class: 0
-    - Type: 0
-      Attribute: 4
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 1
-      Class: 0
-    - Type: 0
-      Attribute: 4
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 1
-      Class: 0
-    - Type: 0
-      Attribute: 4
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 1
-      Class: 0
-    - Type: 0
-      Attribute: 4
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 1
-      Class: 0
-    - Type: 0
-      Attribute: 4
+      Attribute: 2
       Class: 0
   AmbusherProgression:
   - Type: 0
@@ -441,10 +441,34 @@ MonoBehaviour:
   - Type: 0
     Choices:
     - Type: 0
-      Attribute: 0
+      Attribute: 2
+      Class: 0
+    - Type: 0
+      Attribute: 5
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 5
       Class: 0
     - Type: 0
       Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 3
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 0
+      Class: 0
+    - Type: 0
+      Attribute: 1
       Class: 0
   - Type: 0
     Choices:
@@ -457,7 +481,7 @@ MonoBehaviour:
   - Type: 0
     Choices:
     - Type: 0
-      Attribute: 0
+      Attribute: 1
       Class: 0
     - Type: 0
       Attribute: 4
@@ -465,10 +489,18 @@ MonoBehaviour:
   - Type: 0
     Choices:
     - Type: 0
-      Attribute: 0
+      Attribute: 2
       Class: 0
     - Type: 0
-      Attribute: 4
+      Attribute: 3
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 1
+      Class: 0
+    - Type: 0
+      Attribute: 3
       Class: 0
   - Type: 0
     Choices:
@@ -476,39 +508,7 @@ MonoBehaviour:
       Attribute: 0
       Class: 0
     - Type: 0
-      Attribute: 4
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 0
-      Class: 0
-    - Type: 0
-      Attribute: 4
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 0
-      Class: 0
-    - Type: 0
-      Attribute: 4
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 0
-      Class: 0
-    - Type: 0
-      Attribute: 4
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 0
-      Class: 0
-    - Type: 0
-      Attribute: 4
+      Attribute: 1
       Class: 0
   ScoutProgression:
   - Type: 0
@@ -525,20 +525,12 @@ MonoBehaviour:
       Attribute: 5
       Class: 0
     - Type: 0
-      Attribute: 1
+      Attribute: 2
       Class: 0
   - Type: 0
     Choices:
     - Type: 0
-      Attribute: 5
-      Class: 0
-    - Type: 0
-      Attribute: 1
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 5
+      Attribute: 0
       Class: 0
     - Type: 0
       Attribute: 1
@@ -549,20 +541,12 @@ MonoBehaviour:
       Attribute: 5
       Class: 0
     - Type: 0
-      Attribute: 1
+      Attribute: 3
       Class: 0
   - Type: 0
     Choices:
     - Type: 0
-      Attribute: 5
-      Class: 0
-    - Type: 0
-      Attribute: 1
-      Class: 0
-  - Type: 0
-    Choices:
-    - Type: 0
-      Attribute: 5
+      Attribute: 2
       Class: 0
     - Type: 0
       Attribute: 1
@@ -573,6 +557,14 @@ MonoBehaviour:
       Attribute: 5
       Class: 0
     - Type: 0
+      Attribute: 0
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 3
+      Class: 0
+    - Type: 0
       Attribute: 1
       Class: 0
   - Type: 0
@@ -581,7 +573,15 @@ MonoBehaviour:
       Attribute: 5
       Class: 0
     - Type: 0
-      Attribute: 1
+      Attribute: 4
+      Class: 0
+  - Type: 0
+    Choices:
+    - Type: 0
+      Attribute: 5
+      Class: 0
+    - Type: 0
+      Attribute: 2
       Class: 0
   - Type: 0
     Choices:
