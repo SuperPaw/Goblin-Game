@@ -94,7 +94,7 @@ public class GreatestGoblins : MonoBehaviour
 
     private void CreateScoreScreen()
     {
-        HighScores.Sort((x, y) => TotalScore(x).CompareTo(TotalScore(y)));
+        HighScores.Sort((x, y) => -(TotalScore(x).CompareTo(TotalScore(y))));
         foreach (var score in HighScores)
         {
             var e = Instantiate(HighScoreEntry, HighScoreEntry.transform.parent);
