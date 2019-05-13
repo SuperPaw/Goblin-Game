@@ -1936,6 +1936,16 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 522264546816754393, guid: 91610a33314402343b24e70fecefb551,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 522264546816754393, guid: 91610a33314402343b24e70fecefb551,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 250
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91610a33314402343b24e70fecefb551, type: 3}
 --- !u!1 &2386521502586005402

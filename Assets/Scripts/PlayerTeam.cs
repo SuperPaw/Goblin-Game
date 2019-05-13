@@ -112,7 +112,7 @@ public class PlayerTeam : MonoBehaviour
 
     private void TreasureChange(int i)
     {
-        Food += i;
+        Treasure += i;
         UpdateFoodAndTreasure();
     }
 

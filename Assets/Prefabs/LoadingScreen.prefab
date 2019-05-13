@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 400}
+  m_SizeDelta: {x: 800, y: 250}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &522264546816754399
 CanvasRenderer:
@@ -234,17 +234,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.5366267
-      value: 0.021567013
-      inSlope: 0.05794588
-      outSlope: 0.05794588
+      time: 0.63407886
+      value: 0.060014777
+      inSlope: 0.20413245
+      outSlope: 0.20413245
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.11627702
       outWeight: 0.34986067
     - serializedVersion: 3
-      time: 1.0002384
-      value: 0.19940707
+      time: 1.0016208
+      value: 0.28086603
       inSlope: 1.0188785
       outSlope: 1.0188785
       tangentMode: 0
@@ -256,7 +256,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   Background: {fileID: 522264548226097035}
   StartColor: {r: 1, g: 1, b: 1, a: 1}
-  EndColor: {r: 0, g: 0, b: 0, a: 0}
+  EndColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!223 &522264547562529681
 Canvas:
   m_ObjectHideFlags: 0
