@@ -1266,6 +1266,7 @@ MonoBehaviour:
   Team: {fileID: 904032341}
   Cam: {fileID: 929748374}
   Sound: {fileID: 0}
+  FogOfWar: {fileID: 151457449}
   DragToPan: 1
   ZoomEnabled: 1
   MouseMoveKey: 1
@@ -1302,6 +1303,116 @@ MonoBehaviour:
     Speech: Goblins, move!
     GoblinSound: 11
   OrderCooldown: 3
+  LocationReactions:
+  - LocationType: 0
+    GoblinShouts:
+    - Speech: Oh, Big Stone!
+      GoblinSound: {fileID: 8300000, guid: 292d9c656a0d73742abbe4aab4c3fe69, type: 3}
+  - LocationType: 1
+    GoblinShouts:
+    - Speech: I am afraid of big holes
+      GoblinSound: {fileID: 8300000, guid: 292d9c656a0d73742abbe4aab4c3fe69, type: 3}
+  - LocationType: 2
+    GoblinShouts:
+    - Speech: Nice village, maybe we stay here?
+      GoblinSound: {fileID: 8300000, guid: a0fc58c3215576d449caa3ad3295df03, type: 3}
+  - LocationType: 3
+    GoblinShouts:
+    - Speech: Let's burn it!
+      GoblinSound: {fileID: 8300000, guid: 292d9c656a0d73742abbe4aab4c3fe69, type: 3}
+  - LocationType: 4
+    GoblinShouts:
+    - Speech: Oh, big house... Let's burn it!
+      GoblinSound: {fileID: 8300000, guid: a0fc58c3215576d449caa3ad3295df03, type: 3}
+  - LocationType: 5
+    GoblinShouts:
+    - Speech: Pretty house! Let's smash it!
+      GoblinSound: {fileID: 8300000, guid: 292d9c656a0d73742abbe4aab4c3fe69, type: 3}
+  EnemyReactions:
+  - Race: 1
+    GoblinShouts:
+    - Speech: Nasty human!
+      GoblinSound: {fileID: 8300000, guid: 1a156833729fdb84699eba68a4c5f834, type: 3}
+  - Race: 2
+    GoblinShouts:
+    - Speech: Too many legs
+      GoblinSound: {fileID: 8300000, guid: 1a156833729fdb84699eba68a4c5f834, type: 3}
+  - Race: 3
+    GoblinShouts:
+    - Speech: That goblin looks sick
+      GoblinSound: {fileID: 8300000, guid: 1a156833729fdb84699eba68a4c5f834, type: 3}
+  - Race: 4
+    GoblinShouts:
+    - Speech: You are not so big
+      GoblinSound: {fileID: 8300000, guid: 1a156833729fdb84699eba68a4c5f834, type: 3}
+  - Race: 5
+    GoblinShouts:
+    - Speech: Puppy!! Come here puppy!
+      GoblinSound: {fileID: 8300000, guid: 1a156833729fdb84699eba68a4c5f834, type: 3}
+  StateChangeReactions:
+  - State: 7
+    GoblinShouts:
+    - Speech: What's that!?
+      GoblinSound: {fileID: 8300000, guid: 986c4156ee5e38248944d550678ef6dd, type: 3}
+  - State: 1
+    GoblinShouts:
+    - Speech: Kill it!!
+      GoblinSound: {fileID: 8300000, guid: 986c4156ee5e38248944d550678ef6dd, type: 3}
+  - State: 10
+    GoblinShouts:
+    - Speech: Yahoo!! Dinner tiime
+      GoblinSound: {fileID: 8300000, guid: 986c4156ee5e38248944d550678ef6dd, type: 3}
+  - State: 8
+    GoblinShouts:
+    - Speech: hallo!!
+      GoblinSound: {fileID: 8300000, guid: 986c4156ee5e38248944d550678ef6dd, type: 3}
+  - State: 2
+    GoblinShouts:
+    - Speech: I follow chief
+      GoblinSound: {fileID: 8300000, guid: 986c4156ee5e38248944d550678ef6dd, type: 3}
+    - Speech: Yes, chief!
+      GoblinSound: {fileID: 8300000, guid: 986c4156ee5e38248944d550678ef6dd, type: 3}
+    - Speech: Chief shout. I do
+      GoblinSound: {fileID: 8300000, guid: 986c4156ee5e38248944d550678ef6dd, type: 3}
+    - Speech: Where are we going?
+      GoblinSound: {fileID: 8300000, guid: 986c4156ee5e38248944d550678ef6dd, type: 3}
+  DynamicReactions:
+  - State: 0
+    GoblinShouts:
+    - Speech: I'm bored
+      GoblinSound: {fileID: 8300000, guid: 3a831c2f8d1b0fd449c0584843be44b6, type: 3}
+    - Speech: I'm hungry
+      GoblinSound: {fileID: 8300000, guid: 3a831c2f8d1b0fd449c0584843be44b6, type: 3}
+    - Speech: I'm bored and hungry
+      GoblinSound: {fileID: 8300000, guid: 03208fdc8dcff0b428a920458a84d6c7, type: 3}
+  - State: 1
+    GoblinShouts:
+    - Speech: Get him, chief!
+      GoblinSound: {fileID: 8300000, guid: 08d3afcbc804861428fb280de70a0442, type: 3}
+    - Speech: I love new chief!
+      GoblinSound: {fileID: 8300000, guid: 08d3afcbc804861428fb280de70a0442, type: 3}
+    - Speech: Chief battle!!
+      GoblinSound: {fileID: 8300000, guid: 08d3afcbc804861428fb280de70a0442, type: 3}
+    - Speech: Old chief better than new chief
+      GoblinSound: {fileID: 8300000, guid: 08d3afcbc804861428fb280de70a0442, type: 3}
+  - State: 2
+    GoblinShouts:
+    - Speech: Ohh, shiny
+      GoblinSound: {fileID: 8300000, guid: cf012be4215202a4f87cd73e3983fdd8, type: 3}
+  - State: 3
+    GoblinShouts:
+    - Speech: Kiss me!
+      GoblinSound: {fileID: 8300000, guid: 68341d63fa09ddc4c92f61db66a83366, type: 3}
+    - Speech: Catch me!
+      GoblinSound: {fileID: 8300000, guid: 68341d63fa09ddc4c92f61db66a83366, type: 3}
+    - Speech: Hug me!
+      GoblinSound: {fileID: 8300000, guid: 68341d63fa09ddc4c92f61db66a83366, type: 3}
+    - Speech: You smell like human...
+      GoblinSound: {fileID: 8300000, guid: 9be9dc4358a20a34da478df30ea2f3ca, type: 3}
+    - Speech: You look like old chief. Like dead old chief!
+      GoblinSound: {fileID: 8300000, guid: 9be9dc4358a20a34da478df30ea2f3ca, type: 3}
+    - Speech: You look like butt!
+      GoblinSound: {fileID: 8300000, guid: 9be9dc4358a20a34da478df30ea2f3ca, type: 3}
   GoblinViewSize: 5
   AreaViewSize: 12
   MapViewSize: 45
@@ -1309,7 +1420,6 @@ MonoBehaviour:
   ZoomMaxBound: 12
   ZoomSpeed: 0.025
   PcZoomSpeed: 3
-  FogOfWar: {fileID: 151457449}
   MoveTime: 0.75
   MoveCurve:
     serializedVersion: 2
@@ -2010,11 +2120,6 @@ PrefabInstance:
         type: 3}
       propertyPath: VillagesToGenerate
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
-        type: 3}
-      propertyPath: GoblinsToGenerate
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4598158572664144, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0, type: 3}
       propertyPath: m_LocalPosition.x

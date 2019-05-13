@@ -119,9 +119,15 @@ public class Area : MonoBehaviour
 
         //TODO: check if leader
         PlayerController.UpdateFog();
-        
+
+        //TODO: move to area change method
+        if (PointOfInterest)
+            (c as Goblin)?.Speak(PlayerController.GetLocationReaction(this.PointOfInterest.PoiType));
+        else if (AnyEnemies()) //TODO:select random enemy
+            (c as Goblin)?.Speak(PlayerController.GetEnemyReaction(PresentCharacters.First(ch => ch.tag == "Enemy" && ch.Alive()).CharacterRace));
+
     }
-    
+
     //public void OnTriggerExit(Collider other)
     //{
     //    if (!other.gameObject.GetComponent<Character>())

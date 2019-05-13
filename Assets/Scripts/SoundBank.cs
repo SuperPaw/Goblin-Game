@@ -67,6 +67,20 @@ public class SoundBank : MonoBehaviour
         //New
         Eat,
         PanicScream,
+
+        //Reactions
+        //BigStoneReact0,
+        //BigStoneReact1,
+        //BigStoneReact2,
+        //CaveReact0,
+        //CaveReact1,
+        //CaveReact2,
+        //WarrensReact0,
+        //WarrensReact1,
+        //WarrensReact2,
+        //FarmReact0, FarmReact1, FarmReact2,
+        //FortReact0, FortReact1, FortReact2,
+        //WitchhutReact0, Witchhut1, WitchhutReact2,
     }
 
     [System.Serializable]

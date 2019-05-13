@@ -516,11 +516,15 @@ public abstract class Character : MonoBehaviour
 
         Walking = State == CharacterState.Travelling || State == CharacterState.Idling;
 
-        if (State == CharacterState.Attacking)
+        if (Random.value < 0.4f && this as Goblin && PlayerController.IsStateChangeShout(State))
+        {
+            (this as Goblin)?.Speak(PlayerController.GetStateChangeReaction(State));
+        }
+        else if (State == CharacterState.Attacking)
         {
             yield return new WaitForSeconds(Random.Range(0f,1.5f));
-            if(State == CharacterState.Attacking)
-                Speak(SoundBank.GoblinSound.Roar);
+            if(State == CharacterState.Attacking )
+                (this as Goblin)?.Speak(SoundBank.GoblinSound.Roar);
         }
 
         stateChangeRoutine = null;
@@ -675,7 +679,7 @@ public abstract class Character : MonoBehaviour
     private void AttackCharacter(Character target)
     {
         if(Voice && !Voice.isPlaying)
-            Speak(SoundBank.GoblinSound.Roar);
+            (this as Goblin)?.Speak(SoundBank.GoblinSound.Roar);
 
         target.OnBeingAttacked.Invoke(this);
     }
@@ -705,9 +709,8 @@ public abstract class Character : MonoBehaviour
         State = CharacterState.Attacking;
         while (Attacking() && InAttackRange() && AttackTarget.Alive())
         {
-            Speak(SoundBank.GoblinSound.Attacking);
-
-
+            (this as Goblin)?.Speak(SoundBank.GoblinSound.Attacking);
+            
             //HIT TARGET
             var damage = Random.Range(1, DMG.GetStatMax());
             if (AttackTarget.Surprised())
@@ -725,7 +728,7 @@ public abstract class Character : MonoBehaviour
                     ((Goblin) this).Xp += GameManager.XpKill();
                     if (Team)
                         Team.AddXp(GameManager.XpTeamKill());
-                    Speak(SoundBank.GoblinSound.Laugh);
+                    (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
                 }
 
                 break;
@@ -765,6 +768,8 @@ public abstract class Character : MonoBehaviour
                 }
                 else if (Random.value < 0.015f) //selecting idle action
                 {
+                    (this as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.Idle));
+
                     actionInProgress = true;
 
                     Vector3 dest;
@@ -794,7 +799,7 @@ public abstract class Character : MonoBehaviour
                             ChangeState(CharacterState.Provoking, true);
                             var ctx = GetClosestEnemy();
                             (this as Goblin).ProvokeTarget = ctx;
-                            Speak(SoundBank.GoblinSound.Laugh);
+                            (this as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.Mocking));
                             dest = ctx.transform.position;
                         }
                         else if (StickToRoad)
@@ -868,13 +873,15 @@ public abstract class Character : MonoBehaviour
                 {
                     //Debug.Log(name +" arrived at target");
                     State = CharacterState.Idling;
+                    
                     actionInProgress = false;
+                    
                     break;
                 }
 
                 break;
             case CharacterState.Fleeing:
-                Speak(SoundBank.GoblinSound.PanicScream);
+                (this as Goblin)?.Speak(SoundBank.GoblinSound.PanicScream);
 
                 //if (actionInProgress &! navMeshAgent.hasPath)
                 //{
@@ -921,14 +928,15 @@ public abstract class Character : MonoBehaviour
                 if (!Team || !Team.Challenger)
                 {
                     //cheer
-                    Speak(SoundBank.GoblinSound.Laugh);
+                    (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
                     ChangeState(CharacterState.Idling, true);
                 }
                 else
                 {
-                    if (Vector3.Distance(transform.position, Team.Challenger.transform.position) < 3f)
+                    if (Vector3.Distance(transform.position, Team.Challenger.transform.position) < 3f && Team.Challenger != this && Team.Leader != this)
                     {
-                        Speak(SoundBank.GoblinSound.Roar);
+                        //cheer
+                        (this as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.ChiefBattle));
 
                         navMeshAgent.ResetPath();
                     }
@@ -946,13 +954,13 @@ public abstract class Character : MonoBehaviour
                 {
                     if (LootTarget.ContainsLoot)
                     {
-                        Speak(SoundBank.GoblinSound.Laugh);
+                        (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
                         PopUpText.ShowText(name + " found " + LootTarget.Loot);
                         Team.Treasure++;
                     }
                     if (LootTarget.ContainsFood)
                     {
-                        Speak(SoundBank.GoblinSound.Laugh);
+                        (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
                         PopUpText.ShowText(name + " found " + LootTarget.Food);
                         Team.Food += 5;
                     }
@@ -960,7 +968,7 @@ public abstract class Character : MonoBehaviour
                         foreach (var equipment in LootTarget.EquipmentLoot)
                         {
                             //TODO: create player choice for selecting goblin
-                            Speak(SoundBank.GoblinSound.Laugh);
+                            (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
                             PopUpText.ShowText(name + " found " + equipment.name);
                             if (Team && Team.Members.Count > 1)
                                 Team.EquipmentFound(equipment,this as Goblin);
@@ -989,7 +997,7 @@ public abstract class Character : MonoBehaviour
 
                 if (!g.ProvokeTarget || g.ProvokeTarget.InArea != InArea)
                 {
-                    Speak(SoundBank.GoblinSound.Laugh);
+                    (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
                     g.ProvokeTarget = GetClosestEnemy();
                 }
 
@@ -1013,7 +1021,7 @@ public abstract class Character : MonoBehaviour
                 {
                     //Debug.Log(name + " Running away in provocation");
                     if (Random.value < 0.1f)
-                        Speak(SoundBank.GoblinSound.Grunt);
+                        (this as Goblin)?.Speak(SoundBank.GoblinSound.Grunt);
 
                     if (Random.value < 0.3f)
                         g.ProvokeTarget.IrritationMeter++;
@@ -1048,7 +1056,7 @@ public abstract class Character : MonoBehaviour
                 {
                     if (Vector3.Distance(transform.position, Team.Campfire.transform.position) < 4f)
                     {
-                        Speak(SoundBank.GoblinSound.Eat);
+                        (this as Goblin)?.Speak(SoundBank.GoblinSound.Eat);
 
                         navMeshAgent.ResetPath();
                     }
@@ -1104,7 +1112,7 @@ public abstract class Character : MonoBehaviour
         if (!Material)
             yield break;
 
-        Speak(SoundBank.GoblinSound.Hurt);
+        (this as Goblin)?.Speak(SoundBank.GoblinSound.Hurt);
 
         Material.color = DamageColor;
 
@@ -1122,7 +1130,7 @@ public abstract class Character : MonoBehaviour
         if(this as Goblin)
             (this as Goblin).particles.Stop();
 
-        Speak(SoundBank.GoblinSound.Death);
+        (this as Goblin)?.Speak(SoundBank.GoblinSound.Death);
 
         if(MovementAudio)
             MovementAudio.Stop();
@@ -1202,12 +1210,6 @@ public abstract class Character : MonoBehaviour
 
     #endregion
 
-    //TODO: move this and all references to goblin
-    public void Speak(SoundBank.GoblinSound soundtype, bool overridePlaying = false)
-    {
-        if (InArea.Visible() && Voice && Voice.isActiveAndEnabled && (overridePlaying || !Voice.isPlaying))
-            Voice.PlayOneShot(SoundBank.GetSound(soundtype));
-    }
 
     public void Hide()
     {

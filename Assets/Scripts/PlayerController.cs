@@ -11,9 +11,11 @@ using Random = UnityEngine.Random;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
+    [Header("References")]
     public PlayerTeam Team;
     public Camera Cam;
     public SoundController Sound;
+    public Renderer FogOfWar;
 
     [Header("Controls")]
     public bool DragToPan;
@@ -30,7 +32,7 @@ public class PlayerController : MonoBehaviour
     }
     public KeyMapping[] KeyMappings;
 
-
+    //TODO: move all shout stuff to seperate controller 
     [Serializable]
     public struct OrderType
     {
@@ -39,28 +41,62 @@ public class PlayerController : MonoBehaviour
         public string Speech;
         public SoundBank.GoblinSound GoblinSound;
     }
+    [Serializable]
+    public struct Shout
+    {
+        public string Speech;
+        public AudioClip GoblinSound;
+    }
 
 
     [Serializable]
     public struct LocationReaction
     {
-        public PointOfInterest Order;
-        //TODO: create goblin speech struct for linking all goblin shouts with sounds
-        public string Speech;
-        public SoundBank.GoblinSound GoblinSound;
+        public PointOfInterest.Poi LocationType;
+        public Shout[] GoblinShouts;
     }
 
-    public OrderType[] Orders;
+    [Serializable]
+    public struct EnemyReaction
+    {
+        public Character.Race Race;
+        public Shout[] GoblinShouts;
+    }
 
+    [Serializable]
+    public struct StateChangeReaction
+    {
+        //Searching / Attacking / resting / Provoking
+        public Character.CharacterState State;
+        public Shout[] GoblinShouts;
+    }
+
+    [Serializable]
+    public struct DynamicReaction
+    {
+        //Searching / Attacking / resting / Provoking
+        public DynamicState State;
+        public Shout[] GoblinShouts;
+    }
+
+    public enum DynamicState { Idle, ChiefBattle, FoundStuff, Mocking}
+
+    [Header("Shouts")]
+    public OrderType[] Orders;
     public OrderType MoveOrder;
 
     //TODO: use this
     public float OrderCooldown = 3f;
 
+    public LocationReaction[] LocationReactions;
+    public EnemyReaction[] EnemyReactions;
+    public StateChangeReaction[] StateChangeReactions;
+    public DynamicReaction[] DynamicReactions;
+    
     private bool _mouseHeld;
     private Vector3 _mouseDragPos;
 
-    [Header("Zooming")]
+    [Header("Camera Controls")]
     public int GoblinViewSize;
     public int AreaViewSize;
     public int MapViewSize;
@@ -71,9 +107,8 @@ public class PlayerController : MonoBehaviour
     public float PcZoomSpeed;
     public static Goblin FollowGoblin;
 
-    public Renderer FogOfWar;
-
-    [Header("Follow Animation")] public float MoveTime = 1;
+    
+    public float MoveTime = 1;
     public AnimationCurve MoveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     private Vector2[] lastZoomPositions;
     private bool wasZoomingLastFrame;
@@ -730,5 +765,29 @@ public class PlayerController : MonoBehaviour
         showingMoveView = false;
 
         toDisable.ForEach(d => d.DisableAreaUI());
+    }
+
+    private T GetRandom<T>(T[] arr) => arr[Random.Range(0, arr.Length)];
+
+    public static Shout GetLocationReaction(PointOfInterest.Poi Type)
+    {
+        return Instance.GetRandom(Instance.LocationReactions.First(l=> l.LocationType == Type).GoblinShouts);
+    }
+    public static Shout GetEnemyReaction(Character.Race Type)
+    {
+        return Instance.GetRandom(Instance.EnemyReactions.First(l => l.Race == Type).GoblinShouts);
+    }
+    public static Shout GetStateChangeReaction(Character.CharacterState Type)
+    {
+        return Instance.GetRandom(Instance.StateChangeReactions.First(l => l.State == Type).GoblinShouts);
+    }
+    public static bool IsStateChangeShout(Character.CharacterState Type)
+    {
+        return Instance.StateChangeReactions.Any(l => l.State == Type);
+    }
+
+    public static Shout GetDynamicReactions(DynamicState trigger)
+    {
+        return Instance.GetRandom(Instance.DynamicReactions.First(l => l.State == trigger).GoblinShouts);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.Events;
@@ -32,6 +33,11 @@ public class Goblin : Character
     }
 
     public Class ClassType;
+
+
+    private float lastSpeak;
+    [SerializeField]
+    private float speakWait = 3f;
 
 
     [Header("Levelling")]
@@ -208,6 +214,24 @@ public class Goblin : Character
         Speak(goblinSound,true);
 
         StartCoroutine(ShoutRoutine(speech));
+    }
+    
+    public void Speak(PlayerController.Shout shout, bool overridePlaying = false)
+    {
+        if (InArea.Visible() && Voice && Voice.isActiveAndEnabled && lastSpeak + speakWait < Time.time && (overridePlaying || !Voice.isPlaying))
+        {
+            StartCoroutine(ShoutRoutine(shout.Speech));
+
+            Voice.PlayOneShot(shout.GoblinSound);
+
+            lastSpeak = Time.time;
+        }
+    }
+    //TODO: inherit this for each type of character to differentiate sound sets
+    public void Speak(SoundBank.GoblinSound soundtype, bool overridePlaying = false)
+    {
+        if (InArea.Visible() && Voice && Voice.isActiveAndEnabled && (overridePlaying || !Voice.isPlaying))
+            Voice.PlayOneShot(SoundBank.GetSound(soundtype));
     }
 
     private IEnumerator ShoutRoutine(string text)
