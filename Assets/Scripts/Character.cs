@@ -279,6 +279,7 @@ public abstract class Character : MonoBehaviour
     private Vector2 smoothDeltaPosition = Vector2.zero;
     private Vector2 velocity = Vector2.zero;
 
+    private int lastAnimationRandom;
 
     private const string FLEE_ANIMATION_BOOL = "Fleeing";
     private const string DEATH_ANIMATION_BOOL = "Dead";
@@ -287,6 +288,12 @@ public abstract class Character : MonoBehaviour
     private const string MOVE_ANIMATION_BOOL = "Walking";
     private const string IDLE_ANIMATION_BOOL = "Idling";
     private const string RUN_ANIMATION_BOOL = "Running";
+    private const string HIDE_ANIMATION_BOOL = "Hiding";
+    private const string CHEER_ANIMATION_BOOL = "Cheering";
+    private const string SURPRISE_ANIMATION_BOOL = "Surprised";
+    private const string EAT_ANIMATION_BOOL = "Eating";
+    private const string PROVOKE_ANIMATION_BOOL = "Provoking";
+
 
 
     private Collider2D coll;
@@ -470,15 +477,37 @@ public abstract class Character : MonoBehaviour
                 ? RANGED_ATTACK_ANIMATION_BOOL
                 : ATTACK_ANIMATION_BOOL);
         }
-        else if (navMeshAgent.desiredVelocity.sqrMagnitude > SpeedAnimationThreshold)
+        else if (AgentVelocity > SpeedAnimationThreshold)
         {
             Animate(Walking ?MOVE_ANIMATION_BOOL: RUN_ANIMATION_BOOL);
+        }
+        else if (Provoking())
+        {
+            Animate(PROVOKE_ANIMATION_BOOL);
+        }
+        else if (Hiding())
+        {
+            Animate(HIDE_ANIMATION_BOOL);
+        }
+        else if (Watching() &&  Team.Leader != this && Team.Challenger != this)
+        {
+            Animator.SetLookAtPosition(Team.Leader.transform.position);
+            Animate(CHEER_ANIMATION_BOOL);
+        }
+        else if (Surprised())
+        {
+            Animate(SURPRISE_ANIMATION_BOOL);
+        }
+        else if (Resting())
+        {
+            Animate(EAT_ANIMATION_BOOL);
         }
         else
         {
             Animate(IDLE_ANIMATION_BOOL);
         }
     }
+    
 
     /// <summary>
     /// to be used for orders
@@ -528,6 +557,9 @@ public abstract class Character : MonoBehaviour
                 (this as Goblin)?.Speak(SoundBank.GoblinSound.Roar);
         }
 
+        lastAnimationRandom = Random.Range(0, 4);
+        Animator.SetInteger("AnimationRandom",lastAnimationRandom);
+
         stateChangeRoutine = null;
     }
 
@@ -554,6 +586,23 @@ public abstract class Character : MonoBehaviour
     {
         return State == CharacterState.Hiding;
     }
+    public bool Provoking()
+    {
+        return State == CharacterState.Provoking;
+    }
+
+    public bool Watching()
+    {
+        return State == CharacterState.Watching;
+    }
+
+    private bool Surprised()
+    {
+        return State == CharacterState.Surprised;
+    }
+
+    private bool Resting() => State == CharacterState.Resting;
+
 
 
     public bool Equip(Equipment e)
@@ -696,11 +745,6 @@ public abstract class Character : MonoBehaviour
             
             AttackTarget = closest ? closest : attacker;
         }
-    }
-
-    private bool Surprised()
-    {
-        return State == CharacterState.Surprised;
     }
 
     private IEnumerator AttackRoutine()
@@ -1012,28 +1056,33 @@ public abstract class Character : MonoBehaviour
                 {
                     ChangeState(CharacterState.Attacking);
                 }
+                if ((g.ProvokeTarget.transform.position - transform.position).magnitude < 4) //Provoke
+                {
+                    navMeshAgent.isStopped = true;
+                    if (ProvokeTime + ProvokeStartTime <= Time.time)
+                    {
+                        if (Random.value < 0.2f)
+                            (this as Goblin)?.Speak(
+                                PlayerController.GetDynamicReactions(PlayerController.DynamicState.Mocking));
 
-                if (navMeshAgent.remainingDistance < 0.5f)
+                        if (Random.value < 0.3f)
+                            g.ProvokeTarget.IrritationMeter++;
+
+                        //run away
+                        //TODO: check that the position is in the area
+                        //TODO: use other
+                        var dest = InArea.GetRandomPosInArea();
+
+                        navMeshAgent.SetDestination(dest);
+                    }
+                }
+                else if (navMeshAgent.remainingDistance < 0.5f)
                     navMeshAgent.SetDestination(g.ProvokeTarget.transform.position);
                 //the closer the more likely they will runaway
                 //TODO: this should be handled a lot more elegantly
-                else if ((g.ProvokeTarget.transform.position - transform.position).magnitude < 4)
+                else 
                 //(g.ProvokeScaredCurve.Evaluate((g.ProvokeTarget.transform.position - transform.position).magnitude) <Random.value*provokeDistance)
                 {
-                    //Debug.Log(name + " Running away in provocation");
-                    if (Random.value < 0.1f)
-                        (this as Goblin)?.Speak(SoundBank.GoblinSound.Grunt);
-
-                    if (Random.value < 0.3f)
-                        g.ProvokeTarget.IrritationMeter++;
-
-                    //run away
-                    //TODO: check that the position is in the area
-                    //TODO: use other
-                    var dest = InArea.GetRandomPosInArea();
-
-                    navMeshAgent.SetDestination(dest);
-
                     //navMeshAgent.SetDestination(transform.position +
                     //    (transform.position - g.ProvokeTarget.transform.position).normalized * provokeDistance/2);
                 }
@@ -1074,6 +1123,10 @@ public abstract class Character : MonoBehaviour
         }
 
     }
+
+    public int ProvokeTime;
+    private int ProvokeStartTime;
+
 
     private IEnumerator SpotArrivalCheck(Character character)
     {

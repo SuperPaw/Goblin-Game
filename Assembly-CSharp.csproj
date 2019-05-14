@@ -62,7 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\HighScoreEntry.cs" />
     <Compile Include="Assets\Imported\Goblins Pack\Scripts\Gear.cs" />
     <Compile Include="Assets\Imported\Goblins Pack\Scripts\ItemState.cs" />
     <Compile Include="Assets\Imported\Knight\scripts\rotator.cs" />
@@ -163,6 +162,7 @@
     <Compile Include="Assets\Scripts\UI\CharacterView.cs" />
     <Compile Include="Assets\Scripts\UI\GoblinUIList.cs" />
     <Compile Include="Assets\Scripts\UI\GrayscaleFilter.cs" />
+    <Compile Include="Assets\Scripts\UI\HighScoreEntry.cs" />
     <Compile Include="Assets\Scripts\UI\LevelUpChoiceEntry.cs" />
     <Compile Include="Assets\Scripts\UI\LoadingScreen.cs" />
     <Compile Include="Assets\Scripts\UI\MenuWindow.cs" />

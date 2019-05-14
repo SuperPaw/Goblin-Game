@@ -104,7 +104,7 @@ MonoBehaviour:
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 0}
   Animator: {fileID: 9200039782062432997}
-  SpeedAnimationThreshold: 0.1
+  SpeedAnimationThreshold: 0.5
   provokeDistance: 10
   InArea: {fileID: 0}
   Warrens: {fileID: 0}

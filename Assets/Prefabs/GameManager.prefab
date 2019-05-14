@@ -95,7 +95,7 @@ MonoBehaviour:
   - IconType: 9
     Image: {fileID: 21300000, guid: b5693b4edaf94774f969e311bdb8cb76, type: 3}
   - IconType: 10
-    Image: {fileID: 21300000, guid: b5693b4edaf94774f969e311bdb8cb76, type: 3}
+    Image: {fileID: 21300000, guid: 00eb7b1aa159dd2419c2455dc95de927, type: 3}
   - IconType: 11
     Image: {fileID: 21300000, guid: 6eef878946942cc44a7ab779000934fb, type: 3}
   - IconType: 12
@@ -605,12 +605,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HighScores:
   - Name: Ib Halfheart
-    Kills: 10
-    Treasures: 3
-    GoblinsInTribe: 5
-    AreasExplored: 10
-    LeaderLevel: 6
-    EquipmentFound: 3
+    Kills: 55
+    Treasures: 23
+    GoblinsInTribe: 20
+    AreasExplored: 23
+    LeaderLevel: 12
+    EquipmentFound: 10
   - Name: Kiki-jiki the Mirror-breaker
     Kills: 2
     Treasures: 1
@@ -619,10 +619,10 @@ MonoBehaviour:
     LeaderLevel: 2
     EquipmentFound: 0
   - Name: Grenzo Havoc-Raiser
-    Kills: 4
-    Treasures: 3
-    GoblinsInTribe: 2
-    AreasExplored: 1
+    Kills: 10
+    Treasures: 8
+    GoblinsInTribe: 4
+    AreasExplored: 6
     LeaderLevel: 6
     EquipmentFound: 2
   ActiveScore:

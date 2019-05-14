@@ -94,11 +94,14 @@ public class GreatestGoblins : MonoBehaviour
 
     private void CreateScoreScreen()
     {
+        if(!ScoresContainName(ActiveScore.Name))
+            HighScores.Add(ActiveScore);
+
         HighScores.Sort((x, y) => -(TotalScore(x).CompareTo(TotalScore(y))));
         foreach (var score in HighScores)
         {
             var e = Instantiate(HighScoreEntry, HighScoreEntry.transform.parent);
-            e.Name.text = score.Name;
+            e.Name.text = score.Name.Contains("Chief") ? score.Name.Remove(0, 6) : score.Name;
             e.Value.text = TotalScore(score).ToString();
             e.Score = score;
         }
