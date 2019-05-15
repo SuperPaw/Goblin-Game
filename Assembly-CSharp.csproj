@@ -142,9 +142,9 @@
     <Compile Include="Assets\Scripts\MapLocations\Farm.cs" />
     <Compile Include="Assets\Scripts\MapLocations\GoblinWarrens.cs" />
     <Compile Include="Assets\Scripts\MapLocations\HumanSettlement.cs" />
+    <Compile Include="Assets\Scripts\MapLocations\Monument.cs" />
     <Compile Include="Assets\Scripts\MapLocations\PointOfInterest.cs" />
     <Compile Include="Assets\Scripts\MapLocations\WitchHut.cs" />
-    <Compile Include="Assets\Scripts\Monument.cs" />
     <Compile Include="Assets\Scripts\NpcHolder.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerTeam.cs" />

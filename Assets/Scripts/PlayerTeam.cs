@@ -125,6 +125,13 @@ public class PlayerTeam : MonoBehaviour
     private void TeamKill()
     {
         AddXp(GameManager.XpTeamKill());
+
+
+        if (Leader.InArea.AnyEnemies() &&
+            Members.Any(g => g.InArea == Leader.InArea && (g.Attacking() || g.Fleeing())))
+        {
+            SoundController.PlayStinger(SoundBank.Stinger.BattleWon);
+        }
     }
 
     protected void FixedUpdate()
@@ -150,7 +157,6 @@ public class PlayerTeam : MonoBehaviour
                     m.ChangeState(Character.CharacterState.Idling);
                 }
                 
-                SoundController.PlayStinger(SoundBank.Stinger.BattleWon);
                 SoundController.ChangeMusic(SoundBank.Music.Explore);
             }
 
