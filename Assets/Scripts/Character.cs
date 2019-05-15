@@ -314,7 +314,12 @@ public abstract class Character : MonoBehaviour
         }
     }
 
+    //TODO: move to goblin
     public int provokeDistance = 10;
+    //From walking toward to running away
+    public float ProvokeTime = 5;
+    private float ProvokeStartTime;
+
 
     public Area InArea;
     private Area fleeingToArea;
@@ -1055,39 +1060,33 @@ public abstract class Character : MonoBehaviour
                 if (g.ProvokeTarget.Attacking())
                 {
                     ChangeState(CharacterState.Attacking);
+                    break;
+                }
+
+                if (!actionInProgress && navMeshAgent.remainingDistance < 0.5f)
+                {
+                    actionInProgress = true;
+                    navMeshAgent.SetDestination(g.ProvokeTarget.transform.position);
+                    ProvokeStartTime = Time.time;
+                    break;
+                }
+
+                if (ProvokeTime + ProvokeStartTime > Time.time)
+                {
+                    //run away
+                    actionInProgress = false;
+                    var dest = InArea.GetRandomPosInArea();
+                    navMeshAgent.SetDestination(dest);
+                    g.ProvokeTarget.IrritationMeter++;
+                    break;
                 }
                 if ((g.ProvokeTarget.transform.position - transform.position).magnitude < 4) //Provoke
-                {
+                { 
                     navMeshAgent.isStopped = true;
-                    if (ProvokeTime + ProvokeStartTime <= Time.time)
-                    {
-                        if (Random.value < 0.2f)
-                            (this as Goblin)?.Speak(
-                                PlayerController.GetDynamicReactions(PlayerController.DynamicState.Mocking));
-
-                        if (Random.value < 0.3f)
-                            g.ProvokeTarget.IrritationMeter++;
-
-                        //run away
-                        //TODO: check that the position is in the area
-                        //TODO: use other
-                        var dest = InArea.GetRandomPosInArea();
-
-                        navMeshAgent.SetDestination(dest);
-                    }
+                    if (Random.value < 0.2f)
+                        (this as Goblin)?.Speak(
+                            PlayerController.GetDynamicReactions(PlayerController.DynamicState.Mocking));
                 }
-                else if (navMeshAgent.remainingDistance < 0.5f)
-                    navMeshAgent.SetDestination(g.ProvokeTarget.transform.position);
-                //the closer the more likely they will runaway
-                //TODO: this should be handled a lot more elegantly
-                else 
-                //(g.ProvokeScaredCurve.Evaluate((g.ProvokeTarget.transform.position - transform.position).magnitude) <Random.value*provokeDistance)
-                {
-                    //navMeshAgent.SetDestination(transform.position +
-                    //    (transform.position - g.ProvokeTarget.transform.position).normalized * provokeDistance/2);
-                }
-
-
                 break;
             case CharacterState.Surprised:
                 navMeshAgent.isStopped = true;
@@ -1123,9 +1122,6 @@ public abstract class Character : MonoBehaviour
         }
 
     }
-
-    public int ProvokeTime;
-    private int ProvokeStartTime;
 
 
     private IEnumerator SpotArrivalCheck(Character character)
