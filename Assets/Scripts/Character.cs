@@ -258,6 +258,10 @@ public abstract class Character : MonoBehaviour
     public int MoralBoostOnKill = 5;
 
     public float AmbushModifier = 1.2f;
+    
+    public float IncomingDmgPct = 1f;
+    public float OutgoingDmgPct = 1f;
+
 
     [Header("Sprite")]
     //public SpriteRenderer CharacterSprite;
@@ -343,9 +347,9 @@ public abstract class Character : MonoBehaviour
         if (!HealtBar)
             HealtBar = GetComponentInChildren<HealtBar>();
 
-        for (int i = 0; i < (int)Equipment.EquipLocations.COUNT; i++)
+        for (int i = 0; i < (int) Equipment.EquipLocations.COUNT; i++)
         {
-            Equipped.Add((Equipment.EquipLocations)i,null);
+            Equipped.Add((Equipment.EquipLocations) i, null);
         }
 
 
@@ -360,12 +364,12 @@ public abstract class Character : MonoBehaviour
         COU = new Stat(StatType.COURAGE, Random.Range(CouMin, CouMax));
         SPE = new Stat(StatType.SPEED, Random.Range(SpeMin, SpeMax));
         SMA = new Stat(StatType.SMARTS, Random.Range(SmaMin, SmaMax));
-        Stats = new List<Stat>() {DMG,AIM,COU,SPE,SMA}.ToDictionary(s=> s.Type);
+        Stats = new List<Stat>() {DMG, AIM, COU, SPE, SMA}.ToDictionary(s => s.Type);
 
         //Health is a special case
         HEA = new Stat(StatType.HEALTH, Random.Range(HeaMin, HeaMax));
         Health = HEA.GetStatMax();
-        
+    
         Material = GetComponentInChildren<Renderer>().material;
         if(Material &&Material.HasProperty("_Color"))
             NormalColor = Material.color;
@@ -762,12 +766,12 @@ public abstract class Character : MonoBehaviour
             (this as Goblin)?.Speak(SoundBank.GoblinSound.Attacking);
             
             //HIT TARGET
-            var damage = Random.Range(1, DMG.GetStatMax());
+            var damage = Random.Range(1, DMG.GetStatMax()) * OutgoingDmgPct;
             if (AttackTarget.Surprised())
                 damage = (int)(damage * AmbushModifier);
             var target = AttackTarget;
             if(!(target.Team && GameManager.Instance.InvincibleMode))
-                target.Health -= damage;
+                target.Health -= (int) Mathf.Round(damage *target.IncomingDmgPct);
 
             if (target.Health <= 0)
             {

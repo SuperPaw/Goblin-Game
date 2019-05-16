@@ -147,8 +147,8 @@ public class CharacterView : MenuWindow
     {
         switch (cl)
         {
-            case Goblin.Class.Swarmer:
-                return "Goblin Swarmer";
+            case Goblin.Class.Meathshield:
+                return "Goblin Meatshield";
             case Goblin.Class.Shooter:
                 return "Goblin Shooter";
             case Goblin.Class.Ambusher:

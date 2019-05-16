@@ -109,7 +109,7 @@ MonoBehaviour:
     Description: Slave never challenges the chief
   - ClassType: 4
     Image: {fileID: 21300000, guid: 9af384c8520f2bf41a312fa13674adb1, type: 3}
-    Description: Swarmers hit hard and less likely to flee when attacking together
+    Description: Meatshield take less damage and deal less damage
   - ClassType: 8
     Image: {fileID: 21300000, guid: 59f0c76ad3675ff49adb4b4382e9af6a, type: 3}
     Description: Shooters can kill stuff from far away
@@ -214,10 +214,10 @@ MonoBehaviour:
   - Type: 0
     Choices:
     - Type: 0
-      Attribute: 0
+      Attribute: 5
       Class: 0
     - Type: 0
-      Attribute: 1
+      Attribute: 2
       Class: 0
   - Type: 0
     Choices:

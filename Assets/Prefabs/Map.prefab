@@ -123,7 +123,7 @@ MonoBehaviour:
   GoblinsForSalePrVillage: 3
   EquipmentInLootChance: 0.25
   NpcsToGenerate: 25
-  GoblinsToGenerate: 4
+  GoblinsToGenerate: 5
   DefaultCharacter: {fileID: 100702, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe, type: 3}
   GoblinTeam: {fileID: 0}
 --- !u!1 &2032421715755256616

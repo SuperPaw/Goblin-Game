@@ -27,9 +27,9 @@ public class Goblin : Character
     public enum Class
     {
         NoClass = 0,
-        Goblin = 1, Slave = 2, Swarmer = 4, Shooter = 8, Ambusher = 16, Scout = 32,
+        Goblin = 1, Slave = 2, Meathshield = 4, Shooter = 8, Ambusher = 16, Scout = 32,
         END = 64,
-        ALL = Goblin | Slave | Swarmer | Shooter | Ambusher | Scout
+        ALL = Goblin | Slave | Meathshield | Shooter | Ambusher | Scout
     }
 
     public Class ClassType;
@@ -169,10 +169,12 @@ public class Goblin : Character
             case Class.Slave:
                 COU.Modifiers.Add(new Stat.StatMod("Slave", 1));
                 break;
-            case Class.Swarmer:
+            case Class.Meathshield:
                 MoralLossModifier = 0.5f;
-                DMG.Modifiers.Add(new Stat.StatMod("Swarmer",2));
-                SMA.Modifiers.Add(new Stat.StatMod("Swarmer", -1));
+                OutgoingDmgPct = 0.8f;
+                IncomingDmgPct = 0.8f;
+                HEA.Modifiers.Add(new Stat.StatMod("Meatshield",2));
+                COU.Modifiers.Add(new Stat.StatMod("Meatshield", 1));
                 break;
             case Class.Shooter:
                 AttackRange *= 5;
