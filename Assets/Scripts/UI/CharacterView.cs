@@ -58,6 +58,14 @@ public class CharacterView : MenuWindow
         Instance.showCharacter(Instance.character);
     }
 
+    public static void Kill()
+    {
+        if (!Instance.ViewHolder.activeInHierarchy || !Instance.character)
+            return;
+
+        Instance.character.Kill();
+    }
+
     private void showCharacter(Goblin c)
     {
         Open();

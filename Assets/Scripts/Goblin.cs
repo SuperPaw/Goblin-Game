@@ -261,4 +261,9 @@ public class Goblin : Character
 
         ChangeState(CharacterState.Searching, true);
     }
+
+    public void Kill()
+    {
+        Health = 0;
+    }
 }

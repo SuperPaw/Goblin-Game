@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     public bool DragToPan;
     public bool ZoomEnabled;
     public int MouseMoveKey = 1;
-    public enum MappableActions { Hide, Attack, Flee, Menu,FixCamOnLeader, Move, Camp,InvincibleMode, AddXp, ZoomIn, ZoomOut, Pause } //TODO: move should contain direction maybe
+    public enum MappableActions { Hide, Attack, Flee, Menu,FixCamOnLeader, Move, Camp,InvincibleMode, AddXp, ZoomIn, ZoomOut, Pause,Kill } //TODO: move should contain direction maybe
     public LayerMask HitMask;
 
     [Serializable]
@@ -571,6 +571,9 @@ public class PlayerController : MonoBehaviour
                     GameManager.UnPause();
                 else
                     GameManager.Pause();
+                break;
+            case MappableActions.Kill:
+                CharacterView.Kill();
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

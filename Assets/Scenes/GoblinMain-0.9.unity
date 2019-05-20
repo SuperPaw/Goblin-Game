@@ -688,18 +688,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 229336762}
   m_CullTransparentMesh: 0
---- !u!114 &383147625 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8039850125276326806, guid: 9c662831f0f89a84985dc89b3f3e3c90,
-    type: 3}
-  m_PrefabInstance: {fileID: 8039850126836150550}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &904032339
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,6 +745,8 @@ MonoBehaviour:
     Action: 10
   - Key: 32
     Action: 11
+  - Key: 107
+    Action: 12
   Orders:
   - Order: 0
     Speech: Hide in the trees!
@@ -948,8 +938,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Members: []
   Fighting: 0
-  TreasureText: {fileID: 1295394607}
-  FoodText: {fileID: 383147625}
+  TreasureText: {fileID: 8039850126836150552}
+  FoodText: {fileID: 8039850126836150551}
   Challenger: {fileID: 0}
   RandomMoveFactor: 2
   Campfire: {fileID: 0}
@@ -1224,18 +1214,6 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
---- !u!114 &1295394607 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8039850125344981459, guid: 9c662831f0f89a84985dc89b3f3e3c90,
-    type: 3}
-  m_PrefabInstance: {fileID: 8039850126836150550}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1568908559
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1243,6 +1221,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1268618534227698, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
       propertyPath: NpcHolder
@@ -1917,6 +1899,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 522264546816754398, guid: 91610a33314402343b24e70fecefb551,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 167.6
       objectReference: {fileID: 0}
     - target: {fileID: 522264548182955951, guid: 91610a33314402343b24e70fecefb551,
         type: 3}
@@ -10108,3 +10095,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c662831f0f89a84985dc89b3f3e3c90, type: 3}
+--- !u!114 &8039850126836150551 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8039850125276326806, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+    type: 3}
+  m_PrefabInstance: {fileID: 8039850126836150550}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8039850126836150552 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8039850125344981459, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+    type: 3}
+  m_PrefabInstance: {fileID: 8039850126836150550}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
