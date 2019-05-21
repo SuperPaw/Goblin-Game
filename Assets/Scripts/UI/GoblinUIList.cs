@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GoblinUIList : MonoBehaviour
@@ -55,7 +56,26 @@ public class GoblinUIList : MonoBehaviour
         e.ClassImage.sprite = GameManager.GetClassImage(g.ClassType);
 
         //without "Chief "
-        e.NameText.text = (g == Team.Leader) ? g.name.Remove(0, 6) : g.name;
+        if ((g == Team.Leader))
+        {
+            var strs = g.name.Split(' ').ToList();
+
+            strs.Remove("Chief");
+
+            var st = strs.First() + System.Environment.NewLine;
+            strs.Remove(strs.First());
+
+            foreach (var s in strs)
+            {
+                st += " " + s;
+            }
+            e.NameText.text = st;
+        }
+        else
+        {
+            e.NameText.text = g.name;
+        }
+        
         
         e.Goblin = g;
 

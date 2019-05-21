@@ -9,7 +9,7 @@ public class GreatestGoblins : MonoBehaviour
     public List<Score> HighScores = new List<Score>();
     public Score ActiveScore;
     [SerializeField]
-    private HighScoreEntry HighScoreEntry;
+    private HighScoreEntry HighScoreEntry = null;
     private static GreatestGoblins Instance;
 
     void Awake()

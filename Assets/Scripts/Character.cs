@@ -140,7 +140,6 @@ public abstract class Character : MonoBehaviour
     public Stat HEA;
     public Stat SPE;
     public Stat SMA;
-    [SerializeField]
     public Dictionary<StatType,Stat> Stats;
 
     public int DamMin,

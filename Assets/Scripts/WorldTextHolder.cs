@@ -7,14 +7,14 @@ using UnityEngine.UI;
 public class WorldTextHolder : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI MapTextEntry;
+    private TextMeshProUGUI MapTextEntry = null;
     [SerializeField]
-    private Text FloatTextEntry;
+    private Text FloatTextEntry = null;
 
     private static WorldTextHolder Instance;
 
     [SerializeField]
-    private Text ValueChangeText;
+    private Text ValueChangeText = null;
     [SerializeField]
     private Color PositiveChangeColor = Color.green;
     [SerializeField]

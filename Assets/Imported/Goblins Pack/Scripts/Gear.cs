@@ -13,7 +13,7 @@ public class Gear : MonoBehaviour
     #region Private serialized fields
 
     [SerializeField]
-    private ItemState[] _itemStates;
+    private ItemState[] _itemStates = null;
 
     #endregion
 

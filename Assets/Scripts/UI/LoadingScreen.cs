@@ -15,12 +15,12 @@ public class LoadingScreen : MonoBehaviour
     private int imageStartSize;
     public int imageEndSize;
     [SerializeField]
-    private AnimationCurve ImageAnimationCurve;
+    private AnimationCurve ImageAnimationCurve = null;
 
-    [SerializeField] private Image Background;
+    [SerializeField] private Image Background = null;
 
-    [SerializeField] private Color StartColor;
-    [SerializeField] private Color EndColor;
+    [SerializeField] private Color StartColor = Color.clear;
+    [SerializeField] private Color EndColor = Color.clear;
 
 
     void Start ()

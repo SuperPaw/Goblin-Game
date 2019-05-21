@@ -12,15 +12,15 @@ public class LevelUpView : MenuWindow
     private LevelController.LevelUpChoice[] Choices;
     private LevelController.LevelUpChoice SelectedChoice;
     [SerializeField]
-    private TextMeshProUGUI ChoiceExplanantion;
+    private TextMeshProUGUI ChoiceExplanantion = null;
     //public TextMeshProUGUI SelectText;
     private List<LevelUpChoiceEntry> generatedChoiceEntries = new List<LevelUpChoiceEntry>();
     [SerializeField]
-    private LevelUpChoiceEntry levelUpChoiceEntry;
+    private LevelUpChoiceEntry levelUpChoiceEntry = null;
     [SerializeField]
-    private LevelController.LevelUpChoice[] ClassChoices;
+    private LevelController.LevelUpChoice[] ClassChoices = null;
     [SerializeField]
-    private Button ConfirmButton;
+    private Button ConfirmButton = null;
     private Vector3 normalScale = Vector3.one;
     private Vector3 HighlightScale = Vector3.one * 1.3f;
 
