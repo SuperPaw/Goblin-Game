@@ -7,4 +7,6 @@ public class HighScoreEntry : MonoBehaviour
 {
     public TextMeshProUGUI Name, Value;
     public GreatestGoblins.Score Score;
+
+
 }

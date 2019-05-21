@@ -69,6 +69,13 @@
     <Compile Include="Assets\Imported\LowPoly Fantasy Monsters Pack Ver1.0_Demo\Environment\Scripts\PointLight.cs" />
     <Compile Include="Assets\Imported\Pixel Perfect Retro Camera\Scripts\PixelCamera.cs" />
     <Compile Include="Assets\Imported\Pixel Perfect Retro Camera\Scripts\SnapToPixel.cs" />
+    <Compile Include="Assets\Imported\SaveGameFree\Examples\Auto Save\ExampleMoveObject.cs" />
+    <Compile Include="Assets\Imported\SaveGameFree\Examples\Save Custom\ExampleSaveCustom.cs" />
+    <Compile Include="Assets\Imported\SaveGameFree\Examples\Save Position\ExampleSavePosition.cs" />
+    <Compile Include="Assets\Imported\SaveGameFree\Examples\Save Rotation\ExampleSaveRotation.cs" />
+    <Compile Include="Assets\Imported\SaveGameFree\Examples\Save Scale\ExampleSaveScale.cs" />
+    <Compile Include="Assets\Imported\SaveGameFree\Examples\Save Web\ExampleSaveWeb.cs" />
+    <Compile Include="Assets\Imported\SaveGameFree\Examples\Shared\Scripts\SerializerDropdown.cs" />
     <Compile Include="Assets\Imported\Thread Ninja\Example\ExampleScript.cs" />
     <Compile Include="Assets\Imported\Thread Ninja\Ninja.cs" />
     <Compile Include="Assets\Imported\Thread Ninja\Task.cs" />
@@ -146,6 +153,22 @@
     <Compile Include="Assets\Scripts\MapLocations\PointOfInterest.cs" />
     <Compile Include="Assets\Scripts\MapLocations\WitchHut.cs" />
     <Compile Include="Assets\Scripts\NpcHolder.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\Encoders\ISaveGameEncoder.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\Encoders\SaveGameSimpleEncoder.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\SaveGame.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\SaveGameAuto.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\SaveGameWeb.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\Serializers\ISaveGameSerializer.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\Serializers\SaveGameBinarySerializer.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\Serializers\SaveGameJsonSerializer.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\Serializers\SaveGameXmlSerializer.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\Types\Color32Save.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\Types\ColorSave.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\Types\MeshSave.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\Types\QuaternionSave.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\Types\Vector2Save.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\Types\Vector3Save.cs" />
+    <Compile Include="Assets\Scripts\PersistentData\Types\Vector4Save.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerTeam.cs" />
     <Compile Include="Assets\Scripts\ProcGen\EquipmentGen.cs" />
@@ -183,6 +206,7 @@
     <Compile Include="Assets\Scripts\WorldToScreenText.cs" />
     <Compile Include="Assets\Scripts\ZoomBehaviour.cs" />
     <None Include="Assets\PostProcessing\Resources\Shaders\DepthOfField.shader" />
+    <None Include="Assets\Imported\SaveGameFree\Readme.txt" />
     <None Include="Assets\Sprites\7soulsrpggraphics_uipack\Assets\readme.txt" />
     <None Include="Assets\Shaders\Outlined-Silhouette Only.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
@@ -211,6 +235,7 @@
     <None Include="Assets\PostProcessing\Resources\Shaders\FXAA3.cginc" />
     <None Include="Assets\PostProcessing\Resources\Shaders\MotionBlur.shader" />
     <None Include="Assets\PostProcessing\Resources\Shaders\AmbientOcclusion.shader" />
+    <None Include="Assets\Imported\SaveGameFree\Documentation\Save Game Free Documentation - Plain Text Version.txt" />
     <None Include="Assets\PostProcessing\Resources\Bluenoise64\LICENSE.txt" />
     <None Include="Assets\PostProcessing\Resources\Shaders\BuiltinDebugViews.shader" />
     <None Include="Assets\PostProcessing\Resources\Shaders\Common.cginc" />
@@ -239,6 +264,7 @@
     <None Include="Assets\Shaders\FogOfWar.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
+    <None Include="Assets\Imported\SaveGameFree\Plugins\FullSerializer.xml" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\VectorscopeRender.shader" />
     <None Include="Assets\PostProcessing\Resources\Shaders\EyeAdaptation.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
@@ -467,6 +493,9 @@
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.3f1/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="FullSerializer">
+      <HintPath>C:/git/GoblinGame/Assets/Imported/SaveGameFree/Plugins/FullSerializer.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
       <HintPath>C:/git/GoblinGame/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>

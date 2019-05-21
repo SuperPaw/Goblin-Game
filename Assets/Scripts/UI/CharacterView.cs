@@ -107,8 +107,7 @@ public class CharacterView : MenuWindow
         //HealthTextEntry.ValueHover.Stat = c.HEA;
         ClassIcon.sprite = c.Alive() ? GameManager.GetClassImage(c.ClassType): GameManager.GetIconImage(GameManager.Icon.Dead);
         ClassIcon.GetComponent<OnValueHover>().Class = c.ClassType;
-
-        int lr = 0;
+        
         //TODO: update current stats instead replacing
         foreach (var stat in c.Stats.Values)
         {

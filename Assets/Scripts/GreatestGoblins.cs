@@ -113,6 +113,15 @@ public class GreatestGoblins : MonoBehaviour
         Instance.CreateScoreScreen();
     }
 
+    public static List<Score> GetScores() => Instance.HighScores;
 
     public static bool ScoresContainName(string name) => Instance.HighScores.Any(s => s.Name == name);
+
+    internal static void SetScores(List<Score> list)
+    {
+        if(list == null|| !list.Any())
+            return;
+
+        Instance.HighScores = list;
+    }
 }

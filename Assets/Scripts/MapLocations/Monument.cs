@@ -13,7 +13,7 @@ public class Monument : PointOfInterest
         StartCoroutine(Spawning(team));
     }
 
-    private IEnumerator Spawning(PlayerTeam team)
+    private new IEnumerator Spawning(PlayerTeam team)
     {
         yield return new WaitForSeconds(1.5f);
 
