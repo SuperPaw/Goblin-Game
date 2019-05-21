@@ -85,6 +85,8 @@ public class Area : MonoBehaviour
         FogOfWarSprite.gameObject.SetActive(!inArea);
 
         FogOfWarSprite.color = LightFogColor;
+        
+        PresentCharacters.ForEach(c => c.HolderGameObject.SetActive(true));
     }
 
     public void OnTriggerEnter(Collider other)
@@ -117,8 +119,11 @@ public class Area : MonoBehaviour
         if(c.Fleeing() || c.Travelling())
             c.ChangeState(Character.CharacterState.Idling);
 
+        c.HolderGameObject.SetActive(c.Team || Visible());
+
         //TODO: check if leader
         PlayerController.UpdateFog();
+
 
         //TODO: move to area change method
         if (PointOfInterest)
