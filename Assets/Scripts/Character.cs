@@ -327,7 +327,6 @@ public abstract class Character : MonoBehaviour
 
     public Area InArea;
     private Area fleeingToArea;
-    private Coroutine agentStuckRoutine;
     private Coroutine stateChangeRoutine;
 
     public void Start()
@@ -1305,7 +1304,7 @@ public abstract class Character : MonoBehaviour
             Debug.Log(name + ": Bump");
             ChangeState(CharacterState.Idling,true);
         }
-        agentStuckRoutine = null;
+        //agentStuckRoutine = null;
     }
 
     private bool IncoherentNavAgentSpeed() =>

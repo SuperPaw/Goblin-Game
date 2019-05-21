@@ -74,7 +74,6 @@
     <Compile Include="Assets\Imported\SaveGameFree\Examples\Save Position\ExampleSavePosition.cs" />
     <Compile Include="Assets\Imported\SaveGameFree\Examples\Save Rotation\ExampleSaveRotation.cs" />
     <Compile Include="Assets\Imported\SaveGameFree\Examples\Save Scale\ExampleSaveScale.cs" />
-    <Compile Include="Assets\Imported\SaveGameFree\Examples\Save Web\ExampleSaveWeb.cs" />
     <Compile Include="Assets\Imported\SaveGameFree\Examples\Shared\Scripts\SerializerDropdown.cs" />
     <Compile Include="Assets\Imported\Thread Ninja\Example\ExampleScript.cs" />
     <Compile Include="Assets\Imported\Thread Ninja\Ninja.cs" />
@@ -157,7 +156,6 @@
     <Compile Include="Assets\Scripts\PersistentData\Encoders\SaveGameSimpleEncoder.cs" />
     <Compile Include="Assets\Scripts\PersistentData\SaveGame.cs" />
     <Compile Include="Assets\Scripts\PersistentData\SaveGameAuto.cs" />
-    <Compile Include="Assets\Scripts\PersistentData\SaveGameWeb.cs" />
     <Compile Include="Assets\Scripts\PersistentData\Serializers\ISaveGameSerializer.cs" />
     <Compile Include="Assets\Scripts\PersistentData\Serializers\SaveGameBinarySerializer.cs" />
     <Compile Include="Assets\Scripts\PersistentData\Serializers\SaveGameJsonSerializer.cs" />
