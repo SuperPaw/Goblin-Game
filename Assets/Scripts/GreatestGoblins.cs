@@ -122,6 +122,6 @@ public class GreatestGoblins : MonoBehaviour
         if(list == null|| !list.Any())
             return;
 
-        Instance.HighScores = list;
+        Instance.HighScores = list.Take(10).ToList();
     }
 }
