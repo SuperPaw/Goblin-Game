@@ -290,14 +290,26 @@ namespace BayatGames.SaveGameFree
 			if ( saveHighscores )
 			{
                     SaveGame.Save(
-                        highscoreIdentifier,GreatestGoblins.GetScores()
+                        highscoreIdentifier,GreatestGoblins.GetScores(),
+                        encode,
+                        encodePassword,
+                        serializer,
+                        encoder,
+                        encoding,
+                        savePath
                         );
 			}
 			if ( saveLegacy )
 			{
 				SaveGame.Save( 
 					legacyIdentifier, 
-                    LegacySystem.GetAchievements());
+                    LegacySystem.GetAchievements(),
+				    encode,
+				    encodePassword,
+				    serializer,
+				    encoder,
+				    encoding,
+				    savePath);
 			}
 			if ( saveScale )
 			{

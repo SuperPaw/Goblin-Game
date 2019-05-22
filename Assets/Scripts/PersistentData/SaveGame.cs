@@ -391,6 +391,7 @@ namespace BayatGames.SaveGameFree
                 PlayerPrefs.SetString(filePath, data);
                 PlayerPrefs.Save();
             }
+            
             stream.Dispose();
             if (SaveCallback != null)
             {

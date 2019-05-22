@@ -17,8 +17,7 @@ public class Goblin : Character
     public GoblinWarrens Warrens;
 
     public Image ChiefImage;
-
-
+    
     public Image StateImage;
 
     public Character ProvokeTarget;

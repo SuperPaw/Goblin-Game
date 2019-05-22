@@ -12,13 +12,13 @@ public class PlayerTeam : MonoBehaviour
     //Make private to control add and remove events
     public List<Goblin> Members;
     private Goblin _leader;
-    
+
+    public static Goblin.Class LeaderClass = Goblin.Class.NoClass;
+    public static LegacySystem.Blessing TribeBlessing = LegacySystem.Blessing.NoBlessing;
+
     public Goblin Leader
     {
-        get
-        {
-            return _leader;
-        }
+        get => _leader;
         set
         {
             if (value != _leader)

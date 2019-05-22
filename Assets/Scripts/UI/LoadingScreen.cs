@@ -41,10 +41,8 @@ public class LoadingScreen : MonoBehaviour
         // CLASS SELECT SET-UP
         if (legs.Any(a => a.Unlocked && a.UnlocksClass != Goblin.Class.NoClass))
         {
-            var unlocked = legs.Where(e => e.Unlocked).Select(a => a.UnlocksClass).Distinct();
-
-            ChiefClassSelect.ClearOptions();
-
+            var unlocked = legs.Where(e => e.Unlocked && e.UnlocksClass != Goblin.Class.NoClass).Select(a => a.UnlocksClass).Distinct().OrderBy(a => a);
+            
             ChiefClassSelect.AddOptions(unlocked.Select(u => new TMP_Dropdown.OptionData(u.ToString())).ToList());
         }
         else
@@ -55,10 +53,8 @@ public class LoadingScreen : MonoBehaviour
         // World SELECT SET-UP
         if (legs.Any(a => a.Unlocked && a.UnlocksMapSize != MapGenerator.WorldSize.Small))
         {
-            var unlocked = legs.Where(e => e.Unlocked).Select(a => a.UnlocksMapSize).Distinct();
-
-            WorldSizeSelect.ClearOptions();
-
+            var unlocked = legs.Where(e => e.Unlocked && e.UnlocksMapSize != MapGenerator.WorldSize.Small).Select(a => a.UnlocksMapSize).Distinct().OrderBy(a=>a);
+            
             WorldSizeSelect.AddOptions(unlocked.Select( u => new TMP_Dropdown.OptionData(u.ToString())).ToList());
         }
         else
@@ -69,11 +65,9 @@ public class LoadingScreen : MonoBehaviour
         // Blessing SELECT SET-UP
         if (legs.Any(a => a.Unlocked && a.UnlocksBlessing != LegacySystem.Blessing.NoBlessing))
         {
-            var unlocked = legs.Where(e=>e.Unlocked).Select(a => a.UnlocksBlessing).Distinct();
-
-            WorldSizeSelect.ClearOptions();
-
-            WorldSizeSelect.AddOptions(unlocked.Select(u => new TMP_Dropdown.OptionData(u.ToString())).ToList());
+            var unlocked = legs.Where(e=>e.Unlocked && e.UnlocksBlessing != LegacySystem.Blessing.NoBlessing).Select(a => a.UnlocksBlessing).Distinct().OrderBy(a => a);
+            
+            TribeBlessingSelect.AddOptions(unlocked.Select(u => new TMP_Dropdown.OptionData(u.ToString())).ToList());
         }
         else
         {
@@ -89,6 +83,7 @@ public class LoadingScreen : MonoBehaviour
         SoundController.ChangeMusic(SoundBank.Music.Menu);
 
         StartButton.interactable = false;
+        
         Destroy(WorldSizeTextHolder);
         Destroy(ClassSelectHolder);
         Destroy(TribeSelectHolder);
@@ -97,6 +92,7 @@ public class LoadingScreen : MonoBehaviour
         StartCoroutine(MapGen.GenerateMap(SetLoadingText, ()=>Destroy(gameObject)));
         //TODO: include gobbo creation in loading
     }
+    
     
 
     private void SetLoadingText(int pct, string descrip)
@@ -117,5 +113,19 @@ public class LoadingScreen : MonoBehaviour
     public void SelectWorldSize(int sz)
     {
         MapGen.SetSize((MapGenerator.WorldSize) sz);
+    }
+
+    public void SelectChiefClass(int c)
+    {
+        Debug.Log("Selecting class: " + ChiefClassSelect.options[c].text);
+
+        PlayerTeam.LeaderClass = (Goblin.Class)Enum.Parse(typeof(Goblin.Class),ChiefClassSelect.options[c].text);
+    }
+
+    public void SelectTribeBlessing(int c)
+    {
+        Debug.Log("Selecting blessing: " + TribeBlessingSelect.options[c].text);
+
+        PlayerTeam.TribeBlessing = (LegacySystem.Blessing)Enum.Parse(typeof(LegacySystem.Blessing), TribeBlessingSelect.options[c].text);
     }
 }
