@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,26 +23,26 @@ public class LoadingScreen : MonoBehaviour
     [SerializeField] private Color StartColor = Color.clear;
     [SerializeField] private Color EndColor = Color.clear;
 
+    [SerializeField] private Button StartButton;
 
-    void Start ()
-	{
-	    //yield return new WaitForFixedUpdate();
-        
-		StartGame();
-        
-	}
+    
 
-    void StartGame()
+
+
+    public void StartGame()
     {
         //could load different scenes instead of just running the generate
 
         SoundController.ChangeMusic(SoundBank.Music.Menu);
-        
+
+        StartButton.interactable = false;
+        MapGen.gameObject.SetActive(true);
 
         StartCoroutine(MapGen.GenerateMap(SetLoadingText, ()=>gameObject.SetActive(false)));
         //TODO: include gobbo creation in loading
 
     }
+    
 
     private void SetLoadingText(int pct, string descrip)
     {
@@ -56,5 +57,10 @@ public class LoadingScreen : MonoBehaviour
         {
             rectTransform.localScale = new Vector3(sz, sz, sz);
         }
+    }
+
+    public void SelectWorldSize(int sz)
+    {
+        MapGen.SetSize((MapGenerator.WorldSize) sz);
     }
 }

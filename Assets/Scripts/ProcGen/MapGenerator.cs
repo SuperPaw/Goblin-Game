@@ -36,6 +36,18 @@ public class MapGenerator : MonoBehaviour
 
     [Header("Generation variables")]
     public int RandomSeed;
+
+    public enum WorldSize { Small, Medium, Big, Giant }
+    [Serializable]
+    public struct MapSize
+    {
+        public WorldSize WorldSize;
+        public int SizeX;
+        public int SizeY;
+    }
+
+    [SerializeField] private List<MapSize> MapSizes;
+
     public int SizeX, SizeZ;
     public Area AreaTilePrefab;
     public int AreaSize;
@@ -288,6 +300,14 @@ public class MapGenerator : MonoBehaviour
 
         endCallback();
 
+    }
+
+    public void SetSize(WorldSize sz)
+    {
+        var mpsz = MapSizes.First(s => s.WorldSize == sz);
+
+        SizeX = mpsz.SizeX;
+        SizeZ = mpsz.SizeY;
     }
 
     private IEnumerator AreaGenRoutine()

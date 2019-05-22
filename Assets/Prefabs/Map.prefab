@@ -49,6 +49,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaximumThreads: 8
   RandomSeed: 0
+  MapSizes:
+  - WorldSize: 0
+    SizeX: 120
+    SizeY: 120
+  - WorldSize: 1
+    SizeX: 200
+    SizeY: 200
+  - WorldSize: 2
+    SizeX: 240
+    SizeY: 280
+  - WorldSize: 3
+    SizeX: 280
+    SizeY: 400
   SizeX: 400
   SizeZ: 400
   AreaTilePrefab: {fileID: 114614147775462646, guid: e15f42e3c6199524da160032eae3127f,
