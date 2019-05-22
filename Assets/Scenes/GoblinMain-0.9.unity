@@ -1851,7 +1851,7 @@ MonoBehaviour:
     Unlocked: 1
     VisibleUnlockCondition: 0
     Image: {fileID: 0}
-    UnlocksClass: 4
+    UnlocksClass: Meatshield
     UnlocksMapSize: 0
     UnlocksBlessing: 0
   - Name: 
@@ -1861,7 +1861,7 @@ MonoBehaviour:
     Unlocked: 0
     VisibleUnlockCondition: 0
     Image: {fileID: 0}
-    UnlocksClass: 8
+    UnlocksClass: Shooter
     UnlocksMapSize: 0
     UnlocksBlessing: 0
   - Name: 
@@ -1871,7 +1871,7 @@ MonoBehaviour:
     Unlocked: 1
     VisibleUnlockCondition: 0
     Image: {fileID: 0}
-    UnlocksClass: 16
+    UnlocksClass: Ambusher
     UnlocksMapSize: 1
     UnlocksBlessing: 0
   - Name: 
@@ -1881,7 +1881,7 @@ MonoBehaviour:
     Unlocked: 1
     VisibleUnlockCondition: 0
     Image: {fileID: 0}
-    UnlocksClass: 0
+    UnlocksClass: 
     UnlocksMapSize: 0
     UnlocksBlessing: 0
   - Name: 
@@ -1891,7 +1891,7 @@ MonoBehaviour:
     Unlocked: 0
     VisibleUnlockCondition: 0
     Image: {fileID: 0}
-    UnlocksClass: 0
+    UnlocksClass: 
     UnlocksMapSize: 2
     UnlocksBlessing: 0
   - Name: BlessingTest
@@ -1901,7 +1901,7 @@ MonoBehaviour:
     Unlocked: 0
     VisibleUnlockCondition: 0
     Image: {fileID: 0}
-    UnlocksClass: 0
+    UnlocksClass: 
     UnlocksMapSize: 0
     UnlocksBlessing: 3
 --- !u!4 &931550175
@@ -2767,12 +2767,12 @@ MonoBehaviour:
   legacyIdentifier: legacy
   scaleIdentifier: enter the scale identifier
   encode: 0
-  encodePassword: 
+  encodePassword: h@e#ll$o%^
   format: 1
   savePath: 0
   resetBlanks: 1
   saveHighscores: 1
-  saveLegacy: 0
+  saveLegacy: 1
   saveScale: 0
   defaultPosition: {x: 0, y: 0, z: 0}
   defaultRotation: {x: -0, y: 0, z: 0}

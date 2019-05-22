@@ -39,9 +39,9 @@ public class LoadingScreen : MonoBehaviour
         var legs = LegacySystem.GetAchievements();
 
         // CLASS SELECT SET-UP
-        if (legs.Any(a => a.Unlocked && a.UnlocksClass != Goblin.Class.NoClass))
+        if (legs.Any(a => a.Unlocked && a.UnlocksClass != ""))
         {
-            var unlocked = legs.Where(e => e.Unlocked && e.UnlocksClass != Goblin.Class.NoClass).Select(a => a.UnlocksClass).Distinct().OrderBy(a => a);
+            var unlocked = legs.Where(e => e.Unlocked && e.UnlocksClass != "").Select(a => a.UnlocksClass).Distinct().OrderBy(a => a);
             
             ChiefClassSelect.AddOptions(unlocked.Select(u => new TMP_Dropdown.OptionData(u.ToString())).ToList());
         }

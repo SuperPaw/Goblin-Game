@@ -25,7 +25,7 @@ public class LegacySystem : MonoBehaviour
         public bool VisibleUnlockCondition;
         public Sprite Image;
         //using string due to goblin.Class being serialized wrongly
-        public Goblin.Class UnlocksClass;
+        public string UnlocksClass;
         public MapGenerator.WorldSize UnlocksMapSize;
         public Blessing UnlocksBlessing;
     }

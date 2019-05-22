@@ -102,6 +102,24 @@ public class PlayerTeam : MonoBehaviour
         if (!Leader)
             Leader = Members.First();
 
+        Leader.ClassType = LeaderClass;
+
+        switch (TribeBlessing)
+        {
+            case LegacySystem.Blessing.NoBlessing:
+                break;
+            case LegacySystem.Blessing.Xp:
+                break;
+            case LegacySystem.Blessing.Health:
+                break;
+            case LegacySystem.Blessing.ExtraGoblin:
+                break;
+            case LegacySystem.Blessing.Smarts:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
     }
 
     private void FoodChange(int i)
