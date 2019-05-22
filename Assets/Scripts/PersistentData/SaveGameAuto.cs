@@ -9,36 +9,14 @@ using BayatGames.SaveGameFree.Types;
 
 namespace BayatGames.SaveGameFree
 {
-
-	/// <summary>
-	/// Save Game Auto.
-	/// Make your game objects save their position, rotaiton and scale automatically.
-	/// </summary>
 	[AddComponentMenu ( "Save Game Free/Auto Save" )]
 	public class SaveGameAuto : MonoBehaviour
 	{
-
-		/// <summary>
-		/// Save format.
-		/// </summary>
 		public enum SaveFormat
 		{
-			
-			/// <summary>
-			/// The XML.
-			/// </summary>
 			XML,
-
-			/// <summary>
-			/// The JSON.
-			/// </summary>
 			JSON,
-
-			/// <summary>
-			/// The Ninary.
-			/// </summary>
 			Binary
-
 		}
 
 
@@ -53,7 +31,7 @@ namespace BayatGames.SaveGameFree
 		/// <summary>
 		/// The rotation identifier.
 		/// </summary>
-		public string rotationIdentifier = "enter the rotation identifier";
+		public string legacyIdentifier = "enter the rotation identifier";
 
 		[Tooltip ( "You must specify a value for this to be able to save it." )]
 		/// <summary>
@@ -118,7 +96,7 @@ namespace BayatGames.SaveGameFree
 		/// <summary>
 		/// The save rotation.
 		/// </summary>
-		public bool saveRotation = true;
+		public bool saveLegacy = true;
 
 		[Tooltip ( "Save Scale?" )]
 		/// <summary>
@@ -315,17 +293,11 @@ namespace BayatGames.SaveGameFree
                         highscoreIdentifier,GreatestGoblins.GetScores()
                         );
 			}
-			if ( saveRotation )
+			if ( saveLegacy )
 			{
-				SaveGame.Save<QuaternionSave> ( 
-					rotationIdentifier, 
-					transform.rotation, 
-					encode,
-					encodePassword,
-					serializer,
-					encoder,
-					encoding,
-					savePath );
+				SaveGame.Save( 
+					legacyIdentifier, 
+                    LegacySystem.GetAchievements());
 			}
 			if ( saveScale )
 			{
@@ -352,17 +324,9 @@ namespace BayatGames.SaveGameFree
 					highscoreIdentifier
                     ));
 			}
-			if ( saveRotation )
+			if ( saveLegacy )
 			{
-				transform.rotation = SaveGame.Load<QuaternionSave> ( 
-					rotationIdentifier, 
-					Quaternion.Euler ( defaultRotation ), 
-					encode,
-					encodePassword,
-					serializer,
-					encoder,
-					encoding,
-					savePath );
+                LegacySystem.SetAchievements(SaveGame.Load<List<LegacySystem.Achievement>>(legacyIdentifier));
 			}
 			if ( saveScale )
 			{

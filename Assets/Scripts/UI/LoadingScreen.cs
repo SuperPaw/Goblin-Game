@@ -23,10 +23,63 @@ public class LoadingScreen : MonoBehaviour
     [SerializeField] private Color StartColor = Color.clear;
     [SerializeField] private Color EndColor = Color.clear;
 
-    [SerializeField] private Button StartButton;
+    [SerializeField] private Button StartButton = null;
 
-    
+    [SerializeField] private GameObject WorldSizeTextHolder = null;
+    [SerializeField] private GameObject ClassSelectHolder = null;
+    [SerializeField] private GameObject TribeSelectHolder = null;
 
+    [SerializeField] private TMP_Dropdown WorldSizeSelect = null;
+    [SerializeField] private TMP_Dropdown ChiefClassSelect = null;
+    [SerializeField] private TMP_Dropdown TribeBlessingSelect = null;
+
+
+    public void Start()
+    {
+        var legs = LegacySystem.GetAchievements();
+
+        // CLASS SELECT SET-UP
+        if (legs.Any(a => a.Unlocked && a.UnlocksClass != Goblin.Class.NoClass))
+        {
+            var unlocked = legs.Where(e => e.Unlocked).Select(a => a.UnlocksClass).Distinct();
+
+            ChiefClassSelect.ClearOptions();
+
+            ChiefClassSelect.AddOptions(unlocked.Select(u => new TMP_Dropdown.OptionData(u.ToString())).ToList());
+        }
+        else
+        {
+            ClassSelectHolder.SetActive(false);
+        }
+
+        // World SELECT SET-UP
+        if (legs.Any(a => a.Unlocked && a.UnlocksMapSize != MapGenerator.WorldSize.Small))
+        {
+            var unlocked = legs.Where(e => e.Unlocked).Select(a => a.UnlocksMapSize).Distinct();
+
+            WorldSizeSelect.ClearOptions();
+
+            WorldSizeSelect.AddOptions(unlocked.Select( u => new TMP_Dropdown.OptionData(u.ToString())).ToList());
+        }
+        else
+        {
+            WorldSizeTextHolder.SetActive(false);
+        }
+
+        // Blessing SELECT SET-UP
+        if (legs.Any(a => a.Unlocked && a.UnlocksBlessing != LegacySystem.Blessing.NoBlessing))
+        {
+            var unlocked = legs.Where(e=>e.Unlocked).Select(a => a.UnlocksBlessing).Distinct();
+
+            WorldSizeSelect.ClearOptions();
+
+            WorldSizeSelect.AddOptions(unlocked.Select(u => new TMP_Dropdown.OptionData(u.ToString())).ToList());
+        }
+        else
+        {
+            TribeSelectHolder.SetActive(false);
+        }
+    }
 
 
     public void StartGame()
@@ -36,11 +89,13 @@ public class LoadingScreen : MonoBehaviour
         SoundController.ChangeMusic(SoundBank.Music.Menu);
 
         StartButton.interactable = false;
+        Destroy(WorldSizeTextHolder);
+        Destroy(ClassSelectHolder);
+        Destroy(TribeSelectHolder);
         MapGen.gameObject.SetActive(true);
 
-        StartCoroutine(MapGen.GenerateMap(SetLoadingText, ()=>gameObject.SetActive(false)));
+        StartCoroutine(MapGen.GenerateMap(SetLoadingText, ()=>Destroy(gameObject)));
         //TODO: include gobbo creation in loading
-
     }
     
 
