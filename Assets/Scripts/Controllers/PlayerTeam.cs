@@ -94,7 +94,9 @@ public class PlayerTeam : MonoBehaviour
 
         OnTeamKill.AddListener(TeamKill);
         OnEquipmentFound.AddListener(EquipmentFound);
+        OnEquipmentFound.AddListener((e,g)=> LegacySystem.OnConditionEvent.Invoke(LegacySystem.UnlockCondition.EquipmentFound));
         OnTreasureFound.AddListener(TreasureChange);
+        OnTreasureFound.AddListener(t=>LegacySystem.OnConditionEvent.Invoke(LegacySystem.UnlockCondition.Treasure));
         OnFoodFound.AddListener(FoodChange);
 
         UpdateFoodAndTreasure();
@@ -102,6 +104,7 @@ public class PlayerTeam : MonoBehaviour
         if (!Leader)
             Leader = Members.First();
 
+        //TODO: use assign class for bonuses instead
         Leader.ClassType = LeaderClass;
 
         switch (TribeBlessing)

@@ -22,13 +22,21 @@ public class Goblin : Character
 
     public Character ProvokeTarget;
 
+    //diplomat(kan forhandle med andre)
+    //Shaman? kan helbrede + magi + sacrifice slaves(or treasure) for benefits
+    //    necromanceer? for zombie goblins
+    //Slave Master
+    //hunter?
+    //    brewer?
+    //wolf/beast master
+    //cook
     [Flags]
     public enum Class
     {
         NoClass = 0,
-        Goblin = 1, Slave = 2, Meathshield = 4, Shooter = 8, Ambusher = 16, Scout = 32,
-        END = 64,
-        ALL = Goblin | Slave | Meathshield | Shooter | Ambusher | Scout
+        Goblin = 1, Slave = 2, Meathshield = 4, Shooter = 8, Ambusher = 16, Scout = 32, Necromancer = 64, Beastmaster = 128, Hunter = 256, Cook = 512, Shaman = 1024, Diplomat = 2048,
+        END = 4096,
+        ALL = Goblin | Slave | Meathshield | Shooter | Ambusher | Scout | Necromancer | Beastmaster | Hunter | Cook | Shaman | Diplomat
     }
 
     public Class ClassType;

@@ -1844,66 +1844,259 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Achievements:
-  - Name: Big Bang
-    Condition: 0
-    AmountToUnlock: 0
+  - Name: WorldSizeMed
+    Condition: 8
+    AmountToUnlock: 5
     X: 0
-    Unlocked: 1
-    VisibleUnlockCondition: 0
+    Unlocked: 0
+    Unlockable: 1
+    VisibleUnlockCondition: 1
+    Image: {fileID: 0}
+    UnlocksClass: 
+    UnlocksMapSize: 0
+    UnlocksBlessing: 0
+  - Name: WorldSizeBig
+    Condition: 5
+    AmountToUnlock: 2
+    X: 0
+    Unlocked: 0
+    Unlockable: 1
+    VisibleUnlockCondition: 1
+    Image: {fileID: 0}
+    UnlocksClass: 
+    UnlocksMapSize: 0
+    UnlocksBlessing: 0
+  - Name: WorldSizeGiant
+    Condition: 0
+    AmountToUnlock: 1
+    X: 0
+    Unlocked: 0
+    Unlockable: 1
+    VisibleUnlockCondition: 1
+    Image: {fileID: 0}
+    UnlocksClass: 
+    UnlocksMapSize: 0
+    UnlocksBlessing: 0
+  - Name: ClassMeatshield
+    Condition: 7
+    AmountToUnlock: 2
+    X: 0
+    Unlocked: 0
+    Unlockable: 1
+    VisibleUnlockCondition: 1
     Image: {fileID: 0}
     UnlocksClass: Meatshield
     UnlocksMapSize: 0
     UnlocksBlessing: 0
-  - Name: 
-    Condition: 0
-    AmountToUnlock: 0
+  - Name: ClassScout
+    Condition: 8
+    AmountToUnlock: 2
     X: 0
     Unlocked: 0
-    VisibleUnlockCondition: 0
+    Unlockable: 1
+    VisibleUnlockCondition: 1
+    Image: {fileID: 0}
+    UnlocksClass: Scout
+    UnlocksMapSize: 0
+    UnlocksBlessing: 0
+  - Name: ClassShooter
+    Condition: 4
+    AmountToUnlock: 2
+    X: 0
+    Unlocked: 0
+    Unlockable: 1
+    VisibleUnlockCondition: 1
     Image: {fileID: 0}
     UnlocksClass: Shooter
     UnlocksMapSize: 0
     UnlocksBlessing: 0
-  - Name: 
-    Condition: 0
-    AmountToUnlock: 0
+  - Name: ClassAmbusher
+    Condition: 3
+    AmountToUnlock: 2
     X: 0
-    Unlocked: 1
-    VisibleUnlockCondition: 0
+    Unlocked: 0
+    Unlockable: 1
+    VisibleUnlockCondition: 1
     Image: {fileID: 0}
     UnlocksClass: Ambusher
-    UnlocksMapSize: 1
+    UnlocksMapSize: 0
     UnlocksBlessing: 0
-  - Name: 
-    Condition: 0
-    AmountToUnlock: 0
+  - Name: ClassNecromancer
+    Condition: 2
+    AmountToUnlock: 10
     X: 0
-    Unlocked: 1
+    Unlocked: 0
+    Unlockable: 1
+    VisibleUnlockCondition: 1
+    Image: {fileID: 0}
+    UnlocksClass: Necromancer
+    UnlocksMapSize: 0
+    UnlocksBlessing: 0
+  - Name: ClassBeast
+    Condition: 2
+    AmountToUnlock: 10
+    X: 0
+    Unlocked: 0
+    Unlockable: 0
+    VisibleUnlockCondition: 0
+    Image: {fileID: 0}
+    UnlocksClass: Beastmaster
+    UnlocksMapSize: 0
+    UnlocksBlessing: 0
+  - Name: ClassHunter
+    Condition: 2
+    AmountToUnlock: 10
+    X: 0
+    Unlocked: 0
+    Unlockable: 0
+    VisibleUnlockCondition: 0
+    Image: {fileID: 0}
+    UnlocksClass: Hunter
+    UnlocksMapSize: 0
+    UnlocksBlessing: 0
+  - Name: ClassCook
+    Condition: 2
+    AmountToUnlock: 10
+    X: 0
+    Unlocked: 0
+    Unlockable: 0
+    VisibleUnlockCondition: 0
+    Image: {fileID: 0}
+    UnlocksClass: Cook
+    UnlocksMapSize: 0
+    UnlocksBlessing: 0
+  - Name: ClassShaman
+    Condition: 2
+    AmountToUnlock: 10
+    X: 0
+    Unlocked: 0
+    Unlockable: 0
+    VisibleUnlockCondition: 0
+    Image: {fileID: 0}
+    UnlocksClass: Shaman
+    UnlocksMapSize: 0
+    UnlocksBlessing: 0
+  - Name: ClassDiplomat
+    Condition: 2
+    AmountToUnlock: 10
+    X: 0
+    Unlocked: 0
+    Unlockable: 0
+    VisibleUnlockCondition: 0
+    Image: {fileID: 0}
+    UnlocksClass: Diplomat
+    UnlocksMapSize: 0
+    UnlocksBlessing: 0
+  - Name: BlessingXp
+    Condition: 6
+    AmountToUnlock: 1
+    X: 0
+    Unlocked: 0
+    Unlockable: 1
     VisibleUnlockCondition: 0
     Image: {fileID: 0}
     UnlocksClass: 
     UnlocksMapSize: 0
-    UnlocksBlessing: 0
-  - Name: 
-    Condition: 0
-    AmountToUnlock: 0
+    UnlocksBlessing: 1
+  - Name: BlessingFood
+    Condition: 6
+    AmountToUnlock: 2
     X: 0
     Unlocked: 0
+    Unlockable: 1
     VisibleUnlockCondition: 0
     Image: {fileID: 0}
     UnlocksClass: 
-    UnlocksMapSize: 2
-    UnlocksBlessing: 0
-  - Name: BlessingTest
-    Condition: 0
-    AmountToUnlock: 0
+    UnlocksMapSize: 0
+    UnlocksBlessing: 2
+  - Name: BlessingTreasure
+    Condition: 6
+    AmountToUnlock: 3
     X: 0
     Unlocked: 0
+    Unlockable: 1
     VisibleUnlockCondition: 0
     Image: {fileID: 0}
     UnlocksClass: 
     UnlocksMapSize: 0
     UnlocksBlessing: 3
+  - Name: BlessingHealth
+    Condition: 6
+    AmountToUnlock: 4
+    X: 0
+    Unlocked: 0
+    Unlockable: 1
+    VisibleUnlockCondition: 0
+    Image: {fileID: 0}
+    UnlocksClass: 
+    UnlocksMapSize: 0
+    UnlocksBlessing: 4
+  - Name: BlessingGoblin
+    Condition: 6
+    AmountToUnlock: 5
+    X: 0
+    Unlocked: 0
+    Unlockable: 1
+    VisibleUnlockCondition: 0
+    Image: {fileID: 0}
+    UnlocksClass: 
+    UnlocksMapSize: 0
+    UnlocksBlessing: 5
+  - Name: BlessingSlave
+    Condition: 6
+    AmountToUnlock: 6
+    X: 0
+    Unlocked: 0
+    Unlockable: 1
+    VisibleUnlockCondition: 0
+    Image: {fileID: 0}
+    UnlocksClass: 
+    UnlocksMapSize: 0
+    UnlocksBlessing: 6
+  - Name: BlessingSmarts
+    Condition: 5
+    AmountToUnlock: 4
+    X: 0
+    Unlocked: 0
+    Unlockable: 1
+    VisibleUnlockCondition: 0
+    Image: {fileID: 0}
+    UnlocksClass: 
+    UnlocksMapSize: 0
+    UnlocksBlessing: 7
+  - Name: BlessingDamage
+    Condition: 1
+    AmountToUnlock: 4
+    X: 0
+    Unlocked: 0
+    Unlockable: 1
+    VisibleUnlockCondition: 1
+    Image: {fileID: 0}
+    UnlocksClass: 
+    UnlocksMapSize: 0
+    UnlocksBlessing: 8
+  - Name: BlessingSpeed
+    Condition: 1
+    AmountToUnlock: 8
+    X: 0
+    Unlocked: 0
+    Unlockable: 1
+    VisibleUnlockCondition: 1
+    Image: {fileID: 0}
+    UnlocksClass: 
+    UnlocksMapSize: 0
+    UnlocksBlessing: 9
+  - Name: BlessingAim
+    Condition: 4
+    AmountToUnlock: 5
+    X: 0
+    Unlocked: 0
+    Unlockable: 1
+    VisibleUnlockCondition: 1
+    Image: {fileID: 0}
+    UnlocksClass: 
+    UnlocksMapSize: 0
+    UnlocksBlessing: 10
 --- !u!4 &931550175
 Transform:
   m_ObjectHideFlags: 0
@@ -2772,7 +2965,7 @@ MonoBehaviour:
   savePath: 0
   resetBlanks: 1
   saveHighscores: 1
-  saveLegacy: 1
+  saveLegacy: 0
   saveScale: 0
   defaultPosition: {x: 0, y: 0, z: 0}
   defaultRotation: {x: -0, y: 0, z: 0}
@@ -4938,29 +5131,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7301989481906405786, guid: 68c95507853e8b14b8b6f95d1d678e74,
         type: 3}
-      propertyPath: Stingers.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301989481906405786, guid: 68c95507853e8b14b8b6f95d1d678e74,
-        type: 3}
-      propertyPath: Stingers.Array.data[5].Audio.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301989481906405786, guid: 68c95507853e8b14b8b6f95d1d678e74,
-        type: 3}
       propertyPath: Stingers.Array.data[4].Audio.Array.data[1]
       value: 
       objectReference: {fileID: 8300000, guid: 57a309863e238794f8f97b44b3257981, type: 3}
-    - target: {fileID: 7301989481906405786, guid: 68c95507853e8b14b8b6f95d1d678e74,
-        type: 3}
-      propertyPath: Stingers.Array.data[5].Type
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301989481906405786, guid: 68c95507853e8b14b8b6f95d1d678e74,
-        type: 3}
-      propertyPath: Stingers.Array.data[5].Audio.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 1051d6caf472cfd49b979064624be0de, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68c95507853e8b14b8b6f95d1d678e74, type: 3}
 --- !u!1001 &6057858525972215693

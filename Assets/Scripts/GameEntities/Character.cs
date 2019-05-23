@@ -167,15 +167,23 @@ public abstract class Character : MonoBehaviour
     public bool actionInProgress;
 
     [HideInInspector]
-    //should ignore z for 2d.
-    //public Vector3 Target;
+    //Static event to handle generic responces to death
+    public class RaceDeathEvent : UnityEvent<Race> { }
+    public static RaceDeathEvent OnAnyCharacterDeath = new RaceDeathEvent();
+    
+    public class DamageEvent : UnityEvent<int> { }
+    public DamageEvent OnDamage = new DamageEvent();
+
+    //using self as parameter, so other listeners will know who dead
+    public class DeathEvent : UnityEvent<Character> { }
+    public DeathEvent OnDeath = new DeathEvent();
 
     public class TargetDeathEvent : UnityEvent{ }
     public TargetDeathEvent OnTargetDeath = new TargetDeathEvent();
     
-    public class AttackEvent : UnityEvent<Character> { }
-    public AttackEvent OnAttackCharacter = new AttackEvent();
-    public AttackEvent OnBeingAttacked = new AttackEvent();
+    public class CharacterEvent : UnityEvent<Character> { }
+    public CharacterEvent OnCharacterCharacter = new CharacterEvent();
+    public CharacterEvent OnBeingAttacked = new CharacterEvent();
 
     public Vector3 Target;
     public NavMeshAgent navMeshAgent;
@@ -193,7 +201,7 @@ public abstract class Character : MonoBehaviour
             if (_attackTarget == value) return;
             _attackTarget = value;
             if(!value) return;
-            OnAttackCharacter.Invoke(_attackTarget);
+            OnCharacterCharacter.Invoke(_attackTarget);
             _attackTarget.OnDeath.AddListener(x=>OnTargetDeath.Invoke());
 
         }
@@ -268,13 +276,6 @@ public abstract class Character : MonoBehaviour
 
     public Material Material;
     
-    public class DamageEvent : UnityEvent<int> { }
-    public DamageEvent OnDamage = new DamageEvent();
-
-    //using self as parameter, so other listeners will know who dead
-    public class DeathEvent : UnityEvent<Character> { }
-    public  DeathEvent OnDeath = new DeathEvent();
-
     [Header("Animation")]
     public Animator Animator;
     public float SpeedAnimationThreshold;
@@ -375,12 +376,13 @@ public abstract class Character : MonoBehaviour
         
         OnDamage.AddListener(x=> StartCoroutine(HurtRoutine()));
         OnDeath.AddListener(Die);
+        OnDeath.AddListener(c=> OnAnyCharacterDeath.Invoke(c.CharacterRace));
         
         AttackRange = transform.lossyScale.x * 2f;
 
         OnTargetDeath.AddListener(TargetGone);
         OnBeingAttacked.AddListener(BeingAttacked);
-        OnAttackCharacter.AddListener(AttackCharacter);
+        OnCharacterCharacter.AddListener(AttackCharacter);
 
         if(!navMeshAgent)
             navMeshAgent = GetComponentInChildren<NavMeshAgent>();
