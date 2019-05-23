@@ -329,7 +329,7 @@ public abstract class Character : MonoBehaviour
     private Area fleeingToArea;
     private Coroutine stateChangeRoutine;
 
-    public void Start()
+    public void Awake()
     {
         //if(!Voice)
         //    Voice = GetComponentInChildren<AudioSource>();

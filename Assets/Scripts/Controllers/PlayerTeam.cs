@@ -105,19 +105,63 @@ public class PlayerTeam : MonoBehaviour
             Leader = Members.First();
 
         //TODO: use assign class for bonuses instead
-        Leader.ClassType = LeaderClass;
+        Leader.SelectClass(LeaderClass);
 
         switch (TribeBlessing)
         {
             case LegacySystem.Blessing.NoBlessing:
                 break;
             case LegacySystem.Blessing.Xp:
+                foreach (Goblin g in Members)
+                {
+                    g.Xp += 5;
+                }
                 break;
             case LegacySystem.Blessing.Health:
+                foreach (Goblin g in Members)
+                {
+                    g.HEA.LevelUp();
+                    g.HEA.LevelUp();
+                }
                 break;
             case LegacySystem.Blessing.ExtraGoblin:
+                Debug.LogError("Extra goblin  not implemented");
                 break;
             case LegacySystem.Blessing.Smarts:
+                foreach (Goblin g in Members)
+                {
+                    g.SMA.LevelUp();
+                }
+                break;
+            case LegacySystem.Blessing.Food:
+                FoodChange(10);
+                break;
+            case LegacySystem.Blessing.Treasure:
+                TreasureChange(3);
+                break;
+            case LegacySystem.Blessing.ExtraSlaves:
+                Debug.LogError("Extra slaves not implemented");
+                break;
+            case LegacySystem.Blessing.Damage:
+                foreach (Goblin g in Members)
+                {
+                    g.DMG.LevelUp();
+                }
+                break;
+            case LegacySystem.Blessing.Speed:
+                foreach (Goblin g in Members)
+                {
+                    g.SPE.LevelUp();
+                }
+                break;
+            case LegacySystem.Blessing.Aim:
+                foreach (Goblin g in Members)
+                {
+                    g.AIM.LevelUp();
+                }
+                break;
+            case LegacySystem.Blessing.SoloGoblin:
+                Debug.LogError("Solo goblin mode not implemented");
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

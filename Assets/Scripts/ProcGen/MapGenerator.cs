@@ -85,6 +85,11 @@ public class MapGenerator : MonoBehaviour
     public int VillagesToGenerate;
     public GameObject VillagePrefab;
     public int GoblinsForSalePrVillage = 3;
+
+    private List<Goblin.Class> VillageGoblinClasses = new List<Goblin.Class>()
+    {
+        Goblin.Class.Scout,Goblin.Class.Meatshield,Goblin.Class.Slave,Goblin.Class.Scout,Goblin.Class.Ambusher
+    };
     [Range(0f,1f)]
     public float EquipmentInLootChance = 0f;
 
@@ -500,8 +505,8 @@ public class MapGenerator : MonoBehaviour
                 var g = o.GetComponent<Goblin>();
 
                 g.tag = "NPC";
-
-                g.ClassType = (Goblin.Class)Random.Range(0, (int)Goblin.Class.END);
+                
+                g.SelectClass(VillageGoblinClasses[Random.Range(0,VillageGoblinClasses.Count)]);
 
                 g.name = NameGenerator.GetName();
 

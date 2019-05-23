@@ -39,7 +39,7 @@ public class Goblin : Character
         ALL = Goblin | Slave | Meatshield | Shooter | Ambusher | Scout | Necromancer | Beastmaster | Hunter | Cook | Shaman | Diplomat
     }
 
-    public Class ClassType;
+    public Class ClassType { private set; get; }
 
 
     private float lastSpeak;
@@ -103,9 +103,9 @@ public class Goblin : Character
 
         
 
-    new void Start()
+    new void Awake()
     {
-        base.Start();
+        base.Awake();
         
 
         emission = particles.emission;
