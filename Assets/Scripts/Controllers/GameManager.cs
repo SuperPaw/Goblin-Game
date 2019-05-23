@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -40,6 +43,7 @@ public class GameManager : MonoBehaviour
         //TODO: use this instead of on the stat
         public string Description;
     }
+    
     [Header("References")]
     public IconImg[] IconImages;
     public ClassImg[] ClassImgs;
@@ -205,4 +209,5 @@ public class GameManager : MonoBehaviour
         //TODO: move to above method
         HighScoreScreen.gameObject.SetActive(true);
     }
+    
 }

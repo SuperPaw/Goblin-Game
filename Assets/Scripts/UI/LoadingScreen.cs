@@ -24,6 +24,7 @@ public class LoadingScreen : MonoBehaviour
     [SerializeField] private Color EndColor = Color.clear;
 
     [SerializeField] private Button StartButton = null;
+    [SerializeField] private Button LegacyButton = null;
 
     [SerializeField] private GameObject WorldSizeTextHolder = null;
     [SerializeField] private GameObject ClassSelectHolder = null;
@@ -73,6 +74,8 @@ public class LoadingScreen : MonoBehaviour
         {
             TribeSelectHolder.SetActive(false);
         }
+
+        LegacyButton.onClick.AddListener(AchievementView.OpenView);
     }
 
 
@@ -87,6 +90,7 @@ public class LoadingScreen : MonoBehaviour
         Destroy(WorldSizeTextHolder);
         Destroy(ClassSelectHolder);
         Destroy(TribeSelectHolder);
+        Destroy(LegacyButton.gameObject);
         MapGen.gameObject.SetActive(true);
 
         StartCoroutine(MapGen.GenerateMap(SetLoadingText, ()=>Destroy(gameObject)));

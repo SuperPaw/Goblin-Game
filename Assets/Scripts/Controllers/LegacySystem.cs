@@ -16,7 +16,7 @@ public class LegacySystem : MonoBehaviour
     public class AchievementUnlockedEvent : UnityEvent<Achievement> { }
 
     public AchievementUnlockedEvent OnUnlock = new AchievementUnlockedEvent();
-
+    
     [Serializable]
     public class Achievement
     {
@@ -44,16 +44,18 @@ public class LegacySystem : MonoBehaviour
         EquipmentFound,
         GoblinSacrifice,
         GoblinDeath,
-        Treasure }
-    public enum Blessing { NoBlessing, Xp,Food,Treasure,Health,ExtraGoblin,ExtraSlave,Smarts,Damage,Speed,Aim}
+        Treasure,
+        DestroyFarm,
+        FindANewHome
+    }
+    public enum Blessing { NoBlessing, Xp,Food,Treasure,Health,ExtraGoblin,ExtraSlaves,Smarts,Damage,Speed,Aim,SoloGoblin}
         
 
     void Awake()
     {
         if (!Instance) Instance = this;
 
-        OnUnlock.AddListener(a => SoundController.PlayStinger(SoundBank.Stinger.AchievementUnlocked));
-        //OnUnlock.AddListener(PopupAchievement.ShowAchievement);
+        OnUnlock.AddListener(AchievementPopup.ShowAchievement);
 
         OnConditionEvent.AddListener(HandleConditionIncrement);
 
@@ -62,8 +64,20 @@ public class LegacySystem : MonoBehaviour
 
     public static void SetAchievements(List<Achievement> ass)
     {
-        Instance.Achievements = ass;
+        foreach (var a in ass)
+        {
+            Instance.UpdateAchievement(a);
+        }
     }
+
+    private void UpdateAchievement(Achievement a)
+    {
+        var old = Achievements.First(o => o.Name == a.Name);
+
+        old.Unlocked = a.Unlocked;
+        old.X = a.X;
+    }
+
     public static List<Achievement> GetAchievements()
     {
         return Instance.Achievements;
@@ -102,7 +116,7 @@ public class LegacySystem : MonoBehaviour
     private void CountUp(Achievement a)
     {
         a.X++;
-        if (a.X >= a.AmountToUnlock && a.Unlockable)
+        if (!a.Unlocked && a.X >= a.AmountToUnlock && a.Unlockable)
         {
             a.Unlocked = true;
             OnUnlock.Invoke(a);

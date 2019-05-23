@@ -62,6 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\AchievementPopup.cs" />
     <Compile Include="Assets\Imported\Goblins Pack\Scripts\Gear.cs" />
     <Compile Include="Assets\Imported\Goblins Pack\Scripts\ItemState.cs" />
     <Compile Include="Assets\Imported\Knight\scripts\rotator.cs" />
@@ -170,6 +171,8 @@
     <Compile Include="Assets\Scripts\ProcGen\EquipmentGen.cs" />
     <Compile Include="Assets\Scripts\ProcGen\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\ProcGen\NameGenerator.cs" />
+    <Compile Include="Assets\Scripts\UI\AchievementEntry.cs" />
+    <Compile Include="Assets\Scripts\UI\AchievementView.cs" />
     <Compile Include="Assets\Scripts\UI\AttackIconSelector.cs" />
     <Compile Include="Assets\Scripts\UI\BigStoneView.cs" />
     <Compile Include="Assets\Scripts\UI\CaveView.cs" />
