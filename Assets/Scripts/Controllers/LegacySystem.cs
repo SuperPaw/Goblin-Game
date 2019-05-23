@@ -36,7 +36,8 @@ public class LegacySystem : MonoBehaviour
 
     [SerializeField] private List<Achievement> Achievements;
     
-    public enum UnlockCondition { KillGiant,
+    public enum UnlockCondition {
+        KillGiant,
         KillSpider,
         KillZombie,
         KillHuman,

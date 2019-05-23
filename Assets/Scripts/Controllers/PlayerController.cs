@@ -652,6 +652,8 @@ public class PlayerController : MonoBehaviour
         
         SoundController.PlayStinger(SoundBank.Stinger.Sacrifice);
 
+        LegacySystem.OnConditionEvent.Invoke(LegacySystem.UnlockCondition.GoblinSacrifice);
+
         goblin.Speak(SoundBank.GoblinSound.Death);
 
         goblin.Team = null;

@@ -3488,7 +3488,7 @@ MonoBehaviour:
   savePath: 0
   resetBlanks: 1
   saveHighscores: 1
-  saveLegacy: 0
+  saveLegacy: 1
   saveScale: 0
   defaultPosition: {x: 0, y: 0, z: 0}
   defaultRotation: {x: -0, y: 0, z: 0}

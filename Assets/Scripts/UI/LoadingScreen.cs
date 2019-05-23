@@ -75,6 +75,9 @@ public class LoadingScreen : MonoBehaviour
             TribeSelectHolder.SetActive(false);
         }
 
+        LegacyButton.gameObject.SetActive(TribeSelectHolder.activeInHierarchy || ClassSelectHolder.activeInHierarchy ||
+                                          WorldSizeTextHolder.activeInHierarchy);
+
         LegacyButton.onClick.AddListener(AchievementView.OpenView);
     }
 
