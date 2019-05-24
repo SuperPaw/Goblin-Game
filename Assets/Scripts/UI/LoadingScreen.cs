@@ -43,6 +43,8 @@ public class LoadingScreen : MonoBehaviour
         SetupLegacyMenu();
 
         LegacyButton.onClick.AddListener(AchievementView.OpenView);
+
+        MapGen.SetSize(MapGenerator.WorldSize.Small);
     }
 
     public void StartGame()

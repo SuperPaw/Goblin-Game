@@ -39,15 +39,19 @@ public class MapGenerator : MonoBehaviour
 
     public enum WorldSize { Small, Medium, Big, Giant }
     [Serializable]
+    //TODO: included area size and buffer
     public struct MapSize
     {
         public WorldSize WorldSize;
         public int SizeX;
         public int SizeY;
+        public int PointOfInterests;
+        public int HumanSettlements;
+        public int VillagesToGenerate;
     }
 
-    [SerializeField] private List<MapSize> MapSizes;
-
+    [SerializeField] private List<MapSize> MapSizes = null;
+    
     public int SizeX, SizeZ;
     public Area AreaTilePrefab;
     public int AreaSize;
@@ -79,10 +83,8 @@ public class MapGenerator : MonoBehaviour
     public GameObject[] LootObjects;
     public PointOfInterest[] PointOfInterestPrefabs;
     public HumanSettlement[] HumanSettlementPrefab;
+
     [Header("Point of Interests")]
-    public int PointOfInterests;
-    public int HumanSettlements;
-    public int VillagesToGenerate;
     public GameObject VillagePrefab;
     public int GoblinsForSalePrVillage = 3;
 
@@ -120,6 +122,9 @@ public class MapGenerator : MonoBehaviour
     private int poiFact;
     private int progressPct;
     private int totalProgress;
+    private int VillagesToGenerate;
+    private int PointOfInterests;
+    private int HumanSettlements;
 
     // Use this for initialization
     public IEnumerator GenerateMap(Action<int,string> callback, Action endCallback)
@@ -315,6 +320,10 @@ public class MapGenerator : MonoBehaviour
 
         SizeX = mpsz.SizeX;
         SizeZ = mpsz.SizeY;
+
+        HumanSettlements = mpsz.HumanSettlements;
+        PointOfInterests = mpsz.PointOfInterests;
+        VillagesToGenerate = mpsz.VillagesToGenerate;
     }
 
     private IEnumerator AreaGenRoutine()
@@ -408,7 +417,7 @@ public class MapGenerator : MonoBehaviour
 
             var area = GetRandomArea();
 
-            while (area.PointOfInterest | !area.MovablePositions.Any())
+            while (area.PointOfInterest || !area.MovablePositions.Any())
             {
                 area = GetRandomArea();
                 yield return null;
@@ -830,7 +839,7 @@ public class MapGenerator : MonoBehaviour
     private GameObject CreateEnemyCharacter(GameObject go, Transform parent, Area goblinStartArea)
     {
         var area = GetRandomArea();
-        int maxTries = 12;
+        int maxTries = 10;
         int tries = 0;
 
         var type = go.GetComponent<Character>().CharacterRace;
@@ -838,8 +847,18 @@ public class MapGenerator : MonoBehaviour
         while ((area.PointOfInterest || area == goblinStartArea || area.ContainsRoads ||area.PresentCharacters.Any(c => c.CharacterRace != type)) && tries++ < maxTries)
             area = GetRandomArea();
 
-        if(tries >= maxTries)
+        if (tries >= maxTries)
+        {
             Debug.Log("CHUBACUBHA Max enm tries reached..");
+            var a = Areas.First(ar => !(ar.PointOfInterest || ar == goblinStartArea || ar.ContainsRoads));
+            if (a)
+            {
+                Debug.Log("Found other area for character");
+                area = a;
+            }
+        }
+
+
 
         return GenerateCharacter(go, area, parent);
     }
