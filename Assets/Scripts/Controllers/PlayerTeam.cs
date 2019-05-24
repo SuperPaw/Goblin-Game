@@ -105,7 +105,8 @@ public class PlayerTeam : MonoBehaviour
             Leader = Members.First();
 
         //TODO: use assign class for bonuses instead
-        Leader.SelectClass(LeaderClass);
+        if(LeaderClass != Goblin.Class.NoClass)
+            Leader.SelectClass(LeaderClass);
 
         switch (TribeBlessing)
         {

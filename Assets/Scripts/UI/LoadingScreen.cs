@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class LoadingScreen : MonoBehaviour
 {
+    private static LoadingScreen Instance;
     public TextMeshProUGUI Loading;
     public TextMeshProUGUI LoadingDescription;
     public MapGenerator MapGen;
@@ -37,13 +38,49 @@ public class LoadingScreen : MonoBehaviour
 
     public void Start()
     {
+        if (!Instance) Instance = this;
+
+        SetupLegacyMenu();
+
+        LegacyButton.onClick.AddListener(AchievementView.OpenView);
+    }
+
+    public void StartGame()
+    {
+        //could load different scenes instead of just running the generate
+
+        SoundController.ChangeMusic(SoundBank.Music.Menu);
+
+        StartButton.interactable = false;
+
+        Destroy(WorldSizeTextHolder);
+        Destroy(ClassSelectHolder);
+        Destroy(TribeSelectHolder);
+        Destroy(LegacyButton.gameObject);
+        MapGen.gameObject.SetActive(true);
+
+        StartCoroutine(MapGen.GenerateMap(SetLoadingText, () => Destroy(gameObject)));
+        //TODO: include gobbo creation in loading
+    }
+
+    public static void ResetLegacyMenu()
+    {
+        Instance.SetupLegacyMenu();
+    }
+
+    private void SetupLegacyMenu()
+    {
         var legs = LegacySystem.GetAchievements();
 
         // CLASS SELECT SET-UP
         if (legs.Any(a => a.Unlocked && a.UnlocksClass != ""))
         {
             var unlocked = legs.Where(e => e.Unlocked && e.UnlocksClass != "").Select(a => a.UnlocksClass).Distinct().OrderBy(a => a);
-            
+
+            ChiefClassSelect.ClearOptions();
+
+            ChiefClassSelect.AddOptions(new List<TMP_Dropdown.OptionData>() { new TMP_Dropdown.OptionData("No class") });
+
             ChiefClassSelect.AddOptions(unlocked.Select(u => new TMP_Dropdown.OptionData(u.ToString())).ToList());
         }
         else
@@ -54,9 +91,13 @@ public class LoadingScreen : MonoBehaviour
         // World SELECT SET-UP
         if (legs.Any(a => a.Unlocked && a.UnlocksMapSize != MapGenerator.WorldSize.Small))
         {
-            var unlocked = legs.Where(e => e.Unlocked && e.UnlocksMapSize != MapGenerator.WorldSize.Small).Select(a => a.UnlocksMapSize).Distinct().OrderBy(a=>a);
-            
-            WorldSizeSelect.AddOptions(unlocked.Select( u => new TMP_Dropdown.OptionData(u.ToString())).ToList());
+            var unlocked = legs.Where(e => e.Unlocked && e.UnlocksMapSize != MapGenerator.WorldSize.Small).Select(a => a.UnlocksMapSize).Distinct().OrderBy(a => a);
+
+            WorldSizeSelect.ClearOptions();
+
+            WorldSizeSelect.AddOptions(new List<TMP_Dropdown.OptionData>() { new TMP_Dropdown.OptionData("Small") });
+
+            WorldSizeSelect.AddOptions(unlocked.Select(u => new TMP_Dropdown.OptionData(u.ToString())).ToList());
         }
         else
         {
@@ -66,8 +107,12 @@ public class LoadingScreen : MonoBehaviour
         // Blessing SELECT SET-UP
         if (legs.Any(a => a.Unlocked && a.UnlocksBlessing != LegacySystem.Blessing.NoBlessing))
         {
-            var unlocked = legs.Where(e=>e.Unlocked && e.UnlocksBlessing != LegacySystem.Blessing.NoBlessing).Select(a => a.UnlocksBlessing).Distinct().OrderBy(a => a);
-            
+            var unlocked = legs.Where(e => e.Unlocked && e.UnlocksBlessing != LegacySystem.Blessing.NoBlessing).Select(a => a.UnlocksBlessing).Distinct().OrderBy(a => a);
+
+            TribeBlessingSelect.ClearOptions();
+
+            TribeBlessingSelect.AddOptions(new List<TMP_Dropdown.OptionData>() { new TMP_Dropdown.OptionData("No blessing") });
+
             TribeBlessingSelect.AddOptions(unlocked.Select(u => new TMP_Dropdown.OptionData(u.ToString())).ToList());
         }
         else
@@ -77,30 +122,8 @@ public class LoadingScreen : MonoBehaviour
 
         LegacyButton.gameObject.SetActive(TribeSelectHolder.activeInHierarchy || ClassSelectHolder.activeInHierarchy ||
                                           WorldSizeTextHolder.activeInHierarchy);
-
-        LegacyButton.onClick.AddListener(AchievementView.OpenView);
     }
 
-
-    public void StartGame()
-    {
-        //could load different scenes instead of just running the generate
-
-        SoundController.ChangeMusic(SoundBank.Music.Menu);
-
-        StartButton.interactable = false;
-        
-        Destroy(WorldSizeTextHolder);
-        Destroy(ClassSelectHolder);
-        Destroy(TribeSelectHolder);
-        Destroy(LegacyButton.gameObject);
-        MapGen.gameObject.SetActive(true);
-
-        StartCoroutine(MapGen.GenerateMap(SetLoadingText, ()=>Destroy(gameObject)));
-        //TODO: include gobbo creation in loading
-    }
-    
-    
 
     private void SetLoadingText(int pct, string descrip)
     {

@@ -84,6 +84,15 @@ public class LegacySystem : MonoBehaviour
         return Instance.Achievements;
     }
 
+    public static void ResetAchievements()
+    {
+        foreach (var a in Instance.Achievements)
+        {
+            a.X = 0;
+            a.Unlocked = false;
+        }
+    }
+
     private void RaceDeath(Character.Race r)
     {
         switch (r)

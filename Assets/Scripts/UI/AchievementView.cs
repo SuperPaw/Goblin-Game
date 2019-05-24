@@ -29,6 +29,13 @@ public class AchievementView : MonoBehaviour
         Instance.SetupView();
     }
 
+    public void ResetLegacy()
+    {
+        LegacySystem.ResetAchievements();
+
+        LoadingScreen.ResetLegacyMenu();
+        SetupView();
+    }
 
     private void SetupView()
     {
