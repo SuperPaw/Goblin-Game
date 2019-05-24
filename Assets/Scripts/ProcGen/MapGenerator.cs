@@ -94,9 +94,9 @@ public class MapGenerator : MonoBehaviour
     public float EquipmentInLootChance = 0f;
 
     [Header("Character Generation")]
-    public int NpcsToGenerate;
     [Range(0, 20)]
     public int GoblinsToGenerate;
+    private int NpcsToGenerate;
     public GameObject DefaultCharacter;
     public PlayerTeam GoblinTeam;
     private int GroupDistance = 4;
@@ -154,6 +154,8 @@ public class MapGenerator : MonoBehaviour
         }
 
         Debug.Log("Creating "+ areasToCreate + " areas");
+
+        NpcsToGenerate = areasToCreate;
 
         amountOfLoot = areasToCreate;//noOfAreasX * noOfAreasZ;
         
