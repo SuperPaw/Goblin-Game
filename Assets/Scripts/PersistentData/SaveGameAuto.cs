@@ -332,13 +332,15 @@ namespace BayatGames.SaveGameFree
 		{
 			if ( saveHighscores )
 			{
-				GreatestGoblins.SetScores (SaveGame.Load<List<GreatestGoblins.Score>> ( 
-					highscoreIdentifier
-                    ));
+			    if(SaveGame.Exists(highscoreIdentifier))
+                    GreatestGoblins.SetScores (SaveGame.Load<List<GreatestGoblins.Score>> ( 
+					    highscoreIdentifier
+                        ));
 			}
 			if ( saveLegacy )
 			{
-                LegacySystem.SetAchievements(SaveGame.Load<List<LegacySystem.Achievement>>(legacyIdentifier));
+                if(SaveGame.Exists(legacyIdentifier))
+                    LegacySystem.SetAchievements(SaveGame.Load<List<LegacySystem.Achievement>>(legacyIdentifier));
 			}
 			if ( saveScale )
 			{
