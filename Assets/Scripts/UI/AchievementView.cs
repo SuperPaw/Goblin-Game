@@ -31,6 +31,8 @@ public class AchievementView : MonoBehaviour
 
     public void ResetLegacy()
     {
+
+        Debug.Log("resetting legacy");
         LegacySystem.ResetAchievements();
 
         LoadingScreen.ResetLegacyMenu();
