@@ -34,6 +34,7 @@ public class LegacySystem : MonoBehaviour
         public Blessing UnlocksBlessing;
     }
 
+
     [SerializeField] private List<Achievement> Achievements;
     
     public enum UnlockCondition {
@@ -55,6 +56,9 @@ public class LegacySystem : MonoBehaviour
     void Awake()
     {
         if (!Instance) Instance = this;
+
+        ////TODO: test that this works. that highscores are saved and listener still work correctly
+        //DontDestroyOnLoad(this.gameObject);
 
         OnUnlock.AddListener(AchievementPopup.ShowAchievement);
 
@@ -90,6 +94,15 @@ public class LegacySystem : MonoBehaviour
         {
             a.X = 0;
             a.Unlocked = false;
+        }
+    }
+    
+    internal static void UnlockAchievements()
+    {
+        foreach (var a in Instance.Achievements)
+        {
+            a.X = a.AmountToUnlock;
+            a.Unlocked = a.Unlockable;
         }
     }
 

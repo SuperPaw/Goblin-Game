@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -83,6 +84,11 @@ public class GameManager : MonoBehaviour
             return Instance.AttributeImages.First(im => im.Stat == type).Image;
 
         return Instance.AttributeImages.First().Image;
+    }
+
+    public void ResetGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public static string GetClassDescription(Goblin.Class type)
