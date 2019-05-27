@@ -51,9 +51,9 @@ MonoBehaviour:
   RandomSeed: 0
   MapSizes:
   - WorldSize: 0
-    SizeX: 120
-    SizeY: 120
-    PointOfInterests: 2
+    SizeX: 160
+    SizeY: 160
+    PointOfInterests: 3
     HumanSettlements: 2
     VillagesToGenerate: 0
   - WorldSize: 1

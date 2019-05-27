@@ -1466,7 +1466,7 @@ MonoBehaviour:
     UnlocksBlessing: 0
   - Name: Big-Stick
     Condition: 5
-    AmountToUnlock: 2
+    AmountToUnlock: 10
     X: 0
     Unlocked: 0
     Unlockable: 1
@@ -1488,7 +1488,7 @@ MonoBehaviour:
     UnlocksBlessing: 0
   - Name: Protect the chief!
     Condition: 7
-    AmountToUnlock: 2
+    AmountToUnlock: 10
     X: 0
     Unlocked: 0
     Unlockable: 1
@@ -1499,7 +1499,7 @@ MonoBehaviour:
     UnlocksBlessing: 0
   - Name: Treasure-Finder
     Condition: 8
-    AmountToUnlock: 2
+    AmountToUnlock: 10
     X: 0
     Unlocked: 0
     Unlockable: 1
@@ -1510,7 +1510,7 @@ MonoBehaviour:
     UnlocksBlessing: 0
   - Name: Wolf-Shooter
     Condition: 4
-    AmountToUnlock: 2
+    AmountToUnlock: 10
     X: 0
     Unlocked: 0
     Unlockable: 1
@@ -1521,7 +1521,7 @@ MonoBehaviour:
     UnlocksBlessing: 0
   - Name: Man-Poker
     Condition: 3
-    AmountToUnlock: 2
+    AmountToUnlock: 10
     X: 0
     Unlocked: 0
     Unlockable: 1
@@ -1532,12 +1532,12 @@ MonoBehaviour:
     UnlocksBlessing: 0
   - Name: Zombie Goblins
     Condition: 2
-    AmountToUnlock: 10
+    AmountToUnlock: 20
     X: 0
     Unlocked: 0
     Unlockable: 0
     VisibleUnlockCondition: 0
-    Image: {fileID: 21300000, guid: d2c5aa6cf6b6e2e4190a067ba6f4f9a9, type: 3}
+    Image: {fileID: 21300000, guid: 3a00f79c4aee7c343adecdb9d16af71e, type: 3}
     UnlocksClass: Necromancer
     UnlocksMapSize: 0
     UnlocksBlessing: 0
@@ -1620,7 +1620,7 @@ MonoBehaviour:
     UnlocksBlessing: 2
   - Name: Very Hungry God
     Condition: 6
-    AmountToUnlock: 3
+    AmountToUnlock: 4
     X: 0
     Unlocked: 0
     Unlockable: 1
@@ -1631,7 +1631,7 @@ MonoBehaviour:
     UnlocksBlessing: 3
   - Name: Barbecue Goblin Soul
     Condition: 6
-    AmountToUnlock: 4
+    AmountToUnlock: 8
     X: 0
     Unlocked: 0
     Unlockable: 1
@@ -1642,7 +1642,7 @@ MonoBehaviour:
     UnlocksBlessing: 4
   - Name: Deep-Fried Goblin
     Condition: 6
-    AmountToUnlock: 5
+    AmountToUnlock: 12
     X: 0
     Unlocked: 0
     Unlockable: 1
@@ -1653,7 +1653,7 @@ MonoBehaviour:
     UnlocksBlessing: 5
   - Name: Why me?
     Condition: 6
-    AmountToUnlock: 6
+    AmountToUnlock: 15
     X: 0
     Unlocked: 0
     Unlockable: 1
@@ -1664,18 +1664,18 @@ MonoBehaviour:
     UnlocksBlessing: 6
   - Name: Goblin Smarts
     Condition: 5
-    AmountToUnlock: 4
+    AmountToUnlock: 20
     X: 0
     Unlocked: 0
     Unlockable: 1
-    VisibleUnlockCondition: 0
+    VisibleUnlockCondition: 1
     Image: {fileID: 21300000, guid: 7f6f02c59c4162942a567c57c9f399b5, type: 3}
     UnlocksClass: 
     UnlocksMapSize: 0
     UnlocksBlessing: 7
   - Name: Too many many-legs!
     Condition: 1
-    AmountToUnlock: 4
+    AmountToUnlock: 20
     X: 0
     Unlocked: 0
     Unlockable: 1
@@ -1686,7 +1686,7 @@ MonoBehaviour:
     UnlocksBlessing: 8
   - Name: Sneaky Many-Legs
     Condition: 1
-    AmountToUnlock: 8
+    AmountToUnlock: 10
     X: 0
     Unlocked: 0
     Unlockable: 1
@@ -1697,7 +1697,7 @@ MonoBehaviour:
     UnlocksBlessing: 9
   - Name: Puppy-Hacker
     Condition: 4
-    AmountToUnlock: 5
+    AmountToUnlock: 30
     X: 0
     Unlocked: 0
     Unlockable: 1
@@ -3496,7 +3496,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2012155516
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5314,6 +5314,11 @@ PrefabInstance:
       propertyPath: HighScoreEntry
       value: 
       objectReference: {fileID: 95916199}
+    - target: {fileID: 6057858525446187764, guid: affee8357be7256439d8473952deead4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: affee8357be7256439d8473952deead4, type: 3}
 --- !u!114 &6259578010463449864
@@ -6015,12 +6020,32 @@ PrefabInstance:
     - target: {fileID: 357307195679451061, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
       propertyPath: m_fontSize
-      value: 67.6
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 357307195679451061, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 3
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 357307195679451061, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_isTextTruncated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 357307195679451061, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 357307195679451061, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 357307195679451061, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7722632444106794468, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
@@ -16091,6 +16116,11 @@ PrefabInstance:
     - target: {fileID: 1357718688480284315, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332870869133790573, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
