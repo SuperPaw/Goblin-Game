@@ -10,7 +10,7 @@ using BayatGames.SaveGameFree.Types;
 namespace BayatGames.SaveGameFree
 {
 	[AddComponentMenu ( "Save Game Free/Auto Save" )]
-	public class SaveGameAuto : MonoBehaviour
+	public class SaveController : MonoBehaviour
 	{
 		public enum SaveFormat
 		{
@@ -97,14 +97,7 @@ namespace BayatGames.SaveGameFree
 		/// The save rotation.
 		/// </summary>
 		public bool saveLegacy = true;
-
-		[Tooltip ( "Save Scale?" )]
-		/// <summary>
-		/// The save scale.
-		/// </summary>
-		public bool saveScale = true;
-
-
+        
 		[Header ( "Defaults" )]
 		[Space]
 
@@ -282,6 +275,32 @@ namespace BayatGames.SaveGameFree
 			}
 		}
 
+	    public void SaveHighscores()
+	    {
+	        SaveGame.Save(
+	            highscoreIdentifier, GreatestGoblins.GetScores(),
+	            encode,
+	            encodePassword,
+	            serializer,
+	            encoder,
+	            encoding,
+	            savePath
+	        );
+        }
+
+	    public void SaveLegacy()
+	    {
+	        SaveGame.Save(
+	            legacyIdentifier,
+	            LegacySystem.GetAchievements(),
+	            encode,
+	            encodePassword,
+	            serializer,
+	            encoder,
+	            encoding,
+	            savePath);
+        }
+
 		/// <summary>
 		/// Save this instance.
 		/// </summary>
@@ -289,39 +308,11 @@ namespace BayatGames.SaveGameFree
 		{
 			if ( saveHighscores )
 			{
-                    SaveGame.Save(
-                        highscoreIdentifier,GreatestGoblins.GetScores(),
-                        encode,
-                        encodePassword,
-                        serializer,
-                        encoder,
-                        encoding,
-                        savePath
-                        );
+                SaveHighscores();
 			}
 			if ( saveLegacy )
 			{
-				SaveGame.Save( 
-					legacyIdentifier, 
-                    LegacySystem.GetAchievements(),
-				    encode,
-				    encodePassword,
-				    serializer,
-				    encoder,
-				    encoding,
-				    savePath);
-			}
-			if ( saveScale )
-			{
-				SaveGame.Save<Vector3Save> (
-					scaleIdentifier,
-					transform.localScale,
-					encode,
-					encodePassword,
-					serializer,
-					encoder,
-					encoding,
-					savePath );
+                SaveLegacy();
 			}
 		}
 
@@ -342,20 +333,21 @@ namespace BayatGames.SaveGameFree
                 if(SaveGame.Exists(legacyIdentifier))
                     LegacySystem.SetAchievements(SaveGame.Load<List<LegacySystem.Achievement>>(legacyIdentifier));
 			}
-			if ( saveScale )
-			{
-				transform.localScale = SaveGame.Load<Vector3Save> (
-					scaleIdentifier,
-					defaultScale,
-					encode,
-					encodePassword,
-					serializer,
-					encoder,
-					encoding,
-					savePath );
-			}
 		}
 
+	    public static bool SaveTest()
+	    {
+	        var rndValue = Random.Range(100, 100000);
+	        var identifier = "testvalue";
+
+	        SaveGame.Save(
+	            identifier, rndValue
+	        );
+
+	        var loadedValue = SaveGame.Load<int>(identifier);
+            
+            return rndValue == loadedValue;
+	    }
 	}
 
 }

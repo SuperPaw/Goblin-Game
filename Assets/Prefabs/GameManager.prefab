@@ -241,7 +241,7 @@ MonoBehaviour:
       Attribute: 3
       Class: 0
     - Type: 0
-      Attribute: 4
+      Attribute: 5
       Class: 0
   - Type: 0
     Choices:
@@ -290,7 +290,7 @@ MonoBehaviour:
       Attribute: 0
       Class: 0
     - Type: 0
-      Attribute: 4
+      Attribute: 5
       Class: 0
   - Type: 0
     Choices:
@@ -327,7 +327,7 @@ MonoBehaviour:
   - Type: 0
     Choices:
     - Type: 0
-      Attribute: 4
+      Attribute: 3
       Class: 0
     - Type: 0
       Attribute: 5
@@ -371,7 +371,7 @@ MonoBehaviour:
       Attribute: 0
       Class: 0
     - Type: 0
-      Attribute: 4
+      Attribute: 3
       Class: 0
   - Type: 0
     Choices:
@@ -419,7 +419,7 @@ MonoBehaviour:
       Attribute: 3
       Class: 0
     - Type: 0
-      Attribute: 4
+      Attribute: 5
       Class: 0
   - Type: 0
     Choices:
@@ -436,7 +436,7 @@ MonoBehaviour:
       Attribute: 0
       Class: 0
     - Type: 0
-      Attribute: 4
+      Attribute: 5
       Class: 0
   - Type: 0
     Choices:
@@ -452,7 +452,7 @@ MonoBehaviour:
       Attribute: 5
       Class: 0
     - Type: 0
-      Attribute: 4
+      Attribute: 0
       Class: 0
   - Type: 0
     Choices:
@@ -473,10 +473,10 @@ MonoBehaviour:
   - Type: 0
     Choices:
     - Type: 0
-      Attribute: 0
+      Attribute: 5
       Class: 0
     - Type: 0
-      Attribute: 4
+      Attribute: 2
       Class: 0
   - Type: 0
     Choices:
@@ -484,7 +484,7 @@ MonoBehaviour:
       Attribute: 1
       Class: 0
     - Type: 0
-      Attribute: 4
+      Attribute: 3
       Class: 0
   - Type: 0
     Choices:
@@ -573,7 +573,7 @@ MonoBehaviour:
       Attribute: 5
       Class: 0
     - Type: 0
-      Attribute: 4
+      Attribute: 3
       Class: 0
   - Type: 0
     Choices:
@@ -634,3 +634,4 @@ MonoBehaviour:
     LeaderLevel: 0
     EquipmentFound: 0
   HighScoreEntry: {fileID: 0}
+  SaveControls: {fileID: 0}
