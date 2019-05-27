@@ -77,6 +77,8 @@ public class LoadingScreen : MonoBehaviour
         // CLASS SELECT SET-UP
         if (legs.Any(a => a.Unlocked && a.UnlocksClass != ""))
         {
+            ClassSelectHolder.SetActive(true);
+
             var unlocked = legs.Where(e => e.Unlocked && e.UnlocksClass != "").Select(a => a.UnlocksClass).Distinct().OrderBy(a => a);
 
             ChiefClassSelect.ClearOptions();
@@ -93,6 +95,8 @@ public class LoadingScreen : MonoBehaviour
         // World SELECT SET-UP
         if (legs.Any(a => a.Unlocked && a.UnlocksMapSize != MapGenerator.WorldSize.Small))
         {
+            WorldSizeTextHolder.SetActive(true);
+
             var unlocked = legs.Where(e => e.Unlocked && e.UnlocksMapSize != MapGenerator.WorldSize.Small).Select(a => a.UnlocksMapSize).Distinct().OrderBy(a => a);
 
             WorldSizeSelect.ClearOptions();
@@ -109,6 +113,8 @@ public class LoadingScreen : MonoBehaviour
         // Blessing SELECT SET-UP
         if (legs.Any(a => a.Unlocked && a.UnlocksBlessing != LegacySystem.Blessing.NoBlessing))
         {
+            TribeSelectHolder.SetActive(true);
+
             var unlocked = legs.Where(e => e.Unlocked && e.UnlocksBlessing != LegacySystem.Blessing.NoBlessing).Select(a => a.UnlocksBlessing).Distinct().OrderBy(a => a);
 
             TribeBlessingSelect.ClearOptions();

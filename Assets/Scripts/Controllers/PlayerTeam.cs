@@ -126,7 +126,6 @@ public class PlayerTeam : MonoBehaviour
                 }
                 break;
             case LegacySystem.Blessing.ExtraGoblin:
-                Debug.LogError("Extra goblin  not implemented");
                 break;
             case LegacySystem.Blessing.Smarts:
                 foreach (Goblin g in Members)
@@ -141,7 +140,6 @@ public class PlayerTeam : MonoBehaviour
                 TreasureChange(3);
                 break;
             case LegacySystem.Blessing.ExtraSlaves:
-                Debug.LogError("Extra slaves not implemented");
                 break;
             case LegacySystem.Blessing.Damage:
                 foreach (Goblin g in Members)
