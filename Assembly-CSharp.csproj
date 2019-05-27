@@ -80,6 +80,7 @@
     <Compile Include="Assets\Imported\Thread Ninja\Task.cs" />
     <Compile Include="Assets\Imported\Thread Ninja\TaskState.cs" />
     <Compile Include="Assets\Imported\Thread Ninja\ThreadNinjaMonoBehaviourExtensions.cs" />
+    <Compile Include="Assets\InfoClick.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
