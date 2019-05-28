@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class OnValueHover : MonoBehaviour
+public class OnValueHover : Button
 {
     public Character.Stat Stat;
     public Goblin.Class Class;
@@ -12,42 +13,30 @@ public class OnValueHover : MonoBehaviour
     public bool ShowClass = false;
     public bool ShowEquipment = false;
 
-
-
-    private string currentToolTipText = "";
-    private GUIStyle guiStyleFore;
-    private GUIStyle guiStyleBack;
- 
-    public void OnMouseEnter()
+    private new void Start()
     {
-        //Debug.Log("Hovering: " + Stat.GetStatDescription());
+        onClick.AddListener(ShowInfo);
+    }
+    
+    void ShowInfo()    {
+        Debug.Log("Opening: " + gameObject);
         if (ShowEquipment && Equipment)
         {
-            currentToolTipText = Equipment.GetEffectDescription();
+            InfoClick.ShowInfo(gameObject.GetComponent<RectTransform>(), Equipment.name,
+                Equipment.GetEffectDescription());
         }
-        else
-            currentToolTipText = !ShowClass ? Stat.GetStatDescription() : GameManager.GetClassDescription(Class);
-    }
-
-    public void OnMouseExit()
-    {
-        currentToolTipText = "";
-    }
-
-    void OnGUI()
-    {
-        if (guiStyleBack == null || guiStyleFore == null)
+        else if (ShowClass)
         {
-            guiStyleFore = UIManager.Instance.HoverStyle;
-            guiStyleBack = UIManager.Instance.HoverStyleBack;
+            InfoClick.ShowInfo(gameObject.GetComponent<RectTransform>(), Class.ToString(),
+                GameManager.GetClassDescription(Class), GameManager.GetClassImage(Class));
+        }
+        else if(Stat!=null)
+        {
+            InfoClick.ShowInfo(gameObject.GetComponent<RectTransform>(), Stat.Type.ToString(),
+                Stat.GetStatDescription(), GameManager.GetAttributeImage(Stat.Type));
         }
 
-        if (currentToolTipText != "")
-        {
-            var x = Event.current.mousePosition.x;
-            var y = Event.current.mousePosition.y;
-            GUI.Label(new Rect(x - 149, y + 40, 300, 60), currentToolTipText, guiStyleBack);
-            GUI.Label(new Rect(x - 150, y + 40, 300, 60), currentToolTipText, guiStyleFore);
-        }
+        Debug.LogError("No description to show: "+ gameObject);
     }
+    
 }

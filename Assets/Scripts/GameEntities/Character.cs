@@ -101,7 +101,9 @@ public abstract class Character : MonoBehaviour
         //accumulation first and then each multiplier is done at the base
         public string GetStatDescription()
         {
-            string x = Type + ": " + Max + "(base)";
+            string x = GameManager.GetAttributeDescription(Type) + System.Environment.NewLine;
+
+             x += "" + Max + "(base)";
 
             foreach (var mod in Modifiers)
             {
