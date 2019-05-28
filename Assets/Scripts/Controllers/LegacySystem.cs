@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using BayatGames.SaveGameFree;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SocialPlatforms;
@@ -33,8 +34,11 @@ public class LegacySystem : MonoBehaviour
         public MapGenerator.WorldSize UnlocksMapSize;
         public Blessing UnlocksBlessing;
     }
-
-    [SerializeField] private List<Achievement> Achievements;
+    
+    [SerializeField]
+    private SaveController SaveControls = null;
+    [SerializeField]
+    private List<Achievement> Achievements = null;
     
     public enum UnlockCondition {
         KillGiant,
@@ -56,6 +60,12 @@ public class LegacySystem : MonoBehaviour
     {
         if (!Instance) Instance = this;
 
+        ////TODO: test that this works. that highscores are saved and listener still work correctly
+        //DontDestroyOnLoad(this.gameObject);
+
+        SaveControls = FindObjectOfType<SaveController>();
+
+        OnUnlock.AddListener(a => SaveControls?.SaveLegacy());
         OnUnlock.AddListener(AchievementPopup.ShowAchievement);
 
         OnConditionEvent.AddListener(HandleConditionIncrement);
@@ -90,6 +100,15 @@ public class LegacySystem : MonoBehaviour
         {
             a.X = 0;
             a.Unlocked = false;
+        }
+    }
+    
+    internal static void UnlockAchievements()
+    {
+        foreach (var a in Instance.Achievements)
+        {
+            a.X = a.AmountToUnlock;
+            a.Unlocked = a.Unlockable;
         }
     }
 

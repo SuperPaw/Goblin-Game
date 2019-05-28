@@ -259,13 +259,19 @@ public class MapGenerator : MonoBehaviour
         //Find suitable start position
         GoblinTeam.transform.position = new Vector3(pos.x,0,pos.z);
 
+        var b = PlayerTeam.TribeBlessing;
+        if (b == LegacySystem.Blessing.SoloGoblin)
+            GoblinsToGenerate = 1;
+        if (b == LegacySystem.Blessing.ExtraGoblin)
+            GoblinsToGenerate++;
+        if (b == LegacySystem.Blessing.ExtraSlaves)
+            GoblinsToGenerate += 2;
+
         //TODO: check that we are not initializinig in a too small area. could be done with connectivity check
         //TODO: Use create character
         for (int i = 0; i < GoblinsToGenerate; i++)
         {
-
             var next = Instantiate(DefaultCharacter, GoblinTeam.transform);
-
             
             pos = pos + Random.insideUnitSphere * GroupDistance;
 
@@ -280,7 +286,11 @@ public class MapGenerator : MonoBehaviour
             members.Add(g);
 
             g.InArea = goblinStartArea;
-            
+
+
+            if (b == LegacySystem.Blessing.ExtraSlaves && i >= GoblinsToGenerate-2)
+                g.SelectClass(Goblin.Class.Slave);
+
             progress += charFact;
 
             int loc = (progress * 100) / totalProgress;

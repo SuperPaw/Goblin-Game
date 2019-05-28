@@ -64,11 +64,10 @@ public class EquipmentGen : MonoBehaviour
     //TODO: maybe more fun if materials...
     private List<AttributeDescription> PositiveAttributes = new List<AttributeDescription>()
     {
-        new AttributeDescription(Character.StatType.DAMAGE, new []{"Spiked","Bloody"},new []{"Hurt","Kill","Krank"}),
-        new AttributeDescription(Character.StatType.AIM, new []{"Wooden", "Striped", "Grim"},new []{"Knark","Whack","Mok"}),
+        new AttributeDescription(Character.StatType.DAMAGE, new []{ "Red","Painted", "Spiked", "Bloody"},new []{"Hurt","Kill","Krank"}),
+        new AttributeDescription(Character.StatType.AIM, new []{ "Super","Wooden", "Striped"},new []{"Knark","Whack","Mok","Do"}),
         new AttributeDescription(Character.StatType.COURAGE, new []{"Great","Metal","Big"},new []{"Klonk","Top"}),
         new AttributeDescription(Character.StatType.HEALTH, new []{ "Bone","Strong","Brown"},new []{"Gut","Blood","Bok"}),
-        new AttributeDescription(Character.StatType.SPEED, new []{ "Super","Painted", "Red"},new []{"Run","Sneak","Do"}),
         new AttributeDescription(Character.StatType.SMARTS, new []{"Smart","Black","Magic"},new []{ "Find", "Eye","Brain","Head","Tink"}),
     };
 
@@ -76,11 +75,10 @@ public class EquipmentGen : MonoBehaviour
     private List<AttributeDescription> NegativeAttributes = new List<AttributeDescription>()
     {
         new AttributeDescription(Character.StatType.DAMAGE, new []{"Green","Ugly"},new []{"Friend","Relax","Tokk"}),
-        new AttributeDescription(Character.StatType.AIM, new []{"Grey","Blue"},new []{"Beer","Drunk","Frak"}),
-        new AttributeDescription(Character.StatType.COURAGE, new []{"Yellow","Wet"},new []{"Yield","Pak","Pok"}),
+        new AttributeDescription(Character.StatType.AIM, new []{"Broken" , "Greasy", "Grey", "Blue"},new []{"Beer","Drunk","Frak"}),
+        new AttributeDescription(Character.StatType.COURAGE, new []{"Yellow","Wet"},new []{ "Wait", "Yield","Pak","Pok"}),
         new AttributeDescription(Character.StatType.HEALTH, new []{"Weak", "Pale"},new []{"Sokk","Sakk"}),
-        new AttributeDescription(Character.StatType.SPEED, new []{ "Greasy", "White","Broken" },new []{"Wait","Lazy"}),
-        new AttributeDescription(Character.StatType.SMARTS, new []{"Stupid","Cursed","Shiny"},new []{ "Tikk", "Dumb", "Idiot" }),
+        new AttributeDescription(Character.StatType.SMARTS, new []{ "White", "Stupid","Cursed","Shiny"},new []{ "Tikk", "Dumb", "Idiot" }),
     };
 
     private List<LocationType> LocationDescriptions = new List<LocationType>()
@@ -127,6 +125,11 @@ public class EquipmentGen : MonoBehaviour
 
         equip.Type = type;
 
+        List<Character.StatType> affectableStats = new List<Character.StatType>()
+        {
+            Character.StatType.COURAGE,Character.StatType.DAMAGE,Character.StatType.AIM,Character.StatType.SMARTS,Character.StatType.HEALTH
+        };
+
         equip.EquipLocation = Instance.LocationDescriptions.First(loc => loc.Type.Contains(type)).Location;
 
 
@@ -140,7 +143,7 @@ public class EquipmentGen : MonoBehaviour
         {
             Character.StatType stat;
             do
-                stat = (Character.StatType)Random.Range(0, (int)Character.StatType.COUNT);
+                stat = affectableStats[Random.Range(0, affectableStats.Count)];
             while
                 (attributes.ContainsKey(stat));
 

@@ -21,16 +21,15 @@ public class ReadyForInputController : MonoBehaviour
         if( !PlayerController.Instance.Team.Leader)
             return;
 
-        if (!PlayerController.Instance.Team.Leader.Alive())
+        if (!PlayerController.Instance.Team.Leader.Alive() || PlayerController.Instance.Team.Challenger)
             foreach (var controlledObjectMapping in ControlledObjectMappings)
             {
                 controlledObjectMapping.ControlledGameObject.SetActive(false);
             }
-
-
-        foreach (var enabledOnStates in ControlledObjectMappings)
-        {
-            enabledOnStates.ControlledGameObject.SetActive(enabledOnStates.States.Contains(PlayerController.Instance.Team.Leader.State));
-        }
+        else
+            foreach (var enabledOnStates in ControlledObjectMappings)
+            {
+                enabledOnStates.ControlledGameObject.SetActive(enabledOnStates.States.Contains(PlayerController.Instance.Team.Leader.State));
+            }
     }
 }

@@ -39,6 +39,16 @@ public class AchievementView : MonoBehaviour
         SetupView();
     }
 
+    public void UnlockLegacy()
+    {
+
+        Debug.Log("unlocking legacy");
+        LegacySystem.UnlockAchievements();
+
+        LoadingScreen.ResetLegacyMenu();
+        SetupView();
+    }
+
     private void SetupView()
     {
         foreach (var i in InstantiatedObjects)

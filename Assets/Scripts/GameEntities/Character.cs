@@ -363,7 +363,7 @@ public abstract class Character : MonoBehaviour
         COU = new Stat(StatType.COURAGE, Random.Range(CouMin, CouMax));
         SPE = new Stat(StatType.SPEED, Random.Range(SpeMin, SpeMax));
         SMA = new Stat(StatType.SMARTS, Random.Range(SmaMin, SmaMax));
-        Stats = new List<Stat>() {DMG, AIM, COU, SPE, SMA}.ToDictionary(s => s.Type);
+        Stats = new List<Stat>() {DMG, AIM, COU, SMA}.ToDictionary(s => s.Type);
 
         //Health is a special case
         HEA = new Stat(StatType.HEALTH, Random.Range(HeaMin, HeaMax));

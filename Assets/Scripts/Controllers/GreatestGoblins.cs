@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using BayatGames.SaveGameFree;
 using UnityEngine;
 
 public class GreatestGoblins : MonoBehaviour
@@ -11,10 +12,14 @@ public class GreatestGoblins : MonoBehaviour
     [SerializeField]
     private HighScoreEntry HighScoreEntry = null;
     private static GreatestGoblins Instance;
+    [SerializeField]
+    private SaveController SaveControls = null;
 
     void Awake()
     {
         if (!Instance) Instance = this;
+
+        SaveControls = FindObjectOfType<SaveController>();
     }
 
     public enum ScoreCount { Kill,Treasure,GoblinInTribe,AreaExplored,LeaderLevel, Equipment}
@@ -105,6 +110,9 @@ public class GreatestGoblins : MonoBehaviour
             e.Value.text = TotalScore(score).ToString();
             e.Score = score;
         }
+
+        SaveControls?.SaveHighscores();
+
         HighScoreEntry.gameObject.SetActive(false);
     }
 
