@@ -121,7 +121,11 @@ public class GreatestGoblins : MonoBehaviour
         Instance.CreateScoreScreen();
     }
 
-    public static List<Score> GetScores() => Instance.HighScores;
+    public static List<Score> GetScores()
+    {
+        if (!Instance) Instance = FindObjectOfType<GreatestGoblins>();
+        return Instance.HighScores;
+    }
 
     public static bool ScoresContainName(string name) => Instance.HighScores.Any(s => s.Name == name);
 
@@ -129,6 +133,9 @@ public class GreatestGoblins : MonoBehaviour
     {
         if(list == null|| !list.Any())
             return;
+
+
+        if (!Instance) Instance = FindObjectOfType<GreatestGoblins>();
 
         Instance.HighScores = list.Take(10).ToList();
     }
