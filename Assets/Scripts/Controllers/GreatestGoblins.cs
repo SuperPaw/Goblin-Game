@@ -35,6 +35,7 @@ public class GreatestGoblins : MonoBehaviour
         public int LeaderLevel;
         //TODO: check for finding the same equipment
         public int EquipmentFound;
+        public bool NewScore;
         //FOOD?
     }
 
@@ -58,7 +59,8 @@ public class GreatestGoblins : MonoBehaviour
         {
             Name = leader.name,
             GoblinsInTribe = leader.Team.Members.Count,
-            LeaderLevel = leader.CurrentLevel
+            LeaderLevel = leader.CurrentLevel,
+            NewScore = true
         };
 
         leader.Team.OnTeamKill.AddListener(()=> AddCount(ScoreCount.Kill));
@@ -106,8 +108,9 @@ public class GreatestGoblins : MonoBehaviour
         foreach (var score in HighScores)
         {
             var e = Instantiate(HighScoreEntry, HighScoreEntry.transform.parent);
-            e.Name.text = score.Name.Contains("Chief") ? score.Name.Remove(0, 6) : score.Name;
-            e.Value.text = TotalScore(score).ToString();
+            e.Name.text = (score.NewScore ? "*NEW* " : "") + (score.Name.Contains("Chief") ? score.Name.Remove(0, 6) : score.Name );
+            e.Value.text = TotalScore(score).ToString() ;
+            e.Name.color = e.Value.color = score.NewScore ? Color.yellow : Color.white;
             e.Score = score;
         }
 
@@ -138,5 +141,14 @@ public class GreatestGoblins : MonoBehaviour
         if (!Instance) Instance = FindObjectOfType<GreatestGoblins>();
 
         Instance.HighScores = list.Take(10).ToList();
+
+        for (int i = 0; i < Instance.HighScores.Count; i++)
+        {
+            var c = Instance.HighScores[i];
+            c.NewScore = false;
+
+            Instance.HighScores[i] = c;
+        }
+        
     }
 }

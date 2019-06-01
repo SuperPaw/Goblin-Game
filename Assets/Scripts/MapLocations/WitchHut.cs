@@ -14,7 +14,7 @@ public class WitchHut : PointOfInterest
     public void PayToHeal(int i, PlayerTeam team)
     {
         team.Members.ForEach(g=>g.Heal());
-        team.OnTreasureFound.Invoke(i);
+        team.OnTreasureFound.Invoke(-i);
         
     }
 
