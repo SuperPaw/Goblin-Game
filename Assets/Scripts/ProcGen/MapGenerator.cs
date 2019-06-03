@@ -72,7 +72,7 @@ public class MapGenerator : MonoBehaviour
     
 
     [Header("References")]
-    public LocalNavMeshBuilder MeshBuilder; 
+    public NavMeshBuilder MeshBuilder; 
     public GameObject[] Npcs;
     public GameObject[] HidableObjects;
     public GameObject ForestHolder, AreaHolder, TileHolder;
@@ -174,12 +174,15 @@ public class MapGenerator : MonoBehaviour
 
         totalProgress = (int)(totalProgress * 0.83f);
 
+        yield return null;
+
         //Setting up mesh builder
         MeshBuilder.transform.localScale = new Vector3(SizeX / 8f, 1, SizeZ / 8f);
-        MeshBuilder.m_Size = new Vector3(SizeX, 10, SizeZ);
+        //MeshBuilder.m_Size = new Vector3(SizeX, 10, SizeZ);
         MeshBuilder.transform.position = new Vector3(SizeX / 2f, 0, SizeZ / 2f);
 
-        yield return null;
+        MeshBuilder.gameObject.SetActive(true);
+
 
         //Forest gen
 

@@ -80,7 +80,6 @@
     <Compile Include="Assets\Imported\Thread Ninja\Task.cs" />
     <Compile Include="Assets\Imported\Thread Ninja\TaskState.cs" />
     <Compile Include="Assets\Imported\Thread Ninja\ThreadNinjaMonoBehaviourExtensions.cs" />
-    <Compile Include="Assets\InfoClick.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
@@ -153,6 +152,7 @@
     <Compile Include="Assets\Scripts\MapLocations\Monument.cs" />
     <Compile Include="Assets\Scripts\MapLocations\PointOfInterest.cs" />
     <Compile Include="Assets\Scripts\MapLocations\WitchHut.cs" />
+    <Compile Include="Assets\Scripts\NavMeshBuilder.cs" />
     <Compile Include="Assets\Scripts\PersistentData\Encoders\ISaveGameEncoder.cs" />
     <Compile Include="Assets\Scripts\PersistentData\Encoders\SaveGameSimpleEncoder.cs" />
     <Compile Include="Assets\Scripts\PersistentData\SaveController.cs" />
@@ -183,6 +183,7 @@
     <Compile Include="Assets\Scripts\UI\GrayscaleFilter.cs" />
     <Compile Include="Assets\Scripts\UI\HealtBar.cs" />
     <Compile Include="Assets\Scripts\UI\HighScoreEntry.cs" />
+    <Compile Include="Assets\Scripts\UI\InfoClick.cs" />
     <Compile Include="Assets\Scripts\UI\LevelUpChoiceEntry.cs" />
     <Compile Include="Assets\Scripts\UI\LevelUpView.cs" />
     <Compile Include="Assets\Scripts\UI\LoadingScreen.cs" />
@@ -851,10 +852,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="NavMeshComponentsExamplesEditor.csproj">
-      <Project>{E6199AF4-4DEC-7AA3-A365-623B2738A92C}</Project>
-      <Name>NavMeshComponentsExamplesEditor</Name>
-    </ProjectReference>
     <ProjectReference Include="NavMeshComponentsEditor.csproj">
       <Project>{869F9748-05E7-387E-A363-6EC1CC8B602F}</Project>
       <Name>NavMeshComponentsEditor</Name>
@@ -862,10 +859,6 @@
     <ProjectReference Include="NavMeshComponents.csproj">
       <Project>{2EE2B87C-5A01-005A-C0A8-C0E7D8CC3107}</Project>
       <Name>NavMeshComponents</Name>
-    </ProjectReference>
-    <ProjectReference Include="NavMeshComponentsExamples.csproj">
-      <Project>{384ED483-15CA-C189-65EB-E9A12941EA02}</Project>
-      <Name>NavMeshComponentsExamples</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

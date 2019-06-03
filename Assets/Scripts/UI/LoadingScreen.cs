@@ -150,7 +150,9 @@ public class LoadingScreen : MonoBehaviour
 
     public void SelectWorldSize(int sz)
     {
-        MapGen.SetSize((MapGenerator.WorldSize) sz);
+        Debug.Log("Selecting world size: " + WorldSizeSelect.options[sz].text);
+
+        MapGen.SetSize((MapGenerator.WorldSize)Enum.Parse(typeof(MapGenerator.WorldSize), WorldSizeSelect.options[sz].text));
     }
 
     public void SelectChiefClass(int c)
