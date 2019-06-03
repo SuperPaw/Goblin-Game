@@ -44,7 +44,7 @@ public class CharacterView : MenuWindow
 
     public static void ShowCharacter(Goblin c)
     {
-        if (!c || !c.Team || c.Team.Leader.InArea != c.InArea)
+        if (!c || !c.Team)// || c.Team.Leader.InArea != c.InArea)
             return;
 
         Debug.Log("Showing character: "+ c);

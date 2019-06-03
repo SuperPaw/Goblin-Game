@@ -15,7 +15,7 @@ public class ReadyForInputController : MonoBehaviour
 
     public EnabledOnStates[] ControlledObjectMappings;
     
-    // Update is called once per frame
+    // todo: change to on state change
     void FixedUpdate()
     {
         if( !PlayerController.Instance.Team.Leader)

@@ -104,6 +104,12 @@ public class Area : MonoBehaviour
             return;
         }
 
+        if(!c.TravellingToArea == this && this != c.InArea)
+        {
+            Debug.LogWarning(c + " is not travveling to: "+ this);
+            return;
+        }
+
         //if character is not supposed to go there. This hack Creates problems 
         //if(c.Idling())
         //    return;

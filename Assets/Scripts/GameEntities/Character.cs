@@ -56,8 +56,7 @@ public abstract class Character : MonoBehaviour
 
     public int IrritationMeter = 0;
     public int IrritaionTolerance = 50;
-
-
+    
     public CharacterState State;
     
     public class Stat
@@ -121,8 +120,7 @@ public abstract class Character : MonoBehaviour
             //Debug.Log(Name + " increased to "+ Max);
         }
     }
-
-
+    
     [HideInInspector] public Lootable LootTarget;
     [HideInInspector] public PlayerTeam Team;
 
@@ -165,6 +163,7 @@ public abstract class Character : MonoBehaviour
     public int idleDistance;
     public bool Walking;
     public float AttackRange;
+    public Area TravellingToArea;
 
     public bool actionInProgress;
 
@@ -270,8 +269,7 @@ public abstract class Character : MonoBehaviour
     
     public float IncomingDmgPct = 1f;
     public float OutgoingDmgPct = 1f;
-
-
+    
     [Header("Sprite")]
     //public SpriteRenderer CharacterSprite;
     public Color DamageColor, NormalColor;
@@ -325,8 +323,7 @@ public abstract class Character : MonoBehaviour
     //From walking toward to running away
     public float ProvokeTime = 5;
     private float ProvokeStartTime;
-
-
+    
     public Area InArea;
     private Area fleeingToArea;
     private Coroutine stateChangeRoutine;
@@ -536,7 +533,7 @@ public abstract class Character : MonoBehaviour
 
         stateChangeRoutine = StartCoroutine(immedeately
             ? StateChangingRoutine(newState, 0)
-            : StateChangingRoutine(newState, Random.Range(0.2f, 2f)));
+            : StateChangingRoutine(newState, Random.Range(1.5f, 4f)));
     }
 
     private IEnumerator StateChangingRoutine(CharacterState newState, float wait)
@@ -554,6 +551,10 @@ public abstract class Character : MonoBehaviour
             State = newState;
 
         actionInProgress = false;
+
+        if (newState != CharacterState.Travelling && newState != CharacterState.Attacking &&
+            newState != CharacterState.Fleeing)
+            TravellingToArea = null;
 
         Walking = State == CharacterState.Travelling || State == CharacterState.Idling;
 
@@ -703,11 +704,13 @@ public abstract class Character : MonoBehaviour
         }
 
         //get these from a game or fight controller instead for maintenance
-        var gos = InArea.PresentCharacters.Where(c => c.tag == enemyTag && c.Alive());//GameObject.FindGameObjectsWithTag(enemyTag).Select(g=>g.GetComponent<Character>());
+        var gos = InArea.PresentCharacters.Where(c => c.tag == enemyTag && c.Alive()).ToList();//GameObject.FindGameObjectsWithTag(enemyTag).Select(g=>g.GetComponent<Character>());
+        if(TravellingToArea) gos.AddRange(TravellingToArea.PresentCharacters.Where(c => c.tag == enemyTag && c.Alive()));
+
         Character closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
-        foreach (var go in gos.Where(e=>e.InArea == InArea))
+        foreach (var go in gos)
         {
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
@@ -862,10 +865,12 @@ public abstract class Character : MonoBehaviour
                         {
                             var goingTo = InArea.GetClosestNeighbour(transform.position,true);
 
+                            //TODO: handle this in moveto method instead
                             dest = goingTo.PointOfInterest ? goingTo.GetRandomPosInArea(): goingTo.transform.position;
                             
                             //Debug.Log(name + ": Wandering to "+ goingTo);
                             Target = dest;
+                            TravellingToArea = goingTo;
                             
                             goingTo.PresentCharacters.ForEach(c => StartCoroutine(c.SpotArrivalCheck(this)));
 
@@ -953,7 +958,8 @@ public abstract class Character : MonoBehaviour
                 }
                 else if (!actionInProgress)
                 {
-                    fleeingToArea = InArea.GetClosestNeighbour(transform.position,StickToRoad);
+                    fleeingToArea = TravellingToArea ? TravellingToArea.GetClosestNeighbour(transform.position, StickToRoad) 
+                        : InArea.GetClosestNeighbour(transform.position,StickToRoad);
                     navMeshAgent.SetDestination(fleeingToArea.GetRandomPosInArea());
                     
                     actionInProgress = true;
@@ -1230,14 +1236,14 @@ public abstract class Character : MonoBehaviour
         if (Fleeing() || Attacking())
             return;
 
+        TravellingToArea = a;
         MoveTo(a.GetRandomPosInArea(),immedeately);
     }
 
     public void MoveTo(Vector3 t, bool immedeately = false)
     {
         ChangeState(Character.CharacterState.Travelling, immedeately);
-
-        Target = t;
+        
         Target = t;
 
         actionInProgress = true;
