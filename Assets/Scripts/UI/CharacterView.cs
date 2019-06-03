@@ -47,6 +47,8 @@ public class CharacterView : MenuWindow
         if (!c || !c.Team || c.Team.Leader.InArea != c.InArea)
             return;
 
+        Debug.Log("Showing character: "+ c);
+
         Instance.showCharacter(c);
     }
 

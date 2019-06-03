@@ -379,6 +379,7 @@ MonoBehaviour:
     AreasExplored: 0
     LeaderLevel: 0
     EquipmentFound: 0
+    NewScore: 0
 --- !u!1 &151457447
 GameObject:
   m_ObjectHideFlags: 0
