@@ -50,7 +50,8 @@ public class LevelUpView : MenuWindow
         ChoiceExplanantion.text = character.WaitingOnClassSelection ? "Select a Class": "Select level up";
 
         //TODO: use progression system instead
-        Choices = character.WaitingOnClassSelection ? ClassChoices : LevelController.GetLevelUpChoices(character.ClassType, character.LevelUps);
+        Choices = character.WaitingOnClassSelection ? character.GetClassChoices(ClassChoices.Select(c=>c.Class).ToList()).Select(cl => new LevelController.LevelUpChoice {Type = LevelController.ChoiceType.Class,Class = cl}).ToArray() 
+            : LevelController.GetLevelUpChoices(character.ClassType, character.LevelUps);
 
         if (!Choices.Any())
         {

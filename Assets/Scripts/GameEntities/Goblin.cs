@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
@@ -40,6 +41,8 @@ public class Goblin : Character
     }
 
     public Class ClassType { private set; get; }
+    
+    private List<Class> ClassChoices;
 
 
     private float lastSpeak;
@@ -141,6 +144,33 @@ public class Goblin : Character
         emission.enabled = WaitingOnLevelup();//LevelUps > 0|| WaitingOnClassSelection;
     }
 
+    public List<Class> GetClassChoices(List<Class> possibleChoises)
+    {
+        if (ClassChoices != null) return ClassChoices;
+
+        if (!Team) return new List<Class> {Class.Meatshield};
+
+        if (Team.Leader == this) possibleChoises.Remove(Class.Slave);
+
+        if (Team.Members.Any(m => m.ClassType != Class.NoClass))
+        {
+            var mostCommon = Team.Members.Select(g => g.ClassType).Where(c => c != Class.NoClass).GroupBy(item => item)
+                .OrderByDescending(g => g.Count()).Select(g => g.Key).First();
+        
+        Debug.Log("Most common class is " + mostCommon);
+        possibleChoises.Remove(mostCommon);
+        }
+
+        while (possibleChoises.Count > 3)
+        {
+            var ch = possibleChoises[Random.Range(0, possibleChoises.Count)];
+            possibleChoises.Remove(ch);
+        }
+        ClassChoices = possibleChoises;
+
+        return ClassChoices;
+    }
+
     internal void Heal()
     {
         Morale = COU.GetStatMax() *2;
@@ -165,6 +195,9 @@ public class Goblin : Character
 
     public void SelectClass(Class c)
     {
+        if(ClassChoices != null && !(ClassChoices.Contains(c)))
+            Debug.Log("Selected non-selectable class");
+        
         ClassType = c;
         WaitingOnClassSelection = false;
 
