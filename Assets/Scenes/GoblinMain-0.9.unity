@@ -2469,7 +2469,7 @@ MonoBehaviour:
   savePath: 0
   resetBlanks: 1
   saveHighscores: 1
-  saveLegacy: 0
+  saveLegacy: 1
   defaultPosition: {x: 0, y: 0, z: 0}
   defaultRotation: {x: -0, y: 0, z: 0}
   defaultScale: {x: 1, y: 1, z: 1}
@@ -2729,16 +2729,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7983068009638135444, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
-        type: 3}
-      propertyPath: m_OverrideVoxelSize
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7983068009638135444, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
-        type: 3}
-      propertyPath: m_VoxelSize
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 1
@@ -2750,6 +2740,16 @@ PrefabInstance:
     - target: {fileID: 1268618534227698, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983068009638135444, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 3}
+      propertyPath: m_OverrideVoxelSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983068009638135444, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
