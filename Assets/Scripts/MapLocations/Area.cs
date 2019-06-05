@@ -166,6 +166,14 @@ public class Area : MonoBehaviour
         return PresentCharacters.Any(c => c.tag == "Enemy" && c.Alive());
     }
 
+    public bool AnyGoblins(bool dead = false)
+    {
+        if (dead)
+            return PresentCharacters.Any(c => c.CharacterRace == Character.Race.Goblin && !c.Alive());
+
+        return PresentCharacters.Any(c => c.CharacterRace == Character.Race.Goblin && c.Alive());
+    }
+
     internal Area GetClosestNeighbour(Vector3 position, bool useRoads = false)
     {
         Area closest = null;

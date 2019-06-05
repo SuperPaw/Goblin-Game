@@ -119,6 +119,24 @@ MonoBehaviour:
   - ClassType: 32
     Image: {fileID: 21300000, guid: f9b08119c36400742afe7efea5d2e93d, type: 3}
     Description: Scout can scout for enemies. To set up ambushes
+  - ClassType: 64
+    Image: {fileID: 21300000, guid: 87f8845af085935469f96fdeec26078c, type: 3}
+    Description: Scout can scout for enemies. To set up ambushes
+  - ClassType: 128
+    Image: {fileID: 21300000, guid: 1d4e7b3ea473cc045ac4fee07a4ddd8a, type: 3}
+    Description: Scout can scout for enemies. To set up ambushes
+  - ClassType: 256
+    Image: {fileID: 21300000, guid: 3040060ac0181004d8f90c6aa09fc68e, type: 3}
+    Description: Scout can scout for enemies. To set up ambushes
+  - ClassType: 512
+    Image: {fileID: 21300000, guid: 9210a65130e2898458542ba797fb6899, type: 3}
+    Description: Scout can scout for enemies. To set up ambushes
+  - ClassType: 1024
+    Image: {fileID: 21300000, guid: 15f5d954ce1eff54db055229d22604f0, type: 3}
+    Description: Scout can scout for enemies. To set up ambushes
+  - ClassType: 2048
+    Image: {fileID: 21300000, guid: e83f16f2bf40ba945bb5c3c20ea30707, type: 3}
+    Description: Scout can scout for enemies. To set up ambushes
   AttributeImages:
   - Stat: 0
     Image: {fileID: 21300000, guid: 73c58ef9dc6db424db58515b59eb1231, type: 3}
@@ -611,6 +629,7 @@ MonoBehaviour:
     AreasExplored: 23
     LeaderLevel: 12
     EquipmentFound: 10
+    NewScore: 0
   - Name: Kiki-jiki the Mirror-breaker
     Kills: 2
     Treasures: 1
@@ -618,6 +637,7 @@ MonoBehaviour:
     AreasExplored: 1
     LeaderLevel: 2
     EquipmentFound: 0
+    NewScore: 0
   - Name: Grenzo Havoc-Raiser
     Kills: 10
     Treasures: 8
@@ -625,6 +645,7 @@ MonoBehaviour:
     AreasExplored: 6
     LeaderLevel: 6
     EquipmentFound: 2
+    NewScore: 0
   ActiveScore:
     Name: 
     Kills: 0
@@ -633,5 +654,6 @@ MonoBehaviour:
     AreasExplored: 0
     LeaderLevel: 0
     EquipmentFound: 0
+    NewScore: 0
   HighScoreEntry: {fileID: 0}
   SaveControls: {fileID: 0}

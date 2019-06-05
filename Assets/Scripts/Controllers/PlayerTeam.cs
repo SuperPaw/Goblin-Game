@@ -76,6 +76,9 @@ public class PlayerTeam : MonoBehaviour
     public class StuffFoundEvent : UnityEvent<int> { }
     public class EquipmentFoundEvent : UnityEvent<Equipment,Goblin> { }
 
+    [Header("Necromancy")] public Character ZombiePrefab;
+
+
     // Use this for initialization
     public void Initialize (List<Goblin> members)
     {
@@ -253,6 +256,18 @@ public class PlayerTeam : MonoBehaviour
             //Debug.Log(gobbo +" going to " + gobbo.Target);
             
         }
+    }
+
+    public void RaiseDead()
+    {
+        if(!Leader.InArea.AnyGoblins(true)) Debug.LogError("No dead goblins to raise");
+
+        //MOVE TO Goblin
+
+        var corpse = Leader.InArea.PresentCharacters.First(c => c.CharacterRace == Character.Race.Goblin && !c.Alive());
+        corpse.InArea.PresentCharacters.Remove(corpse);
+        Destroy(corpse.gameObject);
+
     }
     
     public void Hide()

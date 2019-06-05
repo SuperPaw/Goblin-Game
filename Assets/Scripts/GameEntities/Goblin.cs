@@ -157,8 +157,8 @@ public class Goblin : Character
             var mostCommon = Team.Members.Select(g => g.ClassType).Where(c => c != Class.NoClass).GroupBy(item => item)
                 .OrderByDescending(g => g.Count()).Select(g => g.Key).First();
         
-        Debug.Log("Most common class is " + mostCommon);
-        possibleChoises.Remove(mostCommon);
+            //Debug.Log("Most common class is " + mostCommon);
+            possibleChoises.Remove(mostCommon);
         }
 
         while (possibleChoises.Count > 3)
@@ -223,11 +223,29 @@ public class Goblin : Character
             case Class.Ambusher:
                 AmbushModifier = 2f;
                 SPE.Modifiers.Add(new Stat.StatMod("Ambusher", 2));
+                DMG.Modifiers.Add(new Stat.StatMod("Ambusher", 1));
                 break;
             case Class.Scout:
                 SMA.Modifiers.Add(new Stat.StatMod("Scout", 2));
                 break;
             case Class.END:
+                break;
+            case Class.NoClass:
+                break;
+            case Class.Necromancer:
+                DMG.Modifiers.Add(new Stat.StatMod("Necromancer", -2));
+                break;
+            case Class.Beastmaster:
+                break;
+            case Class.Hunter:
+                break;
+            case Class.Cook:
+                break;
+            case Class.Shaman:
+                break;
+            case Class.Diplomat:
+                break;
+            case Class.ALL:
                 break;
             default:
                 throw new ArgumentOutOfRangeException("c", c, null);
