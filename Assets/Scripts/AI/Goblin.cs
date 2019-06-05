@@ -125,6 +125,22 @@ public class Goblin : Character
     {
         base.FixedUpdate();
 
+        //TODO: merge together with move's switch statement
+        if (Attacking() && AttackTarget && AttackTarget.Alive() && InAttackRange()
+        ) //has live enemy target and in attackrange
+        {
+            navMeshAgent.isStopped = true;
+
+            if (_attackRoutine == null)
+                _attackRoutine = StartCoroutine(AttackRoutine());
+        }
+        else
+        {
+            navMeshAgent.isStopped = false;
+            SelectAction();
+        }
+
+
         //TODO: this could be handled with events instead of checking each frame
         if (Team)
         {
@@ -145,7 +161,7 @@ public class Goblin : Character
 
         emission.enabled = WaitingOnLevelup();//LevelUps > 0|| WaitingOnClassSelection;
     }
-
+    
     public List<Class> GetClassChoices(List<Class> possibleChoises)
     {
         if (ClassChoices != null) return ClassChoices;
@@ -311,7 +327,7 @@ public class Goblin : Character
 
     internal void Search(Lootable loot)
     {
-        if (!Idling()) return;
+        if (!Idling() || !loot) return;
 
         Speak(SoundBank.GoblinSound.Grunt);
 

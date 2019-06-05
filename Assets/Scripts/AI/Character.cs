@@ -301,7 +301,7 @@ public abstract class Character : MonoBehaviour
 
 
     private Collider2D coll;
-    private Coroutine _attackRoutine;
+    protected Coroutine _attackRoutine;
     private Hidable hiding;
     
     public Hidable Hidingplace
@@ -420,20 +420,6 @@ public abstract class Character : MonoBehaviour
         //if (IncoherentNavAgentSpeed() && agentStuckRoutine == null)
         //    agentStuckRoutine = StartCoroutine(CheckForNavAgentStuck(0.25f));
 
-        //TODO: merge together with move's switch statement
-        if (Attacking() && AttackTarget && AttackTarget.Alive() && InAttackRange()
-        ) //has live enemy target and in attackrange
-        {
-            navMeshAgent.isStopped = true;
-
-            if (_attackRoutine == null)
-                _attackRoutine = StartCoroutine(AttackRoutine());
-        }
-        else
-        {
-            navMeshAgent.isStopped = false;
-            SelectAction();
-        }
     }
 
 
@@ -692,7 +678,7 @@ public abstract class Character : MonoBehaviour
         return closest;
     }
 
-    private Character GetClosestEnemy()
+    protected Character GetClosestEnemy()
     {
         var playerChar = (gameObject.tag == "Player");
         var enemyTag = playerChar ? "Enemy" : "Player";
@@ -725,7 +711,7 @@ public abstract class Character : MonoBehaviour
         return closest;
     }
 
-    private void TargetGone()
+    protected void TargetGone()
     {
         if(!Attacking()) return;
 
@@ -761,7 +747,7 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    private IEnumerator AttackRoutine()
+    protected IEnumerator AttackRoutine()
     {
         //Debug.Log(gameObject.name + " is Attacking " + AttackTarget.gameObject.name);
         
@@ -807,8 +793,8 @@ public abstract class Character : MonoBehaviour
     {
         return State != CharacterState.Dead;
     }
-
-    private  void SelectAction()
+    //TODO: create specific select action for each child class
+    protected  void SelectAction()
     {
         switch (State)
         {
@@ -1255,7 +1241,7 @@ public abstract class Character : MonoBehaviour
         actionInProgress = true;
     }
 
-    private bool InAttackRange()
+    protected bool InAttackRange()
     {
         if (!AttackTarget || !AttackTarget.Alive())
             return false;

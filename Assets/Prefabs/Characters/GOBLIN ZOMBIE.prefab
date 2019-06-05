@@ -11397,8 +11397,8 @@ GameObject:
   - component: {fileID: 4600599033896219243}
   - component: {fileID: 4467384537960578526}
   - component: {fileID: 4342134675093776154}
-  - component: {fileID: 2577060322627594553}
   - component: {fileID: 9180371582078428055}
+  - component: {fileID: 5982750895952644980}
   m_Layer: 0
   m_Name: GOBLIN ZOMBIE
   m_TagString: Enemy
@@ -11473,77 +11473,6 @@ CapsuleCollider:
   m_Height: 1.84
   m_Direction: 1
   m_Center: {x: 0, y: 0.7, z: 0}
---- !u!114 &2577060322627594553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f367bc6751787434fbe6a314f8bf8281, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AgentVelocity: 0
-  DesiredVelocity: 0
-  HasPath: 0
-  PathStale: 0
-  IsOnNavMesh: 0
-  StickToRoad: 0
-  HasEquipment: 0
-  Voice: {fileID: 993784395133949661}
-  VoicePitch: 0
-  VoiceText: {fileID: 0}
-  ShoutTime: 2
-  MovementAudio: {fileID: 0}
-  SurprisedTime: 4
-  SurprisedStartTime: 0
-  CharacterRace: 3
-  IrritationMeter: 0
-  IrritaionTolerance: 5
-  State: 0
-  LootTarget: {fileID: 0}
-  Team: {fileID: 0}
-  DamMin: 1
-  DamMax: 2
-  AimMin: 3
-  AimMax: 4
-  AttMin: 1
-  AttMax: 2
-  CouMin: 50
-  CouMax: 50
-  HeaMin: 5
-  HeaMax: 10
-  SpeMin: 2
-  SpeMax: 2
-  SmaMin: 5
-  SmaMax: 1
-  WalkingSpeed: 1
-  idleDistance: 50
-  Walking: 0
-  AttackRange: 0.5
-  actionInProgress: 0
-  Target: {x: 0, y: 0, z: 0}
-  navMeshAgent: {fileID: 4600599033896219243}
-  HolderGameObject: {fileID: 1218143795376610366}
-  EquipmentManager: {fileID: 0}
-  _health: 10
-  HealtBar: {fileID: 8627913087637334291}
-  AttackTime: 2
-  MoralLossModifier: 1
-  MoralLossOnFriendDeath: 5
-  MoralBoostOnEnemyDeath: 5
-  MoralBoostOnKill: 5
-  AmbushModifier: 1.2
-  DamageColor: {r: 0, g: 0, b: 0, a: 0}
-  NormalColor: {r: 0, g: 0, b: 0, a: 0}
-  Material: {fileID: 0}
-  Animator: {fileID: 9180371582078428055}
-  SpeedAnimationThreshold: 0
-  provokeDistance: 10
-  ProvokeTime: 5
-  InArea: {fileID: 0}
 --- !u!95 &9180371582078428055
 Animator:
   serializedVersion: 3
@@ -11563,6 +11492,80 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5982750895952644980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6d30169e2815f4a88904a8b640e0b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AgentVelocity: 0
+  DesiredVelocity: 0
+  HasPath: 0
+  PathStale: 0
+  IsOnNavMesh: 0
+  StickToRoad: 0
+  HasEquipment: 0
+  Voice: {fileID: 993784395133949661}
+  VoicePitch: 0
+  VoiceText: {fileID: 0}
+  ShoutTime: 2
+  MovementAudio: {fileID: 0}
+  SurprisedTime: 4
+  SurprisedStartTime: 0
+  CharacterRace: 0
+  IrritationMeter: 0
+  IrritaionTolerance: 50
+  State: 0
+  LootTarget: {fileID: 0}
+  Team: {fileID: 0}
+  DamMin: 1
+  DamMax: 1
+  AimMin: 4
+  AimMax: 4
+  AttMin: 1
+  AttMax: 1
+  CouMin: 1000
+  CouMax: 1000
+  HeaMin: 7
+  HeaMax: 7
+  SpeMin: 2
+  SpeMax: 2
+  SmaMin: 1
+  SmaMax: 1
+  WalkingSpeed: 2
+  idleDistance: 0
+  Walking: 0
+  AttackRange: 0
+  TravellingToArea: {fileID: 0}
+  actionInProgress: 0
+  Target: {x: 0, y: 0, z: 0}
+  navMeshAgent: {fileID: 4600599033896219243}
+  HolderGameObject: {fileID: 1218143795376610366}
+  EquipmentManager: {fileID: 0}
+  _health: 10
+  HealtBar: {fileID: 8627913087637334291}
+  AttackTime: 2
+  MoralLossModifier: 1
+  MoralLossOnFriendDeath: 5
+  MoralBoostOnEnemyDeath: 5
+  MoralBoostOnKill: 5
+  AmbushModifier: 1.2
+  IncomingDmgPct: 1
+  OutgoingDmgPct: 1
+  DamageColor: {r: 0.42900318, g: 0.40156642, b: 0.6037736, a: 1}
+  NormalColor: {r: 0, g: 0, b: 0, a: 0}
+  Material: {fileID: 2100000, guid: a77787c003925d94a86f8042f6bb2135, type: 2}
+  Animator: {fileID: 9180371582078428055}
+  SpeedAnimationThreshold: 0
+  provokeDistance: 10
+  ProvokeTime: 5
+  InArea: {fileID: 0}
 --- !u!1 &1649641874408870
 GameObject:
   m_ObjectHideFlags: 0

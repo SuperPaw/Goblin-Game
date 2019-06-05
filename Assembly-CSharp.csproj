@@ -125,6 +125,10 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
+    <Compile Include="Assets\Scripts\AI\Character.cs" />
+    <Compile Include="Assets\Scripts\AI\Enemy.cs" />
+    <Compile Include="Assets\Scripts\AI\Goblin.cs" />
+    <Compile Include="Assets\Scripts\AI\Zombie.cs" />
     <Compile Include="Assets\Scripts\Controllers\EquipmentManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\GreatestGoblins.cs" />
@@ -135,10 +139,7 @@
     <Compile Include="Assets\Scripts\Controllers\SoundBank.cs" />
     <Compile Include="Assets\Scripts\Controllers\SoundController.cs" />
     <Compile Include="Assets\Scripts\GameEntities\CampfireObject.cs" />
-    <Compile Include="Assets\Scripts\GameEntities\Character.cs" />
-    <Compile Include="Assets\Scripts\GameEntities\Enemy.cs" />
     <Compile Include="Assets\Scripts\GameEntities\Equipment.cs" />
-    <Compile Include="Assets\Scripts\GameEntities\Goblin.cs" />
     <Compile Include="Assets\Scripts\GameEntities\Hidable.cs" />
     <Compile Include="Assets\Scripts\GameEntities\Lootable.cs" />
     <Compile Include="Assets\Scripts\GameEntities\RoadEdgeTile.cs" />
