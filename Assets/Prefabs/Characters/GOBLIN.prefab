@@ -87,6 +87,7 @@ MonoBehaviour:
   idleDistance: 0
   Walking: 1
   AttackRange: 1
+  TravellingToArea: {fileID: 0}
   actionInProgress: 0
   Target: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 4600599033896219243}
@@ -114,6 +115,7 @@ MonoBehaviour:
   ChiefImage: {fileID: 114764703591676486}
   StateImage: {fileID: 114716199431146400}
   ProvokeTarget: {fileID: 0}
+  GoblinSkin: {fileID: 5823732466600683179}
   speakWait: 3
   CurrentLevel: 1
   ProvokeScaredCurve:

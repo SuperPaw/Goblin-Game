@@ -23,6 +23,8 @@ public class Goblin : Character
 
     public Character ProvokeTarget;
 
+    public SkinnedMeshRenderer GoblinSkin;
+
     //diplomat(kan forhandle med andre)
     //Shaman? kan helbrede + magi + sacrifice slaves(or treasure) for benefits
     //    necromanceer? for zombie goblins

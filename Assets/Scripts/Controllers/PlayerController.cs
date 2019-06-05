@@ -581,7 +581,7 @@ public class PlayerController : MonoBehaviour
                 CharacterView.Kill();
                 break;
             case MappableActions.RaiseDead:
-                Team.RaiseDead();
+                StartCoroutine(Team.RaiseDead());
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

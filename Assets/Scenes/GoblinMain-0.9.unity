@@ -1106,6 +1106,8 @@ MonoBehaviour:
     Action: 11
   - Key: 107
     Action: 12
+  - Key: 114
+    Action: 13
   Orders:
   - Order: 0
     Speech: Hide in the trees!
@@ -1116,6 +1118,9 @@ MonoBehaviour:
   - Order: 2
     Speech: Run away!!
     GoblinSound: 8
+  - Order: 13
+    Speech: I make Goblin Zombie!
+    GoblinSound: 10
   MoveOrder:
     Order: 5
     Speech: Goblins, move!
@@ -1319,6 +1324,12 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  GoblinSkins:
+  - {fileID: 2100000, guid: 18ba8654da6c78644bce9a78177a3e6d, type: 2}
+  - {fileID: 2100000, guid: 9bdf8ce8bfd44194d85a1e9b0b874af4, type: 2}
+  - {fileID: 2100000, guid: 94265475e2006ab488ba3b3813ee3645, type: 2}
+  ZombiePrefab: {fileID: 0}
+  NecromancerSkin: {fileID: 2100000, guid: bab5322a7d61f8c4eabe4102656e61e2, type: 2}
 --- !u!4 &904032342
 Transform:
   m_ObjectHideFlags: 0

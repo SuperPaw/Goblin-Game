@@ -76,7 +76,10 @@ public class PlayerTeam : MonoBehaviour
     public class StuffFoundEvent : UnityEvent<int> { }
     public class EquipmentFoundEvent : UnityEvent<Equipment,Goblin> { }
 
+    [Header("Graphics")] public Material[] GoblinSkins;
+
     [Header("Necromancy")] public Character ZombiePrefab;
+    public Material NecromancerSkin;
 
 
     // Use this for initialization
@@ -92,6 +95,12 @@ public class PlayerTeam : MonoBehaviour
         {
             character.Team = this;
 
+            var mat = GoblinSkins[Random.Range(0, GoblinSkins.Length)];
+
+            Debug.Log(character +" Material: "+ mat);
+
+            character.GoblinSkin.sharedMaterial = mat;
+            
             character.OnDeath?.AddListener(MemberDied);
         }
 
@@ -108,8 +117,11 @@ public class PlayerTeam : MonoBehaviour
             Leader = Members.First();
 
         //TODO: use assign class for bonuses instead
-        if(LeaderClass != Goblin.Class.NoClass)
+        if (LeaderClass != Goblin.Class.NoClass)
+        {
             Leader.SelectClass(LeaderClass);
+            if (LeaderClass == Goblin.Class.Necromancer) Leader.GoblinSkin.sharedMaterial = NecromancerSkin;
+        }
 
         switch (TribeBlessing)
         {
@@ -258,16 +270,28 @@ public class PlayerTeam : MonoBehaviour
         }
     }
 
-    public void RaiseDead()
+    public IEnumerator RaiseDead()
     {
         if(!Leader.InArea.AnyGoblins(true)) Debug.LogError("No dead goblins to raise");
 
-        //MOVE TO Goblin
-
         var corpse = Leader.InArea.PresentCharacters.First(c => c.CharacterRace == Character.Race.Goblin && !c.Alive());
-        corpse.InArea.PresentCharacters.Remove(corpse);
-        Destroy(corpse.gameObject);
+        var pos = corpse.transform.position;
 
+        //Goblin walk there
+        Leader.MoveTo(pos);
+
+        //Wait for resolution
+        yield return new WaitForSeconds(2);
+        
+        corpse.InArea.PresentCharacters.Remove(corpse);
+        
+
+        Destroy(corpse.gameObject);
+        
+        var z = MapGenerator.GenerateCharacter(ZombiePrefab.gameObject, Leader.InArea, NpcHolder.Instance.transform, pos).GetComponent<Character>();
+
+        z.tag = "Player";
+        z.Team = this;
     }
     
     public void Hide()

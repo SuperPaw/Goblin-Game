@@ -1011,6 +1011,12 @@ public abstract class Character : MonoBehaviour
 
                 break;
             case CharacterState.Searching:
+                if (!LootTarget)
+                {
+                    ChangeState(CharacterState.Idling,true);
+                    break;
+                }
+
                 //check for arrival and stop travelling
                 if (Vector3.Distance(transform.position, LootTarget.transform.position) < 2f)
                 {

@@ -327,6 +327,7 @@ public class MapGenerator : MonoBehaviour
 
     }
 
+
     public void SetSize(WorldSize sz)
     {
         var mpsz = MapSizes.First(s => s.WorldSize == sz);
@@ -876,6 +877,22 @@ public class MapGenerator : MonoBehaviour
         return GenerateCharacter(go, area, parent);
     }
 
+
+    public static GameObject GenerateCharacter(GameObject go, Area inArea, Transform parent, Vector3 pos)
+    {
+
+        var next = Instantiate(go, pos, Quaternion.identity);
+        next.transform.parent = parent;
+
+        var c = next.GetComponent<Character>();
+
+        inArea.PresentCharacters.Add(c);
+
+        c.InArea = inArea;
+
+        return next;
+    }
+
     public static GameObject GenerateCharacter(GameObject go, Area inArea, Transform parent, bool pointOfInterest = false)
     {
         var pos = inArea.GetRandomPosInArea();
@@ -886,17 +903,7 @@ public class MapGenerator : MonoBehaviour
 
             pos.y = 0; // = new Vector3(vector3.x, 0, vector3.z);
         }
-
-        var next = Instantiate(go, pos, Quaternion.identity);
-        next.transform.parent = parent;
-
-        var c = next.GetComponent<Character>();
-
-        inArea.PresentCharacters.Add(c);
-
-        c.InArea = inArea;
-        
-        return next;
+        return GenerateCharacter(go, inArea, parent, pos);
     }
     
 
