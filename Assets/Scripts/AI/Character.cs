@@ -929,14 +929,7 @@ public abstract class Character : MonoBehaviour
                 break;
             case CharacterState.Fleeing:
                 (this as Goblin)?.Speak(SoundBank.GoblinSound.PanicScream);
-
-                //if (actionInProgress &! navMeshAgent.hasPath)
-                //{
-                //    //TODO: move into next if statement, if correct
-                //    Debug.Log("stuck fleeing resolved");
-                //    actionInProgress = false;
-                //    ChangeState(CharacterState.Idling, true);
-                //}
+                
                 if (fleeingToArea == InArea && navMeshAgent.remainingDistance < 0.1f )
                 {
                     actionInProgress = false;
@@ -947,6 +940,8 @@ public abstract class Character : MonoBehaviour
                     fleeingToArea = TravellingToArea ? TravellingToArea.GetClosestNeighbour(transform.position, StickToRoad) 
                         : InArea.GetClosestNeighbour(transform.position,StickToRoad);
                     navMeshAgent.SetDestination(fleeingToArea.GetRandomPosInArea());
+
+                    TravellingToArea = fleeingToArea;
                     
                     actionInProgress = true;
                 }
