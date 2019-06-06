@@ -2999,6 +2999,7 @@ MonoBehaviour:
   MovementAudio: {fileID: 0}
   SurprisedTime: 4
   SurprisedStartTime: 0
+  Aggressive: 1
   CharacterRace: 1
   IrritationMeter: 0
   IrritaionTolerance: 100
@@ -3023,6 +3024,7 @@ MonoBehaviour:
   idleDistance: 50
   Walking: 0
   AttackRange: 0
+  TravellingToArea: {fileID: 0}
   actionInProgress: 0
   Target: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 0}
@@ -3036,12 +3038,15 @@ MonoBehaviour:
   MoralBoostOnEnemyDeath: 5
   MoralBoostOnKill: 5
   AmbushModifier: 1.2
+  IncomingDmgPct: 1
+  OutgoingDmgPct: 1
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 0}
   Animator: {fileID: 2001377320644695465}
   SpeedAnimationThreshold: 0
   provokeDistance: 10
+  ProvokeTime: 5
   InArea: {fileID: 0}
 --- !u!54 &54649803752173894
 Rigidbody:

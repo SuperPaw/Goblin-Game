@@ -121,6 +121,11 @@ public class Area : MonoBehaviour
         if(!PresentCharacters.Contains(c))
             PresentCharacters.Add(c);
 
+        foreach (var aggressive in PresentCharacters.Where(e => e.tag == "Enemy" && e.Aggressive && e.tag != c.tag))
+        {
+            aggressive.ChangeState(Character.CharacterState.Attacking);
+        }
+
         c.IrritationMeter = 0;
         if(c.Fleeing() || c.Travelling())
             c.ChangeState(Character.CharacterState.Idling);

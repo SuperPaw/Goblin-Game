@@ -52,6 +52,8 @@ public abstract class Character : MonoBehaviour
     public float SurprisedTime = 4;
     public float SurprisedStartTime;
 
+    public bool Aggressive;
+
     public Race CharacterRace;
 
     public int IrritationMeter = 0;
@@ -514,8 +516,8 @@ public abstract class Character : MonoBehaviour
             return;
         
         //check if state is already being changed
-        if(stateChangeRoutine != null)
-            Debug.Log(name + ": Changing State already: newState "+newState + ", old: "+ State);
+        //if(stateChangeRoutine != null)
+        //    Debug.Log(name + ": Changing State already: newState "+newState + ", old: "+ State);
 
         stateChangeRoutine = StartCoroutine(immedeately
             ? StateChangingRoutine(newState, 0)
@@ -550,6 +552,7 @@ public abstract class Character : MonoBehaviour
         }
         else if (State == CharacterState.Attacking)
         {
+            Aggressive = true;
             yield return new WaitForSeconds(Random.Range(0f,1.5f));
             if(State == CharacterState.Attacking )
                 (this as Goblin)?.Speak(SoundBank.GoblinSound.Roar);

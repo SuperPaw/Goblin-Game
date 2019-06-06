@@ -10,6 +10,9 @@ public class Zombie : Character
     {
         base.FixedUpdate();
 
+        if (!Alive() || !GameManager.Instance.GameStarted || !navMeshAgent.isOnNavMesh)
+            return;
+
         //TODO: merge together with move's switch statement
         if (Attacking() && AttackTarget && AttackTarget.Alive() && InAttackRange()
         ) //has live enemy target and in attackrange
