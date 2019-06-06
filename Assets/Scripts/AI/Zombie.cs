@@ -82,7 +82,6 @@ public class Zombie : Character
                                 }
                                 break;
                             }
-
                             dest = Team.Leader.transform.position;
                         }
                         else
@@ -95,7 +94,6 @@ public class Zombie : Character
                     }
 
                     navMeshAgent.SetDestination(dest);//new Vector3(Random.Range(-idleDistance, idleDistance), 0,Random.Range(-idleDistance, idleDistance)));
-
                 }
                 break;
             case CharacterState.Attacking:

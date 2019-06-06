@@ -278,7 +278,6 @@ public class PlayerTeam : MonoBehaviour
         var pos = corpse.transform.position;
 
         //Goblin walk there
-        Leader.MoveTo(pos);
 
         //Wait for resolution
         yield return new WaitForSeconds(2);
