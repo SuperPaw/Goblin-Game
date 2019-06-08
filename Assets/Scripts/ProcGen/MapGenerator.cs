@@ -72,7 +72,7 @@ public class MapGenerator : MonoBehaviour
     
 
     [Header("References")]
-    public LocalNavMeshBuilder MeshBuilder; 
+    public NavMeshBuilder MeshBuilder; 
     public GameObject[] Npcs;
     public GameObject[] HidableObjects;
     public GameObject ForestHolder, AreaHolder, TileHolder;
@@ -174,12 +174,15 @@ public class MapGenerator : MonoBehaviour
 
         totalProgress = (int)(totalProgress * 0.83f);
 
+        yield return null;
+
         //Setting up mesh builder
         MeshBuilder.transform.localScale = new Vector3(SizeX / 8f, 1, SizeZ / 8f);
-        MeshBuilder.m_Size = new Vector3(SizeX, 10, SizeZ);
+        //MeshBuilder.m_Size = new Vector3(SizeX, 10, SizeZ);
         MeshBuilder.transform.position = new Vector3(SizeX / 2f, 0, SizeZ / 2f);
 
-        yield return null;
+        MeshBuilder.gameObject.SetActive(true);
+
 
         //Forest gen
 
@@ -323,6 +326,7 @@ public class MapGenerator : MonoBehaviour
         endCallback();
 
     }
+
 
     public void SetSize(WorldSize sz)
     {
@@ -873,6 +877,22 @@ public class MapGenerator : MonoBehaviour
         return GenerateCharacter(go, area, parent);
     }
 
+
+    public static GameObject GenerateCharacter(GameObject go, Area inArea, Transform parent, Vector3 pos)
+    {
+
+        var next = Instantiate(go, pos, Quaternion.identity);
+        next.transform.parent = parent;
+
+        var c = next.GetComponent<Character>();
+
+        inArea.PresentCharacters.Add(c);
+
+        c.InArea = inArea;
+
+        return next;
+    }
+
     public static GameObject GenerateCharacter(GameObject go, Area inArea, Transform parent, bool pointOfInterest = false)
     {
         var pos = inArea.GetRandomPosInArea();
@@ -883,17 +903,7 @@ public class MapGenerator : MonoBehaviour
 
             pos.y = 0; // = new Vector3(vector3.x, 0, vector3.z);
         }
-
-        var next = Instantiate(go, pos, Quaternion.identity);
-        next.transform.parent = parent;
-
-        var c = next.GetComponent<Character>();
-
-        inArea.PresentCharacters.Add(c);
-
-        c.InArea = inArea;
-        
-        return next;
+        return GenerateCharacter(go, inArea, parent, pos);
     }
     
 

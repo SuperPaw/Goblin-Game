@@ -127,7 +127,7 @@ public class GreatestGoblins : MonoBehaviour
     public static List<Score> GetScores()
     {
         if (!Instance) Instance = FindObjectOfType<GreatestGoblins>();
-        return Instance.HighScores;
+        return Instance?.HighScores;
     }
 
     public static bool ScoresContainName(string name) => Instance.HighScores.Any(s => s.Name == name);

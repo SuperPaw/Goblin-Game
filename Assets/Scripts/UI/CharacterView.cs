@@ -44,8 +44,10 @@ public class CharacterView : MenuWindow
 
     public static void ShowCharacter(Goblin c)
     {
-        if (!c || !c.Team || c.Team.Leader.InArea != c.InArea)
+        if (!c || !c.Team)// || c.Team.Leader.InArea != c.InArea)
             return;
+
+        Debug.Log("Showing character: "+ c);
 
         Instance.showCharacter(c);
     }
@@ -165,6 +167,22 @@ public class CharacterView : MenuWindow
                 return "Goblin Scout";
             case Goblin.Class.Slave:
                 return "Goblin Slave";
+            case Goblin.Class.Necromancer:
+                return "Goblin Necromancer";
+            case Goblin.Class.Beastmaster:
+                return "Goblin Beastmaster";
+            case Goblin.Class.Hunter:
+                return "Goblin Hunter";
+            case Goblin.Class.Cook:
+                return "Goblin Cook";
+            case Goblin.Class.Shaman:
+                return "Goblin Shaman";
+            case Goblin.Class.Diplomat:
+                return "Goblin Diplomat";
+            case Goblin.Class.NoClass:
+            case Goblin.Class.Goblin:
+            case Goblin.Class.END:
+            case Goblin.Class.ALL:
             default:
                 return "Goblin";
         }

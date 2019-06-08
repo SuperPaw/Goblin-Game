@@ -104,6 +104,12 @@ public class Area : MonoBehaviour
             return;
         }
 
+        if(GameManager.Instance.GameStarted && !c.TravellingToArea == this && this != c.InArea)
+        {
+            Debug.LogWarning(c + " is not travveling to: "+ this);
+            return;
+        }
+
         //if character is not supposed to go there. This hack Creates problems 
         //if(c.Idling())
         //    return;
@@ -114,6 +120,11 @@ public class Area : MonoBehaviour
         c.InArea = this;
         if(!PresentCharacters.Contains(c))
             PresentCharacters.Add(c);
+
+        foreach (var aggressive in PresentCharacters.Where(e => e.tag == "Enemy" && e.Aggressive && e.tag != c.tag))
+        {
+            aggressive.ChangeState(Character.CharacterState.Attacking);
+        }
 
         c.IrritationMeter = 0;
         if(c.Fleeing() || c.Travelling())
@@ -158,6 +169,14 @@ public class Area : MonoBehaviour
             return PresentCharacters.Any(c => c.tag == "Enemy" && c.Alive() && c.StickToRoad);
 
         return PresentCharacters.Any(c => c.tag == "Enemy" && c.Alive());
+    }
+
+    public bool AnyGoblins(bool dead = false)
+    {
+        if (dead)
+            return PresentCharacters.Any(c => c.CharacterRace == Character.Race.Goblin && !c.Alive());
+
+        return PresentCharacters.Any(c => c.CharacterRace == Character.Race.Goblin && c.Alive());
     }
 
     internal Area GetClosestNeighbour(Vector3 position, bool useRoads = false)

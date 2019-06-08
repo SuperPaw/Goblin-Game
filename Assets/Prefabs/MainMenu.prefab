@@ -3740,7 +3740,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 522264547562529686}
-        m_MethodName: SelectWorldSize
+        m_MethodName: SelectChiefClass
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

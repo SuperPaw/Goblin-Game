@@ -87,6 +87,7 @@ MonoBehaviour:
   idleDistance: 0
   Walking: 1
   AttackRange: 1
+  TravellingToArea: {fileID: 0}
   actionInProgress: 0
   Target: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 4600599033896219243}
@@ -100,18 +101,21 @@ MonoBehaviour:
   MoralBoostOnEnemyDeath: 5
   MoralBoostOnKill: 5
   AmbushModifier: 1.2
+  IncomingDmgPct: 1
+  OutgoingDmgPct: 1
   DamageColor: {r: 1, g: 0, b: 0, a: 1}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 0}
   Animator: {fileID: 9200039782062432997}
   SpeedAnimationThreshold: 0.5
   provokeDistance: 10
+  ProvokeTime: 5
   InArea: {fileID: 0}
   Warrens: {fileID: 0}
   ChiefImage: {fileID: 114764703591676486}
   StateImage: {fileID: 114716199431146400}
   ProvokeTarget: {fileID: 0}
-  ClassType: 1
+  GoblinSkin: {fileID: 5823732466600683179}
   speakWait: 3
   CurrentLevel: 1
   ProvokeScaredCurve:
@@ -189,8 +193,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1
-  m_Height: 1.84
+  m_Radius: 2
+  m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!114 &8600238114990287779

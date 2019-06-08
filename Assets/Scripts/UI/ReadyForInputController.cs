@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ReadyForInputController : MonoBehaviour
 {
@@ -13,9 +14,13 @@ public class ReadyForInputController : MonoBehaviour
         public Character.CharacterState[] States;
     }
 
+    public Button NecromancyButton;
+    public Button HideButton;
+
+
     public EnabledOnStates[] ControlledObjectMappings;
     
-    // Update is called once per frame
+    // todo: change to on state change
     void FixedUpdate()
     {
         if( !PlayerController.Instance.Team.Leader)
@@ -31,5 +36,11 @@ public class ReadyForInputController : MonoBehaviour
             {
                 enabledOnStates.ControlledGameObject.SetActive(enabledOnStates.States.Contains(PlayerController.Instance.Team.Leader.State));
             }
+
+        if(PlayerController.Instance.Team.Leader.ClassType != Goblin.Class.Necromancer || !PlayerController.Instance.Team.Leader.InArea.AnyGoblins(true))
+            NecromancyButton.gameObject.SetActive(false);
+
+        if(!PlayerController.Instance.Team.Leader.InArea.RoadsTo.Any())
+            HideButton.gameObject.SetActive(false);
     }
 }

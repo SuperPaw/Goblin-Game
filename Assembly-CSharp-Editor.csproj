@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
@@ -728,18 +728,6 @@
     <ProjectReference Include="NavMeshComponentsExamplesEditor.csproj">
       <Project>{8762D88C-24F3-AEF6-B307-4D96446049BE}</Project>
       <Name>NavMeshComponentsExamplesEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="NavMeshComponentsEditor.csproj">
-      <Project>{5A179E04-1825-52A4-C01B-3C973E026E99}</Project>
-      <Name>NavMeshComponentsEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="NavMeshComponents.csproj">
-      <Project>{F138EAE8-CF0F-1D8F-4F54-32B03856B6E1}</Project>
-      <Name>NavMeshComponents</Name>
-    </ProjectReference>
-    <ProjectReference Include="NavMeshComponentsExamples.csproj">
-      <Project>{D58B822E-305B-2E8D-A96A-2C0B9F8A6D0B}</Project>
-      <Name>NavMeshComponentsExamples</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

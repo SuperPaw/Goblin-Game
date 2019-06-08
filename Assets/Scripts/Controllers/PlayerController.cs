@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public bool DragToPan;
     public bool ZoomEnabled;
     public int MouseMoveKey = 1;
-    public enum MappableActions { Hide, Attack, Flee, Menu,FixCamOnLeader, Move, Camp,InvincibleMode, AddXp, ZoomIn, ZoomOut, Pause,Kill } //TODO: move should contain direction maybe
+    public enum MappableActions { Hide, Attack, Flee, Menu,FixCamOnLeader, Move, Camp,InvincibleMode, AddXp, ZoomIn, ZoomOut, Pause,Kill,RaiseDead } //TODO: move should contain direction maybe
     public LayerMask HitMask;
 
     [Serializable]
@@ -119,7 +120,10 @@ public class PlayerController : MonoBehaviour
     private float touchTime;
     private Coroutine camMoveRoutine;
 
-    private enum ZoomLevel {GoblinView, AreaView, MapView}
+    public class ZoomLevelChangeEvent : UnityEvent<ZoomLevel> { }
+    public static ZoomLevelChangeEvent OnZoomLevelChange = new ZoomLevelChangeEvent();
+
+    public enum ZoomLevel {GoblinView, AreaView, MapView}
     private ZoomLevel currentZoomLevel;
     private bool showingMoveView;
     private readonly int FogPoints = 8;
@@ -141,6 +145,7 @@ public class PlayerController : MonoBehaviour
         if (!Sound) Sound = FindObjectOfType<SoundController>();
 
         //UpdateFogOfWar();
+        OnZoomLevelChange.AddListener(ChangeZoomLevel);
         ChangeZoomLevel(ZoomLevel.AreaView);
     }
 
@@ -258,11 +263,11 @@ public class PlayerController : MonoBehaviour
         if (currentZoomLevel > ZoomLevel.GoblinView) return;
 
         FollowGoblin = null;
-        ChangeZoomLevel( currentZoomLevel+1);
+        OnZoomLevelChange.Invoke( currentZoomLevel+1);
     }
     private void ZoomIn()
     {
-        ChangeZoomLevel(currentZoomLevel - 1);
+        OnZoomLevelChange.Invoke(currentZoomLevel - 1);
     }
 
     private void ChangeZoomLevel(ZoomLevel newLevel)
@@ -315,7 +320,7 @@ public class PlayerController : MonoBehaviour
             {
                 var loot = hit.collider.GetComponent<Lootable>();
 
-                if (loot.InArea && loot.InArea.Visible() )
+                if (loot.InArea && loot.InArea.Visible() && !loot.InArea.AnyEnemies())
                     Team.Leader.Search(loot);
             }
             else if (hit.collider && hit.collider.GetComponent<Character>()) //TODO:check visibility else just move there
@@ -337,8 +342,8 @@ public class PlayerController : MonoBehaviour
                     }
                     else if (c as Goblin)
                     {
+                        OnZoomLevelChange.Invoke(ZoomLevel.GoblinView);
                         CharacterView.ShowCharacter(c as Goblin);
-                        ChangeZoomLevel(ZoomLevel.GoblinView);
                     }
                     else
                     {
@@ -461,7 +466,7 @@ public class PlayerController : MonoBehaviour
             
             Team.Move(a);
 
-            ChangeZoomLevel(ZoomLevel.AreaView);
+            OnZoomLevelChange.Invoke(ZoomLevel.AreaView);
             FollowGoblin = Team.Leader;
         }
     }
@@ -574,6 +579,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case MappableActions.Kill:
                 CharacterView.Kill();
+                break;
+            case MappableActions.RaiseDead:
+                StartCoroutine(Team.RaiseDead());
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -764,7 +772,7 @@ public class PlayerController : MonoBehaviour
 
         showingMoveView = true;
 
-        ChangeZoomLevel(ZoomLevel.MapView);
+        OnZoomLevelChange.Invoke(ZoomLevel.MapView);
 
         StartCoroutine(DisableAreaUIOnAction(l));
     }
