@@ -879,7 +879,7 @@ public abstract class Character : MonoBehaviour
                 }
                 //TODO: use a different method for activity selection than else if
                 else if (Random.value < 0.0025f && this as Goblin && Team
-                    && !(Team.Leader == this) && (this as Goblin).ClassType > Goblin.Class.Slave
+                    && !(Team.Leader == this) && Team.Members.Count > 4 && (this as Goblin).ClassType > Goblin.Class.Slave
                     & !Team.Challenger && (Team.Leader as Goblin).CurrentLevel < ((Goblin)this).CurrentLevel)
                 {
                     //TODO: make it only appear after a while

@@ -134,7 +134,7 @@ public class Goblin : Character
             if (_attackRoutine == null)
                 _attackRoutine = StartCoroutine(AttackRoutine());
         }
-        else
+        else if(Alive())
         {
             navMeshAgent.isStopped = false;
             SelectAction();
