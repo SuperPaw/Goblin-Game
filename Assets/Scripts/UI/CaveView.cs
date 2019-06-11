@@ -46,7 +46,12 @@ public class CaveView : MenuWindow
 
         team = playerTeam;
 
-        Open();
+        var poiControl = cave.GetComponentInChildren<PoiOptionController>();
+
+        poiControl.CreateOption(PoiOptionController.OptionType.Lure,PoiOptionController.OptionTarget.Monster, LureMonsterBox);
+        poiControl.CreateOption(PoiOptionController.OptionType.Explore, PoiOptionController.OptionTarget.Cave, SendInGoblinBox);
+
+        //Open();
     }
 
 
