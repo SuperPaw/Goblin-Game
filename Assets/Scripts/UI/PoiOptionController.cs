@@ -11,6 +11,20 @@ public class PoiOptionController : MonoBehaviour
     public PoiOptionButton OptionButton;
     public AnimationCurve PopupCurve;
     private List<GameManager.OptionType> OpenTypes = new List<GameManager.OptionType>();
+    public static UnityEvent CloseOptionsEvent;
+    private List<PoiOptionButton> InstantiatedButtons = new List<PoiOptionButton>();
+
+    void Awake()
+    {
+        if (CloseOptionsEvent == null)
+        {
+            CloseOptionsEvent = new UnityEvent();
+            FindObjectOfType<PlayerTeam>()?.OnOrder.AddListener(CloseOptionsEvent.Invoke);
+        }
+
+        CloseOptionsEvent.AddListener(CloseOptions);
+
+    }
 
     //TODO: create as coroutine for pop-ups
     public void CreateOption(GameManager.OptionType type, UnityAction action)
@@ -24,8 +38,21 @@ public class PoiOptionController : MonoBehaviour
         instance.gameObject.SetActive(true);
 
         instance.Button.onClick.AddListener(action);
+        instance.Button.onClick.AddListener(CloseOptionsEvent.Invoke);
         instance.TargetImage.sprite = GameManager.Instance.OptionTargetImages.First(o => type ==o.type).image;
 
+        InstantiatedButtons.Add(instance);
+
         OptionButton.gameObject.SetActive(false);
+    }
+
+    private void CloseOptions()
+    {
+        foreach (var b in InstantiatedButtons)
+        {
+            Destroy(b.gameObject);
+        }
+        InstantiatedButtons.Clear();
+        OpenTypes.Clear();
     }
 }

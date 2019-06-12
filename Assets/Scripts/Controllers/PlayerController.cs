@@ -495,6 +495,8 @@ public class PlayerController : MonoBehaviour
         if (Orders.Any(o => o.Order == action))
             Team.LeaderShout(Orders.First(o => o.Order == action));
 
+        Team.OnOrder.Invoke();
+
         switch (action)
         {
             case MappableActions.Hide:
