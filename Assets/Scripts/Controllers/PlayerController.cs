@@ -351,55 +351,14 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-            //TODO use parent class for these
-            else if (hit.collider && hit.collider.GetComponent<GoblinWarrens>())
+            else if (hit.collider && hit.collider.GetComponent<PointOfInterest>())
             {
-                var v = hit.collider.GetComponent<GoblinWarrens>();
+                var v = hit.collider.GetComponent<PointOfInterest>();
 
                 if (v.InArea.Visible())
-                    VillageView.OpenVillageView(v, Team);
-                else
-                {
-                    //ClickedArea(v.InArea);
-                }
-            }
-            //TODO use parent class for these
-            else if (hit.collider && hit.collider.GetComponent<HumanSettlement>())
-            {
-                var v = hit.collider.GetComponent<HumanSettlement>();
-
-                if (v.InArea.Visible())
-                    PlayerChoice.CreateDoChoice(()=> v.AttackSettlement(),"Do you want to attack the Human " + v.Name);
+                    v.SetupMenuOptions();
                 //else
                   //  ClickedArea(v.InArea);
-            }
-            //TODO: handle the point of interest click generally. Replace BigstoneView and CaveView with a Poi view?
-            else if (hit.collider && hit.collider.GetComponent<Monument>())
-            {
-                var monument = hit.collider.GetComponent<Monument>();
-
-                if (monument.InArea.Visible())
-                    BigStoneView.OpenStoneView(monument, Team);
-                //else
-                //    ClickedArea(monument.InArea);
-            }
-            else if (hit.collider && hit.collider.GetComponent<Cave>())
-            {
-                var cave = hit.collider.GetComponent<Cave>();
-
-                if (cave.InArea.Visible())
-                    CaveView.OpenCaveView(cave, Team);
-                //else
-                //    ClickedArea(cave.InArea);
-            }
-            else if (hit.collider && hit.collider.GetComponent<WitchHut>())
-            {
-                var hut = hit.collider.GetComponent<WitchHut>();
-
-                if (hut.InArea.Visible())
-                    WitchHutView.OpenWitchView(hut, Team);
-                //else
-                //    ClickedArea(hut.InArea);
             }
             else if (hit.collider && hit.collider.GetComponent<Area>())
             {
@@ -623,9 +582,7 @@ public class PlayerController : MonoBehaviour
         stone.Treasure = 0;
 
         SoundController.PlayStinger(SoundBank.Stinger.Sneaking);
-
-        BigStoneView.CloseStone();
-
+        
         //if (Random.value < 0.6f)
             stone.SpawnDead(Instance.Team);
     }
@@ -673,8 +630,6 @@ public class PlayerController : MonoBehaviour
         //goblin.CharacterRace = Character.Race.Undead;
 
         goblin.Health = 0;
-
-        BigStoneView.CloseStone();
         
     }
 
