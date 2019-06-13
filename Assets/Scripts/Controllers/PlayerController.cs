@@ -447,16 +447,16 @@ public class PlayerController : MonoBehaviour
         var id = 1;
 
         RemoveFogAtPos(Team.Leader.transform.position, id++);
-        RemoveFogAtPos(Team.Leader.InArea.transform.position, id++);
+        //RemoveFogAtPos(Team.Leader.InArea.transform.position, id++);
         Team.Leader.InArea.RemoveFogOfWar(true);
-        if (showingMoveView)
-        {
-            foreach (var n in Team.Leader.InArea.Neighbours)
-            {
-                RemoveFogAtPos(n.transform.position, id++);
-                n.RemoveFogOfWar(false);
-            }
-        }
+        //if (showingMoveView)
+        //{
+        //    foreach (var n in Team.Leader.InArea.Neighbours)
+        //    {
+        //        RemoveFogAtPos(n.transform.position, id++);
+        //        n.RemoveFogOfWar(false);
+        //    }
+        //}
 
         //removing unused fog points TODO: make it actually remove instead of just hiding
         for (; id <= FogPoints; id++)
