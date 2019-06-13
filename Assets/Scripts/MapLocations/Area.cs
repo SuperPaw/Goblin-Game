@@ -237,7 +237,7 @@ public class Area : MonoBehaviour
         if (IconSprite == EnemySprite && !AnyEnemies())
             IconSprite = BasicAreaSprite;
 
-        AreaIcon.sprite = scoutedArea || Visited ? IconSprite : GameManager.GetIconImage(GameManager.Icon.Unknown);
+        AreaIcon.sprite = scoutedArea ? IconSprite : GameManager.GetIconImage(GameManager.Icon.Unknown);
         AreaText.gameObject.SetActive(scoutedArea);
     }
 

@@ -726,7 +726,10 @@ public class PlayerController : MonoBehaviour
 
         foreach (var movable in l)
         {
-            movable.EnableAreaUI(scouts-- >0);
+            if(movable.Visited)
+                movable.EnableAreaUI(true);
+            else
+                movable.EnableAreaUI(scouts-- >0);
         }
 
         showingMoveView = true;
