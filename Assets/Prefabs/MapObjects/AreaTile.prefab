@@ -480,7 +480,7 @@ MonoBehaviour:
   pivotWhileRotating: 0
   animationFromCornerStartFromType: 0
   fadeChildren: 1
-  animationShowDuration: 3
+  animationShowDuration: 1.5
   animationHideDuration: 0.5
   withDelay: 0
   showDelay: 0
@@ -508,6 +508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   childrenElements: []
   showMenuOnEnable: 1
+  Active: 0
 --- !u!1 &8495405026905881814
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,7 +784,7 @@ MonoBehaviour:
   pivotWhileRotating: 0
   animationFromCornerStartFromType: 0
   fadeChildren: 0
-  animationShowDuration: 2
+  animationShowDuration: 1.5
   animationHideDuration: 0.5
   withDelay: 0
   showDelay: 0

@@ -837,7 +837,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1200, y: 400}
+  m_SizeDelta: {x: 1300, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2434199827076090729
 CanvasRenderer:
@@ -2813,8 +2813,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 560, y: -95.89744}
-  m_SizeDelta: {x: 1120, y: 191.79488}
+  m_AnchoredPosition: {x: 610, y: -107.25}
+  m_SizeDelta: {x: 1220, y: 214.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1678868800621424162
 CanvasRenderer:
@@ -2873,7 +2873,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.8
+  m_fontSize: 71.35
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4565,8 +4565,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 600, y: -295.89743}
-  m_SizeDelta: {x: 1120, y: 158.20512}
+  m_AnchoredPosition: {x: 650, y: -332.25}
+  m_SizeDelta: {x: 1220, y: 185.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5769697079093039660
 CanvasRenderer:
@@ -4617,7 +4617,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 180
+  m_PreferredHeight: 190
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -4823,7 +4823,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1200, y: 400}
+  m_SizeDelta: {x: 1300, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6510578194270254923
 CanvasRenderer:
@@ -6429,8 +6429,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 560, y: -79.10256}
-  m_SizeDelta: {x: 1120, y: 148.20512}
+  m_AnchoredPosition: {x: 610, y: -92.75}
+  m_SizeDelta: {x: 1220, y: 175.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7412016743833166227
 CanvasRenderer:
@@ -6890,7 +6890,7 @@ MonoBehaviour:
     m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 60
+    m_MinSize: 45
     m_MaxSize: 100
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -6898,7 +6898,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: chief dhgij the second bastard
+  m_Text: Kakakaka the Ambusher
 --- !u!1 &6270904089740114487
 GameObject:
   m_ObjectHideFlags: 0
@@ -7290,8 +7290,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 600, y: -120.89744}
-  m_SizeDelta: {x: 1120, y: 191.79488}
+  m_AnchoredPosition: {x: 650, y: -132.25}
+  m_SizeDelta: {x: 1220, y: 214.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8946874245569104679
 CanvasRenderer:
