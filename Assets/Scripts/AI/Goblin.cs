@@ -144,7 +144,7 @@ public class Goblin : Character
         //TODO: this could be handled with events instead of checking each frame
         if (Team)
         {
-            ChiefImage.enabled = Team.Leader == this;
+            ChiefImage.enabled = IsChief();
 
             StateImage.enabled = true;
             StateImage.sprite = GameManager.GetIconImage(State);
@@ -296,7 +296,7 @@ public class Goblin : Character
     
     public void Speak(PlayerController.Shout shout, bool overridePlaying = false)
     {
-        if (InArea.Visible() && Voice && Voice.isActiveAndEnabled && lastSpeak + speakWait < Time.time && (overridePlaying || !Voice.isPlaying))
+        if ((Random.value > (IsChief() ? 0.0f : 0.35f)) && InArea.Visible() && Voice && Voice.isActiveAndEnabled && lastSpeak + speakWait < Time.time && (overridePlaying || !Voice.isPlaying))
         {
             StartCoroutine(ShoutRoutine(shout.Speech));
 
@@ -308,7 +308,7 @@ public class Goblin : Character
     //TODO: inherit this for each type of character to differentiate sound sets
     public void Speak(SoundBank.GoblinSound soundtype, bool overridePlaying = false)
     {
-        if (InArea.Visible() && Voice && Voice.isActiveAndEnabled && (overridePlaying || !Voice.isPlaying))
+        if ( InArea.Visible() && Voice && Voice.isActiveAndEnabled && (overridePlaying || !Voice.isPlaying))
             Voice.PlayOneShot(SoundBank.GetSound(soundtype));
     }
 
@@ -341,5 +341,10 @@ public class Goblin : Character
     public void Kill()
     {
         Health = 0;
+    }
+
+    public override bool IsChief()
+    {
+        return Team?.Leader == this;
     }
 }
