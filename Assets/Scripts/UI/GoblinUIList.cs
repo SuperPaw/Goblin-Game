@@ -27,21 +27,27 @@ public class GoblinUIList : MonoBehaviour
         Instance.UpdateList();
     }
 
+    //TODO: use 
     private void UpdateList()
     {
-
         foreach (var e in Entries)
         {
-            Destroy(e.gameObject);
+            if(!e.Goblin)
+                continue;
+
+            if(e.Goblin.Alive() && e.Goblin.Team)
+                UpdateEntry(e);
+            else
+                e.GetComponent<AiryUIAnimationManager>()?.SetActive(false);
         }
-        Entries.Clear();
 
         if (!GameManager.Instance.GameStarted)
             return;
 
-        CreateGoblinEntry(Team.Leader);
+        if(!Entries.Any(ent => ent.Goblin.IsChief()))
+            CreateGoblinEntry(Team.Leader);
 
-        foreach (var m in Team.Members)
+        foreach (var m in Team.Members.Where(m=> !Entries.Any(ent => ent.Goblin == m)))
         {
             if (m == Team.Leader)
                 continue;
@@ -49,14 +55,14 @@ public class GoblinUIList : MonoBehaviour
         }
     }
 
-    private void CreateGoblinEntry(Goblin g)
+    private void UpdateEntry(GoblinListEntry e)
     {
-        var e = Instantiate(EntryObject,EntryObject.transform.parent);
+        var g = e.Goblin;
 
         e.ClassImage.sprite = GameManager.GetClassImage(g.ClassType);
 
         //without "Chief "
-        if ((g == Team.Leader))
+        if ((g.IsChief()))
         {
             var strs = g.name.Split(' ').ToList();
 
@@ -75,18 +81,24 @@ public class GoblinUIList : MonoBehaviour
         {
             e.NameText.text = g.name;
         }
-        
-        
-        e.Goblin = g;
 
         e.ChiefImage.gameObject.SetActive(g == Team.Leader);
 
         e.LevelUpReady.gameObject.SetActive(g.WaitingOnLevelup());// || g.WaitingOnClassSelection);
+    }
 
-        g.OnDeath.AddListener(gob=>e.MarkAsDead());
-
+    private void CreateGoblinEntry(Goblin g)
+    {
+        var e = Instantiate(EntryObject,EntryObject.transform.parent);
+        
+        e.Goblin = g;
+        
         e.gameObject.SetActive(true);
         Entries.Add(e);
+        
+        g.OnDeath.AddListener(gob => e.MarkAsDead());
+
+        UpdateEntry(e);
     }
 
 }

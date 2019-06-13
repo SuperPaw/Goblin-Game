@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public abstract class MenuWindow : MonoBehaviour
 {
-    public GameObject ViewHolder;
+    [NotNull]
+    public AiryUIAnimationManager ViewHolder;
 
     public enum WindowType
     {

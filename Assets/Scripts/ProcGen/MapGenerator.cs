@@ -784,16 +784,25 @@ public class MapGenerator : MonoBehaviour
 
             for (Vector3 pos = corner1; pos.z <= corner2.z; pos.z++)
             {
+                var ground = Instantiate(TileArtObject, TileHolder.transform);
+                ground.name = "Tile " + pos.x + "," + pos.z;
+                ground.transform.position = new Vector3(pos.x, 0, pos.z);
+
                 //Ignore chance
-                if(Random.value < 0.2)
+                if (Random.value < 0.2)
                     continue;
 
                 var next = Instantiate(Forest, ForestHolder.transform);
 
                 next.transform.position = pos;
+
             }
             for (Vector3 pos = corner1; pos.x <= corner4.x; pos.x++)
             {
+                var ground = Instantiate(TileArtObject, TileHolder.transform);
+                ground.name = "Tile " + pos.x + "," + pos.z;
+                ground.transform.position = new Vector3(pos.x, 0, pos.z);
+
                 if (Random.value < 0.2)
                     continue;
                 var next = Instantiate(Forest, ForestHolder.transform);
@@ -802,6 +811,10 @@ public class MapGenerator : MonoBehaviour
             }
             for (Vector3 pos = corner4; pos.z <= corner3.z; pos.z++)
             {
+                var ground = Instantiate(TileArtObject, TileHolder.transform);
+                ground.name = "Tile " + pos.x + "," + pos.z;
+                ground.transform.position = new Vector3(pos.x, 0, pos.z);
+
                 if (Random.value < 0.2)
                     continue;
                 var next = Instantiate(Forest, ForestHolder.transform);
@@ -810,6 +823,10 @@ public class MapGenerator : MonoBehaviour
             }
             for (Vector3 pos = corner2; pos.x <= corner3.x; pos.x++)
             {
+                var ground = Instantiate(TileArtObject, TileHolder.transform);
+                ground.name = "Tile " + pos.x + "," + pos.z;
+                ground.transform.position = new Vector3(pos.x, 0, pos.z);
+
                 if (Random.value < 0.2)
                     continue;
                 var next = Instantiate(Forest, ForestHolder.transform);

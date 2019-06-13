@@ -603,9 +603,9 @@ public class PlayerController : MonoBehaviour
         Instance.Team.Members.Remove(goblin);
         Instance.Team.OnTreasureFound.Invoke(price);
 
-        GoblinUIList.UpdateGoblinList();
-
         goblin.Team = null;
+
+        GoblinUIList.UpdateGoblinList();
 
         goblin.transform.parent = newVillage.transform;
 
