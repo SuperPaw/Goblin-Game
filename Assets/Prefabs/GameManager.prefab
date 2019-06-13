@@ -105,7 +105,7 @@ MonoBehaviour:
   ClassImgs:
   - ClassType: 1
     Image: {fileID: 21300000, guid: 78dc59c8441d1524091a52788eda3ba1, type: 3}
-    Description: 
+    Description: Goblin is always hungry. Always Bored. Always scared
   - ClassType: 2
     Image: {fileID: 21300000, guid: 093af69e5375beb4f86c1a4915d6570e, type: 3}
     Description: Slave never challenges the chief

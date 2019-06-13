@@ -61,7 +61,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
     - _FogMaxRadius: 2.8
-    - _FogRadius: 25
+    - _FogRadius: 30
     - _GlossMapScale: 1
     - _Glossiness: 1
     - _GlossyReflections: 1

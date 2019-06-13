@@ -42,7 +42,7 @@ public class Goblin : Character
         ALL = Goblin | Slave | Meatshield | Shooter | Ambusher | Scout | Necromancer | Beastmaster | Hunter | Cook | Shaman | Diplomat
     }
 
-    public Class ClassType { private set; get; }
+    public Class ClassType { private set; get; } = Class.Goblin;
     
     private List<Class> ClassChoices;
 
@@ -170,9 +170,9 @@ public class Goblin : Character
 
         if (Team.Leader == this) possibleChoises.Remove(Class.Slave);
 
-        if (Team.Members.Any(m => m.ClassType != Class.NoClass))
+        if (Team.Members.Any(m => m.ClassType != Class.Goblin))
         {
-            var mostCommon = Team.Members.Select(g => g.ClassType).Where(c => c != Class.NoClass).GroupBy(item => item)
+            var mostCommon = Team.Members.Select(g => g.ClassType).Where(c => c != Class.Goblin).GroupBy(item => item)
                 .OrderByDescending(g => g.Count()).Select(g => g.Key).First();
         
             //Debug.Log("Most common class is " + mostCommon);
