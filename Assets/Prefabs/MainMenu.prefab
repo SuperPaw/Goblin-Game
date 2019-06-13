@@ -404,17 +404,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.63407886
-      value: 0.060014777
-      inSlope: 0.20413245
-      outSlope: 0.20413245
+      time: 0.4727895
+      value: 0.0939757
+      inSlope: 0.39044446
+      outSlope: 0.39044446
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.11627702
+      inWeight: 0.111304946
       outWeight: 0.34986067
     - serializedVersion: 3
       time: 1.0016208
-      value: 0.28086603
+      value: 0.6
       inSlope: 1.0188785
       outSlope: 1.0188785
       tangentMode: 0
@@ -426,7 +426,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   Background: {fileID: 522264548226097035}
   StartColor: {r: 1, g: 1, b: 1, a: 1}
-  EndColor: {r: 0, g: 0, b: 0, a: 1}
+  EndColor: {r: 0.95013654, g: 1, b: 0.8666667, a: 1}
   StartButton: {fileID: 4442886857010482732}
   LegacyButton: {fileID: 5293397171094929420}
   WorldSizeTextHolder: {fileID: 3733324308451737659}

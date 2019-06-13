@@ -20,7 +20,8 @@ public class GameManager : MonoBehaviour
     
     public enum Icon
     {
-        LevelUp, Chief, Healing, Idling, Fleeing, Travelling, Fighting, Hiding, Dead,Watching,Searching, Provoking, Resting
+        LevelUp, Chief, Healing, Idling, Fleeing, Travelling, Fighting, Hiding, Dead,Watching,Searching, Provoking, Resting,
+        Unknown
     }
     [Serializable]
     public struct IconImg

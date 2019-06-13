@@ -52,16 +52,16 @@ MonoBehaviour:
   MapSizes:
   - WorldSize: 0
     SizeX: 160
-    SizeY: 160
-    PointOfInterests: 3
-    HumanSettlements: 2
-    VillagesToGenerate: 0
-  - WorldSize: 1
-    SizeX: 200
     SizeY: 200
-    PointOfInterests: 6
+    PointOfInterests: 3
     HumanSettlements: 3
     VillagesToGenerate: 1
+  - WorldSize: 1
+    SizeX: 200
+    SizeY: 240
+    PointOfInterests: 6
+    HumanSettlements: 4
+    VillagesToGenerate: 2
   - WorldSize: 2
     SizeX: 240
     SizeY: 280

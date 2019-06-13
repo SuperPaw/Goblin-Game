@@ -243,9 +243,8 @@ public class MapGenerator : MonoBehaviour
 	            callback(progressPct, "Warming up enemies...");
 	        }
         }
-
-
-        Debug.Log("Finished NPC gen : " + (Time.time - startTime) + " seconds");
+        
+        //Debug.Log("Finished NPC gen : " + (Time.time - startTime) + " seconds");
 
         foreach (var ar in Areas)
         {
@@ -305,7 +304,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
         
-        Debug.Log("Finished Goblin gen : " + (Time.time - startTime) + " seconds");
+        //Debug.Log("Finished Goblin gen : " + (Time.time - startTime) + " seconds");
 
         yield return new WaitUntil((() => forestGenDone && groundGenDone));
 
@@ -388,7 +387,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         areaGenDone = true;
-        Debug.Log("Finished Area gen : " + (Time.time - startTime) + " seconds");
+        //Debug.Log("Finished Area gen : " + (Time.time - startTime) + " seconds");
     }
 
     private void PathGenRoutine()
@@ -410,7 +409,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         pathGenDone = true;
-        Debug.Log("Finished path gen : " + (Time.time - startTime) + " seconds");
+        //Debug.Log("Finished path gen : " + (Time.time - startTime) + " seconds");
     }
 
     private IEnumerator POIGenRoutine()
@@ -584,7 +583,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         poiGenDone = true;
-        Debug.Log("Finished POI gen : " + (Time.time - startTime) + " seconds");
+        //Debug.Log("Finished POI gen : " + (Time.time - startTime) + " seconds");
 
     }
 
@@ -632,7 +631,7 @@ public class MapGenerator : MonoBehaviour
         }
 
 
-        Debug.Log("Finished Loot gen : " + (Time.time - startTime) + " seconds");
+        //Debug.Log("Finished Loot gen : " + (Time.time - startTime) + " seconds");
 
     }
 
@@ -692,7 +691,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         groundGenDone = true;
-        Debug.Log("Finished ground tile gen : " + (Time.time - startTime) + " seconds");
+        //Debug.Log("Finished ground tile gen : " + (Time.time - startTime) + " seconds");
     }
 
     private IEnumerator ForestGenRoutine()
@@ -748,7 +747,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         forestGenDone = true;
-        Debug.Log("Finished forest gen : " + (Time.time - startTime) + " seconds");
+        //Debug.Log("Finished forest gen : " + (Time.time - startTime) + " seconds");
 
     }
 

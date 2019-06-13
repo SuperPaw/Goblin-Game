@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4782306590053030282}
   - component: {fileID: 7599944301939097178}
   - component: {fileID: 5822398141201594520}
+  - component: {fileID: 2057000625563860116}
   m_Layer: 5
   m_Name: OptionButton
   m_TagString: Untagged
@@ -174,6 +175,26 @@ MonoBehaviour:
   Button: {fileID: 7599944301939097178}
   TargetImage: {fileID: 5196841765098549637}
   TypeImage: {fileID: 6161533848063170024}
+--- !u!114 &2057000625563860116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857306969045598565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 50
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &3309811077593519687
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,34 +384,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaaa56be39026404fafca1850747d816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OptionTargetImages:
-  - type: 0
-    image: {fileID: 21300000, guid: 78dc59c8441d1524091a52788eda3ba1, type: 3}
-  - type: 1
-    image: {fileID: 21300000, guid: 3febefcfd9447814487b6969b5d7d634, type: 3}
-  - type: 2
-    image: {fileID: 0}
-  - type: 3
-    image: {fileID: 21300000, guid: 3040060ac0181004d8f90c6aa09fc68e, type: 3}
-  - type: 4
-    image: {fileID: 21300000, guid: 26864bb0031ff104bb06e2adb6c3c808, type: 3}
-  - type: 5
-    image: {fileID: 21300000, guid: c41af0fae10af13488887ed3f2aec5b7, type: 3}
-  - type: 6
-    image: {fileID: 21300000, guid: 26864bb0031ff104bb06e2adb6c3c808, type: 3}
-  OptionTypeImages:
-  - type: 0
-    image: {fileID: 21300000, guid: dd2938e95c1f7c84ea4c05699ff786ca, type: 3}
-  - type: 1
-    image: {fileID: 21300000, guid: 2fd2449862a18d94c95062f1f6de9ed0, type: 3}
-  - type: 2
-    image: {fileID: 21300000, guid: a7a8633c105cf6247a3551850f2a667e, type: 3}
-  - type: 3
-    image: {fileID: 21300000, guid: a9e404e8d560f0f4ebe658965e000066, type: 3}
-  - type: 4
-    image: {fileID: 21300000, guid: 3040060ac0181004d8f90c6aa09fc68e, type: 3}
-  - type: 5
-    image: {fileID: 21300000, guid: 3ce81458820531b46abf3ae002e40e15, type: 3}
   OptionButton: {fileID: 5822398141201594520}
   PopupCurve:
     serializedVersion: 2

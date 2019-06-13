@@ -100,6 +100,8 @@ MonoBehaviour:
     Image: {fileID: 21300000, guid: 6eef878946942cc44a7ab779000934fb, type: 3}
   - IconType: 12
     Image: {fileID: 21300000, guid: 1814ef9594218d947b33fb618e386da4, type: 3}
+  - IconType: 13
+    Image: {fileID: 21300000, guid: 047e3539c387780499aa08357ab16e09, type: 3}
   ClassImgs:
   - ClassType: 1
     Image: {fileID: 21300000, guid: 78dc59c8441d1524091a52788eda3ba1, type: 3}
@@ -118,7 +120,7 @@ MonoBehaviour:
     Description: Ambushers are fast. Good at ambushing
   - ClassType: 32
     Image: {fileID: 21300000, guid: f9b08119c36400742afe7efea5d2e93d, type: 3}
-    Description: Scout can scout for enemies. To set up ambushes
+    Description: Scout can see far away enemies and areas
   - ClassType: 64
     Image: {fileID: 21300000, guid: 6bc6bdace68836a46a8c93edb10b964d, type: 3}
     Description: Necromancer makes zombie goblins

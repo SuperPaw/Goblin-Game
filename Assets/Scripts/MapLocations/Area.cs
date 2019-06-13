@@ -35,7 +35,7 @@ public class Area : MonoBehaviour
     public HashSet<Area> RoadsTo = new HashSet<Area>();
     public BoxCollider Collider;
 
-    public Sprite BasicAreaSprite, RoadAreaSprite;
+    public Sprite BasicAreaSprite, RoadAreaSprite, EnemySprite;
 
     public PointOfInterest PointOfInterest;
     public PlayerController Controller;
@@ -44,10 +44,11 @@ public class Area : MonoBehaviour
     public Color LightFogColor, UnseenFogColor;
     //should be the size of x and z of the box collider
     public int Size;
-
-    public GameObject AreaUIObject;
+    
     public Image AreaIcon;
     public TextMeshProUGUI AreaText;
+    
+    private Sprite IconSprite;
 
     public void SetUpUI()
     {
@@ -64,11 +65,18 @@ public class Area : MonoBehaviour
             AreaIcon.sprite = RoadAreaSprite;
             AreaText.text = "";
         }
+        else if (PresentCharacters.Any(p=> p.tag == "Enemy"))
+        {
+            AreaIcon.sprite = EnemySprite;
+            AreaText.text = "";
+        }
         else
         {
             AreaIcon.sprite = BasicAreaSprite;
             AreaText.text = "";
         }
+
+        IconSprite = AreaIcon.sprite;
     }
 
     internal Vector3 GetRandomPosInArea()
@@ -217,15 +225,17 @@ public class Area : MonoBehaviour
     public bool HasMaximumConnections => Neighbours.Count >= MaxNeighbours;
 
     public bool ContainsRoads => RoadsTo.Any();
-
-    public void EnableAreaUI()
+    
+    public void EnableAreaUI(bool knownArea)
     {
-        AreaUIObject.SetActive(true);
+        AreaIcon.transform.parent.gameObject.SetActive(true);
+        AreaIcon.sprite = knownArea ? IconSprite : GameManager.GetIconImage(GameManager.Icon.Unknown);
+        AreaText.gameObject.SetActive(knownArea);
     }
 
-    //TODO: should this just be handled by events
     public void DisableAreaUI()
     {
-        AreaUIObject.SetActive(false);
+        AreaIcon.transform.parent.gameObject.SetActive(false);
     }
+
 }

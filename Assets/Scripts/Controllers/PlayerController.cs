@@ -722,9 +722,11 @@ public class PlayerController : MonoBehaviour
     {
         var l = Team.Leader.InArea.Neighbours.ToList();
 
+        var scouts = Team.Members.Count(m => m.ClassType == Goblin.Class.Scout);
+
         foreach (var movable in l)
         {
-            movable.EnableAreaUI();
+            movable.EnableAreaUI(scouts-- >0);
         }
 
         showingMoveView = true;
