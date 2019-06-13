@@ -65,7 +65,7 @@ public class Area : MonoBehaviour
             AreaIcon.sprite = RoadAreaSprite;
             AreaText.text = "";
         }
-        else if (PresentCharacters.Any(p=> p.tag == "Enemy"))
+        else if (AnyEnemies())
         {
             AreaIcon.sprite = EnemySprite;
             AreaText.text = "";
@@ -128,10 +128,13 @@ public class Area : MonoBehaviour
         c.InArea = this;
         if(!PresentCharacters.Contains(c))
             PresentCharacters.Add(c);
-
-        foreach (var aggressive in PresentCharacters.Where(e => e.tag == "Enemy" && e.Aggressive && e.tag != c.tag))
+        if (c.tag == "Player")
         {
-            aggressive.ChangeState(Character.CharacterState.Attacking);
+            Visited = true;
+            foreach (var aggressive in PresentCharacters.Where(e => e.tag == "Enemy" && e.Aggressive && e.tag != c.tag))
+            {
+                aggressive.ChangeState(Character.CharacterState.Attacking);
+            }
         }
 
         c.IrritationMeter = 0;
@@ -225,12 +228,17 @@ public class Area : MonoBehaviour
     public bool HasMaximumConnections => Neighbours.Count >= MaxNeighbours;
 
     public bool ContainsRoads => RoadsTo.Any();
-    
-    public void EnableAreaUI(bool knownArea)
+
+    public bool Visited;
+
+    public void EnableAreaUI(bool scoutedArea)
     {
         AreaIcon.transform.parent.gameObject.SetActive(true);
-        AreaIcon.sprite = knownArea ? IconSprite : GameManager.GetIconImage(GameManager.Icon.Unknown);
-        AreaText.gameObject.SetActive(knownArea);
+        if (IconSprite == EnemySprite && !AnyEnemies())
+            IconSprite = BasicAreaSprite;
+
+        AreaIcon.sprite = scoutedArea || Visited ? IconSprite : GameManager.GetIconImage(GameManager.Icon.Unknown);
+        AreaText.gameObject.SetActive(scoutedArea);
     }
 
     public void DisableAreaUI()
