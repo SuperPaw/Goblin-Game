@@ -14,8 +14,8 @@ public class ReadyForInputController : MonoBehaviour
         public Character.CharacterState[] States;
     }
 
-    public Button NecromancyButton;
-    public Button HideButton;
+    public AiryUIAnimationManager NecromancyButton;
+    public AiryUIAnimationManager HideButton;
 
 
     public EnabledOnStates[] ControlledObjectMappings;
@@ -34,13 +34,15 @@ public class ReadyForInputController : MonoBehaviour
         else
             foreach (var enabledOnStates in ControlledObjectMappings)
             {
-                enabledOnStates.ControlledGameObject.SetActive(enabledOnStates.States.Contains(PlayerController.Instance.Team.Leader.State));
+                if (enabledOnStates.ControlledGameObject == NecromancyButton)
+                    NecromancyButton.SetActive(enabledOnStates.States.Contains(PlayerController.Instance.Team.Leader.State)
+                        && PlayerController.Instance.Team.Leader.ClassType == Goblin.Class.Necromancer && PlayerController.Instance.Team.Leader.InArea.AnyGoblins(true));
+                else if (enabledOnStates.ControlledGameObject == HideButton )
+                    HideButton.SetActive(enabledOnStates.States.Contains(PlayerController.Instance.Team.Leader.State)
+                        && PlayerController.Instance.Team.Leader.InArea.RoadsTo.Any()
+                        &! PlayerController.Instance.Team.Leader.InArea.AnyEnemies());
+                else
+                    enabledOnStates.ControlledGameObject.SetActive(enabledOnStates.States.Contains(PlayerController.Instance.Team.Leader.State));
             }
-
-        if(PlayerController.Instance.Team.Leader.ClassType != Goblin.Class.Necromancer || !PlayerController.Instance.Team.Leader.InArea.AnyGoblins(true))
-            NecromancyButton.gameObject.SetActive(false);
-
-        if(!PlayerController.Instance.Team.Leader.InArea.RoadsTo.Any())
-            HideButton.gameObject.SetActive(false);
     }
 }

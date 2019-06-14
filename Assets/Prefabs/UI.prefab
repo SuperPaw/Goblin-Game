@@ -2483,8 +2483,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86af9442050a78e409297139a3c1285b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NecromancyButton: {fileID: 1217640470799665230}
-  HideButton: {fileID: 7080133155472294972}
+  NecromancyButton: {fileID: 5428865150472205006}
+  HideButton: {fileID: 7087195758497544008}
   ControlledObjectMappings:
   - ControlledGameObject: {fileID: 9217430102576710671}
     States: 000000000400000008000000
