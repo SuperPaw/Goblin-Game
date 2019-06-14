@@ -2441,7 +2441,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   showItemOnMenuEnable: 0
   showAnimationType: 1
-  hideAnimationType: 1
+  hideAnimationType: 0
   animationFromCornerType: 0
   animationToCornerType: 0
   pivotWhileRotating: 0
