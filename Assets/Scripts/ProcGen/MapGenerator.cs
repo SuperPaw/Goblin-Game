@@ -601,6 +601,7 @@ public class MapGenerator : MonoBehaviour
 
             tile.Type = TileType.Loot;
             movableTiles.Remove(tile);
+            parentArea.MovablePositions.Remove(tile);
 
             var loot = Instantiate(LootObjects[Random.Range(0, LootObjects.Length)]);
 
@@ -619,6 +620,7 @@ public class MapGenerator : MonoBehaviour
             if (EquipmentInLootChance > Random.value)
             {
                 l.EquipmentLoot.Add(EquipmentGen.GetRandomEquipment());
+                l.ContainsLoot = false;
             }
 
             int loc = (++progress * 100) / totalProgress;
