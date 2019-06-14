@@ -296,7 +296,7 @@ public class Goblin : Character
     
     public void Speak(PlayerController.Shout shout, bool overridePlaying = false)
     {
-        if ((Random.value > (IsChief() ? 0.0f : 0.35f)) && InArea.Visible() && Voice && Voice.isActiveAndEnabled && lastSpeak + speakWait < Time.time && (overridePlaying || !Voice.isPlaying))
+        if ((Random.value > (IsChief() ? 0.0f : 0.35f)) &&InArea && InArea.Visible() && Voice && Voice.isActiveAndEnabled && lastSpeak + speakWait < Time.time && (overridePlaying || !Voice.isPlaying))
         {
             StartCoroutine(ShoutRoutine(shout.Speech));
 

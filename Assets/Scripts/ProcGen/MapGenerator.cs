@@ -566,7 +566,7 @@ public class MapGenerator : MonoBehaviour
                 area = GetRandomArea();
 
             if (tries >= maxTries)
-                Debug.Log("CHUBACUBHA Max tries reached..");
+                Debug.Log("CHUBACUBHA Max tries reached.. !! REPLACE THIS DOODOD!!");
 
             var x = i % PointOfInterestPrefabs.Length;
 
@@ -759,7 +759,7 @@ public class MapGenerator : MonoBehaviour
         var ctr = GetAreaMidPoint(area);
 
         //81 tiles of unmovables to prevent forest and 
-        int dgr = 4;
+        int dgr = 5;
         for (int x = ctr.X- dgr; x <= ctr.X+ dgr; x++)
         {
             for (int y = ctr.Y- dgr; y <= ctr.Y+dgr; y++)
@@ -769,6 +769,7 @@ public class MapGenerator : MonoBehaviour
                 immovableTiles.Add(t);
                 movableTiles.Remove(t);
                 t.Type = TileType.Building;
+                area.MovablePositions.Remove(t);
             }
         }
     }
