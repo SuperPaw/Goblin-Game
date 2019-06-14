@@ -681,7 +681,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 222b13fee7eea654b8d15006c069f835, type: 3}
   - Type: 4
     Audio:
-    - {fileID: 8300000, guid: 87982ed02075e7e47913f0113e1fe693, type: 3}
+    - {fileID: 8300000, guid: 222b13fee7eea654b8d15006c069f835, type: 3}
   - Type: 5
     Audio:
     - {fileID: 8300000, guid: 286d5ad74b8ac5040ac47de9e848d711, type: 3}
@@ -707,6 +707,9 @@ MonoBehaviour:
   - Type: 6
     Audio:
     - {fileID: 8300000, guid: f4894607cfe047546849151974ef84f9, type: 3}
+  - Type: 7
+    Audio:
+    - {fileID: 8300000, guid: 0e19832ee5fc6fd4b84ec354c1c782d6, type: 3}
   Backgrounds:
   - Type: 0
     Audio:

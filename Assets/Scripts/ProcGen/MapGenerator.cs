@@ -387,7 +387,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         areaGenDone = true;
-        //Debug.Log("Finished Area gen : " + (Time.time - startTime) + " seconds");
+        Debug.Log("Finished Area gen : " + (Time.time - startTime) + " seconds");
     }
 
     private void PathGenRoutine()
@@ -498,7 +498,7 @@ public class MapGenerator : MonoBehaviour
                 area = GetRandomArea();
 
             if (tries >= maxTries)
-                Debug.Log("CHUBACUBHA Max tries reached..");
+                Debug.Log("CHUBACUBHA Max tries reached.. . !!REPLACE THIS WITH OTHER METHOD, PAW!!");
 
             var next = Instantiate(VillagePrefab); //TODO: generate village name
 
@@ -597,6 +597,7 @@ public class MapGenerator : MonoBehaviour
 
             //TODO: should only be in area 
             Tile tile = GetRandomGroundTile(parentArea);
+            if(tile == null) continue;
 
             tile.Type = TileType.Loot;
             movableTiles.Remove(tile);
@@ -868,29 +869,22 @@ public class MapGenerator : MonoBehaviour
 
     private GameObject CreateEnemyCharacter(GameObject go, Transform parent, Area goblinStartArea)
     {
-        var area = GetRandomArea();
-        int maxTries = 10;
-        int tries = 0;
 
         var type = go.GetComponent<Character>().CharacterRace;
 
-        while ((area.PointOfInterest || area == goblinStartArea || area.ContainsRoads ||area.PresentCharacters.Any(c => c.CharacterRace != type)) && tries++ < maxTries)
-            area = GetRandomArea();
 
-        if (tries >= maxTries)
+        var areas = Areas.Where(ar =>
+            !ar.PointOfInterest && ar != goblinStartArea && !ar.ContainsRoads &!
+              ar.PresentCharacters.Any(c => c.CharacterRace != type)).ToList();
+        if (areas.Any())
         {
-            Debug.Log("CHUBACUBHA Max enm tries reached..");
-            var a = Areas.First(ar => !(ar.PointOfInterest || ar == goblinStartArea || ar.ContainsRoads));
-            if (a)
-            {
-                Debug.Log("Found other area for character");
-                area = a;
-            }
+            return GenerateCharacter(go, areas[Random.Range(0, areas.Count)], parent);
         }
-
-
-
-        return GenerateCharacter(go, area, parent);
+        else
+        {
+            Debug.Log("Not able to find suitable area for: "+ type);
+            return null;
+        }
     }
 
 
@@ -1045,10 +1039,13 @@ public class MapGenerator : MonoBehaviour
 
 
     //TODO: not working with area for some reason
-    private Tile GetRandomGroundTile(Area inArea = null)
+    private Tile GetRandomGroundTile(Area inArea)
     {
-        if(!inArea || !inArea.MovablePositions.Any())
-            return movableTiles[Random.Range(0, movableTiles.Count)];
+        if (!inArea || !inArea.MovablePositions.Any())
+        {
+            Debug.LogWarning("Not any movable positions in area: "+ inArea);
+            return null;
+        }
 
         var areaTiles = inArea.MovablePositions;
             //movableTiles.Where(t => t.Area == inArea).ToList();
@@ -1077,25 +1074,6 @@ public class MapGenerator : MonoBehaviour
         //TODO: check for out of bounds
         return map[(int)area.transform.position.x, (int)area.transform.position.z];
     }
-
-    private bool AreaCanFitAtPosition(Vector3 position, List<Area> potentialCollisions)
-    {
-        var corners = new Vector3[4];
-        var adj = totalAreaSize / 2f;
-
-        corners[0] = new Vector3(position.x - adj, position.y, position.z - adj);
-        corners[1] = new Vector3(position.x + adj, position.y, position.z - adj);
-        corners[2] = new Vector3(position.x - adj, position.y, position.z + adj);
-        corners[3] = new Vector3(position.x + adj, position.y, position.z + adj);
-
-        var canFit = !potentialCollisions.Any(n => corners.Any(n.PointIsInArea));
-
-        //Debug.Log("Area can fit: " + canFit);
-
-        return canFit;
-    }
-
-
 
     private IEnumerator CreateRoad(Area from, Area to, bool drawRoad = false)
     {

@@ -12,12 +12,15 @@ public class PopUpText : MonoBehaviour
     public Queue<string> TextToShow = new Queue<string>();
     private bool ShowingText;
     public float ShowTime = 4;
+    private AiryUIAnimatedElement comp;
 
     // Start is called before the first frame update
     void Awake()
     {
         if (!Instance)
             Instance = this;
+
+        comp = GetComponentInChildren<AiryUIAnimatedElement>();
 
         PopText.text = "";
     }
@@ -36,17 +39,26 @@ public class PopUpText : MonoBehaviour
     private IEnumerator ShowTextLoop(string text)
     {
         ShowingText = true;
-
+        
         PopText.text = text;
 
         SoundController.PlayEvent();
+        
+        comp.gameObject.SetActive(true);
+        comp.ShowElement();
 
+        Debug.Log("showing text: "+PopText.text);
         yield return new WaitForSeconds(ShowTime);
 
-        //TODO: make some animation
+        comp.HideElement();
+
+        Debug.Log("*hiding elements");
+        yield return new WaitUntil(() => !comp.gameObject.activeInHierarchy);
+
+        Debug.Log(" elements are animated awaya");
 
         ShowingText = false;
 
-        PopText.text = "";
+        //PopText.text = "";
     }
 }

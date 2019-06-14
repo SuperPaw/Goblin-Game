@@ -376,6 +376,7 @@ MonoBehaviour:
   initialScale: {x: 0, y: 0, z: 0}
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPivot: {x: 0, y: 0}
+  Hidden: 0
 --- !u!1 &522264547562529682
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,6 +820,7 @@ MonoBehaviour:
   initialScale: {x: 0, y: 0, z: 0}
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPivot: {x: 0, y: 0}
+  Hidden: 0
 --- !u!1 &522264548197114608
 GameObject:
   m_ObjectHideFlags: 0
@@ -2297,7 +2299,7 @@ MonoBehaviour:
   animationShowDuration: 0.5
   animationHideDuration: 0.5
   withDelay: 1
-  showDelay: 0.8
+  showDelay: 0.3
   hideDelay: 0
   elasticityPower: 1
   rotateFrom: {x: 0, y: 0, z: 0}
@@ -2308,6 +2310,7 @@ MonoBehaviour:
   initialScale: {x: 0, y: 0, z: 0}
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPivot: {x: 0, y: 0}
+  Hidden: 0
 --- !u!1 &2357662627139034025
 GameObject:
   m_ObjectHideFlags: 0
@@ -2461,6 +2464,7 @@ MonoBehaviour:
   initialScale: {x: 0, y: 0, z: 0}
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPivot: {x: 0, y: 0}
+  Hidden: 0
 --- !u!1 &2743000336092508018
 GameObject:
   m_ObjectHideFlags: 0
@@ -3153,7 +3157,7 @@ MonoBehaviour:
   animationShowDuration: 0.5
   animationHideDuration: 0.5
   withDelay: 1
-  showDelay: 0.5
+  showDelay: 0.1
   hideDelay: 0
   elasticityPower: 1
   rotateFrom: {x: 0, y: 0, z: 0}
@@ -3164,6 +3168,7 @@ MonoBehaviour:
   initialScale: {x: 0, y: 0, z: 0}
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPivot: {x: 0, y: 0}
+  Hidden: 0
 --- !u!1 &3753000155730773791
 GameObject:
   m_ObjectHideFlags: 0
@@ -3748,7 +3753,7 @@ MonoBehaviour:
   animationShowDuration: 0.5
   animationHideDuration: 0.5
   withDelay: 1
-  showDelay: 0.6
+  showDelay: 0.2
   hideDelay: 0
   elasticityPower: 1
   rotateFrom: {x: 0, y: 0, z: 0}
@@ -3759,6 +3764,7 @@ MonoBehaviour:
   initialScale: {x: 0, y: 0, z: 0}
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPivot: {x: 0, y: 0}
+  Hidden: 0
 --- !u!1 &4234777421738455180
 GameObject:
   m_ObjectHideFlags: 0
@@ -5387,7 +5393,7 @@ MonoBehaviour:
   animationShowDuration: 0.5
   animationHideDuration: 0.5
   withDelay: 1
-  showDelay: 0.7
+  showDelay: 0.25
   hideDelay: 0
   elasticityPower: 1
   rotateFrom: {x: 0, y: 0, z: 0}
@@ -5398,6 +5404,7 @@ MonoBehaviour:
   initialScale: {x: 0, y: 0, z: 0}
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPivot: {x: 0, y: 0}
+  Hidden: 0
 --- !u!1 &8401595896409716252
 GameObject:
   m_ObjectHideFlags: 0
@@ -6503,3 +6510,4 @@ MonoBehaviour:
   initialScale: {x: 0, y: 0, z: 0}
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPivot: {x: 0, y: 0}
+  Hidden: 0

@@ -76,4 +76,8 @@ public class AiryUIAnimationManager : MonoBehaviour
     {
         return childrenElements.All(e => e.Hidden);
     }
+    public bool ThisHidden()
+    {
+        return GetComponent<AiryUIAnimatedElement>().Hidden;
+    }
 }

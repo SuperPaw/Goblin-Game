@@ -10,7 +10,7 @@ public class SizeAnimation : MonoBehaviour
     public Vector2 Startsize;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         RectTransform = GetComponent<RectTransform>();
         Startsize = RectTransform.localScale;

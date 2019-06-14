@@ -41,6 +41,8 @@ public class LoadingScreen : MonoBehaviour
     {
         if (!Instance) Instance = this;
 
+        SoundController.PlayStinger(SoundBank.Stinger.MenuOpen);
+
         SetupLegacyMenu();
 
         LegacyButton.onClick.AddListener(AchievementView.OpenView);

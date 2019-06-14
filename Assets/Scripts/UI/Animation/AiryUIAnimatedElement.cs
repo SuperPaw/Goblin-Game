@@ -101,8 +101,7 @@ public class AiryUIAnimatedElement : MonoBehaviour
                 break;
         }
 
-        if (OnShow != null)
-            OnShow.Invoke();
+        OnShow?.Invoke();
     }
 
     public virtual void HideElement()
@@ -132,8 +131,7 @@ public class AiryUIAnimatedElement : MonoBehaviour
                 break;
         }
 
-        if (OnHide != null)
-            OnHide.Invoke();
+        OnHide?.Invoke();
     }
 
     #region Show Coroutines

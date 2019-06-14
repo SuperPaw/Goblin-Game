@@ -28,7 +28,8 @@ public class SoundBank : MonoBehaviour
         Sacrifice,
         GameWin,
         BattleWon,
-        AchievementUnlocked
+        AchievementUnlocked,
+        MenuOpen
     }
     public enum Background
     {
