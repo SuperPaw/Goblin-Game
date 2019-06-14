@@ -42,9 +42,17 @@ public abstract class MenuWindow : MonoBehaviour
 
     public void Close()
     {
+        StartCoroutine(MarkAsClosedAfterAnimation());
+    }
+
+    private IEnumerator MarkAsClosedAfterAnimation()
+    {
+        ViewHolder.SetActive(false);
+
+        yield return new WaitUntil(()=> ViewHolder.AllHidden());
+
         //Debug.Log("Closing view: " +Type);
 
-        ViewHolder.SetActive(false);
         OpenWindows[Type] = false;
 
         if (!OpenWindows.Values.Any(open => open))

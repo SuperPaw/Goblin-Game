@@ -46,6 +46,7 @@ public class AiryUIAnimatedElement : MonoBehaviour
     private Graphic[] graphics;
 
     private bool isReady = false;
+    public bool Hidden;
 
     private void Start()
     {
@@ -75,6 +76,7 @@ public class AiryUIAnimatedElement : MonoBehaviour
         if (!isReady)
             SetReady();
 
+        Hidden = false;
         gameObject.SetActive(true);
 
         switch (showAnimationType)
@@ -106,6 +108,7 @@ public class AiryUIAnimatedElement : MonoBehaviour
     public virtual void HideElement()
     {
         OnHideComplete.AddListener(ResetDefaults);
+        OnHideComplete.AddListener(() => Hidden = true);
 
         switch (hideAnimationType)
         {

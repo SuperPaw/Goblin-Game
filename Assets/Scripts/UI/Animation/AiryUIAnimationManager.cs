@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 [RequireComponent(typeof(AiryUIAnimatedElement))]
 public class AiryUIAnimationManager : MonoBehaviour
@@ -69,5 +70,10 @@ public class AiryUIAnimationManager : MonoBehaviour
     {
         childrenElements = GetComponentsInChildren<AiryUIAnimatedElement>();
         elementsUpdated = true;
+    }
+
+    public bool AllHidden()
+    {
+        return childrenElements.All(e => e.Hidden);
     }
 }

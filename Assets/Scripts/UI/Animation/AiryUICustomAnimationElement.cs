@@ -34,6 +34,7 @@ public class AiryUICustomAnimationElement : AiryUIAnimatedElement
     private GraphicAnimationRecord graphicRecord_beforeRecrod;
     private TransformAndGraphicAnimationRecord transformAndGraphicRecord_beforeRecrod;
 
+
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
