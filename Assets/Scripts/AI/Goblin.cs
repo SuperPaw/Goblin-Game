@@ -42,7 +42,7 @@ public class Goblin : Character
         ALL = Goblin | Slave | Meatshield | Shooter | Ambusher | Scout | Necromancer | Beastmaster | Hunter | Cook | Shaman | Diplomat
     }
 
-    public Class ClassType { private set; get; }
+    public Class ClassType { private set; get; } = Class.Goblin;
     
     private List<Class> ClassChoices;
 
@@ -134,7 +134,7 @@ public class Goblin : Character
             if (_attackRoutine == null)
                 _attackRoutine = StartCoroutine(AttackRoutine());
         }
-        else
+        else if(Alive())
         {
             navMeshAgent.isStopped = false;
             SelectAction();
@@ -144,7 +144,7 @@ public class Goblin : Character
         //TODO: this could be handled with events instead of checking each frame
         if (Team)
         {
-            ChiefImage.enabled = Team.Leader == this;
+            ChiefImage.enabled = IsChief();
 
             StateImage.enabled = true;
             StateImage.sprite = GameManager.GetIconImage(State);
@@ -170,9 +170,9 @@ public class Goblin : Character
 
         if (Team.Leader == this) possibleChoises.Remove(Class.Slave);
 
-        if (Team.Members.Any(m => m.ClassType != Class.NoClass))
+        if (Team.Members.Any(m => m.ClassType != Class.Goblin))
         {
-            var mostCommon = Team.Members.Select(g => g.ClassType).Where(c => c != Class.NoClass).GroupBy(item => item)
+            var mostCommon = Team.Members.Select(g => g.ClassType).Where(c => c != Class.Goblin).GroupBy(item => item)
                 .OrderByDescending(g => g.Count()).Select(g => g.Key).First();
         
             //Debug.Log("Most common class is " + mostCommon);
@@ -296,7 +296,7 @@ public class Goblin : Character
     
     public void Speak(PlayerController.Shout shout, bool overridePlaying = false)
     {
-        if (InArea.Visible() && Voice && Voice.isActiveAndEnabled && lastSpeak + speakWait < Time.time && (overridePlaying || !Voice.isPlaying))
+        if ((Random.value > (IsChief() ? 0.0f : 0.35f)) && InArea.Visible() && Voice && Voice.isActiveAndEnabled && lastSpeak + speakWait < Time.time && (overridePlaying || !Voice.isPlaying))
         {
             StartCoroutine(ShoutRoutine(shout.Speech));
 
@@ -308,7 +308,7 @@ public class Goblin : Character
     //TODO: inherit this for each type of character to differentiate sound sets
     public void Speak(SoundBank.GoblinSound soundtype, bool overridePlaying = false)
     {
-        if (InArea.Visible() && Voice && Voice.isActiveAndEnabled && (overridePlaying || !Voice.isPlaying))
+        if ( InArea.Visible() && Voice && Voice.isActiveAndEnabled && (overridePlaying || !Voice.isPlaying))
             Voice.PlayOneShot(SoundBank.GetSound(soundtype));
     }
 
@@ -341,5 +341,10 @@ public class Goblin : Character
     public void Kill()
     {
         Health = 0;
+    }
+
+    public override bool IsChief()
+    {
+        return Team?.Leader == this;
     }
 }

@@ -10,7 +10,7 @@ public class ReadyForInputController : MonoBehaviour
     [Serializable]
     public struct EnabledOnStates
     {
-        public GameObject ControlledGameObject;
+        public AiryUIAnimationManager ControlledGameObject;
         public Character.CharacterState[] States;
     }
 

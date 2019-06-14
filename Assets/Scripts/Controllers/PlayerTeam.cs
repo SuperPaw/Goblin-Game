@@ -68,6 +68,7 @@ public class PlayerTeam : MonoBehaviour
     //TODO: use these properly
     public UnityEvent OnTeamKill = new UnityEvent();
     public UnityEvent OnMemberAdded = new UnityEvent();
+    public UnityEvent OnOrder = new UnityEvent();
     public StuffFoundEvent OnTreasureFound = new StuffFoundEvent();
     public EquipmentFoundEvent OnEquipmentFound = new EquipmentFoundEvent();
     public StuffFoundEvent OnFoodFound = new StuffFoundEvent();
@@ -80,6 +81,7 @@ public class PlayerTeam : MonoBehaviour
 
     [Header("Necromancy")] public Character ZombiePrefab;
     public Material NecromancerSkin;
+
 
 
     // Use this for initialization

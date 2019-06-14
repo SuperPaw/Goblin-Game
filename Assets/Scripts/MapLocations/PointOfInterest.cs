@@ -12,11 +12,23 @@ public abstract class PointOfInterest : MonoBehaviour
     public Area InArea;
     public bool HasBeenAttacked;
     public Sprite IconSprite;
+    public PoiOptionController PoiOptionController;
+    protected static PlayerTeam team;
+
+    //UI Player choices
+    public PlayerChoice.ChoiceOption OkOption = new PlayerChoice.ChoiceOption() { Action = null, Description = "Ok" };
+    public PlayerChoice.ChoiceOption No = new PlayerChoice.ChoiceOption() { Action = null, Description = "No" };
 
     public Poi PoiType;
 
     public enum Poi { BigStone,Cave,Warrens,HumanFarm,HumanFort,Withchut,
         Count }
+
+    void Awake()
+    {
+        PoiOptionController = GetComponentInChildren<PoiOptionController>();
+        if(!team) team = FindObjectOfType<PlayerTeam>();
+    }
 
     public IEnumerator Spawning(PlayerTeam team)
     {
@@ -36,4 +48,8 @@ public abstract class PointOfInterest : MonoBehaviour
         }
     }
 
+    public virtual void SetupMenuOptions()
+    {
+        Debug.LogError("Virtual method called!");
+    }
 }

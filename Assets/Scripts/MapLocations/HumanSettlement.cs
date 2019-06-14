@@ -50,5 +50,11 @@ public class HumanSettlement : PointOfInterest
         }
     }
 
+    public override void SetupMenuOptions()
+    {
+        PoiOptionController.CreateOption(GameManager.OptionType.Attack,() =>
+            PlayerChoice.CreateDoChoice(AttackSettlement, "Do you want to attack the Human " + Name));
+    }
+
 
 }

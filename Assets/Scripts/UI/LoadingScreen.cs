@@ -30,6 +30,7 @@ public class LoadingScreen : MonoBehaviour
     [SerializeField] private GameObject WorldSizeTextHolder = null;
     [SerializeField] private GameObject ClassSelectHolder = null;
     [SerializeField] private GameObject TribeSelectHolder = null;
+    [SerializeField] private AiryUIAnimationManager AnimationController = null;
 
     [SerializeField] private TMP_Dropdown WorldSizeSelect = null;
     [SerializeField] private TMP_Dropdown ChiefClassSelect = null;
@@ -54,11 +55,8 @@ public class LoadingScreen : MonoBehaviour
         SoundController.ChangeMusic(SoundBank.Music.Menu);
 
         StartButton.interactable = false;
-
-        Destroy(WorldSizeTextHolder);
-        Destroy(ClassSelectHolder);
-        Destroy(TribeSelectHolder);
-        Destroy(LegacyButton.gameObject);
+        
+        AnimationController.SetActive(false);
         MapGen.gameObject.SetActive(true);
 
         StartCoroutine(MapGen.GenerateMap(SetLoadingText, () => Destroy(gameObject)));
@@ -128,8 +126,8 @@ public class LoadingScreen : MonoBehaviour
             TribeSelectHolder.SetActive(false);
         }
 
-        LegacyButton.gameObject.SetActive(TribeSelectHolder.activeInHierarchy || ClassSelectHolder.activeInHierarchy ||
-                                          WorldSizeTextHolder.activeInHierarchy);
+        LegacyButton.gameObject.SetActive(TribeSelectHolder.gameObject.activeInHierarchy || ClassSelectHolder.gameObject.activeInHierarchy ||
+                                          WorldSizeTextHolder.gameObject.activeInHierarchy);
     }
 
 

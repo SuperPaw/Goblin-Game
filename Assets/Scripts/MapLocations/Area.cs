@@ -35,7 +35,7 @@ public class Area : MonoBehaviour
     public HashSet<Area> RoadsTo = new HashSet<Area>();
     public BoxCollider Collider;
 
-    public Sprite BasicAreaSprite, RoadAreaSprite;
+    public Sprite BasicAreaSprite, RoadAreaSprite, EnemySprite;
 
     public PointOfInterest PointOfInterest;
     public PlayerController Controller;
@@ -44,10 +44,11 @@ public class Area : MonoBehaviour
     public Color LightFogColor, UnseenFogColor;
     //should be the size of x and z of the box collider
     public int Size;
-
-    public GameObject AreaUIObject;
+    
     public Image AreaIcon;
     public TextMeshProUGUI AreaText;
+    
+    private Sprite IconSprite;
 
     public void SetUpUI()
     {
@@ -64,11 +65,18 @@ public class Area : MonoBehaviour
             AreaIcon.sprite = RoadAreaSprite;
             AreaText.text = "";
         }
+        else if (AnyEnemies())
+        {
+            AreaIcon.sprite = EnemySprite;
+            AreaText.text = "";
+        }
         else
         {
             AreaIcon.sprite = BasicAreaSprite;
             AreaText.text = "";
         }
+
+        IconSprite = AreaIcon.sprite;
     }
 
     internal Vector3 GetRandomPosInArea()
@@ -120,10 +128,13 @@ public class Area : MonoBehaviour
         c.InArea = this;
         if(!PresentCharacters.Contains(c))
             PresentCharacters.Add(c);
-
-        foreach (var aggressive in PresentCharacters.Where(e => e.tag == "Enemy" && e.Aggressive && e.tag != c.tag))
+        if (c.tag == "Player")
         {
-            aggressive.ChangeState(Character.CharacterState.Attacking);
+            Visited = true;
+            foreach (var aggressive in PresentCharacters.Where(e => e.tag == "Enemy" && e.Aggressive && e.tag != c.tag))
+            {
+                aggressive.ChangeState(Character.CharacterState.Attacking);
+            }
         }
 
         c.IrritationMeter = 0;
@@ -137,10 +148,11 @@ public class Area : MonoBehaviour
 
 
         //TODO: move to area change method
-        if (PointOfInterest)
-            (c as Goblin)?.Speak(PlayerController.GetLocationReaction(this.PointOfInterest.PoiType));
-        else if (AnyEnemies()) //TODO:select random enemy
-            (c as Goblin)?.Speak(PlayerController.GetEnemyReaction(PresentCharacters.First(ch => ch.tag == "Enemy" && ch.Alive()).CharacterRace));
+        if(c as Goblin &! c.IsChief())
+            if (PointOfInterest)
+                (c as Goblin)?.Speak(PlayerController.GetLocationReaction(this.PointOfInterest.PoiType));
+            else if (AnyEnemies()) //TODO:select random enemy
+                (c as Goblin)?.Speak(PlayerController.GetEnemyReaction(PresentCharacters.First(ch => ch.tag == "Enemy" && ch.Alive()).CharacterRace));
 
     }
 
@@ -218,14 +230,21 @@ public class Area : MonoBehaviour
 
     public bool ContainsRoads => RoadsTo.Any();
 
-    public void EnableAreaUI()
+    public bool Visited;
+
+    public void EnableAreaUI(bool scoutedArea)
     {
-        AreaUIObject.SetActive(true);
+        AreaIcon.transform.parent.gameObject.SetActive(true);
+        if (IconSprite == EnemySprite && !AnyEnemies())
+            IconSprite = BasicAreaSprite;
+
+        AreaIcon.sprite = scoutedArea ? IconSprite : GameManager.GetIconImage(GameManager.Icon.Unknown);
+        AreaText.gameObject.SetActive(scoutedArea);
     }
 
-    //TODO: should this just be handled by events
     public void DisableAreaUI()
     {
-        AreaUIObject.SetActive(false);
+        AreaIcon.transform.parent.gameObject.SetActive(false);
     }
+
 }

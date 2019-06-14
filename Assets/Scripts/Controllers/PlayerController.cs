@@ -351,55 +351,14 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-            //TODO use parent class for these
-            else if (hit.collider && hit.collider.GetComponent<GoblinWarrens>())
+            else if (hit.collider && hit.collider.GetComponent<PointOfInterest>())
             {
-                var v = hit.collider.GetComponent<GoblinWarrens>();
+                var v = hit.collider.GetComponent<PointOfInterest>();
 
                 if (v.InArea.Visible())
-                    VillageView.OpenVillageView(v, Team);
-                else
-                {
-                    //ClickedArea(v.InArea);
-                }
-            }
-            //TODO use parent class for these
-            else if (hit.collider && hit.collider.GetComponent<HumanSettlement>())
-            {
-                var v = hit.collider.GetComponent<HumanSettlement>();
-
-                if (v.InArea.Visible())
-                    PlayerChoice.CreateDoChoice(()=> v.AttackSettlement(),"Do you want to attack the Human " + v.Name);
+                    v.SetupMenuOptions();
                 //else
                   //  ClickedArea(v.InArea);
-            }
-            //TODO: handle the point of interest click generally. Replace BigstoneView and CaveView with a Poi view?
-            else if (hit.collider && hit.collider.GetComponent<Monument>())
-            {
-                var monument = hit.collider.GetComponent<Monument>();
-
-                if (monument.InArea.Visible())
-                    BigStoneView.OpenStoneView(monument, Team);
-                //else
-                //    ClickedArea(monument.InArea);
-            }
-            else if (hit.collider && hit.collider.GetComponent<Cave>())
-            {
-                var cave = hit.collider.GetComponent<Cave>();
-
-                if (cave.InArea.Visible())
-                    CaveView.OpenCaveView(cave, Team);
-                //else
-                //    ClickedArea(cave.InArea);
-            }
-            else if (hit.collider && hit.collider.GetComponent<WitchHut>())
-            {
-                var hut = hit.collider.GetComponent<WitchHut>();
-
-                if (hut.InArea.Visible())
-                    WitchHutView.OpenWitchView(hut, Team);
-                //else
-                //    ClickedArea(hut.InArea);
             }
             else if (hit.collider && hit.collider.GetComponent<Area>())
             {
@@ -488,16 +447,16 @@ public class PlayerController : MonoBehaviour
         var id = 1;
 
         RemoveFogAtPos(Team.Leader.transform.position, id++);
-        RemoveFogAtPos(Team.Leader.InArea.transform.position, id++);
+        //RemoveFogAtPos(Team.Leader.InArea.transform.position, id++);
         Team.Leader.InArea.RemoveFogOfWar(true);
-        if (showingMoveView)
-        {
-            foreach (var n in Team.Leader.InArea.Neighbours)
-            {
-                RemoveFogAtPos(n.transform.position, id++);
-                n.RemoveFogOfWar(false);
-            }
-        }
+        //if (showingMoveView)
+        //{
+        //    foreach (var n in Team.Leader.InArea.Neighbours)
+        //    {
+        //        RemoveFogAtPos(n.transform.position, id++);
+        //        n.RemoveFogOfWar(false);
+        //    }
+        //}
 
         //removing unused fog points TODO: make it actually remove instead of just hiding
         for (; id <= FogPoints; id++)
@@ -535,6 +494,8 @@ public class PlayerController : MonoBehaviour
     {
         if (Orders.Any(o => o.Order == action))
             Team.LeaderShout(Orders.First(o => o.Order == action));
+
+        Team.OnOrder.Invoke();
 
         switch (action)
         {
@@ -623,9 +584,7 @@ public class PlayerController : MonoBehaviour
         stone.Treasure = 0;
 
         SoundController.PlayStinger(SoundBank.Stinger.Sneaking);
-
-        BigStoneView.CloseStone();
-
+        
         //if (Random.value < 0.6f)
             stone.SpawnDead(Instance.Team);
     }
@@ -644,9 +603,9 @@ public class PlayerController : MonoBehaviour
         Instance.Team.Members.Remove(goblin);
         Instance.Team.OnTreasureFound.Invoke(price);
 
-        GoblinUIList.UpdateGoblinList();
-
         goblin.Team = null;
+
+        GoblinUIList.UpdateGoblinList();
 
         goblin.transform.parent = newVillage.transform;
 
@@ -673,8 +632,6 @@ public class PlayerController : MonoBehaviour
         //goblin.CharacterRace = Character.Race.Undead;
 
         goblin.Health = 0;
-
-        BigStoneView.CloseStone();
         
     }
 
@@ -765,9 +722,14 @@ public class PlayerController : MonoBehaviour
     {
         var l = Team.Leader.InArea.Neighbours.ToList();
 
+        var scouts = Team.Members.Count(m => m.ClassType == Goblin.Class.Scout);
+
         foreach (var movable in l)
         {
-            movable.EnableAreaUI();
+            if(movable.Visited)
+                movable.EnableAreaUI(true);
+            else
+                movable.EnableAreaUI(scouts-- >0);
         }
 
         showingMoveView = true;

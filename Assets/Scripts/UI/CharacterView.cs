@@ -54,7 +54,7 @@ public class CharacterView : MenuWindow
 
     public static void AddXp()
     {
-        if(!Instance.ViewHolder.activeInHierarchy || !Instance.character)
+        if(!Instance.ViewHolder.gameObject.activeInHierarchy || !Instance.character)
             return;
 
         Instance.character.Xp += 10;
@@ -63,7 +63,7 @@ public class CharacterView : MenuWindow
 
     public static void Kill()
     {
-        if (!Instance.ViewHolder.activeInHierarchy || !Instance.character)
+        if (!Instance.ViewHolder.gameObject.activeInHierarchy || !Instance.character)
             return;
 
         Instance.character.Kill();

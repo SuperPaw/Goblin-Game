@@ -20,7 +20,8 @@ public class GameManager : MonoBehaviour
     
     public enum Icon
     {
-        LevelUp, Chief, Healing, Idling, Fleeing, Travelling, Fighting, Hiding, Dead,Watching,Searching, Provoking, Resting
+        LevelUp, Chief, Healing, Idling, Fleeing, Travelling, Fighting, Hiding, Dead,Watching,Searching, Provoking, Resting,
+        Unknown
     }
     [Serializable]
     public struct IconImg
@@ -44,11 +45,24 @@ public class GameManager : MonoBehaviour
         //TODO: use this instead of on the stat
         public string Description;
     }
-    
+    public enum OptionType
+    {
+        BuyGoblin, SellGoblin, SacrificeGoblin, BuyStaff, BuyHat, StealTreasure, BuyFood, Healing, Attack, Explore, Lure
+    }
+
+    [Serializable]
+    public struct TargetImaget
+    {
+        public OptionType type;
+        public Sprite image;
+    }
+
+
     [Header("References")]
     public IconImg[] IconImages;
     public ClassImg[] ClassImgs;
     public AttributeImg[] AttributeImages;
+    public List<TargetImaget> OptionTargetImages;
     public Image BlackscreenImage;
     public GameObject HighScoreScreen;
 

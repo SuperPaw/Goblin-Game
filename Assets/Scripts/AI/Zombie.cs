@@ -77,8 +77,8 @@ public class Zombie : Character
                             {
                                 if (!TravellingToArea)
                                 {
-                                    ChangeState(CharacterState.Travelling);
-                                    TravellingToArea = Team.Leader.TravellingToArea;
+                                    MoveTo(Team.Leader.TravellingToArea);
+                                    Debug.Log("Zombie going to " + TravellingToArea);
                                 }
                                 break;
                             }

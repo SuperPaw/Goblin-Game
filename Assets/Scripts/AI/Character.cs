@@ -411,6 +411,8 @@ public abstract class Character : MonoBehaviour
         if(SPE.GetStatMax() < 1)
             Debug.LogWarning("Speed is 0");
 
+        Walking = State == CharacterState.Travelling || State == CharacterState.Idling;
+
         navMeshAgent.speed = Walking ? Mathf.Min(WalkingSpeed,SPE.GetStatMax())/2f : SPE.GetStatMax() / 2f;
 
         DesiredVelocity = navMeshAgent.desiredVelocity.sqrMagnitude;
@@ -429,32 +431,6 @@ public abstract class Character : MonoBehaviour
     private void HandleAnimation()
     {
         if (!Animator) return;
-
-        //Animator.SetFloat("Speed", navMeshAgent.desiredVelocity.magnitude);
-
-        //Vector3 worldDeltaPosition = navMeshAgent.nextPosition - transform.position;
-
-        //// Map 'worldDeltaPosition' to local space
-        //float dx = Vector3.Dot(transform.right, worldDeltaPosition);
-        //float dy = Vector3.Dot(transform.forward, worldDeltaPosition);
-        //Vector2 deltaPosition = new Vector2(dx, dy);
-
-        //// Low-pass filter the deltaMove
-        //float smooth = Mathf.Min(1.0f, Time.deltaTime / 0.15f);
-        //smoothDeltaPosition = Vector2.Lerp(smoothDeltaPosition, deltaPosition, smooth);
-
-        //// Update velocity if time advances
-        //if (Time.deltaTime > 1e-5f)
-        //    velocity = smoothDeltaPosition / Time.deltaTime;
-
-        //bool shouldMove = velocity.magnitude > 0.5f && navMeshAgent.remainingDistance > navMeshAgent.radius;
-
-        //// Update animation parameters
-        ////Animator.SetBool("move", shouldMove);
-        //Animator.SetFloat("velx", velocity.x);
-        //Animator.SetFloat("vely", velocity.y);
-
-        //GetComponent<LookAt>().lookAtTargetPosition = agent.steeringTarget + transform.forward;
 
         if (navMeshAgent)
             Animator.SetFloat("Speed",navMeshAgent.speed);
@@ -485,7 +461,7 @@ public abstract class Character : MonoBehaviour
         {
             Animate(HIDE_ANIMATION_BOOL);
         }
-        else if (Watching() &&  Team.Leader != this && Team.Challenger != this)
+        else if (Watching() &&  !IsChief() && Team.Challenger != this)
         {
             Animator.SetLookAtPosition(Team.Leader.transform.position);
             Animate(CHEER_ANIMATION_BOOL);
@@ -544,9 +520,8 @@ public abstract class Character : MonoBehaviour
             newState != CharacterState.Fleeing)
             TravellingToArea = null;
 
-        Walking = State == CharacterState.Travelling || State == CharacterState.Idling;
 
-        if (Random.value < 0.4f && this as Goblin && PlayerController.IsStateChangeShout(State))
+        if (this as Goblin && PlayerController.IsStateChangeShout(State))
         {
             (this as Goblin)?.Speak(PlayerController.GetStateChangeReaction(State));
         }
@@ -816,7 +791,8 @@ public abstract class Character : MonoBehaviour
                 }
                 else if (Random.value < 0.015f) //selecting idle action
                 {
-                    (this as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.Idle));
+                    if(!IsChief())
+                        (this as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.Idle));
 
                     actionInProgress = true;
 
@@ -879,7 +855,7 @@ public abstract class Character : MonoBehaviour
                 }
                 //TODO: use a different method for activity selection than else if
                 else if (Random.value < 0.0025f && this as Goblin && Team
-                    && !(Team.Leader == this) && (this as Goblin).ClassType > Goblin.Class.Slave
+                    && !(Team.Leader == this) && Team.Members.Count > 4 && (this as Goblin).ClassType > Goblin.Class.Slave
                     & !Team.Challenger && (Team.Leader as Goblin).CurrentLevel < ((Goblin)this).CurrentLevel)
                 {
                     //TODO: make it only appear after a while
@@ -1085,9 +1061,8 @@ public abstract class Character : MonoBehaviour
                 if ((g.ProvokeTarget.transform.position - transform.position).magnitude < 4) //Provoke
                 { 
                     navMeshAgent.isStopped = true;
-                    if (Random.value < 0.2f)
-                        (this as Goblin)?.Speak(
-                            PlayerController.GetDynamicReactions(PlayerController.DynamicState.Mocking));
+                    (this as Goblin)?.Speak(
+                        PlayerController.GetDynamicReactions(PlayerController.DynamicState.Mocking));
                 }
                 break;
             case CharacterState.Surprised:
@@ -1238,6 +1213,7 @@ public abstract class Character : MonoBehaviour
 
         actionInProgress = true;
     }
+    
 
     protected bool InAttackRange()
     {
@@ -1305,6 +1281,8 @@ public abstract class Character : MonoBehaviour
         }
         //agentStuckRoutine = null;
     }
+
+    public virtual bool IsChief() => false;
 
     private bool IncoherentNavAgentSpeed() =>
         (navMeshAgent.hasPath && navMeshAgent.desiredVelocity.sqrMagnitude > navMeshAgent.speed/3 && navMeshAgent.velocity.sqrMagnitude < navMeshAgent.desiredVelocity.sqrMagnitude /2);

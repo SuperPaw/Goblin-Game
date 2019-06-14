@@ -63,6 +63,7 @@ MonoBehaviour:
   MovementAudio: {fileID: 0}
   SurprisedTime: 4
   SurprisedStartTime: 0
+  Aggressive: 0
   CharacterRace: 0
   IrritationMeter: 0
   IrritaionTolerance: 50
@@ -79,8 +80,8 @@ MonoBehaviour:
   CouMax: 5
   HeaMin: 6
   HeaMax: 11
-  SpeMin: 4
-  SpeMax: 4
+  SpeMin: 5
+  SpeMax: 5
   SmaMin: 2
   SmaMax: 5
   WalkingSpeed: 3
