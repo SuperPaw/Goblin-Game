@@ -23,8 +23,14 @@ public class ReadyForInputController : MonoBehaviour
     // todo: change to on state change
     void FixedUpdate()
     {
-        if( !PlayerController.Instance.Team.Leader)
+        if (!GameManager.Instance.GameStarted)
             return;
+
+        if (!PlayerController.Instance.Team.Leader)
+        {
+            Debug.Log("No leader in tribe");
+            return;
+        }
 
         if (!PlayerController.Instance.Team.Leader.Alive() || PlayerController.Instance.Team.Challenger)
             foreach (var controlledObjectMapping in ControlledObjectMappings)

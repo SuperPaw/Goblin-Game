@@ -35,8 +35,8 @@ public class OnValueHover : Button
             InfoClick.ShowInfo(gameObject.GetComponent<RectTransform>(), Stat.Type.ToString(),
                 Stat.GetStatDescription(), GameManager.GetAttributeImage(Stat.Type));
         }
-
-        Debug.LogError("No description to show: "+ gameObject);
+        else
+            Debug.LogError("No description to show: "+ gameObject);
     }
     
 }

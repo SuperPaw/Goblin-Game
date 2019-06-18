@@ -46,16 +46,15 @@ public class PopUpText : MonoBehaviour
         
         comp.gameObject.SetActive(true);
         comp.ShowElement();
-
-        Debug.Log("showing text: "+PopText.text);
+        
         yield return new WaitForSeconds(ShowTime);
 
         comp.HideElement();
 
-        Debug.Log("*hiding elements");
+        //Debug.Log("*hiding elements");
         yield return new WaitUntil(() => !comp.gameObject.activeInHierarchy);
 
-        Debug.Log(" elements are animated awaya");
+        //Debug.Log(" elements are animated awaya");
 
         ShowingText = false;
 

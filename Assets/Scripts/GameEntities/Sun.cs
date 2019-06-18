@@ -51,7 +51,7 @@ public class Sun : MonoBehaviour
 
     private IEnumerator TravelFade(float distance)
     {
-        Debug.Log("Travel distance: "+ distance + ", Fade time: "+ distance * TravelFadeFactor);
+        //Debug.Log("Travel distance: "+ distance + ", Fade time: "+ distance * TravelFadeFactor);
 
         var duration = distance * TravelFadeFactor;
 

@@ -320,7 +320,7 @@ public class MapGenerator : MonoBehaviour
 
         PlayerController.UpdateFog();
 
-        Debug.Log("Finishing generation in : " + (Time.time -startTime) + " seconds");
+        //Debug.Log("Finishing generation in : " + (Time.time -startTime) + " seconds");
 
         endCallback();
 
@@ -342,9 +342,8 @@ public class MapGenerator : MonoBehaviour
     private IEnumerator AreaGenRoutine()
     {
 
-        Debug.Log("Started Area gen : " + (Time.time - startTime) + " seconds");
-
-
+        //Debug.Log("Started Area gen : " + (Time.time - startTime) + " seconds");
+        
         var noOfAreasX = SizeX / totalAreaSize;
         var noOfAreasZ = SizeZ / totalAreaSize;
         
@@ -387,7 +386,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         areaGenDone = true;
-        Debug.Log("Finished Area gen : " + (Time.time - startTime) + " seconds");
+        //Debug.Log("Finished Area gen : " + (Time.time - startTime) + " seconds");
     }
 
     private void PathGenRoutine()
@@ -641,7 +640,7 @@ public class MapGenerator : MonoBehaviour
     private IEnumerator GroundGenRoutine()
     {
         //yield return null;
-        Debug.Log("Ground gen started");
+        //Debug.Log("Ground gen started");
 
         //creating ground tiles
         foreach (var tile in map)
@@ -700,7 +699,7 @@ public class MapGenerator : MonoBehaviour
     private IEnumerator ForestGenRoutine()
     {
         //yield return null;
-        Debug.Log("Forest gen started");
+        //Debug.Log("Forest gen started");
 
         //INSTANTIATING MAP
         //y=1 for tree height

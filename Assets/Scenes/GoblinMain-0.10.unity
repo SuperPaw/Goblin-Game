@@ -579,31 +579,22 @@ MonoBehaviour:
   Light: {fileID: 176702757}
   DayColor: {r: 1, g: 0.9313208, b: 0.8160377, a: 1}
   NightColor: {r: 0.23921569, g: 0.18431373, b: 0.65882355, a: 1}
-  TravelFadeTime: 20
+  TravelFadeFactor: 0.5
   TimeSpeedUpCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 1.0038109
-      inSlope: 1.6467451
-      outSlope: 1.6467451
+      inSlope: 5.015742
+      outSlope: 5.015742
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.23990989
-      value: 1.3988813
-      inSlope: 3.656941
-      outSlope: 3.656941
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.14817306
-    - serializedVersion: 3
-      time: 0.49591678
-      value: 2.5271487
+      time: 0.29971927
+      value: 2.5071254
       inSlope: 0.17233726
       outSlope: 0.17233726
       tangentMode: 0
@@ -611,8 +602,8 @@ MonoBehaviour:
       inWeight: 0.11733078
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.73757046
-      value: 2.520976
+      time: 0.79170865
+      value: 2.4959478
       inSlope: -0.20084602
       outSlope: -0.20084602
       tangentMode: 0
@@ -622,8 +613,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1.0038109
-      inSlope: -5.781229
-      outSlope: -5.781229
+      inSlope: -7.163701
+      outSlope: -7.163701
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

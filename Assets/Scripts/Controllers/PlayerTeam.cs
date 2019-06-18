@@ -99,7 +99,7 @@ public class PlayerTeam : MonoBehaviour
 
             var mat = GoblinSkins[Random.Range(0, GoblinSkins.Length)];
 
-            Debug.Log(character +" Material: "+ mat);
+            //Debug.Log(character +" Material: "+ mat);
 
             character.GoblinSkin.sharedMaterial = mat;
             
@@ -573,7 +573,7 @@ public class PlayerTeam : MonoBehaviour
             PlayerChoice.SetupPlayerChoice(options.ToArray(),"Who gets to keep the " + equipment.name + "?");
         else
         {
-            Treasure++;
+            OnTreasureFound.Invoke(1);
             PopUpText.ShowText(finder.name + " broke the " + equipment.name + " and turned it into treasure");
         }
     }

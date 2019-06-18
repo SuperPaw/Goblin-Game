@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -60,7 +59,7 @@ public abstract class Character : MonoBehaviour
     public int IrritaionTolerance = 50;
     
     public CharacterState State;
-    
+
     public class Stat
     {
         [Serializable]
@@ -329,6 +328,9 @@ public abstract class Character : MonoBehaviour
     public Area InArea;
     private Area fleeingToArea;
     private Coroutine stateChangeRoutine;
+    
+    [Header("Debug")]
+    public TextMeshProUGUI DebugText;
 
     public void Awake()
     {
@@ -396,6 +398,10 @@ public abstract class Character : MonoBehaviour
 
     protected void FixedUpdate()
     {
+        if (DebugText )
+        {
+            DebugText.text = GameManager.Instance.DebugText ? State.ToString(): "";
+        }
 
         HandleAnimation();
 

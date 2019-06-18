@@ -12,7 +12,8 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    
+
+    public bool DebugText;
     public bool GameStarted;
     public bool GamePaused;
     public bool InvincibleMode;
