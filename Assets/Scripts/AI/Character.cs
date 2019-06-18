@@ -916,8 +916,8 @@ public abstract class Character : MonoBehaviour
                 }
                 else if (!actionInProgress)
                 {
-                    fleeingToArea = TravellingToArea ? TravellingToArea.GetClosestNeighbour(transform.position, StickToRoad) 
-                        : InArea.GetClosestNeighbour(transform.position,StickToRoad);
+                    fleeingToArea = TravellingToArea ? TravellingToArea.GetClosestNeighbour(transform.position, StickToRoad,TravellingToArea.ContainsRoads) 
+                        : InArea.GetClosestNeighbour(transform.position,StickToRoad,InArea.ContainsRoads);
                     navMeshAgent.SetDestination(fleeingToArea.GetRandomPosInArea());
 
                     TravellingToArea = fleeingToArea;

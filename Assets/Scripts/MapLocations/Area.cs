@@ -191,12 +191,21 @@ public class Area : MonoBehaviour
         return PresentCharacters.Any(c => c.CharacterRace == Character.Race.Goblin && c.Alive());
     }
 
-    internal Area GetClosestNeighbour(Vector3 position, bool useRoads = false)
+    internal Area GetClosestNeighbour(Vector3 position, bool useRoads = false, bool ignoreRoad = false)
     {
+        if(useRoads && ignoreRoad)
+            Debug.LogError("Ignoring AND using roads!!!");
+
         Area closest = null;
         float distance = Mathf.Infinity;
 
-        var ns = useRoads && RoadsTo.Any() ? RoadsTo : Neighbours;
+        var ns = useRoads && RoadsTo.Any() ? RoadsTo : ignoreRoad ? Neighbours.Where(n => !RoadsTo.Contains(n)) : Neighbours;
+
+        if (!ns.Any())
+        {
+            Debug.Log("Not any valid neighbours: "+ name);
+            ns = Neighbours;
+        }
 
         foreach (var go in ns)
         {

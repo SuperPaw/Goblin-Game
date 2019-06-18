@@ -256,6 +256,7 @@ public class PlayerTeam : MonoBehaviour
 
     public void Move(Area a )
     {
+        Sun.TravelRoutine((Leader.transform.position-a.transform.position).magnitude);
         //if(a && a== Leader.InArea) //if already there
         //    return;
         //var leaderPos = Leader.transform.position;

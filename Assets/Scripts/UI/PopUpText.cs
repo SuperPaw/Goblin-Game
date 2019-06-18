@@ -27,7 +27,7 @@ public class PopUpText : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (TextToShow.Any() && !ShowingText)
+        if (TextToShow.Any() && !ShowingText && GameManager.Instance.GameStarted)
             StartCoroutine(ShowTextLoop(TextToShow.Dequeue()));
     }
 

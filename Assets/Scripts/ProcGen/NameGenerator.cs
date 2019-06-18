@@ -8,6 +8,7 @@ public class NameGenerator : MonoBehaviour
     public static NameGenerator Instance;
 
     private static string[] endings = new[] {"k", "p", "ka", "k", "l", "k", "ki"}; //g
+    private static string[] specialEndings = new[] { "zo", "zak","ox","ax"}; //g
     private static string[] vowels = new[] {"i", "u", "o", "o", "a"};
 
     private static string[] startings = new[] {"r", "k", "t", "s", "y", "b", "n", "g", "b"}
@@ -83,6 +84,8 @@ public class NameGenerator : MonoBehaviour
     //chance for special start syllabyl
     [Range(1, 10)]
     public int ShortLongSyllabalChance;
+    [Range(1, 10)]
+    public int SpecialEndingChance;
 
     private int TotalChance;
 
@@ -92,7 +95,7 @@ public class NameGenerator : MonoBehaviour
         if (!Instance)
             Instance = this;
 
-        TotalChance = TwotimesSyllabalChance +RhymingSyllabalChance + SingleSyllabalChance + DoubleSyllabalChance + ShortLongSyllabalChance;
+        TotalChance = TwotimesSyllabalChance +RhymingSyllabalChance + SingleSyllabalChance + DoubleSyllabalChance + ShortLongSyllabalChance + SpecialEndingChance;
 
         //for (int i = 0; i < 20; i++)
         //{
@@ -274,6 +277,10 @@ public class NameGenerator : MonoBehaviour
             var sndSyllabal = start+ Rnd(vowels) + end;
 
             return syllabal+sndSyllabal;
+        }
+        else if (valRange < TwotimesSyllabalChance + RhymingSyllabalChance + SingleSyllabalChance + DoubleSyllabalChance + SpecialEndingChance)
+        {
+            return Rnd(startings) + Rnd(vowels) + Rnd(endings) + Rnd(specialEndings);
         }
         else 
         {

@@ -205,7 +205,7 @@ public class Goblin : Character
         //TODO: health should be handled differently than other stuff
         HEA.LevelUp();
 
-        if (CurrentLevel == 2)
+        if (CurrentLevel == 2 && (ClassType <= Class.Goblin ))
             WaitingOnClassSelection = true;
         
         GoblinUIList.UpdateGoblinList();

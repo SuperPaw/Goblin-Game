@@ -163,8 +163,6 @@ public class GameManager : MonoBehaviour
 
     internal static void GameOver()
     {
-        Instance.GameStarted = false;
-
         SoundController.PlayGameLoss();
 
         Instance.StartCoroutine(Instance.FadeToHighScoreRoutine());
@@ -211,7 +209,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator FadeToHighScoreRoutine()
     {
         var start = Time.time;
-        var duration = 4f;
+        var duration = 6f;
         var end = start + duration;
 
         var endColor = BlackscreenImage.color;
@@ -226,6 +224,7 @@ public class GameManager : MonoBehaviour
         }
 
         GreatestGoblins.ShowHighscores();
+        Instance.GameStarted = false;
         //TODO: move to above method
         HighScoreScreen.gameObject.SetActive(true);
     }
