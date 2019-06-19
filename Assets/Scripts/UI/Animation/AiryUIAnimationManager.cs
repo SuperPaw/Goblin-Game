@@ -58,11 +58,11 @@ public class AiryUIAnimationManager : MonoBehaviour
 
     public void HideMenu()
     {
-        Active = false;
-
         foreach (var element in childrenElements)
         {
             element.HideElement();
+            element.OnHideComplete.AddListener(() =>
+                Active = false);
         }
     }
 
