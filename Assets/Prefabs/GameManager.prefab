@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ead7df1dbcdd3584cbb5f67ddb5bca19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DebugText: 0
   GameStarted: 0
   GamePaused: 0
   InvincibleMode: 0
@@ -86,7 +87,7 @@ MonoBehaviour:
   - IconType: 8
     Image: {fileID: 21300000, guid: 1f1bfc0f692170048bb0b66eb94b5dd3, type: 3}
   - IconType: 5
-    Image: {fileID: 21300000, guid: cb2e16dbd8e51e24e93e316eecb5d6a5, type: 3}
+    Image: {fileID: 21300000, guid: 21db639d0e692e641ab44364e179a117, type: 3}
   - IconType: 7
     Image: {fileID: 21300000, guid: 1877022404ed8ba4282871b589fa597e, type: 3}
   - IconType: 2

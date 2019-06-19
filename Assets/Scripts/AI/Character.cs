@@ -517,6 +517,12 @@ public abstract class Character : MonoBehaviour
         if (State == newState)
             yield break;
 
+        if (State == CharacterState.Fleeing && newState == CharacterState.Attacking)
+        {
+            Debug.Log(name + " not able to attack, Fleeing!");
+            yield break;
+        }
+
         if (State != CharacterState.Dead)
             State = newState;
 
@@ -793,7 +799,7 @@ public abstract class Character : MonoBehaviour
                 }
                 else if (IrritationMeter >= IrritaionTolerance)
                 {
-                    ChangeState(CharacterState.Attacking);
+                    ChangeState(CharacterState.Attacking,true);
                 }
                 else if (Random.value < 0.015f) //selecting idle action
                 {
