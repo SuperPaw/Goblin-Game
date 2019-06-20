@@ -346,6 +346,10 @@ public abstract class Character : MonoBehaviour
             Voice.pitch = VoicePitch;
         }
 
+        //TODO: remove this and actually handle the warnings :P
+        if(Animator)
+            Animator.logWarnings = false;
+
         if (!HealtBar)
             HealtBar = GetComponentInChildren<HealtBar>();
 

@@ -2553,6 +2553,13 @@ MonoBehaviour:
     States: 000000000400000001000000080000000700000002000000
   - ControlledGameObject: {fileID: 5428865150472205006}
     States: 00000000
+  ActionButtons:
+  - {fileID: 3926110131568576913}
+  - {fileID: 2197761186955214913}
+  - {fileID: 1581148943610127416}
+  - {fileID: 6837081304201231341}
+  - {fileID: 6555561252652555066}
+  - {fileID: 4039481505606677625}
 --- !u!1 &2596289357525923977
 GameObject:
   m_ObjectHideFlags: 0
@@ -3323,6 +3330,7 @@ GameObject:
   - component: {fileID: 7080133155472294972}
   - component: {fileID: 2346136604295608672}
   - component: {fileID: 7087195758497544008}
+  - component: {fileID: 6555561252652555066}
   m_Layer: 5
   m_Name: Hide
   m_TagString: Untagged
@@ -3513,6 +3521,21 @@ MonoBehaviour:
   childrenElements: []
   showMenuOnEnable: 1
   Active: 0
+--- !u!114 &6555561252652555066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3132641333453979217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be7ef341f03e4f4fa57e1742e234aad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Action: 0
+  Button: {fileID: 7080133155472294972}
+  AiryUIAnimationManager: {fileID: 7087195758497544008}
 --- !u!1 &3531078872285139375
 GameObject:
   m_ObjectHideFlags: 0
@@ -4299,6 +4322,7 @@ GameObject:
   - component: {fileID: 3169191590393265571}
   - component: {fileID: 7449491920639390392}
   - component: {fileID: 9217430102576710671}
+  - component: {fileID: 3926110131568576913}
   m_Layer: 5
   m_Name: Move
   m_TagString: Untagged
@@ -4489,6 +4513,21 @@ MonoBehaviour:
   childrenElements: []
   showMenuOnEnable: 1
   Active: 0
+--- !u!114 &3926110131568576913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4294342718121054068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be7ef341f03e4f4fa57e1742e234aad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Action: 5
+  Button: {fileID: 3169191590393265571}
+  AiryUIAnimationManager: {fileID: 9217430102576710671}
 --- !u!1 &4353432099197018000
 GameObject:
   m_ObjectHideFlags: 0
@@ -7420,6 +7459,7 @@ GameObject:
   - component: {fileID: 1217640470799665230}
   - component: {fileID: 8525705773669124090}
   - component: {fileID: 5428865150472205006}
+  - component: {fileID: 2197761186955214913}
   m_Layer: 5
   m_Name: Necromancy
   m_TagString: Untagged
@@ -7610,6 +7650,21 @@ MonoBehaviour:
   childrenElements: []
   showMenuOnEnable: 1
   Active: 0
+--- !u!114 &2197761186955214913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6614103686878969010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be7ef341f03e4f4fa57e1742e234aad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Action: 13
+  Button: {fileID: 1217640470799665230}
+  AiryUIAnimationManager: {fileID: 5428865150472205006}
 --- !u!1 &6648285963607984121
 GameObject:
   m_ObjectHideFlags: 0
@@ -7988,6 +8043,7 @@ GameObject:
   - component: {fileID: 2312879898369602178}
   - component: {fileID: 9189124474305359148}
   - component: {fileID: 4866394616423209936}
+  - component: {fileID: 4039481505606677625}
   m_Layer: 5
   m_Name: Flee
   m_TagString: Untagged
@@ -8189,6 +8245,21 @@ MonoBehaviour:
   childrenElements: []
   showMenuOnEnable: 1
   Active: 0
+--- !u!114 &4039481505606677625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6866674476817276638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be7ef341f03e4f4fa57e1742e234aad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Action: 2
+  Button: {fileID: 2312879898369602178}
+  AiryUIAnimationManager: {fileID: 4866394616423209936}
 --- !u!1 &6962917466637631961
 GameObject:
   m_ObjectHideFlags: 0
@@ -8362,6 +8433,7 @@ GameObject:
   - component: {fileID: 3875561992489453}
   - component: {fileID: 7536424365819135267}
   - component: {fileID: 3539780685916493288}
+  - component: {fileID: 6837081304201231341}
   m_Layer: 5
   m_Name: Camp
   m_TagString: Untagged
@@ -8552,6 +8624,21 @@ MonoBehaviour:
   childrenElements: []
   showMenuOnEnable: 1
   Active: 0
+--- !u!114 &6837081304201231341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7070337633197956985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be7ef341f03e4f4fa57e1742e234aad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Action: 6
+  Button: {fileID: 3875561992489453}
+  AiryUIAnimationManager: {fileID: 3539780685916493288}
 --- !u!1 &7175510307161408078
 GameObject:
   m_ObjectHideFlags: 0
@@ -9534,6 +9621,7 @@ GameObject:
   - component: {fileID: 3128153168933274753}
   - component: {fileID: 3920804779871312460}
   - component: {fileID: 8928228941265325979}
+  - component: {fileID: 1581148943610127416}
   m_Layer: 5
   m_Name: Attack
   m_TagString: Untagged
@@ -9740,6 +9828,21 @@ MonoBehaviour:
   childrenElements: []
   showMenuOnEnable: 1
   Active: 0
+--- !u!114 &1581148943610127416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7792515028322297756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be7ef341f03e4f4fa57e1742e234aad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Action: 1
+  Button: {fileID: 3987923508832665354}
+  AiryUIAnimationManager: {fileID: 8928228941265325979}
 --- !u!1 &7905564605652609684
 GameObject:
   m_ObjectHideFlags: 0

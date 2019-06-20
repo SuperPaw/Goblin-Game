@@ -1171,6 +1171,16 @@ MonoBehaviour:
   EnabledActionOnStates:
   - Action: 5
     EnabledOnLeaderStates: 000000000800000004000000
+  - Action: 1
+    EnabledOnLeaderStates: 000000000800000004000000010000000700000002000000
+  - Action: 6
+    EnabledOnLeaderStates: 000000000700000004000000
+  - Action: 0
+    EnabledOnLeaderStates: 000000000700000004000000
+  - Action: 2
+    EnabledOnLeaderStates: 000000000800000004000000010000000700000002000000
+  - Action: 13
+    EnabledOnLeaderStates: 00000000
   OrderCooldown: 3
   LocationReactions:
   - LocationType: 0
@@ -9154,7 +9164,7 @@ PrefabInstance:
     - target: {fileID: 7080133155472294972, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7080133155472294972, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
@@ -9201,10 +9211,15 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
       value: Hide
       objectReference: {fileID: 0}
+    - target: {fileID: 7080133155472294972, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Attack
+      objectReference: {fileID: 0}
     - target: {fileID: 2312879898369602178, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2312879898369602178, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
@@ -9256,9 +9271,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
       value: Flee
       objectReference: {fileID: 0}
+    - target: {fileID: 2312879898369602178, guid: 9c662831f0f89a84985dc89b3f3e3c90,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Attack
+      objectReference: {fileID: 0}
     - target: {fileID: 3875561992489453, guid: 9c662831f0f89a84985dc89b3f3e3c90, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3875561992489453, guid: 9c662831f0f89a84985dc89b3f3e3c90, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -9296,10 +9316,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
       value: Camp
       objectReference: {fileID: 0}
+    - target: {fileID: 3875561992489453, guid: 9c662831f0f89a84985dc89b3f3e3c90, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Attack
+      objectReference: {fileID: 0}
     - target: {fileID: 3987923508832665354, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3987923508832665354, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
@@ -12315,7 +12339,7 @@ PrefabInstance:
     - target: {fileID: 3169191590393265571, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3169191590393265571, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
@@ -16055,7 +16079,7 @@ PrefabInstance:
     - target: {fileID: 1217640470799665230, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1217640470799665230, guid: 9c662831f0f89a84985dc89b3f3e3c90,
         type: 3}

@@ -7,18 +7,7 @@ using UnityEngine.UI;
 
 public class ReadyForInputController : MonoBehaviour
 {
-    [Serializable]
-    public struct EnabledOnStates
-    {
-        public AiryUIAnimationManager ControlledGameObject;
-        public Character.CharacterState[] States;
-    }
-
-    public AiryUIAnimationManager NecromancyButton;
-    public AiryUIAnimationManager HideButton;
-
-
-    public EnabledOnStates[] ControlledObjectMappings;
+    public ActionButton[] ActionButtons;
     
     // todo: change to on state change
     void FixedUpdate()
@@ -33,22 +22,14 @@ public class ReadyForInputController : MonoBehaviour
         }
 
         if (!PlayerController.Instance.Team.Leader.Alive() || PlayerController.Instance.Team.Challenger)
-            foreach (var controlledObjectMapping in ControlledObjectMappings)
+            foreach (var controlledObjectMapping in ActionButtons)
             {
-                controlledObjectMapping.ControlledGameObject.SetActive(false);
+                controlledObjectMapping.AiryUIAnimationManager.SetActive(false);
             }
         else
-            foreach (var enabledOnStates in ControlledObjectMappings)
+            foreach (var actionButton in ActionButtons)
             {
-                if (enabledOnStates.ControlledGameObject == NecromancyButton)
-                    NecromancyButton.SetActive(enabledOnStates.States.Contains(PlayerController.Instance.Team.Leader.State)
-                        && PlayerController.Instance.Team.Leader.ClassType == Goblin.Class.Necromancer && PlayerController.Instance.Team.Leader.InArea.AnyGoblins(true));
-                else if (enabledOnStates.ControlledGameObject == HideButton )
-                    HideButton.SetActive(enabledOnStates.States.Contains(PlayerController.Instance.Team.Leader.State)
-                        && PlayerController.Instance.Team.Leader.InArea.RoadsTo.Any()
-                        &! PlayerController.Instance.Team.Leader.InArea.AnyEnemies());
-                else
-                    enabledOnStates.ControlledGameObject.SetActive(enabledOnStates.States.Contains(PlayerController.Instance.Team.Leader.State));
+                actionButton.AiryUIAnimationManager.SetActive(PlayerController.ActionIsLegal(actionButton.Action));
             }
     }
 }

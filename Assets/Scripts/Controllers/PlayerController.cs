@@ -568,13 +568,7 @@ public class PlayerController : MonoBehaviour
                 throw new ArgumentOutOfRangeException();
         }
     }
-
-    //TODO: this should be less hacky
-    public void Action(string action)
-    {
-        Action((MappableActions)Enum.Parse(typeof(MappableActions),action,true) );
-    }
-
+    
     public bool ReadyForInput()
     {
         if (!Team.Leader)
@@ -591,8 +585,19 @@ public class PlayerController : MonoBehaviour
             return true;
         }
 
-        return Instance.EnabledActionOnStates.First(e => e.Action == action).EnabledOnLeaderStates
-            .Contains(Instance.Team.Leader.State);
+        switch (action)
+        {
+            case MappableActions.RaiseDead:
+                return Instance.EnabledActionOnStates.First(e => e.Action == action).EnabledOnLeaderStates
+                           .Contains(Instance.Team.Leader.State) && Instance.Team.Leader.ClassType == Goblin.Class.Necromancer && Instance.Team.Leader.InArea.AnyGoblins(true);
+            case MappableActions.Hide:
+                return Instance.EnabledActionOnStates.First(e => e.Action == action).EnabledOnLeaderStates
+                           .Contains(Instance.Team.Leader.State) && Instance.Team.Leader.InArea.RoadsTo.Any()
+                       & !Instance.Team.Leader.InArea.AnyEnemies();
+            default:
+                return Instance.EnabledActionOnStates.First(e => e.Action == action).EnabledOnLeaderStates
+                    .Contains(Instance.Team.Leader.State);
+        }
     }
 
     //TODO: move top camera controller
