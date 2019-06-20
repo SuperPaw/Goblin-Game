@@ -420,6 +420,9 @@ public class PlayerController : MonoBehaviour
     //TODO: only from button click
     public void ClickedArea(Area a)
     {
+        if(!ActionIsLegal(MappableActions.Move))
+            Debug.LogWarning("Moving should not be allowed now. Handle here ,pawski!");
+
         var target = a.transform.position;//hit.point;
         target.y = 0;
 
@@ -544,7 +547,10 @@ public class PlayerController : MonoBehaviour
                 CharacterView.AddXp();
                 break;
             case MappableActions.Move:
-                MoveView();
+                if (showingMoveView)
+                    ZoomIn();
+                else
+                    MoveView();
                 break;
             case MappableActions.ZoomIn:
                 ZoomIn();

@@ -158,6 +158,7 @@ MonoBehaviour:
   UnseenFogColor: {r: 0, g: 0, b: 0, a: 1}
   Size: 10
   AreaIcon: {fileID: 2722214493074538252}
+  IconAnimationManager: {fileID: 1246582102874720350}
   AreaText: {fileID: 7055927740199848000}
   Visited: 0
 --- !u!1 &1919515435964972
@@ -474,14 +475,14 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   showItemOnMenuEnable: 1
   showAnimationType: 3
-  hideAnimationType: 0
+  hideAnimationType: 3
   animationFromCornerType: 0
   animationToCornerType: 0
   pivotWhileRotating: 0
   animationFromCornerStartFromType: 0
   fadeChildren: 1
-  animationShowDuration: 1.5
-  animationHideDuration: 0.5
+  animationShowDuration: 0.5
+  animationHideDuration: 1
   withDelay: 0
   showDelay: 0
   hideDelay: 0
@@ -494,6 +495,7 @@ MonoBehaviour:
   initialScale: {x: 0, y: 0, z: 0}
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPivot: {x: 0, y: 0}
+  Hidden: 0
 --- !u!114 &1246582102874720350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -798,3 +800,4 @@ MonoBehaviour:
   initialScale: {x: 0, y: 0, z: 0}
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPivot: {x: 0, y: 0}
+  Hidden: 0

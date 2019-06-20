@@ -46,6 +46,7 @@ public class Area : MonoBehaviour
     public int Size;
     
     public Image AreaIcon;
+    public AiryUIAnimationManager IconAnimationManager;
     public TextMeshProUGUI AreaText;
     
     private Sprite IconSprite;
@@ -243,7 +244,7 @@ public class Area : MonoBehaviour
 
     public void EnableAreaUI(bool scoutedArea)
     {
-        AreaIcon.transform.parent.gameObject.SetActive(true);
+        IconAnimationManager.SetActive(true);
         if (IconSprite == EnemySprite && !AnyEnemies())
             IconSprite = BasicAreaSprite;
 
@@ -253,7 +254,7 @@ public class Area : MonoBehaviour
 
     public void DisableAreaUI()
     {
-        AreaIcon.transform.parent.gameObject.SetActive(false);
+        IconAnimationManager.SetActive(false);
     }
 
 }
