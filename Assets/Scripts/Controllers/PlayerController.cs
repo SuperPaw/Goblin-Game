@@ -6,6 +6,7 @@ using System.Net;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -24,6 +25,13 @@ public class PlayerController : MonoBehaviour
     public int MouseMoveKey = 1;
     public enum MappableActions { Hide, Attack, Flee, Menu,FixCamOnLeader, Move, Camp,InvincibleMode, AddXp, ZoomIn, ZoomOut, Pause,Kill,RaiseDead } //TODO: move should contain direction maybe
     public LayerMask HitMask;
+
+    [Serializable]
+    public struct ActionOnStates
+    {
+        public MappableActions Action;
+        public List<Character.CharacterState> EnabledOnLeaderStates;
+    }
 
     [Serializable]
     public struct KeyMapping
@@ -82,9 +90,11 @@ public class PlayerController : MonoBehaviour
 
     public enum DynamicState { Idle, ChiefBattleCheer, FoundStuff, Mocking, ChallengingChief}
 
-    [Header("Shouts")]
+    [Header("Order Controls")]
     public OrderType[] Orders;
     public OrderType MoveOrder;
+
+    public List<ActionOnStates> EnabledActionOnStates;
 
     //TODO: use this
     public float OrderCooldown = 3f;
@@ -495,6 +505,13 @@ public class PlayerController : MonoBehaviour
 
     public void Action(MappableActions action)
     {
+        //TODO: check for order legality
+        if (!ActionIsLegal(action))
+        {
+            Debug.Log("Trying to call illegal aciton: "+ action);
+            return;
+        }
+
         if (Orders.Any(o => o.Order == action))
             Team.LeaderShout(Orders.First(o => o.Order == action));
 
@@ -566,12 +583,31 @@ public class PlayerController : MonoBehaviour
         return Team.Leader.Idling();
     }
 
+    public static bool ActionIsLegal(MappableActions action)
+    {
+        if (!Instance.EnabledActionOnStates.Any(e => e.Action == action))
+        {
+            Debug.Log(action + " not yet mapped to legal leader states");
+            return true;
+        }
+
+        return Instance.EnabledActionOnStates.First(e => e.Action == action).EnabledOnLeaderStates
+            .Contains(Instance.Team.Leader.State);
+    }
+
     //TODO: move top camera controller
     public void Zoom(float deltaMagnitudeDiff, bool touch)
     {
         if(!ZoomEnabled) return;
 
         if(Math.Abs(deltaMagnitudeDiff) < 0.001) return;
+
+        if (Cam.orthographicSize >= ZoomMaxBound - 0.2f && deltaMagnitudeDiff * (touch ? TouchZoomFactor : PcZoomFactor) < -0.4f)
+        {
+            if(ActionIsLegal(MappableActions.Move))
+                MoveView();
+            return;
+        }
 
         if (currentZoomLevel > ZoomLevel.AreaView) currentZoomLevel = ZoomLevel.AreaView;
 

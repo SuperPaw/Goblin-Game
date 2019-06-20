@@ -1168,6 +1168,9 @@ MonoBehaviour:
     Order: 5
     Speech: Goblins, move!
     GoblinSound: 11
+  EnabledActionOnStates:
+  - Action: 5
+    EnabledOnLeaderStates: 000000000800000004000000
   OrderCooldown: 3
   LocationReactions:
   - LocationType: 0
@@ -1292,13 +1295,12 @@ MonoBehaviour:
   GoblinViewSize: 5
   AreaViewSize: 9
   MapViewSize: 45
-  CameraSlide: 1
   ZoomMinBound: 2
   ZoomMaxBound: 10
   TouchZoomFactor: 0.025
   PcZoomFactor: 2
-  PanSpeed: 15
-  ZoomSpeed: 5
+  PanSpeed: 12
+  ZoomSpeed: 4
   FollowGoblin: {fileID: 0}
 --- !u!114 &904032341
 MonoBehaviour:
