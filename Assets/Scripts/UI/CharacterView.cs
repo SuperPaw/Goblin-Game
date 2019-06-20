@@ -77,7 +77,7 @@ public class CharacterView : MenuWindow
 
         character = c;
 
-        PlayerController.FollowGoblin = c;
+        PlayerController.Follow(c);
 
         foreach (var generatedObject in generatedObjects)
         {

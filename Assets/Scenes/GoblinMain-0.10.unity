@@ -1292,45 +1292,14 @@ MonoBehaviour:
   GoblinViewSize: 5
   AreaViewSize: 9
   MapViewSize: 45
+  CameraSlide: 1
   ZoomMinBound: 2
-  ZoomMaxBound: 9
-  ZoomSpeed: 0.025
-  PcZoomSpeed: 3
-  MoveTime: 0.75
-  MoveCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.65459317
-      value: 0.32461968
-      inSlope: 1.2592765
-      outSlope: 1.2592765
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.22681256
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  PanSpeed: 20
+  ZoomMaxBound: 10
+  TouchZoomFactor: 0.025
+  PcZoomFactor: 2
+  PanSpeed: 15
+  ZoomSpeed: 5
+  FollowGoblin: {fileID: 0}
 --- !u!114 &904032341
 MonoBehaviour:
   m_ObjectHideFlags: 0

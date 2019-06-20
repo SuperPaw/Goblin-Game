@@ -8,7 +8,7 @@ public class Monument : PointOfInterest
     public Character ZombiePrefab;
     public int Treasure = 3;
 
-    public PlayerChoice.ChoiceOption SacTreasureOption = new PlayerChoice.ChoiceOption() { Action = () => PlayerController.SacTreasure(3), Description = "Ok" };
+    public PlayerChoice.ChoiceOption SacTreasureOption = new PlayerChoice.ChoiceOption() { Action = () => PlayerTeam.Instance.SacTreasure(3), Description = "Ok" };
 
 
     public void SpawnDead(PlayerTeam team)
@@ -74,7 +74,7 @@ public class Monument : PointOfInterest
         else
         {
             var options = new List<PlayerChoice.ChoiceOption>() {
-                new PlayerChoice.ChoiceOption() { Action = () => PlayerController.StealTreasure(this), Description = "Yes" },
+                new PlayerChoice.ChoiceOption() { Action = () => PlayerTeam.Instance.StealTreasure(this), Description = "Yes" },
                 No
             };
 
@@ -88,7 +88,7 @@ public class Monument : PointOfInterest
         //TODO: maybe shuffle first
 
         var options = team.Members.Take(4).Select(g =>
-            new PlayerChoice.ChoiceOption() { Action = () => PlayerController.SacGoblin(g, this), Description = g.name + " the " + g.ClassType }).ToList();
+            new PlayerChoice.ChoiceOption() { Action = () => PlayerTeam.Instance.SacGoblin(g, this), Description = g.name + " the " + g.ClassType }).ToList();
         options.Add(No);
 
         PlayerChoice.SetupPlayerChoice(options.ToArray(),
@@ -104,7 +104,7 @@ public class Monument : PointOfInterest
 
             PlayerChoice.SetupPlayerChoice(new PlayerChoice.ChoiceOption[]
                 {
-                    new PlayerChoice.ChoiceOption() { Action = () => PlayerController.SacFood(amount), Description = "Ok" },
+                    new PlayerChoice.ChoiceOption() { Action = () => PlayerTeam.Instance.SacFood(amount), Description = "Ok" },
                     No
                 },
                 "Sacrifice " + amount.ToString("D") + " food to Big Stone?");

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,24 +101,23 @@ public class PlayerController : MonoBehaviour
     public int GoblinViewSize;
     public int AreaViewSize;
     public int MapViewSize;
-
     public float ZoomMinBound= 2;
     public float ZoomMaxBound = 50;
-    public float ZoomSpeed;
-    public float PcZoomSpeed;
-    public static Goblin FollowGoblin;
+    public float TouchZoomFactor;
+    public float PcZoomFactor;
+    public float PanSpeed = 1;
+    public float ZoomSpeed = 1;
 
+    public Goblin FollowGoblin;
+
+    private Vector3 desiredCamPos;
+    private float desiredOrtographicSize;
     
-    public float MoveTime = 1;
-    public AnimationCurve MoveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     private Vector2[] lastZoomPositions;
     private bool wasZoomingLastFrame;
-    private Vector2 lastPanPosition;
     private int panFingerId;
     
-    public float PanSpeed;
     private float touchTime;
-    private Coroutine camMoveRoutine;
 
     public class ZoomLevelChangeEvent : UnityEvent<ZoomLevel> { }
     public static ZoomLevelChangeEvent OnZoomLevelChange = new ZoomLevelChangeEvent();
@@ -149,22 +148,17 @@ public class PlayerController : MonoBehaviour
         ChangeZoomLevel(ZoomLevel.AreaView);
     }
 
-    void FixedUpdate()
-    {
-        if(!GameManager.Instance.GameStarted)
-            return;
-
-        //maybe at larger interval
-        if(FollowGoblin && camMoveRoutine == null)
-            MoveToGoblin(FollowGoblin);
-
-        if (Instance && Instance.Team)
-            Instance.UpdateFogOfWar();
-    }
-
-
     void Update()
     {
+        if (!GameManager.Instance.GameStarted)
+        {
+            return;
+        }
+
+        //maybe at larger interval
+        if(FollowGoblin)
+            MoveToFollowGoblin();
+
         //TODO: divide these into methods
         if (Input.touchSupported)
         {
@@ -174,7 +168,15 @@ public class PlayerController : MonoBehaviour
         {
             HandleMouseKeys();
         }
+        
+        Cam.transform.position = Vector3.Lerp(Cam.transform.position, desiredCamPos, PanSpeed * Time.deltaTime);
+        Cam.orthographicSize = Mathf.Lerp(Cam.orthographicSize, desiredOrtographicSize, ZoomSpeed*Time.deltaTime);
+
+        if (Instance && Instance.Team)
+            Instance.UpdateFogOfWar();
+        
     }
+    
 
     void HandleMouseKeys()
     {
@@ -215,7 +217,7 @@ public class PlayerController : MonoBehaviour
                 {
                     touchTime = Time.time;
 
-                    lastPanPosition = touch.position;
+                    //lastPanPosition = touch.position;
                     panFingerId = touch.fingerId;
                     _mouseHeld = false;
                 }
@@ -281,14 +283,13 @@ public class PlayerController : MonoBehaviour
         {
             case ZoomLevel.GoblinView:
                 if (!FollowGoblin)
-                    FollowGoblin = Team.Leader;
-                camMoveRoutine = StartCoroutine(MoveCamera(FollowGoblin.transform, GoblinViewSize));
+                    SetFollowGoblin(Team.Leader);
                 break;
             case ZoomLevel.AreaView:
-                camMoveRoutine = StartCoroutine(MoveCamera(Team.Leader.InArea?.transform, AreaViewSize));
+                MoveCamera(Team.Leader.InArea?.transform, AreaViewSize);
                 break;
             case ZoomLevel.MapView:
-                camMoveRoutine = StartCoroutine(MoveCamera(Team.Leader.InArea.transform, MapViewSize));
+                MoveCamera(Team.Leader.InArea?.transform, MapViewSize);
                 break;
             default:
                 return;
@@ -298,8 +299,10 @@ public class PlayerController : MonoBehaviour
 
     private bool IsPointerOverUIObject()
     {
-        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current)
+        {
+            position = new Vector2(Input.mousePosition.x, Input.mousePosition.y)
+        };
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
         return results.Count > 0;
@@ -397,7 +400,7 @@ public class PlayerController : MonoBehaviour
 
         //TODO: the z axis does not move correctly due to the rotation of the camera
 
-        Cam.transform.position += moveDelta;
+        desiredCamPos += moveDelta;
 
         FollowGoblin = null;
         
@@ -426,7 +429,7 @@ public class PlayerController : MonoBehaviour
             Team.Move(a);
 
             OnZoomLevelChange.Invoke(ZoomLevel.AreaView);
-            FollowGoblin = Team.Leader;
+            SetFollowGoblin(Team.Leader);
         }
     }
 
@@ -512,7 +515,7 @@ public class PlayerController : MonoBehaviour
             case MappableActions.Menu:
                 break;
             case MappableActions.FixCamOnLeader:
-                FollowGoblin = Team.Leader;
+                SetFollowGoblin(Team.Leader);
                 break;
             case MappableActions.Camp:
                 Team.Camp();
@@ -555,102 +558,6 @@ public class PlayerController : MonoBehaviour
         Action((MappableActions)Enum.Parse(typeof(MappableActions),action,true) );
     }
 
-    //TODO: seperate team stuff and interface into two classes
-    internal static void BuyFood(int amount, int price)
-    {
-        Instance.Team.OnFoodFound.Invoke(amount);
-        Instance.Team.OnTreasureFound.Invoke(-price);
-
-        //TODO: play caching
-    }
-
-    internal static void SacTreasure(int amount)
-    {
-        Instance.Team.OnTreasureFound.Invoke(-amount);
-
-        //TODO: effect
-    }
-
-    internal static void SacFood(int v)
-    {
-        Instance.Team.OnFoodFound.Invoke(-v);
-
-        //TODO: effect
-    }
-
-    internal static void StealTreasure(Monument stone)
-    {
-        Instance.Team.OnTreasureFound.Invoke(stone.Treasure);
-        stone.Treasure = 0;
-
-        SoundController.PlayStinger(SoundBank.Stinger.Sneaking);
-        
-        //if (Random.value < 0.6f)
-            stone.SpawnDead(Instance.Team);
-    }
-
-
-    internal static void SellFood(int amount, int price)
-    {
-        Instance.Team.OnFoodFound.Invoke(-price); 
-        Instance.Team.OnTreasureFound.Invoke(amount);
-
-        //TODO: play caching
-    }
-
-    internal static void SellGoblin(Goblin goblin, int price, GoblinWarrens newVillage)
-    {
-        Instance.Team.Members.Remove(goblin);
-        Instance.Team.OnTreasureFound.Invoke(price);
-
-        goblin.Team = null;
-
-        GoblinUIList.UpdateGoblinList();
-
-        goblin.transform.parent = newVillage.transform;
-
-        goblin.tag = "NPC";
-
-        newVillage.Members.Add(goblin);
-    }
-    internal static void SacGoblin(Goblin goblin, Monument sacrificeStone)
-    {
-        Instance.Team.Members.Remove(goblin);
-        
-        SoundController.PlayStinger(SoundBank.Stinger.Sacrifice);
-
-        LegacySystem.OnConditionEvent.Invoke(LegacySystem.UnlockCondition.GoblinSacrifice);
-
-        goblin.Speak(SoundBank.GoblinSound.Death);
-
-        goblin.Team = null;
-
-        goblin.transform.parent = sacrificeStone.transform;
-
-        goblin.tag = "Enemy";
-
-        //goblin.CharacterRace = Character.Race.Undead;
-
-        goblin.Health = 0;
-        
-    }
-
-    internal static void BuyGoblin(Goblin goblin, int price, GoblinWarrens oldVillage)
-    {
-        Instance.Team.OnTreasureFound.Invoke(-price); 
-
-        goblin.Team = Instance.Team;
-        
-        //TODO: use method for these
-        Instance.Team.AddMember(goblin);
-        goblin.transform.parent = Instance.Team.transform;
-        goblin.tag = "Player";
-
-        GoblinUIList.UpdateGoblinList();
-
-        oldVillage.Members.Remove(goblin);
-    }
-
     public bool ReadyForInput()
     {
         if (!Team.Leader)
@@ -668,54 +575,42 @@ public class PlayerController : MonoBehaviour
 
         if (currentZoomLevel > ZoomLevel.AreaView) currentZoomLevel = ZoomLevel.AreaView;
 
-        Cam.orthographicSize -= deltaMagnitudeDiff * (touch ?  ZoomSpeed: PcZoomSpeed);
+        desiredOrtographicSize -= deltaMagnitudeDiff * (touch ?  TouchZoomFactor: PcZoomFactor);
         // set min and max value of Clamp function upon your requirement
-        Cam.orthographicSize = Mathf.Clamp(Cam.orthographicSize, ZoomMinBound, ZoomMaxBound);
+
+        desiredOrtographicSize = Mathf.Clamp(desiredOrtographicSize, ZoomMinBound, ZoomMaxBound);
     }
 
-
-    private void MoveToGoblin(Goblin g)
+    public static void Follow(Goblin g)
     {
-        currentZoomLevel = ZoomLevel.GoblinView;
-        camMoveRoutine = StartCoroutine(MoveCamera(g.transform,GoblinViewSize));
+        Instance.SetFollowGoblin(g);
     }
 
-    private IEnumerator MoveCamera(Transform loc, int endSize)
+    public void SetFollowGoblin(Goblin g)
+    {
+        FollowGoblin = g;
+
+        currentZoomLevel = ZoomLevel.GoblinView;
+        desiredOrtographicSize = GoblinViewSize;
+    }
+
+
+    private void MoveToFollowGoblin()
+    {
+        var offset = 51f;
+
+        var xz = FollowGoblin.transform.position;
+        desiredCamPos = new Vector3(xz.x, Cam.transform.position.y, xz.z - offset);
+    }
+
+    private void MoveCamera(Transform loc, int orthographicSize)
     {
         //currentLocation = loc;
         var offset = 49;
-
-        var start = Cam.transform.position;
-        var startSize = Cam.orthographicSize;
-        if (GameManager.Instance.GamePaused)
-        {
-            var xz = loc.position;
-            Cam.transform.position = new Vector3(xz.x, Cam.transform.position.y, xz.z - offset);
-            Cam.orthographicSize = endSize;
-        }
-        else
-        {
-            for (var t = 0f; t < MoveTime; t += Time.deltaTime)
-            {
-                yield return null;
-
-                var xz = loc.position;
-                var end = new Vector3(xz.x, Cam.transform.position.y, xz.z - offset);
-                Cam.transform.position = Vector3.LerpUnclamped(start, end, MoveCurve.Evaluate(t / MoveTime));
-
-                Cam.orthographicSize = Mathf.LerpUnclamped(startSize, endSize, MoveCurve.Evaluate(t / MoveTime));
-            }
-        }
-
-        while (FollowGoblin)
-        {
-            var xz = FollowGoblin.transform.position;
-            Cam.transform.position = new Vector3(xz.x,Cam.transform.position.y,xz.z-offset);
-
-            yield return null;
-        }
-
-        camMoveRoutine = null;
+        
+        var xz = loc.position;
+        desiredCamPos = new Vector3(xz.x, Cam.transform.position.y, xz.z - offset);
+        desiredOrtographicSize = orthographicSize;
     }
 
     private void MoveView()

@@ -6,7 +6,7 @@ using UnityEngine;
 public class GoblinWarrens : PointOfInterest
 {
     public List<Goblin> Members = new List<Goblin>();
-    public PlayerChoice.ChoiceOption BuyFood = new PlayerChoice.ChoiceOption() { Action = () => PlayerController.BuyFood(5, 2), Description = "Ok" };
+    public PlayerChoice.ChoiceOption BuyFood = new PlayerChoice.ChoiceOption() { Action = () => PlayerTeam.Instance.BuyFood(5, 2), Description = "Ok" };
 
     public override void SetupMenuOptions()
     {
@@ -26,7 +26,7 @@ public class GoblinWarrens : PointOfInterest
         if (team.Treasure >= 5)
         {
             var options = Members.Take(4).Select(g =>
-                new PlayerChoice.ChoiceOption() { Action = () => PlayerController.BuyGoblin(g, 5, this), Description = g.name + " the " + g.ClassType }).ToList();
+                new PlayerChoice.ChoiceOption() { Action = () => PlayerTeam.Instance.BuyGoblin(g, 5, this), Description = g.name + " the " + g.ClassType }).ToList();
             options.Add(No);
 
             PlayerChoice.SetupPlayerChoice(options.ToArray(),
@@ -45,7 +45,7 @@ public class GoblinWarrens : PointOfInterest
         //TODO: maybe shuffle first
 
         var options = team.Members.Where(g => g != team.Leader).Take(4).Select(g =>
-            new PlayerChoice.ChoiceOption() { Action = () => PlayerController.SellGoblin(g, 2, this), Description = g.name + " the " + g.ClassType }).ToList();
+            new PlayerChoice.ChoiceOption() { Action = () => PlayerTeam.Instance.SellGoblin(g, 2, this), Description = g.name + " the " + g.ClassType }).ToList();
         options.Add(No);
 
         PlayerChoice.SetupPlayerChoice(options.ToArray(),

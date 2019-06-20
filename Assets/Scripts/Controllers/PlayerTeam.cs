@@ -9,6 +9,8 @@ using Random = UnityEngine.Random;
 
 public class PlayerTeam : MonoBehaviour
 {
+    public static PlayerTeam Instance;
+
     //Make private to control add and remove events
     public List<Goblin> Members;
     private Goblin _leader;
@@ -82,11 +84,15 @@ public class PlayerTeam : MonoBehaviour
     [Header("Necromancy")] public Character ZombiePrefab;
     public Material NecromancerSkin;
 
-
+    void Awake()
+    {
+        if (!Instance) Instance = this;
+    }
 
     // Use this for initialization
     public void Initialize (List<Goblin> members)
     {
+
         Treasure = 0;
         Food = 10;
         Members = members;
@@ -494,7 +500,103 @@ public class PlayerTeam : MonoBehaviour
     }
 
 
-    
+    //TODO: seperate team stuff and interface into two classes
+    internal void BuyFood(int amount, int price)
+    {
+        OnFoodFound.Invoke(amount);
+        OnTreasureFound.Invoke(-price);
+
+        //TODO: play caching
+    }
+
+    internal void SacTreasure(int amount)
+    {
+        OnTreasureFound.Invoke(-amount);
+
+        //TODO: effect
+    }
+
+    internal void SacFood(int v)
+    {
+        OnFoodFound.Invoke(-v);
+
+        //TODO: effect
+    }
+
+    internal void StealTreasure(Monument stone)
+    {
+        OnTreasureFound.Invoke(stone.Treasure);
+        stone.Treasure = 0;
+
+        SoundController.PlayStinger(SoundBank.Stinger.Sneaking);
+
+        //if (Random.value < 0.6f)
+        stone.SpawnDead(this);
+    }
+
+
+    internal void SellFood(int amount, int price)
+    {
+        OnFoodFound.Invoke(-price);
+        OnTreasureFound.Invoke(amount);
+
+        //TODO: play caching
+    }
+
+    internal void SellGoblin(Goblin goblin, int price, GoblinWarrens newVillage)
+    {
+        Members.Remove(goblin);
+        OnTreasureFound.Invoke(price);
+
+        goblin.Team = null;
+
+        GoblinUIList.UpdateGoblinList();
+
+        goblin.transform.parent = newVillage.transform;
+
+        goblin.tag = "NPC";
+
+        newVillage.Members.Add(goblin);
+    }
+    internal void SacGoblin(Goblin goblin, Monument sacrificeStone)
+    {
+        Members.Remove(goblin);
+
+        SoundController.PlayStinger(SoundBank.Stinger.Sacrifice);
+
+        LegacySystem.OnConditionEvent.Invoke(LegacySystem.UnlockCondition.GoblinSacrifice);
+
+        goblin.Speak(SoundBank.GoblinSound.Death);
+
+        goblin.Team = null;
+
+        goblin.transform.parent = sacrificeStone.transform;
+
+        goblin.tag = "Enemy";
+
+        //goblin.CharacterRace = Character.Race.Undead;
+
+        goblin.Health = 0;
+
+    }
+
+    internal void BuyGoblin(Goblin goblin, int price, GoblinWarrens oldVillage)
+    {
+        OnTreasureFound.Invoke(-price);
+
+        goblin.Team = this;
+
+        //TODO: use method for these
+        AddMember(goblin);
+        goblin.transform.parent = transform;
+        goblin.tag = "Player";
+
+        GoblinUIList.UpdateGoblinList();
+
+        oldVillage.Members.Remove(goblin);
+    }
+
+
     internal void AddXp(int v)
     {
         foreach (var g in Members)
