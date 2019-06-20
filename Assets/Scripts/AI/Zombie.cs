@@ -121,11 +121,7 @@ public class Zombie : Character
                 if (Vector3.Distance(transform.position, Target) < 3f)
                 {
                     //Debug.Log(name +" arrived at target");
-                    State = CharacterState.Idling;
-
-                    actionInProgress = false;
-
-                    break;
+                    ChangeState(CharacterState.Idling);
                 }
                 break;
             case CharacterState.Dead:

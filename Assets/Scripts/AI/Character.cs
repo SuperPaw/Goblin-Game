@@ -246,10 +246,9 @@ public abstract class Character : MonoBehaviour
             if (value == _morale) return;
             _morale = value;
             //Debug.Log(gameObject.name + " lost " + value + " moral");
-            if (_morale <= 0)
+            if (_morale <= 0 &! Fleeing())
             {
-                Debug.Log(name+" fleeing now!");
-                actionInProgress = false;
+                //Debug.Log(name+" fleeing now!");
                 ChangeState(CharacterState.Fleeing,true);
             }
             else if(Fleeing())
@@ -512,18 +511,29 @@ public abstract class Character : MonoBehaviour
 
     private IEnumerator StateChangingRoutine(CharacterState newState, float wait)
     {
+        var fromState = State;
+
         yield return new WaitForSeconds(wait);
+
+        if (fromState != State)
+        {
+            //Debug.Log(name + " no longer "+ fromState + "; Now: "+ State + "; Not " + newState);
+            yield break;
+        }
 
         //TODO: maybe sounds on specific states
         //if (Voice&& !Voice.isPlaying)
         //    Voice.PlayOneShot(SoundBank.GetSound(SoundBank.GoblinSound.Grunt));
 
         if (State == newState)
-            yield break;
-
-        if (State == CharacterState.Fleeing && newState == CharacterState.Attacking)
         {
-            Debug.Log(name + " not able to attack, Fleeing!");
+            //Debug.Log(name + " is already "+ newState);
+            yield break;
+        }
+
+        if (Morale <= 0 && newState != CharacterState.Fleeing)
+        {
+            //Debug.Log(name + " not able to change state to " + newState + " Fleeing!");
             yield break;
         }
 
@@ -793,9 +803,6 @@ public abstract class Character : MonoBehaviour
         switch (State)
         {
             case CharacterState.Idling:
-                //reset morale
-                Morale = COU.GetStatMax()*2;
-
                 if (actionInProgress)
                 {
                     if (navMeshAgent.remainingDistance < 0.02f)
@@ -914,20 +921,18 @@ public abstract class Character : MonoBehaviour
                 if (Vector3.Distance(transform.position, Target) < 3f)
                 {
                     //Debug.Log(name +" arrived at target");
-                    State = CharacterState.Idling;
-                    
-                    actionInProgress = false;
-                    
-                    break;
+                    ChangeState(CharacterState.Idling);
                 }
 
                 break;
             case CharacterState.Fleeing:
                 (this as Goblin)?.Speak(SoundBank.GoblinSound.PanicScream);
                 
-                if (fleeingToArea == InArea && navMeshAgent.remainingDistance < 0.1f )
+                if (fleeingToArea == InArea && navMeshAgent.remainingDistance < 1f )
                 {
-                    actionInProgress = false;
+                    //Debug.Log(name + "done fleeing");
+                    //reset morale
+                    Morale = COU.GetStatMax() * 2;
                     ChangeState(CharacterState.Idling,true);
                 }
                 else if (!actionInProgress)
@@ -936,6 +941,7 @@ public abstract class Character : MonoBehaviour
                         : InArea.GetClosestNeighbour(transform.position,StickToRoad,InArea.ContainsRoads);
                     navMeshAgent.SetDestination(fleeingToArea.GetRandomPosInArea());
 
+                    //Debug.Log(name + " fleeing to " +fleeingToArea);
                     TravellingToArea = fleeingToArea;
                     
                     actionInProgress = true;

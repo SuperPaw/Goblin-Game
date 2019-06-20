@@ -1309,8 +1309,8 @@ MonoBehaviour:
   ZoomMaxBound: 10
   TouchZoomFactor: 0.025
   PcZoomFactor: 2
-  PanSpeed: 12
-  ZoomSpeed: 4
+  PanSpeed: 10
+  ZoomSpeed: 3
   FollowGoblin: {fileID: 0}
 --- !u!114 &904032341
 MonoBehaviour:

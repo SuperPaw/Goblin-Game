@@ -138,8 +138,11 @@ public class Area : MonoBehaviour
         }
 
         c.IrritationMeter = 0;
-        if(c.Fleeing() || c.Travelling())
+        if (c.Fleeing() || c.Travelling())
+        {
+            c.Morale = c.COU.GetStatMax() * 2;
             c.ChangeState(Character.CharacterState.Idling);
+        }
 
         c.HolderGameObject.SetActive(c.Team || Visible());
 
@@ -193,9 +196,6 @@ public class Area : MonoBehaviour
 
     internal Area GetClosestNeighbour(Vector3 position, bool useRoads = false, bool ignoreRoad = false)
     {
-        if(useRoads && ignoreRoad)
-            Debug.LogError("Ignoring AND using roads!!!");
-
         Area closest = null;
         float distance = Mathf.Infinity;
 
