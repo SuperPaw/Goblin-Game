@@ -1860,8 +1860,8 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   showItemOnMenuEnable: 1
-  showAnimationType: 1
-  hideAnimationType: 1
+  showAnimationType: 0
+  hideAnimationType: 0
   animationFromCornerType: 0
   animationToCornerType: 0
   pivotWhileRotating: 0
@@ -2956,7 +2956,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   showItemOnMenuEnable: 1
   showAnimationType: 1
-  hideAnimationType: 1
+  hideAnimationType: 0
   animationFromCornerType: 0
   animationToCornerType: 0
   pivotWhileRotating: 0
@@ -3616,7 +3616,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   showItemOnMenuEnable: 1
   showAnimationType: 1
-  hideAnimationType: 1
+  hideAnimationType: 0
   animationFromCornerType: 0
   animationToCornerType: 0
   pivotWhileRotating: 0
@@ -9965,7 +9965,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   showItemOnMenuEnable: 1
   showAnimationType: 1
-  hideAnimationType: 1
+  hideAnimationType: 0
   animationFromCornerType: 0
   animationToCornerType: 0
   pivotWhileRotating: 0
@@ -11592,7 +11592,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   showItemOnMenuEnable: 1
   showAnimationType: 1
-  hideAnimationType: 1
+  hideAnimationType: 0
   animationFromCornerType: 0
   animationToCornerType: 0
   pivotWhileRotating: 0
