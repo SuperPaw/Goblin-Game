@@ -25,6 +25,9 @@ public class AiryUIAnimationManager : MonoBehaviour
     {
         if (showMenuOnEnable && elementsUpdated)
         {
+            //if(DynamicChildrenCount)
+            UpdateElementsInChildren();
+
             ShowMenu();
         }
     }
@@ -60,6 +63,7 @@ public class AiryUIAnimationManager : MonoBehaviour
     {
         foreach (var element in childrenElements)
         {
+            if(!element || !element.isActiveAndEnabled) continue;
             element.HideElement();
             element.OnHideComplete.AddListener(() =>
                 Active = false);

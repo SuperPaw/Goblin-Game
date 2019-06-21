@@ -169,16 +169,16 @@ public class AiryUIAnimatedElement : MonoBehaviour
         #endregion
 
         if (withDelay)
-            yield return (new WaitForSeconds(showDelay));
+            yield return (new WaitForSecondsRealtime(showDelay));
 
         // Starting animating.
         rectTransform.position = startPos;
 
-        float startTime = Time.time;
+        float startTime = Time.unscaledTime;
 
-        while (Time.time <= startTime + animationShowDuration)
+        while (Time.unscaledTime <= startTime + animationShowDuration)
         {
-            float t = (Time.time - startTime) / animationShowDuration;
+            float t = (Time.unscaledTime - startTime) / animationShowDuration;
 
             // Here we Lerp the position and the scale as well.
             rectTransform.position = Vector3.Lerp(startPos, targetPosition, t);
@@ -222,20 +222,20 @@ public class AiryUIAnimatedElement : MonoBehaviour
         #endregion
 
         if (withDelay)
-            yield return (new WaitForSeconds(showDelay));
+            yield return (new WaitForSecondsRealtime(showDelay));
 
         ResetPosition();
         ResetScale(ResetOptions.One);
         ResetColor(ResetOptions.One);
 
         // Starting animating.
-        float startTime = Time.time;
+        float startTime = Time.unscaledTime;
 
         rectTransform.position = startPos;
 
-        while (Time.time <= startTime + animationShowDuration)
+        while (Time.unscaledTime <= startTime + animationShowDuration)
         {
-            float t = (Time.time - startTime) / animationShowDuration;
+            float t = (Time.unscaledTime - startTime) / animationShowDuration;
 
             // Here we Lerp the position and the scale as well.
             rectTransform.position = Vector3.Lerp(startPos, targetPosition, t);
@@ -260,13 +260,13 @@ public class AiryUIAnimatedElement : MonoBehaviour
         ResetColor(ResetOptions.One);
 
         if (withDelay)
-            yield return (new WaitForSeconds(showDelay));
+            yield return (new WaitForSecondsRealtime(showDelay));
 
-        float startTime = Time.time;
+        float startTime = Time.unscaledTime;
 
-        while (Time.time <= startTime + animationShowDuration)
+        while (Time.unscaledTime <= startTime + animationShowDuration)
         {
-            float t = (Time.time - startTime) / animationShowDuration;
+            float t = (Time.unscaledTime - startTime) / animationShowDuration;
 
             rectTransform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one + new Vector3(0.1f, 0.1f, 0.1f) * elasticityPower, t);
 
@@ -275,10 +275,10 @@ public class AiryUIAnimatedElement : MonoBehaviour
 
         rectTransform.localScale = Vector3.one + new Vector3(0.1f, 0.1f, 0.1f) * elasticityPower;
 
-        startTime = Time.time;
-        while (Time.time <= startTime + animationShowDuration / 5)
+        startTime = Time.unscaledTime;
+        while (Time.unscaledTime <= startTime + animationShowDuration / 5)
         {
-            float t = (Time.time - startTime) / (animationShowDuration / 5);
+            float t = (Time.unscaledTime - startTime) / (animationShowDuration / 5);
             rectTransform.localScale = Vector3.Lerp(Vector3.one + new Vector3(0.1f, 0.1f, 0.1f) * elasticityPower, Vector3.one, t);
             yield return (null);
         }
@@ -299,14 +299,14 @@ public class AiryUIAnimatedElement : MonoBehaviour
         ResetColor(ResetOptions.One);
 
         if (withDelay)
-            yield return (new WaitForSeconds(showDelay));
+            yield return (new WaitForSecondsRealtime(showDelay));
 
         Vector3 startPosition = rectTransform.position;
-        float startTime = Time.time;
+        float startTime = Time.unscaledTime;
 
-        while (Time.time <= startTime + animationShowDuration)
+        while (Time.unscaledTime <= startTime + animationShowDuration)
         {
-            float t = (Time.time - startTime) / animationShowDuration;
+            float t = (Time.unscaledTime - startTime) / animationShowDuration;
 
             rectTransform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, t);
 
@@ -344,14 +344,14 @@ public class AiryUIAnimatedElement : MonoBehaviour
         #endregion
 
         if (withDelay)
-            yield return (new WaitForSeconds(showDelay));
+            yield return (new WaitForSecondsRealtime(showDelay));
 
         if (fadeChildren)
         {
-            float startTime = Time.time;
-            while (Time.time < startTime + animationShowDuration)
+            float startTime = Time.unscaledTime;
+            while (Time.unscaledTime < startTime + animationShowDuration)
             {
-                float t = (Time.time - startTime) / animationShowDuration;
+                float t = (Time.unscaledTime - startTime) / animationShowDuration;
                 for (int i = 0; i < graphics.Length; i++)
                 {
                     graphics[i].color = Color.Lerp(startColors[i], endColors[i], t);
@@ -366,10 +366,10 @@ public class AiryUIAnimatedElement : MonoBehaviour
         }
         else
         {
-            float startTime = Time.time;
-            while (Time.time < startTime + animationShowDuration)
+            float startTime = Time.unscaledTime;
+            while (Time.unscaledTime < startTime + animationShowDuration)
             {
-                float t = (Time.time - startTime) / animationShowDuration;
+                float t = (Time.unscaledTime - startTime) / animationShowDuration;
                 graphics[0].color = Color.Lerp(startColors[0], endColors[0], t);
 
                 yield return (null);
@@ -394,12 +394,12 @@ public class AiryUIAnimatedElement : MonoBehaviour
         ResetRotation(ResetOptions.One, true);
 
         if (withDelay)
-            yield return (new WaitForSeconds(showDelay));
+            yield return (new WaitForSecondsRealtime(showDelay));
 
-        float startTime = Time.time;
-        while (Time.time <= startTime + animationShowDuration)
+        float startTime = Time.unscaledTime;
+        while (Time.unscaledTime <= startTime + animationShowDuration)
         {
-            float t = (Time.time - startTime) / animationShowDuration;
+            float t = (Time.unscaledTime - startTime) / animationShowDuration;
 
             rectTransform.rotation = Quaternion.Euler(Vector3.Lerp(rotateFrom, Quaternion.ToEulerAngles(initialRotation), t));
 
@@ -445,15 +445,15 @@ public class AiryUIAnimatedElement : MonoBehaviour
         #endregion
 
         if (withDelay)
-            yield return (new WaitForSeconds(hideDelay));
+            yield return (new WaitForSecondsRealtime(hideDelay));
 
-        float startTime = Time.time;
+        float startTime = Time.unscaledTime;
 
         if (fadeChildren)
         {
-            while (Time.time < startTime + animationHideDuration)
+            while (Time.unscaledTime < startTime + animationHideDuration)
             {
-                float t = (Time.time - startTime) / animationHideDuration;
+                float t = (Time.unscaledTime - startTime) / animationHideDuration;
                 for (int i = 0; i < graphics.Length; i++)
                 {
                     graphics[i].color = Color.Lerp(startColors[i], endColors[i], t);
@@ -468,9 +468,9 @@ public class AiryUIAnimatedElement : MonoBehaviour
         }
         else
         {
-            while (Time.time < startTime + animationHideDuration)
+            while (Time.unscaledTime < startTime + animationHideDuration)
             {
-                float t = (Time.time - startTime) / animationHideDuration;
+                float t = (Time.unscaledTime - startTime) / animationHideDuration;
                 graphics[0].color = Color.Lerp(startColors[0], endColors[0], t);
 
                 yield return (null);
@@ -492,13 +492,13 @@ public class AiryUIAnimatedElement : MonoBehaviour
         rectTransform.localScale = Vector3.one;
 
         if (withDelay)
-            yield return (new WaitForSeconds(hideDelay));
+            yield return (new WaitForSecondsRealtime(hideDelay));
 
-        float startTime = Time.time;
+        float startTime = Time.unscaledTime;
 
-        while (Time.time <= startTime + animationHideDuration)
+        while (Time.unscaledTime <= startTime + animationHideDuration)
         {
-            float t = (Time.time - startTime) / animationHideDuration;
+            float t = (Time.unscaledTime - startTime) / animationHideDuration;
 
             rectTransform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t);
 
@@ -521,26 +521,26 @@ public class AiryUIAnimatedElement : MonoBehaviour
         ResetColor(ResetOptions.One);
 
         if (withDelay)
-            yield return (new WaitForSeconds(hideDelay));
+            yield return (new WaitForSecondsRealtime(hideDelay));
 
         rectTransform.localScale = Vector3.one;
 
-        float startTime = Time.time;
+        float startTime = Time.unscaledTime;
 
-        while (Time.time <= startTime + animationHideDuration / 5)
+        while (Time.unscaledTime <= startTime + animationHideDuration / 5)
         {
-            float t = (Time.time - startTime) / (animationHideDuration / 5);
+            float t = (Time.unscaledTime - startTime) / (animationHideDuration / 5);
 
             rectTransform.localScale = Vector3.Lerp(Vector3.one, Vector3.one + new Vector3(0.1f, 0.1f, 0.1f) * elasticityPower, t);
 
             yield return (null);
         }
 
-        startTime = Time.time;
+        startTime = Time.unscaledTime;
 
-        while (Time.time <= startTime + animationHideDuration)
+        while (Time.unscaledTime <= startTime + animationHideDuration)
         {
-            float t = (Time.time - startTime) / (animationHideDuration);
+            float t = (Time.unscaledTime - startTime) / (animationHideDuration);
 
             rectTransform.localScale = Vector3.Lerp(Vector3.one + new Vector3(0.1f, 0.1f, 0.1f) * elasticityPower, Vector3.zero, t);
 
@@ -582,13 +582,13 @@ public class AiryUIAnimatedElement : MonoBehaviour
         rectTransform.position = startPos;
 
         if (withDelay)
-            yield return (new WaitForSeconds(hideDelay));
+            yield return (new WaitForSecondsRealtime(hideDelay));
 
-        float startTime = Time.time;
+        float startTime = Time.unscaledTime;
 
-        while (Time.time <= startTime + animationHideDuration)
+        while (Time.unscaledTime <= startTime + animationHideDuration)
         {
-            float t = (Time.time - startTime) / animationHideDuration;
+            float t = (Time.unscaledTime - startTime) / animationHideDuration;
             rectTransform.position = Vector3.Lerp(startPos, targetPosition, t);
             rectTransform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t);
 
@@ -622,13 +622,13 @@ public class AiryUIAnimatedElement : MonoBehaviour
         rectTransform.position = startPos;
 
         if (withDelay)
-            yield return (new WaitForSeconds(hideDelay));
+            yield return (new WaitForSecondsRealtime(hideDelay));
 
-        float startTime = Time.time;
+        float startTime = Time.unscaledTime;
 
-        while (Time.time <= startTime + animationHideDuration)
+        while (Time.unscaledTime <= startTime + animationHideDuration)
         {
-            float t = (Time.time - startTime) / animationHideDuration;
+            float t = (Time.unscaledTime - startTime) / animationHideDuration;
             rectTransform.position = Vector3.Lerp(startPos, targetPosition, t);
 
             yield return (null);
@@ -652,12 +652,12 @@ public class AiryUIAnimatedElement : MonoBehaviour
         ResetRotation(ResetOptions.Zero, true);
 
         if (withDelay)
-            yield return (new WaitForSeconds(hideDelay));
+            yield return (new WaitForSecondsRealtime(hideDelay));
 
-        float startTime = Time.time;
-        while (Time.time < startTime + animationHideDuration)
+        float startTime = Time.unscaledTime;
+        while (Time.unscaledTime < startTime + animationHideDuration)
         {
-            float t = (Time.time - startTime) / animationHideDuration;
+            float t = (Time.unscaledTime - startTime) / animationHideDuration;
 
             rectTransform.rotation = Quaternion.Euler(Vector3.Lerp(Quaternion.ToEulerAngles(initialRotation), rotateTo, t));
 

@@ -47,7 +47,7 @@ public class PopUpText : MonoBehaviour
         comp.gameObject.SetActive(true);
         comp.ShowElement();
         
-        yield return new WaitForSeconds(ShowTime);
+        yield return new WaitForSecondsRealtime(ShowTime);
 
         comp.HideElement();
 

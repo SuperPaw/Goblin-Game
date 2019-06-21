@@ -179,8 +179,8 @@ public class PlayerController : MonoBehaviour
             HandleMouseKeys();
         }
         
-        Cam.transform.position = Vector3.Lerp(Cam.transform.position, desiredCamPos, PanSpeed * Time.deltaTime);
-        Cam.orthographicSize = Mathf.Lerp(Cam.orthographicSize, desiredOrtographicSize, ZoomSpeed*Time.deltaTime);
+        Cam.transform.position = Vector3.Lerp(Cam.transform.position, desiredCamPos, PanSpeed * Time.unscaledDeltaTime);
+        Cam.orthographicSize = Mathf.Lerp(Cam.orthographicSize, desiredOrtographicSize, ZoomSpeed*Time.unscaledDeltaTime);
 
         if (Instance && Instance.Team)
             Instance.UpdateFogOfWar();
@@ -411,6 +411,8 @@ public class PlayerController : MonoBehaviour
         //TODO: the z axis does not move correctly due to the rotation of the camera
 
         desiredCamPos += moveDelta;
+        //Outcomment to enable camera wiggle!
+        Cam.transform.position = desiredCamPos;
 
         FollowGoblin = null;
         

@@ -34,8 +34,6 @@ public class LevelUpView : MenuWindow
     public void SetupLevelScreen(Goblin character)
     {
         if(!character) return;
-
-        Open();
         
         ConfirmButton.interactable = false;
         
@@ -93,10 +91,9 @@ public class LevelUpView : MenuWindow
         }
         levelUpChoiceEntry.gameObject.SetActive(false);
 
+        Open();
 
         //ViewHolder.SetActive(true);
-
-
     }
 
     public void SelectChoice(LevelUpChoiceEntry c)
