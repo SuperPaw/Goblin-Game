@@ -44,8 +44,8 @@ NavMeshObstacle:
   m_GameObject: {fileID: 6920746842318355173}
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 5, y: 1, z: 5}
+  m_Shape: 1
+  m_Extents: {x: 5, y: 3, z: 5}
   m_MoveThreshold: 1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -62,7 +62,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 9, y: 6, z: 8}
+  m_Size: {x: 10, y: 6, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4214430656408830761
 MonoBehaviour:
@@ -82,7 +82,7 @@ MonoBehaviour:
   MonsterPrefab: {fileID: 0}
   InArea: {fileID: 0}
   HasBeenAttacked: 0
-  IconSprite: {fileID: 21300000, guid: 1102d1c69eaca4a41b86260c4c6fa22a, type: 3}
+  IconSprite: {fileID: 21300000, guid: 3a85dd4af1c2e534abdd284076d917c8, type: 3}
   PoiOptionController: {fileID: 0}
   PoiType: 4
   Name: Fort
@@ -115,13 +115,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8503355671099633675}
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 3, z: -2}
-  m_LocalScale: {x: 4, y: 4, z: 6}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.4, z: 0}
   m_Children: []
   m_Father: {fileID: 4081050876500789283}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &3393623537601953334
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -159,7 +159,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1102d1c69eaca4a41b86260c4c6fa22a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3a85dd4af1c2e534abdd284076d917c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

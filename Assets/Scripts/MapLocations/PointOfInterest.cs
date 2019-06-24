@@ -21,7 +21,7 @@ public abstract class PointOfInterest : MonoBehaviour
 
     public Poi PoiType;
 
-    public enum Poi { BigStone,Cave,Warrens,HumanFarm,HumanFort,Withchut,
+    public enum Poi { BigStone,Cave,Warrens,HumanFarm,HumanFort,Withchut,SlaveTrader,GoblinMerchant,Lake,ElvenTemple,
         Count }
 
     void Awake()

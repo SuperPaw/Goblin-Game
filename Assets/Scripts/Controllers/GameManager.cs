@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     }
     public enum OptionType
     {
-        BuyGoblin, SellGoblin, SacrificeGoblin, BuyStaff, BuyHat, StealTreasure, BuyFood, Healing, Attack, Explore, Lure
+        BuyGoblin, SellGoblin, SacrificeGoblin, BuyStaff, BuyHat, StealTreasure, BuyFood, Healing, Attack, Explore, Lure,BuySlave,
     }
 
     [Serializable]
@@ -162,9 +162,14 @@ public class GameManager : MonoBehaviour
         return Instance.XpOnTeamKill;
     }
 
-    internal static void GameOver()
+    internal static void GameOver(bool gameWon = false)
     {
-        SoundController.PlayGameLoss();
+        if(gameWon)
+            SoundController.PlayStinger(SoundBank.Stinger.GameWin);
+        else
+            SoundController.PlayGameLoss();
+
+        //tODO: add points to score if won
 
         Instance.StartCoroutine(Instance.FadeToHighScoreRoutine());
     }

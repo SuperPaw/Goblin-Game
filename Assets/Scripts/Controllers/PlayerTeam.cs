@@ -543,7 +543,7 @@ public class PlayerTeam : MonoBehaviour
         //TODO: play caching
     }
 
-    internal void SellGoblin(Goblin goblin, int price, GoblinWarrens newVillage)
+    internal void SellGoblin(Goblin goblin, int price, GoblinWarrens newVillage = null)
     {
         Members.Remove(goblin);
         OnTreasureFound.Invoke(price);
@@ -552,12 +552,17 @@ public class PlayerTeam : MonoBehaviour
 
         GoblinUIList.UpdateGoblinList();
 
-        goblin.transform.parent = newVillage.transform;
+        if (newVillage)
+        {
+            goblin.transform.parent = newVillage.transform;
+            newVillage.Members.Add(goblin);
+        }
 
         goblin.tag = "NPC";
 
-        newVillage.Members.Add(goblin);
     }
+
+
     internal void SacGoblin(Goblin goblin, Monument sacrificeStone)
     {
         Members.Remove(goblin);

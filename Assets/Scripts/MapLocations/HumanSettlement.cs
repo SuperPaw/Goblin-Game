@@ -46,7 +46,7 @@ public class HumanSettlement : PointOfInterest
             Debug.Log("PLAYER HAS WON");
 
             PopUpText.ShowText("The goblins have found a new home!");
-            SoundController.PlayStinger(SoundBank.Stinger.GameWin);
+            GameManager.GameOver(true);
         }
     }
 

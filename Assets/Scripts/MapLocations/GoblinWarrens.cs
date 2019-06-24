@@ -23,7 +23,7 @@ public class GoblinWarrens : PointOfInterest
             PlayerChoice.SetupPlayerChoice(new PlayerChoice.ChoiceOption[] { OkOption },
                 "No goblins for sale here.");
         }
-        if (team.Treasure >= 5)
+        else if (team.Treasure >= 5)
         {
             var options = Members.Take(4).Select(g =>
                 new PlayerChoice.ChoiceOption() { Action = () => PlayerTeam.Instance.BuyGoblin(g, 5, this), Description = g.name + " the " + g.ClassType }).ToList();
