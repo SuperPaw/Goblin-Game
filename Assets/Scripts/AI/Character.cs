@@ -29,7 +29,7 @@ public abstract class Character : MonoBehaviour
 
     public enum Race
     {
-        Goblin, Human, Spider, Zombie, Ogre, Wolf,
+        Goblin, Human, Spider, Zombie, Ogre, Wolf,Orc,Elf,
         NoRace
     }
     
