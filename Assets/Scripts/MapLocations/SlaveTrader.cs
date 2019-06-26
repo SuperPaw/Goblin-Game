@@ -9,8 +9,8 @@ public class SlaveTrader : PointOfInterest
     public override void SetupMenuOptions()
     {
 
-        PoiOptionController.CreateOption(GameManager.OptionType.BuyGoblin, BuyGoblinBox);
-        PoiOptionController.CreateOption(GameManager.OptionType.SellGoblin, SellGoblinBox);
+        PoiOptionController.CreateOption(PointOfInterest.OptionType.BuyGoblin, BuyGoblinBox);
+        PoiOptionController.CreateOption(PointOfInterest.OptionType.SellGoblin, SellGoblinBox);
         //attack option
     }
 

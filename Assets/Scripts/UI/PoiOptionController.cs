@@ -10,7 +10,7 @@ public class PoiOptionController : MonoBehaviour
 {
     public PoiOptionButton OptionButton;
     public AnimationCurve PopupCurve;
-    private List<GameManager.OptionType> OpenTypes = new List<GameManager.OptionType>();
+    private List<PointOfInterest.OptionType> OpenTypes = new List<PointOfInterest.OptionType>();
     public static UnityEvent CloseOptionsEvent;
     private List<PoiOptionButton> InstantiatedButtons = new List<PoiOptionButton>();
 
@@ -27,7 +27,7 @@ public class PoiOptionController : MonoBehaviour
     }
 
     //TODO: create as coroutine for pop-ups
-    public void CreateOption(GameManager.OptionType type, UnityAction action)
+    public void CreateOption(PointOfInterest.OptionType type, UnityAction action)
     {
         if(OpenTypes.Contains(type)) return;
 

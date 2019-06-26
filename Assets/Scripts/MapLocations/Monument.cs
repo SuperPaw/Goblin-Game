@@ -38,8 +38,8 @@ public class Monument : PointOfInterest
     
     public override void SetupMenuOptions()
     {
-        PoiOptionController.CreateOption(GameManager.OptionType.SacrificeGoblin, SacGoblinBox);
-        PoiOptionController.CreateOption(GameManager.OptionType.StealTreasure, StealTreasureBox);
+        PoiOptionController.CreateOption(PointOfInterest.OptionType.SacrificeGoblin, SacGoblinBox);
+        PoiOptionController.CreateOption(PointOfInterest.OptionType.StealTreasure, StealTreasureBox);
     }
 
 

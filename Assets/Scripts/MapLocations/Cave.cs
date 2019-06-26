@@ -57,8 +57,8 @@ public class Cave : PointOfInterest
 
     public override void SetupMenuOptions()
     {
-        PoiOptionController.CreateOption(GameManager.OptionType.Lure, LureMonsterBox);
-        PoiOptionController.CreateOption(GameManager.OptionType.Explore, SendInGoblinBox);
+        PoiOptionController.CreateOption(PointOfInterest.OptionType.Lure, LureMonsterBox);
+        PoiOptionController.CreateOption(PointOfInterest.OptionType.Explore, SendInGoblinBox);
 
     }
 

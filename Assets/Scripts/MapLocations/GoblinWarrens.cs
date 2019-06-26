@@ -11,9 +11,9 @@ public class GoblinWarrens : PointOfInterest
     public override void SetupMenuOptions()
     {
 
-        PoiOptionController.CreateOption(GameManager.OptionType.BuyGoblin, BuyGoblinBox);
-        PoiOptionController.CreateOption(GameManager.OptionType.SellGoblin, SellGoblinBox);
-        PoiOptionController.CreateOption(GameManager.OptionType.BuyFood, BuyFoodBox);
+        PoiOptionController.CreateOption(PointOfInterest.OptionType.BuyGoblin, BuyGoblinBox);
+        PoiOptionController.CreateOption(PointOfInterest.OptionType.SellGoblin, SellGoblinBox);
+        PoiOptionController.CreateOption(PointOfInterest.OptionType.BuyFood, BuyFoodBox);
     }
 
     void BuyGoblinBox()

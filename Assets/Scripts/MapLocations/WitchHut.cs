@@ -34,10 +34,10 @@ public class WitchHut : PointOfInterest
 
     public override void SetupMenuOptions()
     {
-        PoiOptionController.CreateOption(GameManager.OptionType.Healing, Heal);
-        PoiOptionController.CreateOption(GameManager.OptionType.BuyStaff, BuyStaff);
-        PoiOptionController.CreateOption(GameManager.OptionType.BuyHat, BuyHat);
-        PoiOptionController.CreateOption(GameManager.OptionType.Attack, () =>
+        PoiOptionController.CreateOption(PointOfInterest.OptionType.Healing, Heal);
+        PoiOptionController.CreateOption(PointOfInterest.OptionType.BuyStaff, BuyStaff);
+        PoiOptionController.CreateOption(PointOfInterest.OptionType.BuyHat, BuyHat);
+        PoiOptionController.CreateOption(PointOfInterest.OptionType.Attack, () =>
             PlayerChoice.CreateDoChoice(() => Attack(team), "Do you want to attack the witch"));
 
     }
