@@ -46,6 +46,27 @@ public class PoiOptionController : MonoBehaviour
         OptionButton.gameObject.SetActive(false);
     }
 
+    //TODO: create as coroutine for pop-ups
+    public void CreateOption(PointOfInterest.OptionType type, UnityAction action, Sprite spr)
+    {
+        if (OpenTypes.Contains(type)) return;
+
+        OpenTypes.Add(type);
+
+        var instance = Instantiate(OptionButton, this.transform);
+
+        instance.gameObject.SetActive(true);
+
+        instance.Button.onClick.AddListener(action);
+        instance.Button.onClick.AddListener(CloseOptionsEvent.Invoke);
+        instance.TargetImage.sprite = spr;
+
+        InstantiatedButtons.Add(instance);
+
+        OptionButton.gameObject.SetActive(false);
+    }
+
+
     private void CloseOptions()
     {
         foreach (var b in InstantiatedButtons)

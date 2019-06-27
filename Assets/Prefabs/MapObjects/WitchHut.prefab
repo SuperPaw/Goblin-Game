@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4081050876500789283}
   - component: {fileID: 4526848622528733997}
   - component: {fileID: 3279508761785604338}
-  - component: {fileID: 799393227371411339}
+  - component: {fileID: 3619856751451260163}
   m_Layer: 0
   m_Name: WitchHut
   m_TagString: Hidable
@@ -64,7 +64,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 6, y: 6, z: 5}
   m_Center: {x: 0, y: 0, z: -1.5}
---- !u!114 &799393227371411339
+--- !u!114 &3619856751451260163
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,18 +73,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 6920746842318355173}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c068caa43bd7a6144a94c9d2b2cae4ef, type: 3}
+  m_Script: {fileID: 11500000, guid: 79083799dc4cb564482ebd282aad8db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   AreaName: Witch Hut
+  Inhabitants: witch
   MinSpawns: 1
   MaxSpawns: 1
   MonsterPrefab: {fileID: 114479280790955412, guid: a41febb9abb65c949b38b226685a2ff7,
     type: 3}
+  NPCPrefab: {fileID: 0}
   InArea: {fileID: 0}
   HasBeenAttacked: 0
+  Attackable: 0
   IconSprite: {fileID: 21300000, guid: c2b65fcb79e2b8044bd70eeb7b4a28a5, type: 3}
   PoiOptionController: {fileID: 0}
+  Options: 08000000
+  Buyables:
+  - Name: skull hat
+    Sprite: {fileID: 0}
+    Type: 3
+    EquipmentType: 1
+    Price: 5
+    AmountForSale: 1
+    OptionType: 4
+  - Name: stick
+    Sprite: {fileID: 0}
+    Type: 3
+    EquipmentType: 6
+    Price: 4
+    AmountForSale: 1
+    OptionType: 3
+  - Name: healing
+    Sprite: {fileID: 0}
+    Type: 2
+    EquipmentType: 0
+    Price: 2
+    AmountForSale: 10
+    OptionType: 7
   PoiType: 5
 --- !u!1 &8503355671099633675
 GameObject:

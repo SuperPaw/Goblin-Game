@@ -137,7 +137,7 @@ MonoBehaviour:
   PointOfInterestPrefabs:
   - {fileID: 1510720524141754411, guid: 7cde1fc3eeb07ab41add50d71da38d93, type: 3}
   - {fileID: 909367182681320238, guid: 69c2564b5439e0a4892a9240f5182bcc, type: 3}
-  - {fileID: 799393227371411339, guid: e68521ac0ca9f3d42970ef4e5885b4d4, type: 3}
+  - {fileID: 3619856751451260163, guid: e68521ac0ca9f3d42970ef4e5885b4d4, type: 3}
   - {fileID: 7972912392436402978, guid: 4456ccbde6cee0740a01e17a716561e3, type: 3}
   - {fileID: 6577473752560398164, guid: af27c9342edcf8a4c9aef48860d6d374, type: 3}
   - {fileID: 7968939661066104517, guid: aa72a07c325a09742bd269bcb73a9595, type: 3}

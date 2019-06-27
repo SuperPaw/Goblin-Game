@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public abstract class PointOfInterest : MonoBehaviour
+public class PointOfInterest : MonoBehaviour
 {
     public string AreaName;
     public string Inhabitants;
@@ -14,25 +15,28 @@ public abstract class PointOfInterest : MonoBehaviour
     public Character NPCPrefab;
     public Area InArea;
     public bool HasBeenAttacked;
+    //TODO: use this instead of the option
+    public bool Attackable;
     public Sprite IconSprite;
     public PoiOptionController PoiOptionController;
     protected static PlayerTeam team;
 
     public List<OptionType> Options;
-    public List<TradableItem> Tradables;
+    public List<BuyableItem> Buyables;
 
     [Serializable]
-    public struct TradableItem
+    public class BuyableItem
     {
-        public bool BuyingThis;
+        public string Name;
         public Sprite Sprite;
         public Tradable Type;
+        public Equipment.EquipmentType EquipmentType;
         public int Price;
         public int AmountForSale;
+        public OptionType OptionType;
     }
 
-    public enum Tradable { Goblin, Food,Healing, Staff, SkullHat, Hat, Stick, Sword, Shoes, Armor,
-        Gloves, Shirt, Cloth, Bow
+    public enum Tradable { Goblin, Food,Healing, Equipment
     }
 
     public enum OptionType
@@ -77,15 +81,12 @@ public abstract class PointOfInterest : MonoBehaviour
     public virtual void SetupMenuOptions()
     {
         Debug.LogError("Virtual method called!");
-        //PoiOptionController.CreateOption(PointOfInterest.OptionType.Healing, Heal);
-        //PoiOptionController.CreateOption(PointOfInterest.OptionType.BuyStaff, BuyStaff);
-        //PoiOptionController.CreateOption(PointOfInterest.OptionType.BuyHat, BuyHat);
 
         foreach (var o in Options)
         {
             CreateOption(o);
         }
-        foreach (var t in Tradables)
+        foreach (var t in Buyables.Where(b => b.AmountForSale > 0))
         {
             CreateOption(t);
         }
@@ -101,7 +102,7 @@ public abstract class PointOfInterest : MonoBehaviour
                 break;
             case OptionType.Attack:
                 PoiOptionController.CreateOption(PointOfInterest.OptionType.Attack, () =>
-                    PlayerChoice.CreateDoChoice(() => Attack(team), "Do you want to attack the witch"));
+                    PlayerChoice.CreateDoChoice(() => Attack(team), "Do you want to attack the "+ Inhabitants));
                 break;
             case OptionType.Explore:
                 break;
@@ -111,7 +112,7 @@ public abstract class PointOfInterest : MonoBehaviour
                 throw new ArgumentOutOfRangeException(nameof(o), o, null);
         }
     }
-    private void CreateOption(TradableItem t)
+    private void CreateOption(BuyableItem t)
     {
         switch (t.Type)
         {
@@ -120,33 +121,42 @@ public abstract class PointOfInterest : MonoBehaviour
             case Tradable.Food:
                 break;
             case Tradable.Healing:
-                PoiOptionController.CreateOption(OptionType.Healing, ()=> Heal(t.Price));
+                PoiOptionController.CreateOption(OptionType.Healing, ()=> HealBox(t.Price));
                 break;
-            case Tradable.Staff:
-                break;
-            case Tradable.SkullHat:
-                break;
-            case Tradable.Hat:
-                break;
-            case Tradable.Stick:
-                break;
-            case Tradable.Sword:
-                break;
-            case Tradable.Shoes:
-                break;
-            case Tradable.Armor:
-                break;
-            case Tradable.Gloves:
-                break;
-            case Tradable.Shirt:
-                break;
-            case Tradable.Cloth:
-                break;
-            case Tradable.Bow:
+            case Tradable.Equipment:
+                PoiOptionController.CreateOption(t.OptionType,()=> CreateBuyBox(t));
                 break;
             default:
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(t.ToString());
         }
+    }
+
+    private void CreateBuyBox(BuyableItem b)
+    {
+        if (team.Treasure >= b.Price)
+        {
+            PlayerChoice.SetupPlayerChoice(new[]
+                {
+                    new PlayerChoice.ChoiceOption() { Action = () => Buy(b), Description = "Ok" },
+                    No
+                },
+                $"Buy {b.Name} for {b.Price} treasure?");
+        }
+        else
+        {
+            PlayerChoice.SetupPlayerChoice(new PlayerChoice.ChoiceOption[] { OkOption },
+                $"You do not have {b.Price} treasure to buy {b.Name}.");
+        }
+    }
+
+    private static void Buy(BuyableItem b)
+    {
+        //TODO: check that this works
+        b.AmountForSale--;
+
+        team.OnEquipmentFound.Invoke(EquipmentGen.GetEquipment(b.EquipmentType), team.Leader);
+
+        team.OnTreasureFound.Invoke(-b.Price);
     }
 
     private void Attack(PlayerTeam team)
@@ -158,11 +168,9 @@ public abstract class PointOfInterest : MonoBehaviour
     {
         team.Members.ForEach(g => g.Heal());
         team.OnTreasureFound.Invoke(-i);
-
     }
 
-
-    private void Heal(int price)
+    private void HealBox(int price)
     {
         if (team.Treasure >= price)
         {
