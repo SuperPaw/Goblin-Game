@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4081050876500789283}
   - component: {fileID: 4526848622528733997}
   - component: {fileID: 3279508761785604338}
-  - component: {fileID: 7972912392436402978}
+  - component: {fileID: 3015812138980168657}
   m_Layer: 0
   m_Name: Goblin Trader
   m_TagString: Hidable
@@ -64,7 +64,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4, y: 4, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7972912392436402978
+--- !u!114 &3015812138980168657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,18 +73,66 @@ MonoBehaviour:
   m_GameObject: {fileID: 6920746842318355173}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1b5cf8d7b6ef204fb88d3c6fa9f3560, type: 3}
+  m_Script: {fileID: 11500000, guid: 79083799dc4cb564482ebd282aad8db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AreaName: Goblin Merchant
-  MinSpawns: 1
-  MaxSpawns: 4
-  MonsterPrefab: {fileID: 0}
+  AreaName: Goblin Trader
+  Inhabitants: Goblin Trader
+  PoiType: 7
   InArea: {fileID: 0}
-  HasBeenAttacked: 0
+  NPCPrefab: {fileID: 114423572150661240, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe,
+    type: 3}
+  NoOfNpcs: 1
   IconSprite: {fileID: 21300000, guid: 22d11b88d3f951d498a0af6ccd39b214, type: 3}
   PoiOptionController: {fileID: 0}
-  PoiType: 7
+  Members: []
+  MonsterPrefab: {fileID: 114423572150661240, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe,
+    type: 3}
+  MinSpawns: 1
+  MaxSpawns: 4
+  WinCondition: 0
+  InitialEnemies: 0
+  HasBeenAttacked: 0
+  Attackable: 0
+  LivingDead: 0
+  Options: 05000000
+  Buyables:
+  - Name: Hat
+    Sprite: {fileID: 0}
+    Type: 3
+    BuyableClass: 0
+    EquipmentType: 2
+    Price: 3
+    AmountForSale: 1
+    OptionType: 4
+  - Name: Gloves
+    Sprite: {fileID: 0}
+    Type: 3
+    BuyableClass: 0
+    EquipmentType: 0
+    Price: 4
+    AmountForSale: 1
+    OptionType: 4
+  - Name: Sword
+    Sprite: {fileID: 0}
+    Type: 3
+    BuyableClass: 0
+    EquipmentType: 7
+    Price: 5
+    AmountForSale: 1
+    OptionType: 3
+  - Name: Bow
+    Sprite: {fileID: 0}
+    Type: 3
+    BuyableClass: 0
+    EquipmentType: 11
+    Price: 2
+    AmountForSale: 1
+    OptionType: 3
+  GoblinPrefab: {fileID: 0}
+  Explored: 0
+  Difficulty: 0
+  Treasure: 10
 --- !u!1 &8503355671099633675
 GameObject:
   m_ObjectHideFlags: 0

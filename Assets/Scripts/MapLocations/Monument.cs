@@ -39,7 +39,6 @@ public class Monument : PointOfInterest
     public override void SetupMenuOptions()
     {
         PoiOptionController.CreateOption(PointOfInterest.OptionType.SacrificeGoblin, SacGoblinBox);
-        PoiOptionController.CreateOption(PointOfInterest.OptionType.StealTreasure, StealTreasureBox);
     }
 
 
@@ -63,26 +62,7 @@ public class Monument : PointOfInterest
         }
 
     }
-
-    void StealTreasureBox()
-    {
-        if (Treasure <= 0)
-        {
-            PlayerChoice.SetupPlayerChoice(new PlayerChoice.ChoiceOption[] { OkOption },
-                "No treasure to steal.");
-        }
-        else
-        {
-            var options = new List<PlayerChoice.ChoiceOption>() {
-                new PlayerChoice.ChoiceOption() { Action = () => PlayerTeam.Instance.StealTreasure(this), Description = "Yes" },
-                No
-            };
-
-            PlayerChoice.SetupPlayerChoice(options.ToArray(),
-                "Steal treasure from Big Stone?");
-        }
-    }
-
+    
     void SacGoblinBox()
     {
         //TODO: maybe shuffle first

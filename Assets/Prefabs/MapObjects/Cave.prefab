@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4081050876500789283}
   - component: {fileID: 4526848622528733997}
   - component: {fileID: 3279508761785604338}
-  - component: {fileID: 909367182681320238}
+  - component: {fileID: 3737014991024357967}
   m_Layer: 0
   m_Name: Cave
   m_TagString: Hidable
@@ -64,7 +64,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 6, y: 6, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &909367182681320238
+--- !u!114 &3737014991024357967
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,22 +73,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 6920746842318355173}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d307b0506f5d69847a166a3739fa89f2, type: 3}
+  m_Script: {fileID: 11500000, guid: 79083799dc4cb564482ebd282aad8db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AreaName: Cave
-  MinSpawns: 1
-  MaxSpawns: 4
-  MonsterPrefab: {fileID: 114311055515310312, guid: 8c00db5be83e04b4c88b073e10fba9b9,
-    type: 3}
+  AreaName: Dark Cave
+  Inhabitants: 
+  PoiType: 1
   InArea: {fileID: 0}
-  HasBeenAttacked: 0
+  NPCPrefab: {fileID: 0}
+  NoOfNpcs: 0
   IconSprite: {fileID: 21300000, guid: cfa70002af370824e9d00a455b135bcb, type: 3}
   PoiOptionController: {fileID: 0}
-  PoiType: 1
-  Difficulty: 3
-  Prize: 5
+  Members: []
+  MonsterPrefab: {fileID: 114311055515310312, guid: 8c00db5be83e04b4c88b073e10fba9b9,
+    type: 3}
+  MinSpawns: 1
+  MaxSpawns: 5
+  WinCondition: 0
+  InitialEnemies: 0
+  HasBeenAttacked: 0
+  Attackable: 0
+  LivingDead: 0
+  Options: 0a00000009000000
+  Buyables: []
+  GoblinPrefab: {fileID: 0}
   Explored: 0
+  Difficulty: 2
+  Treasure: 5
 --- !u!1 &8503355671099633675
 GameObject:
   m_ObjectHideFlags: 0

@@ -252,10 +252,18 @@ public class PlayerTeam : MonoBehaviour
     }
 
 
-    public void AddMember(Goblin g)
+    public void AddMember(Goblin goblin)
     {
-        Members.Add(g);
+        goblin.Team = this;
+
+        //TODO: use method for these
+        goblin.transform.parent = transform;
+        goblin.tag = "Player";
+
+        Members.Add(goblin);
         OnMemberAdded.Invoke();
+
+        GoblinUIList.UpdateGoblinList();
     }
 
     #region Orders
@@ -523,17 +531,6 @@ public class PlayerTeam : MonoBehaviour
         //TODO: effect
     }
 
-    internal void StealTreasure(Monument stone)
-    {
-        OnTreasureFound.Invoke(stone.Treasure);
-        stone.Treasure = 0;
-
-        SoundController.PlayStinger(SoundBank.Stinger.Sneaking);
-
-        //if (Random.value < 0.6f)
-        stone.SpawnDead(this);
-    }
-
 
     internal void SellFood(int amount, int price)
     {
@@ -563,7 +560,7 @@ public class PlayerTeam : MonoBehaviour
     }
 
 
-    internal void SacGoblin(Goblin goblin, Monument sacrificeStone)
+    internal void SacGoblin(Goblin goblin, PointOfInterest sacrificeStone)
     {
         Members.Remove(goblin);
 
@@ -585,22 +582,13 @@ public class PlayerTeam : MonoBehaviour
 
     }
 
+    //TODO: should not be used. remove this
     internal void BuyGoblin(Goblin goblin, int price, GoblinWarrens oldVillage)
     {
         OnTreasureFound.Invoke(-price);
-
-        goblin.Team = this;
-
-        //TODO: use method for these
         AddMember(goblin);
-        goblin.transform.parent = transform;
-        goblin.tag = "Player";
-
-        GoblinUIList.UpdateGoblinList();
-
         oldVillage.Members.Remove(goblin);
     }
-
 
     internal void AddXp(int v)
     {

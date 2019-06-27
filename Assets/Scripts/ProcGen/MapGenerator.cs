@@ -82,7 +82,7 @@ public class MapGenerator : MonoBehaviour
     public RoadEdgeTile NextToRoadTile;
     public GameObject[] LootObjects;
     public PointOfInterest[] PointOfInterestPrefabs;
-    public HumanSettlement[] HumanSettlementPrefab;
+    public PointOfInterest[] HumanSettlementPrefab;
 
     [Header("Point of Interests")]
     public GameObject VillagePrefab;
@@ -414,7 +414,7 @@ public class MapGenerator : MonoBehaviour
     private IEnumerator POIGenRoutine()
     {
 
-        HumanSettlement last = null;
+        PointOfInterest last = null;
 
         for (int i = 0; i < HumanSettlements; i++)
         {
@@ -450,12 +450,12 @@ public class MapGenerator : MonoBehaviour
             area.name += next.name;
             next.InArea = area;
 
-            //Create characters
-            for (int j = 0; j < next.InitialEnemies; j++)
-            {
-                GenerateCharacter(next.SpawnEnemies[Random.Range(0, next.SpawnEnemies.Length)], next.InArea, NpcHolder.Instance.transform, true);//Instantiate(next.SpawnEnemies[Random.Range(0,next.SpawnEnemies.Length)],);
+            ////Create characters
+            //for (int j = 0; j < next.InitialEnemies; j++)
+            //{
+            //    GenerateCharacter(next.SpawnEnemies[Random.Range(0, next.SpawnEnemies.Length)], next.InArea, NpcHolder.Instance.transform, true);//Instantiate(next.SpawnEnemies[Random.Range(0,next.SpawnEnemies.Length)],);
 
-            }
+            //}
 
             if (last != null)
             {
@@ -508,34 +508,12 @@ public class MapGenerator : MonoBehaviour
 
             //next.name = "Village " + area.X + "," + area.Z;
 
-            var village = next.GetComponent<GoblinWarrens>();
+            var village = next.GetComponent<PointOfInterest>();
 
             AddAreaPoi(area, village);
             area.name += ": Warrens";
             village.InArea = area;
-
-
-            for (int j = 0; j < GoblinsForSalePrVillage; j++)
-            {
-                //TODO: check distance by getting it form the size of the warrens
-                var vector3 = next.transform.position + Random.onUnitSphere * 5;
-
-                vector3.y = 0; // = new Vector3(vector3.x, 0, vector3.z);
-
-                var o = Instantiate(DefaultCharacter, vector3, next.transform.rotation, village.transform);
-
-
-                var g = o.GetComponent<Goblin>();
-
-                g.tag = "NPC";
-                
-                g.SelectClass(VillageGoblinClasses[Random.Range(0,VillageGoblinClasses.Count)]);
-
-                g.name = NameGenerator.GetName();
-
-                //g.InArea = a;
-                village.Members.Add(g);
-            }
+            
         }
 
         //Create goblin start area

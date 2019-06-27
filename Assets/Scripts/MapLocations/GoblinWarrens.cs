@@ -10,7 +10,6 @@ public class GoblinWarrens : PointOfInterest
 
     public override void SetupMenuOptions()
     {
-
         PoiOptionController.CreateOption(PointOfInterest.OptionType.BuyGoblin, BuyGoblinBox);
         PoiOptionController.CreateOption(PointOfInterest.OptionType.SellGoblin, SellGoblinBox);
         PoiOptionController.CreateOption(PointOfInterest.OptionType.BuyFood, BuyFoodBox);
@@ -20,7 +19,7 @@ public class GoblinWarrens : PointOfInterest
     {
         if (Members.Count == 0)
         {
-            PlayerChoice.SetupPlayerChoice(new PlayerChoice.ChoiceOption[] { OkOption },
+            PlayerChoice.SetupPlayerChoice(new [] { OkOption },
                 "No goblins for sale here.");
         }
         else if (team.Treasure >= 5)
