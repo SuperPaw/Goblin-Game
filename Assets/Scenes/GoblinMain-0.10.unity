@@ -1207,6 +1207,22 @@ MonoBehaviour:
     GoblinShouts:
     - Speech: Pretty house! Let's smash it!
       GoblinSound: {fileID: 8300000, guid: 292d9c656a0d73742abbe4aab4c3fe69, type: 3}
+  - LocationType: 6
+    GoblinShouts:
+    - Speech: I don't want to go in cage
+      GoblinSound: {fileID: 8300000, guid: a0fc58c3215576d449caa3ad3295df03, type: 3}
+  - LocationType: 7
+    GoblinShouts:
+    - Speech: I don't like water
+      GoblinSound: {fileID: 8300000, guid: 292d9c656a0d73742abbe4aab4c3fe69, type: 3}
+  - LocationType: 8
+    GoblinShouts:
+    - Speech: Pretty house! Let's smash it!
+      GoblinSound: {fileID: 8300000, guid: 292d9c656a0d73742abbe4aab4c3fe69, type: 3}
+  - LocationType: 9
+    GoblinShouts:
+    - Speech: Smell like elves. Bwah!
+      GoblinSound: {fileID: 8300000, guid: 292d9c656a0d73742abbe4aab4c3fe69, type: 3}
   EnemyReactions:
   - Race: 1
     GoblinShouts:
@@ -1227,6 +1243,14 @@ MonoBehaviour:
   - Race: 5
     GoblinShouts:
     - Speech: Puppy!! Come here puppy!
+      GoblinSound: {fileID: 8300000, guid: 1a156833729fdb84699eba68a4c5f834, type: 3}
+  - Race: 6
+    GoblinShouts:
+    - Speech: I love Big Orc!
+      GoblinSound: {fileID: 8300000, guid: 1a156833729fdb84699eba68a4c5f834, type: 3}
+  - Race: 7
+    GoblinShouts:
+    - Speech: Stab the elf!!
       GoblinSound: {fileID: 8300000, guid: 1a156833729fdb84699eba68a4c5f834, type: 3}
   StateChangeReactions:
   - State: 7
