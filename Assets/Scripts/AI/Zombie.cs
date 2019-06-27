@@ -24,6 +24,12 @@ public class Zombie : Character
         }
         else
         {
+            if (!Attacking() && _attackRoutine != null)
+            {
+                Debug.Log("Stopping attack routine");
+                StopCoroutine(_attackRoutine);
+                _attackRoutine = null;
+            }
             navMeshAgent.isStopped = false;
             SelectAction();
         }

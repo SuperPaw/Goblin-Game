@@ -410,6 +410,8 @@ public abstract class Character : MonoBehaviour
         if(Target != Vector3.zero) Debug.DrawLine(transform.position, Target, Color.blue);
         if (navMeshAgent) Debug.DrawLine(transform.position, navMeshAgent.destination, Color.red);
         if(this as Goblin && (this as Goblin).ProvokeTarget) Debug.DrawLine(transform.position, (this as Goblin).ProvokeTarget.transform.position, Color.cyan);
+        if (this as Goblin && (this as Goblin).LootTarget) Debug.DrawLine(transform.position, (this as Goblin).ProvokeTarget.transform.position, Color.yellow);
+
 
         HandleAnimation();
 
@@ -457,7 +459,7 @@ public abstract class Character : MonoBehaviour
         {
             Animate(FLEE_ANIMATION_BOOL);
         }
-        else if (_attackRoutine != null)
+        else if (_attackRoutine != null && Attacking())
         {
             Animate(Equipped.Values.Any(e => e && e.Type == Equipment.EquipmentType.Bow)
                 ? RANGED_ATTACK_ANIMATION_BOOL

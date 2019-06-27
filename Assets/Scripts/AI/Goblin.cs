@@ -15,8 +15,6 @@ public class Goblin : Character
     //consider removing to Character
     //meaning how often they notice what other are doing
     //0-10
-    public GoblinWarrens Warrens;
-
     public Image ChiefImage;
     
     public Image StateImage;

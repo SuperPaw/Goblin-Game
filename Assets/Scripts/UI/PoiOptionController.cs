@@ -39,7 +39,8 @@ public class PoiOptionController : MonoBehaviour
 
         instance.Button.onClick.AddListener(action);
         instance.Button.onClick.AddListener(CloseOptionsEvent.Invoke);
-        instance.TargetImage.sprite = GameManager.Instance.OptionTargetImages.First(o => type ==o.type).image;
+        if(GameManager.Instance.OptionTargetImages.Any(o => type == o.type))
+            instance.TargetImage.sprite = GameManager.Instance.OptionTargetImages.First(o => type ==o.type).image;
 
         InstantiatedButtons.Add(instance);
 

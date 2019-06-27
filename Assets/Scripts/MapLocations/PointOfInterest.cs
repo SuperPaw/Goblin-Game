@@ -119,18 +119,23 @@ public class PointOfInterest : MonoBehaviour
 
         var spawn = new List<Character>();
 
-        for (int i = 0; i < zs; i++)
+        if (MonsterPrefab)
         {
-            var enm = MapGenerator.GenerateCharacter(MonsterPrefab.gameObject, InArea, NpcHolder.Instance.transform,true).GetComponent<Character>();
+            for (int i = 0; i < zs; i++)
+            {
+                var enm = MapGenerator
+                    .GenerateCharacter(MonsterPrefab.gameObject, InArea, NpcHolder.Instance.transform, true)
+                    .GetComponent<Character>();
 
-            enm.ChangeState(Character.CharacterState.Attacking);
+                enm.ChangeState(Character.CharacterState.Attacking);
 
-            if(livingDead)
-                team.Members.ForEach(m => m.Morale -= 1);
+                if (livingDead)
+                    team.Members.ForEach(m => m.Morale -= 1);
 
-            spawn.Add(enm);
+                spawn.Add(enm);
 
-            yield return new WaitForSeconds(Random.Range(0, 1.5f));
+                yield return new WaitForSeconds(Random.Range(0, 1.5f));
+            }
         }
 
         if (WinCondition)
@@ -148,7 +153,7 @@ public class PointOfInterest : MonoBehaviour
 
     public virtual void SetupMenuOptions()
     {
-        Debug.LogError("Virtual method called!");
+        //Debug.LogError("Virtual method called!");
 
         foreach (var o in Options)
         {
