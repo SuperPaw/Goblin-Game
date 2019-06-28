@@ -408,7 +408,7 @@ public abstract class Character : MonoBehaviour
         if(Target != Vector3.zero) Debug.DrawLine(transform.position, Target, Color.blue);
         if (navMeshAgent) Debug.DrawLine(transform.position, navMeshAgent.destination, Color.red);
         if(this as Goblin && (this as Goblin).ProvokeTarget) Debug.DrawLine(transform.position, (this as Goblin).ProvokeTarget.transform.position, Color.cyan);
-        if (this as Goblin && (this as Goblin).LootTarget) Debug.DrawLine(transform.position, (this as Goblin).ProvokeTarget.transform.position, Color.yellow);
+        if (this as Goblin && (this as Goblin).LootTarget) Debug.DrawLine(transform.position, (this as Goblin).LootTarget.transform.position, Color.yellow);
 
 
         HandleAnimation();
@@ -664,11 +664,12 @@ public abstract class Character : MonoBehaviour
         //get these from a game or fight controller instead for maintenance
         //GameObject[] gos;
         //gos = GameObject.FindGameObjectsWithTag("Hidable");
+        var area = TravellingToArea == Team.Leader.InArea ? TravellingToArea : InArea;
 
         Hidable closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
-        foreach (Hidable go in InArea.Hidables)//.Where(h=> h.GetComponent<Hidable>().Area = InArea))
+        foreach (Hidable go in area.Hidables)//.Where(h=> h.GetComponent<Hidable>().Area = InArea))
         {
             if(!go)
                 Debug.LogError("Hidable object does not have hidable script");
@@ -1271,8 +1272,8 @@ public abstract class Character : MonoBehaviour
         Hidingplace = GetClosestHidingPlace();
 
         if (!Hidingplace) return;
-        
-        State = CharacterState.Hiding;
+
+        ChangeState(CharacterState.Hiding, true);
     }
 
     private void Animate(string boolName)

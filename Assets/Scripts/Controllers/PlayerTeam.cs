@@ -314,13 +314,13 @@ public class PlayerTeam : MonoBehaviour
     {
         foreach (var ch in Members)
         {
-            if (!ch.Attacking() && !ch.Fleeing() &&ch.InArea == Leader.InArea)
+            if (!ch.Attacking() && !ch.Fleeing() &&
+                (ch.InArea == Leader.InArea || ch.TravellingToArea == Leader.InArea))
             {
                 ch.Hide();
             }
-
-            StartCoroutine(PlayHideSound(2.5f));
         }
+        StartCoroutine(PlayHideSound(2.5f));
     }
 
     private IEnumerator PlayHideSound(float wait)
@@ -378,7 +378,8 @@ public class PlayerTeam : MonoBehaviour
 
         foreach (var gobbo in Members)
         {
-            if (gobbo.Fleeing() || !gobbo.InArea == Leader.InArea)
+            if (gobbo.Fleeing() |! 
+                (gobbo.InArea == Leader.InArea))//|| gobbo.TravellingToArea == Leader.InArea || gobbo.TravellingToArea == Leader.TravellingToArea))
                 continue;
             if (gobbo.Hiding())
                 gobbo.Hidingplace = null;
@@ -629,7 +630,8 @@ public class PlayerTeam : MonoBehaviour
         //Debug.Log("Fleeing now");
         foreach (var gobbo in Members)
         {
-            gobbo.ChangeState(Character.CharacterState.Fleeing, gobbo == Leader);
+            if (gobbo.InArea == Leader.InArea || gobbo.TravellingToArea == Leader.InArea || gobbo.TravellingToArea == Leader.TravellingToArea)
+               gobbo.ChangeState(Character.CharacterState.Fleeing, gobbo == Leader);
         }
     }
 
