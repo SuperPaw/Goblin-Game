@@ -195,6 +195,8 @@ public class Goblin : Character
 
     private void NextLevel()
     {
+        if(!Team) return;
+
         //a sound
         SoundController.PlayLevelup();
 
@@ -282,7 +284,7 @@ public class Goblin : Character
     //TODO: use struct to combine text to sound
     public void Shout(string speech, SoundBank.GoblinSound goblinSound)//, bool interrupt = false)
     {
-        if (Fleeing() &! Team)
+        if (Fleeing() |! Team)
             return;
 
 

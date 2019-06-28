@@ -5343,6 +5343,7 @@ MonoBehaviour:
   VoiceText: {fileID: 0}
   ShoutTime: 2
   MovementAudio: {fileID: 0}
+  MaxGroupSize: 1
   SurprisedTime: 4
   SurprisedStartTime: 0
   Aggressive: 0
@@ -5356,8 +5357,6 @@ MonoBehaviour:
   DamMax: 15
   AimMin: 6
   AimMax: 6
-  AttMin: 3
-  AttMax: 3
   CouMin: 200
   CouMax: 200
   HeaMin: 200
@@ -5420,7 +5419,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 925690161}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 10
+  m_Radius: 0.05
   m_Speed: 3.5
   m_Acceleration: 20
   avoidancePriority: 50

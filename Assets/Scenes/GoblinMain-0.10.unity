@@ -106,15 +106,15 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 4
-    agentHeight: 8
-    agentSlope: 45
-    agentClimb: 7.8
+    agentRadius: 0.1
+    agentHeight: 2
+    agentSlope: 10.2
+    agentClimb: 2
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 1
-    cellSize: 2
+    cellSize: 0.025
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -1213,11 +1213,11 @@ MonoBehaviour:
       GoblinSound: {fileID: 8300000, guid: a0fc58c3215576d449caa3ad3295df03, type: 3}
   - LocationType: 7
     GoblinShouts:
-    - Speech: I don't like water
+    - Speech: Oh, shinys!!
       GoblinSound: {fileID: 8300000, guid: 292d9c656a0d73742abbe4aab4c3fe69, type: 3}
   - LocationType: 8
     GoblinShouts:
-    - Speech: Pretty house! Let's smash it!
+    - Speech: I hate water!
       GoblinSound: {fileID: 8300000, guid: 292d9c656a0d73742abbe4aab4c3fe69, type: 3}
   - LocationType: 9
     GoblinShouts:
@@ -1326,8 +1326,8 @@ MonoBehaviour:
       GoblinSound: {fileID: 8300000, guid: a0fc58c3215576d449caa3ad3295df03, type: 3}
     - Speech: Me be good chief! Kill bad chief
       GoblinSound: {fileID: 8300000, guid: a0fc58c3215576d449caa3ad3295df03, type: 3}
-  GoblinViewSize: 5
-  AreaViewSize: 9
+  GoblinViewSize: 6
+  AreaViewSize: 10
   MapViewSize: 45
   ZoomMinBound: 2
   ZoomMaxBound: 10
@@ -3211,7 +3211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.42745098, g: 0.105882354, b: 0.050980393, a: 0.78431374}
+  m_Color: {r: 0.19215688, g: 0.19215688, b: 0.19215688, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

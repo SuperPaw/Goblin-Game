@@ -87,7 +87,7 @@ MonoBehaviour:
   Members: []
   MonsterPrefab: {fileID: 5982750895952644980, guid: 33cae0a0b31c5f74fac564eb302b96fe,
     type: 3}
-  MinSpawns: 5
+  MinSpawns: 6
   MaxSpawns: 10
   WinCondition: 0
   InitialEnemies: 0

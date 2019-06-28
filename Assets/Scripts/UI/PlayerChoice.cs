@@ -32,9 +32,9 @@ public class PlayerChoice : MenuWindow
 
     new void Awake()
     {
-        base.Awake();
-
         Type = WindowType.PlayerChoice;
+
+        base.Awake();
 
         if (!Instance)
             Instance = this;

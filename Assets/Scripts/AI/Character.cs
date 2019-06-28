@@ -48,6 +48,7 @@ public abstract class Character : MonoBehaviour
     public AudioSource MovementAudio;
 
     [Header("AI Values")]
+    public int MaxGroupSize = 4;
     public float SurprisedTime = 4;
     public float SurprisedStartTime;
 
@@ -843,8 +844,9 @@ public abstract class Character : MonoBehaviour
                             Target = GetClosestEnemy().transform.position;
                             dest = Target;
                         }
-                        else if ((this as Goblin) && Team && Team.Leader.InArea != InArea && Team.Leader.Idling())
+                        else if ((this as Goblin) && Team && Team.Leader.InArea != InArea &! Team.Leader.Travelling())
                         {
+                            TravellingToArea = Team.Leader.InArea;
                             dest = Team.Leader.InArea.GetRandomPosInArea();
                         }
                         else if ((this as Goblin) &&tag == "Player" && GetClosestEnemy() && (GetClosestEnemy().transform.position - transform.position).magnitude < provokeDistance)
@@ -941,7 +943,7 @@ public abstract class Character : MonoBehaviour
                     Morale = COU.GetStatMax() * 2;
                     ChangeState(CharacterState.Idling,true);
                 }
-                else if (!actionInProgress)
+                else if (!actionInProgress || (!fleeingToArea &! navMeshAgent.hasPath))
                 {
                     fleeingToArea = TravellingToArea ? TravellingToArea.GetClosestNeighbour(transform.position, StickToRoad,TravellingToArea.ContainsRoads) 
                         : InArea.GetClosestNeighbour(transform.position,StickToRoad,InArea.ContainsRoads);
@@ -951,6 +953,11 @@ public abstract class Character : MonoBehaviour
                     TravellingToArea = fleeingToArea;
                     
                     actionInProgress = true;
+                }
+                else if (!navMeshAgent.hasPath)
+                {
+                    //Debug.Log(name + " updating fleeing to " + fleeingToArea);
+                    navMeshAgent.SetDestination(fleeingToArea.GetRandomPosInArea());
                 }
                 break;
             case CharacterState.Dead:
@@ -1003,6 +1010,12 @@ public abstract class Character : MonoBehaviour
                 {
                     ChangeState(CharacterState.Idling,true);
                     break;
+                }
+
+                if (!navMeshAgent.hasPath)
+                {
+                    Debug.Log($"{name}: Updating loot target path");
+                    navMeshAgent.SetDestination(LootTarget.transform.position);
                 }
 
                 //check for arrival and stop travelling

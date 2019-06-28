@@ -135,6 +135,8 @@ public class PlayerController : MonoBehaviour
     public enum ZoomLevel {GoblinView, AreaView, MapView}
     private ZoomLevel currentZoomLevel;
     private bool showingMoveView;
+    private Vector3 moveDelta;
+    private float moveDamp = 0.85f;
     private readonly int FogPoints = 8;
 
     void Awake()
@@ -178,8 +180,14 @@ public class PlayerController : MonoBehaviour
         {
             HandleMouseKeys();
         }
-        
-        Cam.transform.position = Vector3.Lerp(Cam.transform.position, desiredCamPos, PanSpeed * Time.unscaledDeltaTime);
+
+        if (!_mouseHeld)
+        {
+            moveDelta *= moveDamp;
+            desiredCamPos += moveDelta;
+            Cam.transform.position = Vector3.Lerp(Cam.transform.position, desiredCamPos, PanSpeed * Time.unscaledDeltaTime);
+        }
+
         Cam.orthographicSize = Mathf.Lerp(Cam.orthographicSize, desiredOrtographicSize, ZoomSpeed*Time.unscaledDeltaTime);
 
         if (Instance && Instance.Team)
@@ -196,7 +204,10 @@ public class PlayerController : MonoBehaviour
         {
             PanCamera(Input.mousePosition);
         }
-        if (Input.GetMouseButtonUp(0)) _mouseHeld = false;
+        if (Input.GetMouseButtonUp(0))
+        {
+            _mouseHeld = false;
+        }
         
 
         if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
@@ -405,7 +416,7 @@ public class PlayerController : MonoBehaviour
             _mouseHeld = true;
         }
         
-        var moveDelta = (_mouseDragPos - inWorld);
+        moveDelta = (_mouseDragPos - inWorld);
         moveDelta.y = 0;
 
         //TODO: the z axis does not move correctly due to the rotation of the camera

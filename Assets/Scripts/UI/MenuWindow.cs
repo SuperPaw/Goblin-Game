@@ -28,7 +28,7 @@ public abstract class MenuWindow : MonoBehaviour
             OpenWindows[(WindowType) i] = false;
         }
         
-        PlayerController.OnZoomLevelChange.AddListener(v=> Close());
+        if(Type != WindowType.PlayerChoice) PlayerController.OnZoomLevelChange.AddListener(v=> Close());
     }
 
     protected void Open()

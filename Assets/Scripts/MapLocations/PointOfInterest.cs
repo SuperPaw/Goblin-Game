@@ -127,6 +127,8 @@ public class PointOfInterest : MonoBehaviour
                     .GenerateCharacter(MonsterPrefab.gameObject, InArea, NpcHolder.Instance.transform, true)
                     .GetComponent<Character>();
 
+                enm.tag = "Enemy";
+
                 enm.ChangeState(Character.CharacterState.Attacking);
 
                 if (livingDead)
@@ -154,14 +156,14 @@ public class PointOfInterest : MonoBehaviour
     public virtual void SetupMenuOptions()
     {
         //Debug.LogError("Virtual method called!");
+        if (HasBeenAttacked)
+            return;
 
         foreach (var o in Options)
         {
             CreateOption(o);
         }
 
-        if (HasBeenAttacked)
-            return;
         foreach (var t in Buyables.Where(b => b.AmountForSale > 0))
         {
             PoiOptionController.CreateOption(t.OptionType, () => CreateBuyBox(t));

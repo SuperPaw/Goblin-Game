@@ -396,7 +396,7 @@ public class MapGenerator : MonoBehaviour
         {
             var position = n.transform.position;
 
-            var toConnect = Areas.Where(e => e != n && !e.HasMaximumConnections).OrderBy(ne => (ne.transform.position - position).sqrMagnitude).Take(3).ToList();
+            var toConnect = Areas.Where(e => e != n && !e.HasMaximumConnections).OrderBy(ne => (ne.transform.position - position).sqrMagnitude).Take(2).ToList();
 
             //yield return null;
 
@@ -850,19 +850,20 @@ public class MapGenerator : MonoBehaviour
     private GameObject CreateEnemyCharacter(GameObject go, Transform parent, Area goblinStartArea)
     {
 
-        var type = go.GetComponent<Character>().CharacterRace;
+        var ch = go.GetComponent<Character>();
+
 
 
         var areas = Areas.Where(ar =>
             !ar.PointOfInterest && ar != goblinStartArea && !ar.ContainsRoads &!
-              ar.PresentCharacters.Any(c => c.CharacterRace != type)).ToList();
+              ar.PresentCharacters.Any(c => c.CharacterRace != ch.CharacterRace) && ar.PresentCharacters.Count < ch.MaxGroupSize).ToList();
         if (areas.Any())
         {
             return GenerateCharacter(go, areas[Random.Range(0, areas.Count)], parent);
         }
         else
         {
-            Debug.Log("Not able to find suitable area for: "+ type);
+            Debug.Log($"Not able to find suitable area for: {ch}, max group: {ch.MaxGroupSize}");
             return null;
         }
     }

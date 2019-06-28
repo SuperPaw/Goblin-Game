@@ -82,7 +82,7 @@ MonoBehaviour:
   InArea: {fileID: 0}
   NPCPrefab: {fileID: 114423572150661240, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe,
     type: 3}
-  NoOfNpcs: 4
+  NoOfNpcs: 5
   IconSprite: {fileID: 21300000, guid: c148599842f42274194246ba86cb5215, type: 3}
   PoiOptionController: {fileID: 0}
   Members: []

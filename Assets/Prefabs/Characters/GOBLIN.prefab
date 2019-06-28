@@ -61,6 +61,7 @@ MonoBehaviour:
   VoiceText: {fileID: 7493249906784945000}
   ShoutTime: 2
   MovementAudio: {fileID: 0}
+  MaxGroupSize: 4
   SurprisedTime: 4
   SurprisedStartTime: 0
   Aggressive: 0
@@ -68,15 +69,12 @@ MonoBehaviour:
   IrritationMeter: 0
   IrritaionTolerance: 50
   State: 0
-  DebugText: {fileID: 67269001809020726}
   LootTarget: {fileID: 0}
   Team: {fileID: 0}
   DamMin: 2
   DamMax: 5
   AimMin: 2
   AimMax: 5
-  AttMin: 2
-  AttMax: 5
   CouMin: 2
   CouMax: 5
   HeaMin: 6
@@ -109,11 +107,11 @@ MonoBehaviour:
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 0}
   Animator: {fileID: 9200039782062432997}
-  SpeedAnimationThreshold: 0.5
+  SpeedAnimationThreshold: 0.2
   provokeDistance: 10
   ProvokeTime: 5
   InArea: {fileID: 0}
-  Warrens: {fileID: 0}
+  DebugText: {fileID: 67269001809020726}
   ChiefImage: {fileID: 114764703591676486}
   StateImage: {fileID: 114716199431146400}
   ProvokeTarget: {fileID: 0}
@@ -156,7 +154,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 100702}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.005
   m_Speed: 4
   m_Acceleration: 20
   avoidancePriority: 50
