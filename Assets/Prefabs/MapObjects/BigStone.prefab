@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4081050876500789283}
   - component: {fileID: 4526848622528733997}
-  - component: {fileID: 1510720524141754411}
   - component: {fileID: 6499722188339829397}
+  - component: {fileID: 199962508053162890}
   m_Layer: 0
   m_Name: BigStone
   m_TagString: Hidable
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6920746842318355173}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7906681578375453446}
@@ -44,37 +44,13 @@ NavMeshObstacle:
   m_GameObject: {fileID: 6920746842318355173}
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 2.8, y: 2, z: 2.8}
+  m_Shape: 1
+  m_Extents: {x: 3, y: 3, z: 3}
   m_MoveThreshold: 1
   m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!114 &1510720524141754411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6920746842318355173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2eecc5d6040adb47aef9ee89c10e485, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AreaName: Big Stone
-  MinSpawns: 1
-  MaxSpawns: 4
-  MonsterPrefab: {fileID: 0}
-  InArea: {fileID: 0}
-  HasBeenAttacked: 0
-  IconSprite: {fileID: 21300000, guid: 2eb82ac66de274383af71b2eb2c75da0, type: 3}
-  PoiOptionController: {fileID: 0}
-  PoiType: 0
-  ZombiePrefab: {fileID: 5982750895952644980, guid: 33cae0a0b31c5f74fac564eb302b96fe,
-    type: 3}
-  Treasure: 3
 --- !u!65 &6499722188339829397
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -86,8 +62,44 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4, y: 1, z: 4}
+  m_Size: {x: 6, y: 6, z: 6}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &199962508053162890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6920746842318355173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79083799dc4cb564482ebd282aad8db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AreaName: Big Stone
+  Inhabitants: 
+  PoiType: 0
+  InArea: {fileID: 0}
+  NPCPrefab: {fileID: 0}
+  NoOfNpcs: 0
+  IconSprite: {fileID: 21300000, guid: 510ed9e83276beb44b58506d27476a00, type: 3}
+  PoiOptionController: {fileID: 0}
+  Members: []
+  MonsterPrefab: {fileID: 5982750895952644980, guid: 33cae0a0b31c5f74fac564eb302b96fe,
+    type: 3}
+  MinSpawns: 5
+  MaxSpawns: 10
+  WinCondition: 0
+  InitialEnemies: 0
+  HasBeenAttacked: 0
+  Attackable: 0
+  LivingDead: 1
+  Options: 0200000005000000
+  Buyables: []
+  GoblinPrefab: {fileID: 0}
+  Explored: 0
+  Difficulty: 0
+  Treasure: 3
 --- !u!1 &8503355671099633675
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,13 +124,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8503355671099633675}
-  m_LocalRotation: {x: 0.60876137, y: 0, z: 0, w: 0.7933534}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 7.5}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.4, z: 1}
   m_Children: []
   m_Father: {fileID: 4081050876500789283}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 75, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &3393623537601953334
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -136,7 +148,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a125d9c012b2ff1498a01d0102f9950a, type: 2}
+  - {fileID: 2100000, guid: 3cd4f51bca0ed2740926dad996b57cd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -156,7 +168,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2eb82ac66de274383af71b2eb2c75da0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 510ed9e83276beb44b58506d27476a00, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

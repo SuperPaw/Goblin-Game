@@ -113,7 +113,7 @@ public class Area : MonoBehaviour
             return;
         }
 
-        if(GameManager.Instance.GameStarted && !c.TravellingToArea == this && this != c.InArea)
+        if(GameManager.Instance.GameStarted && c.TravellingToArea != this && this != c.InArea)
         {
             Debug.LogWarning(c + " is not travveling to: "+ this);
             return;

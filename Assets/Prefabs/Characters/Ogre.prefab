@@ -5313,7 +5313,7 @@ Transform:
   m_GameObject: {fileID: 925690161}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
   m_LocalPosition: {x: 475.80756, y: 1.04, z: 618.6}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children:
   - {fileID: 6814016902350944696}
   m_Father: {fileID: 0}
@@ -5345,6 +5345,7 @@ MonoBehaviour:
   MovementAudio: {fileID: 0}
   SurprisedTime: 4
   SurprisedStartTime: 0
+  Aggressive: 0
   CharacterRace: 4
   IrritationMeter: 0
   IrritaionTolerance: 200
@@ -5369,6 +5370,7 @@ MonoBehaviour:
   idleDistance: 50
   Walking: 0
   AttackRange: 0
+  TravellingToArea: {fileID: 0}
   actionInProgress: 0
   Target: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 4784471807589823077}
@@ -5382,13 +5384,17 @@ MonoBehaviour:
   MoralBoostOnEnemyDeath: 5
   MoralBoostOnKill: 5
   AmbushModifier: 1.2
+  IncomingDmgPct: 1
+  OutgoingDmgPct: 1
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 2100000, guid: ec7b940140fe1fd48b9583049be0fe7b, type: 2}
   Animator: {fileID: 4456687315143079690}
   SpeedAnimationThreshold: 0
   provokeDistance: 10
+  ProvokeTime: 5
   InArea: {fileID: 0}
+  DebugText: {fileID: 0}
 --- !u!54 &925690164
 Rigidbody:
   m_ObjectHideFlags: 0

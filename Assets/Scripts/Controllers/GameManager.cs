@@ -46,16 +46,12 @@ public class GameManager : MonoBehaviour
         //TODO: use this instead of on the stat
         public string Description;
     }
-    public enum OptionType
-    {
-        BuyGoblin, SellGoblin, SacrificeGoblin, BuyStaff, BuyHat, StealTreasure, BuyFood, Healing, Attack, Explore, Lure
-    }
-
     [Serializable]
     public struct TargetImaget
     {
-        public OptionType type;
+        public PointOfInterest.OptionType type;
         public Sprite image;
+        public string DefaultQuestionText;
     }
 
 
@@ -162,9 +158,14 @@ public class GameManager : MonoBehaviour
         return Instance.XpOnTeamKill;
     }
 
-    internal static void GameOver()
+    internal static void GameOver(bool gameWon = false)
     {
-        SoundController.PlayGameLoss();
+        if(gameWon)
+            SoundController.PlayStinger(SoundBank.Stinger.GameWin);
+        else
+            SoundController.PlayGameLoss();
+
+        //tODO: add points to score if won
 
         Instance.StartCoroutine(Instance.FadeToHighScoreRoutine());
     }
@@ -229,5 +230,4 @@ public class GameManager : MonoBehaviour
         //TODO: move to above method
         HighScoreScreen.gameObject.SetActive(true);
     }
-    
 }

@@ -422,8 +422,12 @@ public class PlayerController : MonoBehaviour
     //TODO: only from button click
     public void ClickedArea(Area a)
     {
-        if(!ActionIsLegal(MappableActions.Move))
-            Debug.LogWarning("Moving should not be allowed now. Handle here ,pawski!");
+        if (!ActionIsLegal(MappableActions.Move))
+        {
+            Debug.LogWarning("Moving should not be allowed now.");
+            ZoomIn();
+            return;
+        }
 
         var target = a.transform.position;//hit.point;
         target.y = 0;
@@ -685,7 +689,10 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator DisableAreaUIOnAction(List<Area> toDisable)
     {
-        yield return new WaitUntil(() => currentZoomLevel != ZoomLevel.MapView);
+        yield return new WaitUntil(() => currentZoomLevel != ZoomLevel.MapView || !ActionIsLegal(MappableActions.Move));
+
+        if(currentZoomLevel == ZoomLevel.MapView)
+            ZoomIn();
         
         showingMoveView = false;
 

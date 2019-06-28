@@ -3006,16 +3006,14 @@ MonoBehaviour:
   State: 0
   LootTarget: {fileID: 0}
   Team: {fileID: 0}
-  DamMin: 9
-  DamMax: 9
-  AimMin: 8
-  AimMax: 8
-  AttMin: 10
-  AttMax: 10
+  DamMin: 7
+  DamMax: 7
+  AimMin: 5
+  AimMax: 5
   CouMin: 30
   CouMax: 30
-  HeaMin: 15
-  HeaMax: 15
+  HeaMin: 13
+  HeaMax: 13
   SpeMin: 4
   SpeMax: 4
   SmaMin: 5
@@ -3048,6 +3046,7 @@ MonoBehaviour:
   provokeDistance: 10
   ProvokeTime: 5
   InArea: {fileID: 0}
+  DebugText: {fileID: 0}
 --- !u!54 &54649803752173894
 Rigidbody:
   m_ObjectHideFlags: 0

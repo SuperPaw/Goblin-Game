@@ -51,35 +51,35 @@ MonoBehaviour:
   RandomSeed: 0
   MapSizes:
   - WorldSize: 0
-    SizeX: 160
+    SizeX: 200
     SizeY: 200
-    PointOfInterests: 3
+    PointOfInterests: 7
     HumanSettlements: 3
     VillagesToGenerate: 1
   - WorldSize: 1
-    SizeX: 200
-    SizeY: 240
-    PointOfInterests: 6
-    HumanSettlements: 4
-    VillagesToGenerate: 2
-  - WorldSize: 2
     SizeX: 240
     SizeY: 280
-    PointOfInterests: 9
-    HumanSettlements: 4
-    VillagesToGenerate: 2
-  - WorldSize: 3
-    SizeX: 280
-    SizeY: 400
-    PointOfInterests: 12
+    PointOfInterests: 14
     HumanSettlements: 6
+    VillagesToGenerate: 2
+  - WorldSize: 2
+    SizeX: 280
+    SizeY: 320
+    PointOfInterests: 21
+    HumanSettlements: 9
     VillagesToGenerate: 3
-  SizeX: 400
-  SizeZ: 400
+  - WorldSize: 3
+    SizeX: 320
+    SizeY: 400
+    PointOfInterests: 28
+    HumanSettlements: 12
+    VillagesToGenerate: 4
+  SizeX: 160
+  SizeZ: 160
   AreaTilePrefab: {fileID: 114614147775462646, guid: e15f42e3c6199524da160032eae3127f,
     type: 3}
-  AreaSize: 30
-  AreaBufferSize: 10
+  AreaSize: 25
+  AreaBufferSize: 15
   WeightedBufferChance:
     serializedVersion: 2
     m_Curve:
@@ -119,6 +119,7 @@ MonoBehaviour:
   - {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9, type: 3}
   - {fileID: 180470, guid: f4864ffb159f30048a3bdafeae646afb, type: 3}
   - {fileID: 925690161, guid: c20038e116842f141abc7551f9742b45, type: 3}
+  - {fileID: 100000, guid: ba76689f220e59a48845d4df03dcbffa, type: 3}
   HidableObjects:
   - {fileID: 1910571166180590, guid: 039038a2da993284dbd739d670e3a939, type: 3}
   ForestHolder: {fileID: 2032421715755256616}
@@ -134,12 +135,15 @@ MonoBehaviour:
   LootObjects:
   - {fileID: 1910571166180590, guid: ee5830f18c2be1244bb0fa764c0769a1, type: 3}
   PointOfInterestPrefabs:
-  - {fileID: 1510720524141754411, guid: 7cde1fc3eeb07ab41add50d71da38d93, type: 3}
-  - {fileID: 909367182681320238, guid: 69c2564b5439e0a4892a9240f5182bcc, type: 3}
-  - {fileID: 799393227371411339, guid: e68521ac0ca9f3d42970ef4e5885b4d4, type: 3}
+  - {fileID: 199962508053162890, guid: 7cde1fc3eeb07ab41add50d71da38d93, type: 3}
+  - {fileID: 3737014991024357967, guid: 69c2564b5439e0a4892a9240f5182bcc, type: 3}
+  - {fileID: 3619856751451260163, guid: e68521ac0ca9f3d42970ef4e5885b4d4, type: 3}
+  - {fileID: 3015812138980168657, guid: 4456ccbde6cee0740a01e17a716561e3, type: 3}
+  - {fileID: 8657152020438372284, guid: af27c9342edcf8a4c9aef48860d6d374, type: 3}
+  - {fileID: 2211416476180358674, guid: aa72a07c325a09742bd269bcb73a9595, type: 3}
   HumanSettlementPrefab:
-  - {fileID: 3172418170863198060, guid: 949060969851d48479664ba80b2eecef, type: 3}
-  - {fileID: 4214430656408830761, guid: 038fe9f5a3d519245832da7ff693b767, type: 3}
+  - {fileID: 1183648253675823931, guid: 949060969851d48479664ba80b2eecef, type: 3}
+  - {fileID: 7885703517516428167, guid: 038fe9f5a3d519245832da7ff693b767, type: 3}
   VillagePrefab: {fileID: 6920746842318355173, guid: 44755d817d47f524b8229f414246efa5,
     type: 3}
   GoblinsForSalePrVillage: 3
@@ -302,7 +306,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.06666667
+  m_VoxelSize: 0.033333335
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 0}
 --- !u!114 &8333565733166306683

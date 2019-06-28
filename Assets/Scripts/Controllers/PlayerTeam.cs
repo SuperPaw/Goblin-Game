@@ -252,10 +252,18 @@ public class PlayerTeam : MonoBehaviour
     }
 
 
-    public void AddMember(Goblin g)
+    public void AddMember(Goblin goblin)
     {
-        Members.Add(g);
+        goblin.Team = this;
+
+        //TODO: use method for these
+        goblin.transform.parent = transform;
+        goblin.tag = "Player";
+
+        Members.Add(goblin);
         OnMemberAdded.Invoke();
+
+        GoblinUIList.UpdateGoblinList();
     }
 
     #region Orders
@@ -306,13 +314,13 @@ public class PlayerTeam : MonoBehaviour
     {
         foreach (var ch in Members)
         {
-            if (!ch.Attacking() && !ch.Fleeing() &&ch.InArea == Leader.InArea)
+            if (!ch.Attacking() && !ch.Fleeing() &&
+                (ch.InArea == Leader.InArea || ch.TravellingToArea == Leader.InArea))
             {
                 ch.Hide();
             }
-
-            StartCoroutine(PlayHideSound(2.5f));
         }
+        StartCoroutine(PlayHideSound(2.5f));
     }
 
     private IEnumerator PlayHideSound(float wait)
@@ -370,7 +378,8 @@ public class PlayerTeam : MonoBehaviour
 
         foreach (var gobbo in Members)
         {
-            if (gobbo.Fleeing() || !gobbo.InArea == Leader.InArea)
+            if (gobbo.Fleeing() |! 
+                (gobbo.InArea == Leader.InArea))//|| gobbo.TravellingToArea == Leader.InArea || gobbo.TravellingToArea == Leader.TravellingToArea))
                 continue;
             if (gobbo.Hiding())
                 gobbo.Hidingplace = null;
@@ -523,17 +532,6 @@ public class PlayerTeam : MonoBehaviour
         //TODO: effect
     }
 
-    internal void StealTreasure(Monument stone)
-    {
-        OnTreasureFound.Invoke(stone.Treasure);
-        stone.Treasure = 0;
-
-        SoundController.PlayStinger(SoundBank.Stinger.Sneaking);
-
-        //if (Random.value < 0.6f)
-        stone.SpawnDead(this);
-    }
-
 
     internal void SellFood(int amount, int price)
     {
@@ -543,7 +541,7 @@ public class PlayerTeam : MonoBehaviour
         //TODO: play caching
     }
 
-    internal void SellGoblin(Goblin goblin, int price, GoblinWarrens newVillage)
+    internal void SellGoblin(Goblin goblin, int price)
     {
         Members.Remove(goblin);
         OnTreasureFound.Invoke(price);
@@ -551,14 +549,13 @@ public class PlayerTeam : MonoBehaviour
         goblin.Team = null;
 
         GoblinUIList.UpdateGoblinList();
-
-        goblin.transform.parent = newVillage.transform;
-
+        
         goblin.tag = "NPC";
 
-        newVillage.Members.Add(goblin);
     }
-    internal void SacGoblin(Goblin goblin, Monument sacrificeStone)
+
+
+    internal void SacGoblin(Goblin goblin, PointOfInterest sacrificeStone)
     {
         Members.Remove(goblin);
 
@@ -579,23 +576,6 @@ public class PlayerTeam : MonoBehaviour
         goblin.Health = 0;
 
     }
-
-    internal void BuyGoblin(Goblin goblin, int price, GoblinWarrens oldVillage)
-    {
-        OnTreasureFound.Invoke(-price);
-
-        goblin.Team = this;
-
-        //TODO: use method for these
-        AddMember(goblin);
-        goblin.transform.parent = transform;
-        goblin.tag = "Player";
-
-        GoblinUIList.UpdateGoblinList();
-
-        oldVillage.Members.Remove(goblin);
-    }
-
 
     internal void AddXp(int v)
     {
@@ -650,7 +630,8 @@ public class PlayerTeam : MonoBehaviour
         //Debug.Log("Fleeing now");
         foreach (var gobbo in Members)
         {
-            gobbo.ChangeState(Character.CharacterState.Fleeing, gobbo == Leader);
+            if (gobbo.InArea == Leader.InArea || gobbo.TravellingToArea == Leader.InArea || gobbo.TravellingToArea == Leader.TravellingToArea)
+               gobbo.ChangeState(Character.CharacterState.Fleeing, gobbo == Leader);
         }
     }
 

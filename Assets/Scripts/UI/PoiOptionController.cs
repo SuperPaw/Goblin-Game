@@ -10,7 +10,7 @@ public class PoiOptionController : MonoBehaviour
 {
     public PoiOptionButton OptionButton;
     public AnimationCurve PopupCurve;
-    private List<GameManager.OptionType> OpenTypes = new List<GameManager.OptionType>();
+    private List<PointOfInterest.OptionType> OpenTypes = new List<PointOfInterest.OptionType>();
     public static UnityEvent CloseOptionsEvent;
     private List<PoiOptionButton> InstantiatedButtons = new List<PoiOptionButton>();
 
@@ -27,7 +27,7 @@ public class PoiOptionController : MonoBehaviour
     }
 
     //TODO: create as coroutine for pop-ups
-    public void CreateOption(GameManager.OptionType type, UnityAction action)
+    public void CreateOption(PointOfInterest.OptionType type, UnityAction action)
     {
         if(OpenTypes.Contains(type)) return;
 
@@ -39,12 +39,34 @@ public class PoiOptionController : MonoBehaviour
 
         instance.Button.onClick.AddListener(action);
         instance.Button.onClick.AddListener(CloseOptionsEvent.Invoke);
-        instance.TargetImage.sprite = GameManager.Instance.OptionTargetImages.First(o => type ==o.type).image;
+        if(GameManager.Instance.OptionTargetImages.Any(o => type == o.type))
+            instance.TargetImage.sprite = GameManager.Instance.OptionTargetImages.First(o => type ==o.type).image;
 
         InstantiatedButtons.Add(instance);
 
         OptionButton.gameObject.SetActive(false);
     }
+
+    //TODO: create as coroutine for pop-ups
+    public void CreateOption(PointOfInterest.OptionType type, UnityAction action, Sprite spr)
+    {
+        if (OpenTypes.Contains(type)) return;
+
+        OpenTypes.Add(type);
+
+        var instance = Instantiate(OptionButton, this.transform);
+
+        instance.gameObject.SetActive(true);
+
+        instance.Button.onClick.AddListener(action);
+        instance.Button.onClick.AddListener(CloseOptionsEvent.Invoke);
+        instance.TargetImage.sprite = spr;
+
+        InstantiatedButtons.Add(instance);
+
+        OptionButton.gameObject.SetActive(false);
+    }
+
 
     private void CloseOptions()
     {

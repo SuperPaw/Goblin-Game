@@ -133,7 +133,24 @@ public class LevelUpView : MenuWindow
         switch (SelectedChoice.Type)
         {
             case LevelController.ChoiceType.Attribute:
-                LevelUp(character,character.Stats[SelectedChoice.Attribute]);
+                switch (SelectedChoice.Attribute)
+                {
+                    case Character.StatType.DAMAGE:
+                    case Character.StatType.AIM:
+                    case Character.StatType.COURAGE:
+                    case Character.StatType.SMARTS:
+                        LevelUp(character, character.Stats[SelectedChoice.Attribute]);
+                        break;
+                    case Character.StatType.HEALTH:
+                        LevelUp(character,character.HEA);
+                        break;
+                    case Character.StatType.SPEED:
+                        LevelUp(character, character.SPE);
+                        break;
+                    case Character.StatType.COUNT:
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
                 break;
             case LevelController.ChoiceType.Class:
                 SelectClass(character,SelectedChoice.Class);

@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4081050876500789283}
   - component: {fileID: 4526848622528733997}
-  - component: {fileID: 1518246160178354466}
   - component: {fileID: 3279508761785604338}
+  - component: {fileID: 3356812039455365595}
   m_Layer: 0
   m_Name: Warrens
   m_TagString: Hidable
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6920746842318355173}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7906681578375453446}
@@ -44,35 +44,13 @@ NavMeshObstacle:
   m_GameObject: {fileID: 6920746842318355173}
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 5, y: 1, z: 5}
+  m_Shape: 1
+  m_Extents: {x: 3, y: 3, z: 3}
   m_MoveThreshold: 1
   m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!114 &1518246160178354466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6920746842318355173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81682c003697a7b4abed377af7baa1e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AreaName: Goblin Village
-  MinSpawns: 1
-  MaxSpawns: 4
-  MonsterPrefab: {fileID: 0}
-  InArea: {fileID: 0}
-  HasBeenAttacked: 0
-  IconSprite: {fileID: 21300000, guid: b12336ffd95ef6c4a840e23d56f4d9da, type: 3}
-  PoiOptionController: {fileID: 0}
-  PoiType: 2
-  Members: []
 --- !u!65 &3279508761785604338
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -84,8 +62,62 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 9, y: 6, z: 8}
+  m_Size: {x: 6, y: 6, z: 6}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3356812039455365595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6920746842318355173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79083799dc4cb564482ebd282aad8db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AreaName: Goblin Village
+  Inhabitants: Village
+  PoiType: 2
+  InArea: {fileID: 0}
+  NPCPrefab: {fileID: 114423572150661240, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe,
+    type: 3}
+  NoOfNpcs: 4
+  IconSprite: {fileID: 21300000, guid: c148599842f42274194246ba86cb5215, type: 3}
+  PoiOptionController: {fileID: 0}
+  Members: []
+  MonsterPrefab: {fileID: 114423572150661240, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe,
+    type: 3}
+  MinSpawns: 8
+  MaxSpawns: 12
+  WinCondition: 1
+  InitialEnemies: 0
+  HasBeenAttacked: 0
+  Attackable: 0
+  LivingDead: 0
+  Options: 0800000001000000
+  Buyables:
+  - Name: Goblin
+    Sprite: {fileID: 0}
+    Type: 0
+    BuyableClass: 1
+    EquipmentType: 0
+    Price: 4
+    AmountForSale: 2
+    OptionType: 0
+  - Name: 5 food
+    Sprite: {fileID: 0}
+    Type: 1
+    BuyableClass: 0
+    EquipmentType: 0
+    Price: 1
+    AmountForSale: 20
+    OptionType: 6
+  GoblinPrefab: {fileID: 114423572150661240, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe,
+    type: 3}
+  Explored: 0
+  Difficulty: 0
+  Treasure: 0
 --- !u!1 &8503355671099633675
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,13 +142,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8503355671099633675}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: -2.5}
-  m_LocalScale: {x: 3, y: 4, z: 3}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.4, z: 1}
   m_Children: []
   m_Father: {fileID: 4081050876500789283}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &3393623537601953334
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -154,7 +186,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b12336ffd95ef6c4a840e23d56f4d9da, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c148599842f42274194246ba86cb5215, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

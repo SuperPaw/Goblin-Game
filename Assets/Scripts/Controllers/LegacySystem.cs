@@ -136,6 +136,10 @@ public class LegacySystem : MonoBehaviour
                 break;
             case Character.Race.NoRace:
                 break;
+            case Character.Race.Orc:
+                break;
+            case Character.Race.Elf:
+                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(r), r, null);
         }

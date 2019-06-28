@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4081050876500789283}
   - component: {fileID: 4526848622528733997}
   - component: {fileID: 3279508761785604338}
-  - component: {fileID: 799393227371411339}
+  - component: {fileID: 3619856751451260163}
   m_Layer: 0
   m_Name: WitchHut
   m_TagString: Hidable
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6920746842318355173}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7906681578375453446}
@@ -44,12 +44,12 @@ NavMeshObstacle:
   m_GameObject: {fileID: 6920746842318355173}
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 6, y: 1, z: 6}
+  m_Shape: 1
+  m_Extents: {x: 3, y: 3, z: 2.5}
   m_MoveThreshold: 1
   m_Carve: 1
   m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: -1.5}
   m_TimeToStationary: 0.5
 --- !u!65 &3279508761785604338
 BoxCollider:
@@ -62,9 +62,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10, y: 6, z: 10}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &799393227371411339
+  m_Size: {x: 6, y: 6, z: 5}
+  m_Center: {x: 0, y: 0, z: -1.5}
+--- !u!114 &3619856751451260163
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,18 +73,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 6920746842318355173}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c068caa43bd7a6144a94c9d2b2cae4ef, type: 3}
+  m_Script: {fileID: 11500000, guid: 79083799dc4cb564482ebd282aad8db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   AreaName: Witch Hut
+  Inhabitants: witch
   MinSpawns: 1
   MaxSpawns: 1
   MonsterPrefab: {fileID: 114479280790955412, guid: a41febb9abb65c949b38b226685a2ff7,
     type: 3}
+  NPCPrefab: {fileID: 0}
   InArea: {fileID: 0}
   HasBeenAttacked: 0
-  IconSprite: {fileID: 21300000, guid: f24aaf3d4500eda4fa6dba91e4e3877b, type: 3}
+  Attackable: 0
+  IconSprite: {fileID: 21300000, guid: c2b65fcb79e2b8044bd70eeb7b4a28a5, type: 3}
   PoiOptionController: {fileID: 0}
+  Options: 08000000
+  Buyables:
+  - Name: skull hat
+    Sprite: {fileID: 0}
+    Type: 3
+    EquipmentType: 1
+    Price: 5
+    AmountForSale: 1
+    OptionType: 4
+  - Name: stick
+    Sprite: {fileID: 0}
+    Type: 3
+    EquipmentType: 6
+    Price: 4
+    AmountForSale: 1
+    OptionType: 3
+  - Name: healing
+    Sprite: {fileID: 0}
+    Type: 2
+    EquipmentType: 0
+    Price: 2
+    AmountForSale: 10
+    OptionType: 7
   PoiType: 5
 --- !u!1 &8503355671099633675
 GameObject:
@@ -111,8 +137,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8503355671099633675}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6, y: 7.5, z: 6}
+  m_LocalPosition: {x: 0, y: 2, z: -1}
+  m_LocalScale: {x: 0.3, y: 0.4, z: 1}
   m_Children: []
   m_Father: {fileID: 4081050876500789283}
   m_RootOrder: 0
@@ -154,7 +180,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f24aaf3d4500eda4fa6dba91e4e3877b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c2b65fcb79e2b8044bd70eeb7b4a28a5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
