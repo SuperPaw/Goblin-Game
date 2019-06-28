@@ -1854,22 +1854,21 @@ MonoBehaviour:
   MovementAudio: {fileID: 8120271307407292857}
   SurprisedTime: 4
   SurprisedStartTime: 0
+  Aggressive: 0
   CharacterRace: 2
   IrritationMeter: 0
   IrritaionTolerance: 50
   State: 0
   LootTarget: {fileID: 0}
   Team: {fileID: 0}
-  DamMin: 6
-  DamMax: 6
-  AimMin: 8
-  AimMax: 8
-  AttMin: 10
-  AttMax: 10
+  DamMin: 5
+  DamMax: 5
+  AimMin: 6
+  AimMax: 6
   CouMin: 50
   CouMax: 50
-  HeaMin: 20
-  HeaMax: 20
+  HeaMin: 18
+  HeaMax: 18
   SpeMin: 7
   SpeMax: 7
   SmaMin: 5
@@ -1878,6 +1877,7 @@ MonoBehaviour:
   idleDistance: 4
   Walking: 0
   AttackRange: 0
+  TravellingToArea: {fileID: 0}
   actionInProgress: 0
   Target: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 0}
@@ -1891,13 +1891,17 @@ MonoBehaviour:
   MoralBoostOnEnemyDeath: 5
   MoralBoostOnKill: 5
   AmbushModifier: 1.2
+  IncomingDmgPct: 1
+  OutgoingDmgPct: 1
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 2100000, guid: 78d88e566e5f7b14aaa719c52b23bd6c, type: 2}
   Animator: {fileID: 2540776658341829585}
   SpeedAnimationThreshold: 0
   provokeDistance: 8
+  ProvokeTime: 5
   InArea: {fileID: 0}
+  DebugText: {fileID: 0}
 --- !u!136 &136731165325136334
 CapsuleCollider:
   m_ObjectHideFlags: 0

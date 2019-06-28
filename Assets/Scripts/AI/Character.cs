@@ -147,8 +147,6 @@ public abstract class Character : MonoBehaviour
         DamMax,
         AimMin,
         AimMax,
-        AttMin,
-        AttMax,
         CouMin,
         CouMax,
         HeaMin,

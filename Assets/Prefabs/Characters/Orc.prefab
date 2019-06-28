@@ -69,16 +69,14 @@ MonoBehaviour:
   State: 0
   LootTarget: {fileID: 0}
   Team: {fileID: 0}
-  DamMin: 9
-  DamMax: 9
-  AimMin: 8
-  AimMax: 8
-  AttMin: 10
-  AttMax: 10
-  CouMin: 30
-  CouMax: 30
-  HeaMin: 15
-  HeaMax: 15
+  DamMin: 6
+  DamMax: 6
+  AimMin: 4
+  AimMax: 4
+  CouMin: 10
+  CouMax: 10
+  HeaMin: 20
+  HeaMax: 20
   SpeMin: 5
   SpeMax: 5
   SmaMin: 5
