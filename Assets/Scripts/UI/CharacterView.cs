@@ -146,9 +146,15 @@ public class CharacterView : MenuWindow
             generatedObjects.Add(entry.gameObject);
         }
 
-
+        StartCoroutine(CloseOnPan());
     }
 
+    private IEnumerator CloseOnPan()
+    {
+        yield return new WaitUntil(() => PlayerController.Instance.FollowGoblin);
+
+        Close();
+    }
 
     private string ClassName(Goblin.Class cl)
     {
