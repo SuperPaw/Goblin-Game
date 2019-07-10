@@ -114,19 +114,16 @@ public class CharacterView : MenuWindow
         //TODO: update current stats instead replacing
         foreach (var stat in c.Stats.Values)
         {
-            
-
-
             var entry = Instantiate(StatEntry, StatEntry.transform.parent);
 
             var val = stat.GetStatMax();
 
-            entry.Name.text = stat.Type.ToString();
+            entry.Name.sprite = GameManager.GetAttributeImage(stat.Type);
             entry.Value.text = val.ToString();
-            var style = val > 3 ? FontStyles.Bold : FontStyles.Normal;
+            //var style = val > 3 ? FontStyles.Bold : FontStyles.Normal;
             var color = val > 3 ? entry.HighStatColor : val < 3 ? entry.LowStatColor : entry.Value.color;
             entry.Value.color = color;
-            entry.Name.fontStyle = entry.Value.fontStyle = style;
+            //entry.Name.fontStyle = entry.Value.fontStyle = style;
             entry.gameObject.SetActive(true);
             entry.ValueHover.Stat = stat;
             generatedObjects.Add(entry.gameObject);

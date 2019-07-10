@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class StatEntry : MonoBehaviour
 {
-    public TextMeshProUGUI Name;
+    public Image Name;
     public TextMeshProUGUI Value;
     public OnValueHover ValueHover;
     public Image FillImage;
