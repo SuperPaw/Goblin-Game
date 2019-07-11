@@ -87,7 +87,7 @@ public class CharacterView : MenuWindow
         
         Name.text = c.name;
         var lvl = Goblin.GetLevel((int) c.Xp);
-        ClassLevelText.text = "Level " + lvl + " " + ClassName(c.ClassType);
+        ClassLevelText.text = "LVL " + lvl;// + " " + ClassName(c.ClassType);
         ClassLevelText.GetComponent<OnValueHover>().Class = c.ClassType;
         //ClassLevelText.gameObject.SetActive(!c.WaitingOnClassSelection || !c.Alive());
         //ClassSelectionHolder.SetActive(c.WaitingOnClassSelection && c.Alive());
@@ -151,7 +151,7 @@ public class CharacterView : MenuWindow
 
     private IEnumerator CloseOnPan()
     {
-        yield return new WaitUntil(() => PlayerController.Instance.FollowGoblin);
+        yield return new WaitUntil(() => !PlayerController.Instance.FollowGoblin);
 
         Close();
     }

@@ -205,8 +205,8 @@ public class PlayerTeam : MonoBehaviour
 
     private void UpdateFoodAndTreasure()
     {
-        TreasureText.text = "Goblin TreasurES: " + Treasure;
-        FoodText.text = "FOod: " + Food;
+        TreasureText.text = "" + Treasure;
+        FoodText.text = "" + Food;
     }
 
     private void TeamKill()
