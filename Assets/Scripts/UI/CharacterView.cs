@@ -26,6 +26,8 @@ public class CharacterView : MenuWindow
     [SerializeField]
     private LevelUpView levelUpScreen = null;
 
+    public GameObject EquipmentHolder;
+
     new void Awake()
     {
         base.Awake();
@@ -129,6 +131,9 @@ public class CharacterView : MenuWindow
             generatedObjects.Add(entry.gameObject);
             
         }
+
+        if(EquipmentHolder)
+            EquipmentHolder.SetActive(c.Equipped.Values.Any(v => v));
 
         //TODO: update current stats instead replacing
         foreach (var equipment in c.Equipped.Values.Where(v => v))
