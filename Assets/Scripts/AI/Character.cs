@@ -13,9 +13,10 @@ using Random = UnityEngine.Random;
 //TODO: Should be divided into smaller classes
 public abstract class Character : MonoBehaviour
 {
-    [Header("Debug Values")]
+    [Header("NAV MESH Debug Values")]
     public float AgentVelocity;
     public float DesiredVelocity;
+    public Vector3 Destination;
     public bool HasPath;
     public bool PathStale;
     public bool IsOnNavMesh;
@@ -430,6 +431,7 @@ public abstract class Character : MonoBehaviour
 
         navMeshAgent.speed = Walking ? Mathf.Min(WalkingSpeed,SPE.GetStatMax())/2f : SPE.GetStatMax() / 2f;
 
+        Destination = navMeshAgent.destination;
         DesiredVelocity = navMeshAgent.desiredVelocity.sqrMagnitude;
         AgentVelocity = navMeshAgent.velocity.sqrMagnitude;
         HasPath = navMeshAgent.hasPath;
@@ -1012,11 +1014,11 @@ public abstract class Character : MonoBehaviour
                     break;
                 }
 
-                if (!navMeshAgent.hasPath)
-                {
-                    Debug.Log($"{name}: Updating loot target path");
-                    navMeshAgent.SetDestination(LootTarget.transform.position);
-                }
+                //if (!navMeshAgent.hasPath && !navMeshAgent.pathPending)
+                //{
+                //    Debug.Log($"{name}: Updating loot target path: {LootTarget}, {LootTarget.transform.position}");
+                //    navMeshAgent.SetDestination(LootTarget.transform.position);
+                //}
 
                 //check for arrival and stop travelling
                 if (Vector3.Distance(transform.position, LootTarget.transform.position) < 2f)

@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AgentVelocity: 0
   DesiredVelocity: 0
+  Destination: {x: 0, y: 0, z: 0}
   HasPath: 0
   PathStale: 0
   IsOnNavMesh: 0
@@ -154,7 +155,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 100702}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.005
+  m_Radius: 0.2
   m_Speed: 4
   m_Acceleration: 20
   avoidancePriority: 50

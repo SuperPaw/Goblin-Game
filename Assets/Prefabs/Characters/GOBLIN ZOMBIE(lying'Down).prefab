@@ -11142,7 +11142,7 @@ GameObject:
   - component: {fileID: 3743388866066621440}
   - component: {fileID: 2935909671606926489}
   m_Layer: 0
-  m_Name: GOBLIN ZOMBIE(Clone)
+  m_Name: GOBLIN ZOMBIE(lying'Down)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11172,7 +11172,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8790477768155263420}
   m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.2
   m_Speed: 1
   m_Acceleration: 20
   avoidancePriority: 50
@@ -11227,25 +11227,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f367bc6751787434fbe6a314f8bf8281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HolderGameObject: {fileID: 2781066086286281129}
-  CharacterRace: 3
-  Wandering: 1
+  AgentVelocity: 0
+  DesiredVelocity: 0
+  Destination: {x: 0, y: 0, z: 0}
+  HasPath: 0
+  PathStale: 0
+  IsOnNavMesh: 0
+  StickToRoad: 0
   HasEquipment: 0
   Voice: {fileID: 5247153854327925670}
   VoicePitch: 1.2130075
   VoiceText: {fileID: 0}
   ShoutTime: 2
   MovementAudio: {fileID: 0}
+  MaxGroupSize: 4
   SurprisedTime: 4
   SurprisedStartTime: 0
+  Aggressive: 0
+  CharacterRace: 3
+  IrritationMeter: 0
+  IrritaionTolerance: 5
+  State: 0
   LootTarget: {fileID: 0}
   Team: {fileID: 0}
   DamMin: 1
   DamMax: 2
   AimMin: 3
   AimMax: 4
-  AttMin: 1
-  AttMax: 2
   CouMin: 50
   CouMax: 50
   HeaMin: 5
@@ -11254,12 +11262,15 @@ MonoBehaviour:
   SpeMax: 2
   SmaMin: 5
   SmaMax: 1
+  WalkingSpeed: 2
   idleDistance: 50
   Walking: 0
   AttackRange: 1
+  TravellingToArea: {fileID: 0}
   actionInProgress: 0
   Target: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 4030170270417308882}
+  HolderGameObject: {fileID: 2781066086286281129}
   EquipmentManager: {fileID: 0}
   _health: 0
   HealtBar: {fileID: 7474054333844064586}
@@ -11269,15 +11280,17 @@ MonoBehaviour:
   MoralBoostOnEnemyDeath: 5
   MoralBoostOnKill: 5
   AmbushModifier: 1.2
+  IncomingDmgPct: 1
+  OutgoingDmgPct: 1
   DamageColor: {r: 1, g: 0, b: 0, a: 1}
   NormalColor: {r: 1, g: 1, b: 1, a: 1}
   Material: {fileID: 0}
   Animator: {fileID: 3743388866066621440}
   SpeedAnimationThreshold: 0
-  IrritationMeter: 0
-  IrritaionTolerance: 5
   provokeDistance: 10
+  ProvokeTime: 5
   InArea: {fileID: 0}
+  DebugText: {fileID: 0}
 --- !u!95 &3743388866066621440
 Animator:
   serializedVersion: 3
@@ -11315,6 +11328,7 @@ MonoBehaviour:
   ContainsFood: 1
   Food: Zombie food
   EquipmentLoot: []
+  InArea: {fileID: 0}
 --- !u!1 &8831982265576013335
 GameObject:
   m_ObjectHideFlags: 0
