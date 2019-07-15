@@ -11307,6 +11307,7 @@ MonoBehaviour:
   ClassIcon: {fileID: 5851224103366882955}
   levelUpButton: {fileID: 7622511449129654370}
   levelUpScreen: {fileID: 377567600539130325}
+  EquipmentHolder: {fileID: 0}
 --- !u!223 &4112279837990132907
 Canvas:
   m_ObjectHideFlags: 0
