@@ -956,7 +956,7 @@ public abstract class Character : MonoBehaviour
                     
                     actionInProgress = true;
                 }
-                else if (!navMeshAgent.hasPath)
+                else if (!navMeshAgent.hasPath &! navMeshAgent.pathPending)
                 {
                     //Debug.Log(name + " updating fleeing to " + fleeingToArea);
                     navMeshAgent.SetDestination(fleeingToArea.GetRandomPosInArea());
