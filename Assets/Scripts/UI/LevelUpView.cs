@@ -23,11 +23,13 @@ public class LevelUpView : MenuWindow
     private Button ConfirmButton = null;
     private Vector3 normalScale = Vector3.one;
     private Vector3 HighlightScale = Vector3.one * 1.3f;
-
+    private static LevelUpView Instance;
 
     new void Awake()
     {
         base.Awake();
+
+        if (!Instance) Instance = this;
 
         Type = WindowType.LevelUp;
     }
@@ -169,7 +171,7 @@ public class LevelUpView : MenuWindow
         GoblinUIList.UpdateGoblinList();
 
         //TODO: use a character stat change event instead.
-        CharacterView.ShowCharacter(character);
+        character.CharacterUI.ShowCharacter();
 
 
         Debug.Log("Closing level view");
@@ -182,7 +184,15 @@ public class LevelUpView : MenuWindow
         c.SelectClass(cl);
     }
 
+    public static void CloseLevelUp()
+    {
+        Instance.Close();
+    }
 
+    public static void OpenLevelUp(Goblin gob)
+    {
+        Instance.SetupLevelScreen(gob);
+    }
 
     //TODO: move to character or game manager
     private void LevelUp(Goblin gob, Character.Stat stat)

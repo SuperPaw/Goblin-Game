@@ -14,7 +14,7 @@ public class GoblinListEntry : MonoBehaviour
 
     public void SelectGoblin()
     {
-        CharacterView.ShowCharacter(Goblin);
+        Goblin.CharacterUI.ShowCharacter();
     }
 
     public void MarkAsDead()

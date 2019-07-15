@@ -104,12 +104,15 @@ public class Goblin : Character
         }
     }
 
+    public CharacterView CharacterUI;
+
         
 
     new void Awake()
     {
         base.Awake();
         
+        CharacterUI.SetCharacter(this);
 
         emission = particles.emission;
         

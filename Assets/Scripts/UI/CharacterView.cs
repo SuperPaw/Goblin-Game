@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterView : MenuWindow
+public class CharacterView : MonoBehaviour
 {
     public StatEntry XpTextEntry;
     public StatEntry HealthTextEntry;
@@ -18,64 +19,62 @@ public class CharacterView : MenuWindow
     //public GameObject ClassSelectionHolder;
     [SerializeField]
     private Image ClassIcon = null;
-    private static CharacterView Instance;
     private Goblin character;
     private readonly List<GameObject> generatedObjects = new List<GameObject>(10);
     [SerializeField]
     private Button levelUpButton = null;
-    [SerializeField]
-    private LevelUpView levelUpScreen = null;
+    [NotNull]
+    public AiryUIAnimationManager ViewHolder;
 
     public GameObject EquipmentHolder;
 
     new void Awake()
     {
-        base.Awake();
-
-        Type = WindowType.Character;
-
         levelUpButton.onClick.AddListener(OpenLevelUp);
-
-        if (!Instance) Instance = this;
+        
     }
 
     private void OpenLevelUp()
     {
-        levelUpScreen.SetupLevelScreen(character);
+        LevelUpView.OpenLevelUp(character);
     }
 
-    public static void ShowCharacter(Goblin c)
+    public  void SetCharacter(Goblin g)
     {
-        if (!c || !c.Team)// || c.Team.Leader.InArea != c.InArea)
-            return;
+        character = g;
+    }
 
+    public void ShowCharacter()
+    {
         //Debug.Log("Showing character: "+ c);
 
-        Instance.showCharacter(c);
+        showCharacter(character);
     }
 
-    public static void AddXp()
+    public void AddXp()
     {
-        if(!Instance.ViewHolder.gameObject.activeInHierarchy || !Instance.character)
-            return;
-
-        Instance.character.Xp += 10;
-        Instance.showCharacter(Instance.character);
+        character.Xp += 10;
+        showCharacter(character);
     }
 
-    public static void Kill()
+    public  void Kill()
     {
-        if (!Instance.ViewHolder.gameObject.activeInHierarchy || !Instance.character)
-            return;
+        character.Kill();
+    }
+    
+    protected void Open()
+    {
+        SoundController.PlayMenuPopup();
 
-        Instance.character.Kill();
+        ViewHolder.SetActive(true);
+        //GameManager.Pause();
     }
 
     private void showCharacter(Goblin c)
     {
         Open();
 
-        levelUpScreen.Close();
+        LevelUpView.CloseLevelUp();
 
         character = c;
 
@@ -104,10 +103,10 @@ public class CharacterView : MenuWindow
         }
         else
         {
-            XpTextEntry.Value.text = c.Xp.ToString("F0") + "\n - \n" + Goblin.LevelCaps[lvl];
+            XpTextEntry.Value.text = $" {c.Xp:F0} / {Goblin.LevelCaps[lvl]}";
             XpTextEntry.FillImage.fillAmount = c.Xp / Goblin.LevelCaps[lvl];
         }
-        HealthTextEntry.Value.text = c.Health + "\n - \n" + c.HEA.GetStatMax();
+        HealthTextEntry.Value.text = $" {c.Health} / {c.HEA.GetStatMax()}";
         HealthTextEntry.FillImage.fillAmount = c.Health / (float) c.HEA.GetStatMax();
         //HealthTextEntry.ValueHover.Stat = c.HEA;
         ClassIcon.sprite = c.Alive() ? GameManager.GetClassImage(c.ClassType): GameManager.GetIconImage(GameManager.Icon.Dead);
@@ -159,6 +158,22 @@ public class CharacterView : MenuWindow
         yield return new WaitUntil(() => !PlayerController.Instance.FollowGoblin);
 
         Close();
+    }
+
+    public void Close()
+    {
+        StartCoroutine(MarkAsClosedAfterAnimation());
+    }
+
+    private IEnumerator MarkAsClosedAfterAnimation()
+    {
+        ViewHolder.SetActive(false);
+
+        yield return new WaitUntil(() => ViewHolder.AllHidden());
+
+        //Debug.Log("Closing view: " +Type);
+        
+        //PlayerController.FollowGoblin = null;
     }
 
     private string ClassName(Goblin.Class cl)

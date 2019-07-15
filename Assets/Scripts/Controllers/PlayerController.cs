@@ -367,7 +367,7 @@ public class PlayerController : MonoBehaviour
                     else if (c as Goblin)
                     {
                         OnZoomLevelChange.Invoke(ZoomLevel.GoblinView);
-                        CharacterView.ShowCharacter(c as Goblin);
+                        (c as Goblin).CharacterUI.ShowCharacter();
                     }
                     else
                     {
@@ -561,7 +561,7 @@ public class PlayerController : MonoBehaviour
                 GameManager.Instance.InvincibleMode = !GameManager.Instance.InvincibleMode;
                 break;
             case MappableActions.AddXp:
-                CharacterView.AddXp();
+                FollowGoblin?.CharacterUI.AddXp();
                 break;
             case MappableActions.Move:
                 if (showingMoveView)
@@ -582,7 +582,7 @@ public class PlayerController : MonoBehaviour
                     GameManager.Pause();
                 break;
             case MappableActions.Kill:
-                CharacterView.Kill();
+                FollowGoblin?.Kill();
                 break;
             case MappableActions.RaiseDead:
                 StartCoroutine(Team.RaiseDead());
@@ -652,6 +652,8 @@ public class PlayerController : MonoBehaviour
 
     public void SetFollowGoblin(Goblin g)
     {
+        if(FollowGoblin != g) FollowGoblin?.CharacterUI.Close();
+
         FollowGoblin = g;
 
         currentZoomLevel = ZoomLevel.GoblinView;
