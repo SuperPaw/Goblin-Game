@@ -14,7 +14,7 @@ public class CharacterView : MonoBehaviour
     public StatEntry StatEntry;
     public TextMeshProUGUI Name;
     public TextMeshProUGUI ClassLevelText;
-    public TextMeshProUGUI EquipmentInfo;
+    public StatEntry EquipmentInfo;
     //public TextMeshProUGUI ClassSelectText;
     //public GameObject ClassSelectionHolder;
     [SerializeField]
@@ -26,7 +26,6 @@ public class CharacterView : MonoBehaviour
     [NotNull]
     public AiryUIAnimationManager ViewHolder;
 
-    public GameObject EquipmentHolder;
 
     new void Awake()
     {
@@ -42,6 +41,8 @@ public class CharacterView : MonoBehaviour
     public  void SetCharacter(Goblin g)
     {
         character = g;
+
+        ViewHolder.SetActive(false);
     }
 
     public void ShowCharacter()
@@ -131,14 +132,13 @@ public class CharacterView : MonoBehaviour
             
         }
 
-        if(EquipmentHolder)
-            EquipmentHolder.SetActive(c.Equipped.Values.Any(v => v));
 
         //TODO: update current stats instead replacing
         foreach (var equipment in c.Equipped.Values.Where(v => v))
         {
             var entry = Instantiate(EquipmentInfo, EquipmentInfo.transform.parent);
-            entry.text = equipment.EquipLocation + ": " + equipment.name;
+            entry.Value.text = equipment.name;
+            entry.Name.sprite = GameManager.GetIconImage(equipment.Type);
             entry.gameObject.SetActive(true);
             var hover =entry.GetComponent<OnValueHover>();
             if (hover)

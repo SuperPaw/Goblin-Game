@@ -103,6 +103,8 @@ public class PointOfInterest : MonoBehaviour
 
     protected IEnumerator Spawning(PlayerTeam team, bool livingDead = false)
     {
+        Debug.Log("Spawning monsters!!");
+
         HasBeenAttacked = true;
 
         yield return new WaitForSeconds(1.5f);
@@ -322,7 +324,7 @@ public class PointOfInterest : MonoBehaviour
 
         SoundController.PlayStinger(SoundBank.Stinger.Sneaking);
 
-        if (Random.value < 0.6f)
+        if (Random.value < 0.8f)
             StartCoroutine(Spawning(team,LivingDead));
     }
 

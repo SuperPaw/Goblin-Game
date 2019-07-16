@@ -141,6 +141,31 @@ MonoBehaviour:
   - ClassType: 2048
     Image: {fileID: 21300000, guid: e83f16f2bf40ba945bb5c3c20ea30707, type: 3}
     Description: Scout can scout for enemies. To set up ambushes
+  EquipmentImages:
+  - Type: 0
+    Sprite: {fileID: 21300000, guid: 0fc4167c00b7a0e49b895710bf0a7bc1, type: 3}
+  - Type: 1
+    Sprite: {fileID: 21300000, guid: 70b114b4184d0614eb80a6c4f51a8b91, type: 3}
+  - Type: 2
+    Sprite: {fileID: 21300000, guid: 5f081a55547080b41b71a4f77469792b, type: 3}
+  - Type: 3
+    Sprite: {fileID: 21300000, guid: 46962b70f2be7d94c91a79be7fb2588e, type: 3}
+  - Type: 4
+    Sprite: {fileID: 21300000, guid: 712a2b3c1c389cc46a841301713013c6, type: 3}
+  - Type: 5
+    Sprite: {fileID: 21300000, guid: f3522adafa2e99e438c51bc70508626d, type: 3}
+  - Type: 6
+    Sprite: {fileID: 21300000, guid: ffc7562d002564f4f9f4389860b1f55a, type: 3}
+  - Type: 7
+    Sprite: {fileID: 21300000, guid: 102254b6c9b20494285feb9d7c9a81ea, type: 3}
+  - Type: 8
+    Sprite: {fileID: 21300000, guid: 192429039a504f74897df1f03c40f3dc, type: 3}
+  - Type: 9
+    Sprite: {fileID: 21300000, guid: ff959b18bd1fcf944b24ac016e8d3316, type: 3}
+  - Type: 10
+    Sprite: {fileID: 21300000, guid: 321e7e550d5089347b6f6667b286eddf, type: 3}
+  - Type: 11
+    Sprite: {fileID: 21300000, guid: fdc2216d2a6a0db42a367b962ef03d17, type: 3}
   AttributeImages:
   - Stat: 0
     Image: {fileID: 21300000, guid: 73c58ef9dc6db424db58515b59eb1231, type: 3}
@@ -162,28 +187,42 @@ MonoBehaviour:
     Image: {fileID: 21300000, guid: 1381c04e043ab2b4b99d8624ea888154, type: 3}
     Description: SPEED - How fast goblin run
   OptionTargetImages:
-  - type: 0
-    image: {fileID: 21300000, guid: 78dc59c8441d1524091a52788eda3ba1, type: 3}
-  - type: 1
-    image: {fileID: 21300000, guid: 2fd2449862a18d94c95062f1f6de9ed0, type: 3}
-  - type: 2
-    image: {fileID: 21300000, guid: a9e404e8d560f0f4ebe658965e000066, type: 3}
-  - type: 3
-    image: {fileID: 21300000, guid: 3febefcfd9447814487b6969b5d7d634, type: 3}
-  - type: 4
-    image: {fileID: 21300000, guid: 15f5d954ce1eff54db055229d22604f0, type: 3}
-  - type: 5
-    image: {fileID: 21300000, guid: a7a8633c105cf6247a3551850f2a667e, type: 3}
-  - type: 6
-    image: {fileID: 21300000, guid: 3040060ac0181004d8f90c6aa09fc68e, type: 3}
-  - type: 7
-    image: {fileID: 21300000, guid: 26864bb0031ff104bb06e2adb6c3c808, type: 3}
-  - type: 8
-    image: {fileID: 21300000, guid: dd2938e95c1f7c84ea4c05699ff786ca, type: 3}
-  - type: 9
-    image: {fileID: 21300000, guid: 3ce81458820531b46abf3ae002e40e15, type: 3}
-  - type: 10
-    image: {fileID: 21300000, guid: c41af0fae10af13488887ed3f2aec5b7, type: 3}
+  - Type: 0
+    Image: {fileID: 21300000, guid: 78dc59c8441d1524091a52788eda3ba1, type: 3}
+    DefaultQuestionText: 
+  - Type: 1
+    Image: {fileID: 21300000, guid: d9ea26cb0d2791e41bf2a7bcfccdec80, type: 3}
+    DefaultQuestionText: 
+  - Type: 2
+    Image: {fileID: 21300000, guid: a9e404e8d560f0f4ebe658965e000066, type: 3}
+    DefaultQuestionText: 
+  - Type: 3
+    Image: {fileID: 21300000, guid: 3febefcfd9447814487b6969b5d7d634, type: 3}
+    DefaultQuestionText: 
+  - Type: 4
+    Image: {fileID: 21300000, guid: 70b114b4184d0614eb80a6c4f51a8b91, type: 3}
+    DefaultQuestionText: 
+  - Type: 6
+    Image: {fileID: 21300000, guid: 3040060ac0181004d8f90c6aa09fc68e, type: 3}
+    DefaultQuestionText: 
+  - Type: 5
+    Image: {fileID: 21300000, guid: a7a8633c105cf6247a3551850f2a667e, type: 3}
+    DefaultQuestionText: 
+  - Type: 7
+    Image: {fileID: 21300000, guid: 26864bb0031ff104bb06e2adb6c3c808, type: 3}
+    DefaultQuestionText: 
+  - Type: 8
+    Image: {fileID: 21300000, guid: dd2938e95c1f7c84ea4c05699ff786ca, type: 3}
+    DefaultQuestionText: 
+  - Type: 9
+    Image: {fileID: 21300000, guid: 52683bc110bf8344ab5bddebed6ad804, type: 3}
+    DefaultQuestionText: 
+  - Type: 10
+    Image: {fileID: 21300000, guid: c41af0fae10af13488887ed3f2aec5b7, type: 3}
+    DefaultQuestionText: 
+  - Type: 11
+    Image: {fileID: 21300000, guid: 093af69e5375beb4f86c1a4915d6570e, type: 3}
+    DefaultQuestionText: 
   BlackscreenImage: {fileID: 0}
   HighScoreScreen: {fileID: 0}
   XpOnKill: 10

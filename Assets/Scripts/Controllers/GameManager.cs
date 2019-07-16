@@ -49,15 +49,23 @@ public class GameManager : MonoBehaviour
     [Serializable]
     public struct TargetImaget
     {
-        public PointOfInterest.OptionType type;
-        public Sprite image;
+        public PointOfInterest.OptionType Type;
+        public Sprite Image;
         public string DefaultQuestionText;
+    }
+
+    [Serializable]
+    public struct EquipmentImage
+    {
+        public Equipment.EquipmentType Type;
+        public Sprite Sprite;
     }
 
 
     [Header("References")]
     public IconImg[] IconImages;
     public ClassImg[] ClassImgs;
+    public EquipmentImage[] EquipmentImages;
     public AttributeImg[] AttributeImages;
     public List<TargetImaget> OptionTargetImages;
     public Image BlackscreenImage;
@@ -147,6 +155,15 @@ public class GameManager : MonoBehaviour
                 return GetIconImage(Icon.Idling);
         }
         
+    }
+
+    internal static Sprite GetIconImage(Equipment.EquipmentType type)
+    {
+
+        if (Instance.EquipmentImages.Any(im => im.Type == type))
+            return Instance.EquipmentImages.First(im => im.Type == type).Sprite;
+
+        return Instance.EquipmentImages.First().Sprite;
     }
 
     public static int XpKill()

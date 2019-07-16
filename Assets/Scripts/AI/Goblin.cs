@@ -113,7 +113,7 @@ public class Goblin : Character
         base.Awake();
         
         CharacterUI.SetCharacter(this);
-
+        
         emission = particles.emission;
         
         //TODO: make better or remove
@@ -143,19 +143,20 @@ public class Goblin : Character
 
 
         //TODO: this could be handled with events instead of checking each frame
-        if (Team)
+        if (Team &! CharacterUI.ViewHolder.Active)
         {
             ChiefImage.enabled = IsChief();
 
             StateImage.enabled = true;
             StateImage.sprite = GameManager.GetIconImage(State);
-
         }
         else
         {
             ChiefImage.enabled = false;
             StateImage.enabled = false;
         }
+
+        HealtBar.gameObject.SetActive(!CharacterUI.ViewHolder.Active);
 
         if(!Alive())
             this.enabled = false;
