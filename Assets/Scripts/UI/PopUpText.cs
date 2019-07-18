@@ -9,10 +9,24 @@ public class PopUpText : MonoBehaviour
     public RectTransform Rect;
     public TextMeshProUGUI PopText;
     private static PopUpText Instance;
-    public Queue<string> TextToShow = new Queue<string>();
+    public AiryUIAnimationManager ViewHolder;
+
+    public struct ShowEvent
+    {
+        public string Text;
+        public Vector3? Position;
+
+        public ShowEvent(string text, Vector3? position)
+        {
+            Text = text;
+            Position = position;
+        }
+    }
+
+    public Queue<ShowEvent> TextToShow = new Queue<ShowEvent>();
     private bool ShowingText;
     public float ShowTime = 4;
-    private AiryUIAnimatedElement comp;
+    //private AiryUIAnimatedElement comp;
 
     // Start is called before the first frame update
     void Awake()
@@ -20,7 +34,9 @@ public class PopUpText : MonoBehaviour
         if (!Instance)
             Instance = this;
 
-        comp = GetComponentInChildren<AiryUIAnimatedElement>();
+        //comp = GetComponentInChildren<AiryUIAnimatedElement>();
+
+        ViewHolder.SetActive(false);
 
         PopText.text = "";
     }
@@ -31,30 +47,40 @@ public class PopUpText : MonoBehaviour
             StartCoroutine(ShowTextLoop(TextToShow.Dequeue()));
     }
 
-    public static void ShowText(string text)
+    public static void ShowText(string text, Vector3 position)
     {
-        Instance.TextToShow.Enqueue(text);
+        Instance.TextToShow.Enqueue(new ShowEvent(text,position));
     }
 
-    private IEnumerator ShowTextLoop(string text)
+    private IEnumerator ShowTextLoop(ShowEvent showing)
     {
         ShowingText = true;
         
-        PopText.text = text;
+        PopText.text = showing.Text;
 
         SoundController.PlayEvent();
         
-        comp.gameObject.SetActive(true);
-        comp.ShowElement();
+        ViewHolder.gameObject.SetActive(true);
+        //comp.ShowElement();
+
+        //TODO: slow down time
+        GameManager.Pause();
         
-        yield return new WaitForSecondsRealtime(ShowTime);
+        //TODO: different sizes for different types of events
+        PlayerController.MoveCameraToPos(showing.Position.Value,6);
 
-        comp.HideElement();
+        var endTime = Time.unscaledTime + ShowTime;
 
-        //Debug.Log("*hiding elements");
-        yield return new WaitUntil(() => !comp.gameObject.activeInHierarchy);
+        yield return new WaitForSecondsRealtime(0.5f);
 
-        //Debug.Log(" elements are animated awaya");
+        yield return new WaitUntil(() => Time.unscaledTime > endTime || Input.anyKeyDown || Input.touchCount > 0);
+
+        ViewHolder.SetActive(false);
+        GameManager.UnPause();
+
+        yield return new WaitUntil(() => !ViewHolder.AllHidden());
+       
+        //TODO: only unpause if it was already unpaused
 
         ShowingText = false;
 

@@ -204,7 +204,7 @@ public class Goblin : Character
         //a sound
         SoundController.PlayLevelup();
 
-        PopUpText.ShowText(name + " has gained a new level!");
+        //PopUpText.ShowText(name + " has gained a new level!");
         
         //TODO: health should be handled differently than other stuff
         HEA.LevelUp();
@@ -213,6 +213,8 @@ public class Goblin : Character
             WaitingOnClassSelection = true;
         
         GoblinUIList.UpdateGoblinList();
+
+        GoblinUIList.HighlightGoblin(this);
     }
 
     public void SelectClass(Class c)
@@ -302,7 +304,8 @@ public class Goblin : Character
     {
         if ((Random.value > (IsChief() ? 0.0f : 0.35f)) &&InArea && InArea.Visible() && Voice && Voice.isActiveAndEnabled && lastSpeak + speakWait < Time.time && (overridePlaying || !Voice.isPlaying))
         {
-            StartCoroutine(ShoutRoutine(shout.Speech));
+            if(IsChief() || Team?.GoblinsSpeaking() < Team?.Members.Count / 4 +1)
+                StartCoroutine(ShoutRoutine(shout.Speech));
 
             Voice.PlayOneShot(shout.GoblinSound);
 

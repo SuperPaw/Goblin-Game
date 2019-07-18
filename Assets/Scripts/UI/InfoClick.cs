@@ -47,7 +47,7 @@ public class InfoClick : MonoBehaviour
         Viewholder.localPosition = new Vector3(Mathf.Clamp(clicked.localPosition.x, xMin, xMax),
             Mathf.Clamp(clicked.localPosition.y, yMin, yMax), clicked.localPosition.z); 
 
-        Debug.Log(Viewholder.position);
+        //Debug.Log(Viewholder.position);
 
         Title.text = title;
         Description.text = description;

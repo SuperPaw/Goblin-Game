@@ -19,7 +19,7 @@ public class OnValueHover : Button
     }
     
     void ShowInfo()    {
-        Debug.Log("Opening: " + gameObject);
+        //Debug.Log("Opening: " + gameObject);
         if (ShowEquipment && Equipment)
         {
             InfoClick.ShowInfo(gameObject.GetComponent<RectTransform>(), Equipment.name,

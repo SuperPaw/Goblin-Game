@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -101,4 +102,8 @@ public class GoblinUIList : MonoBehaviour
         UpdateEntry(e);
     }
 
+    internal static void HighlightGoblin(Goblin goblin)
+    {
+        UIManager.HighlightText(Instance.Entries.First(g => g.Goblin == goblin).NameText);
+    }
 }

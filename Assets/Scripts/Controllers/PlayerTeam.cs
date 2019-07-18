@@ -31,7 +31,7 @@ public class PlayerTeam : MonoBehaviour
                     _leader.name = "Chief " + _leader.name + NameGenerator.GetSurName();
                 } while (GreatestGoblins.ScoresContainName(_leader.name)); //TODO: check that this works
 
-                PopUpText.ShowText(_leader.name +" is new chief!");
+                PopUpText.ShowText(_leader.name +" is new chief!",_leader.transform.position);
 
                 //TODO: use event instead of having all this here
                 GreatestGoblins.NewLeader(_leader);
@@ -194,12 +194,18 @@ public class PlayerTeam : MonoBehaviour
     private void FoodChange(int i)
     {
         Food += i;
+
+        if (i > 0)
+            UIManager.HighlightText(FoodText);
         UpdateFoodAndTreasure();
     }
 
     private void TreasureChange(int i)
     {
         Treasure += i;
+
+        if(i > 0)
+            UIManager.HighlightText(TreasureText);
         UpdateFoodAndTreasure();
     }
 
@@ -335,12 +341,12 @@ public class PlayerTeam : MonoBehaviour
     {
         if (Food < 2*Members.Count)
         {
-            PopUpText.ShowText("Goblins need more food to camp!");
+            //PopUpText.ShowText("Goblins need more food to camp!");
             return; 
         }
         if (Leader.InArea.PointOfInterest )
         {
-            PopUpText.ShowText("Goblins need space to camp");
+            //PopUpText.ShowText("Goblins need space to camp");
             return; //TODO: Maybe just change camping icon
         }
         if ( Leader.InArea.AnyEnemies() || Leader.Fleeing())
@@ -484,6 +490,11 @@ public class PlayerTeam : MonoBehaviour
     internal void LeaderShout(PlayerController.OrderType shout)
     {
         Leader.Shout(shout.Speech,shout.GoblinSound);
+    }
+
+    public int GoblinsSpeaking()
+    {
+        return Members.Count(g => g.VoiceText.text != "");
     }
 
     #endregion
@@ -657,7 +668,7 @@ public class PlayerTeam : MonoBehaviour
         else
         {
             OnTreasureFound.Invoke(1);
-            PopUpText.ShowText(finder.name + " broke the " + equipment.name + " and turned it into treasure");
+            PopUpText.ShowText(finder.name + " broke the " + equipment.name + " and turned it into treasure",finder.transform.position);
         }
     }
 }

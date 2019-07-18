@@ -307,10 +307,10 @@ public class PlayerController : MonoBehaviour
                     SetFollowGoblin(Team.Leader);
                 break;
             case ZoomLevel.AreaView:
-                MoveCamera(Team.Leader.InArea?.transform, AreaViewSize);
+                MoveCamera(Team.Leader.InArea.transform.position, AreaViewSize);
                 break;
             case ZoomLevel.MapView:
-                MoveCamera(Team.Leader.InArea?.transform, MapViewSize);
+                MoveCamera(Team.Leader.InArea.transform.position, MapViewSize);
                 break;
             default:
                 return;
@@ -660,6 +660,11 @@ public class PlayerController : MonoBehaviour
         desiredOrtographicSize = GoblinViewSize;
     }
 
+    public static void MoveCameraToPos(Vector3 pos,int ortoSize)
+    {
+        Instance.MoveCamera(pos,ortoSize);
+    }
+
 
     private void MoveToFollowGoblin()
     {
@@ -669,12 +674,11 @@ public class PlayerController : MonoBehaviour
         desiredCamPos = new Vector3(xz.x, Cam.transform.position.y, xz.z - offset);
     }
 
-    private void MoveCamera(Transform loc, int orthographicSize)
+    private void MoveCamera(Vector3 xz, int orthographicSize)
     {
         //currentLocation = loc;
         var offset = 49;
         
-        var xz = loc.position;
         desiredCamPos = new Vector3(xz.x, Cam.transform.position.y, xz.z - offset);
         desiredOrtographicSize = orthographicSize;
     }

@@ -42,7 +42,7 @@ public class CharacterView : MonoBehaviour
     {
         character = g;
 
-        ViewHolder.SetActive(false);
+        //ViewHolder.SetActive(false);
     }
 
     public void ShowCharacter()
@@ -99,6 +99,7 @@ public class CharacterView : MonoBehaviour
         if (c.WaitingOnLevelup())//LevelUps > 0 || c.WaitingOnClassSelection)
         {
             XpTextEntry.Value.text = "LVL up";
+            UIManager.HighlightText(XpTextEntry.Value);
             XpTextEntry.FillImage.fillAmount = 1;
             levelUpButton.interactable = true;
         }
@@ -109,7 +110,8 @@ public class CharacterView : MonoBehaviour
         }
         HealthTextEntry.Value.text = $" {c.Health} / {c.HEA.GetStatMax()}";
         HealthTextEntry.FillImage.fillAmount = c.Health / (float) c.HEA.GetStatMax();
-        //HealthTextEntry.ValueHover.Stat = c.HEA;
+        HealthTextEntry.ValueHover.Stat = c.HEA;
+        
         ClassIcon.sprite = c.Alive() ? GameManager.GetClassImage(c.ClassType): GameManager.GetIconImage(GameManager.Icon.Dead);
         ClassIcon.GetComponent<OnValueHover>().Class = c.ClassType;
         
@@ -127,7 +129,10 @@ public class CharacterView : MonoBehaviour
             entry.Value.color = color;
             //entry.Name.fontStyle = entry.Value.fontStyle = style;
             entry.gameObject.SetActive(true);
-            entry.ValueHover.Stat = stat;
+
+            var valCopy = entry.Name.gameObject.AddComponent<OnValueHover>();
+            
+            entry.ValueHover.Stat = valCopy.Stat = stat;
             generatedObjects.Add(entry.gameObject);
             
         }
@@ -140,11 +145,15 @@ public class CharacterView : MonoBehaviour
             entry.Value.text = equipment.name;
             entry.Name.sprite = GameManager.GetIconImage(equipment.Type);
             entry.gameObject.SetActive(true);
-            var hover =entry.GetComponent<OnValueHover>();
-            if (hover)
+            //var hover =entry.GetComponent<OnValueHover>();
+            if (entry.ValueHover)
             {
-                hover.ShowEquipment = true;
-                hover.Equipment = equipment;
+                //TODO: make this less hacky
+                var valCopy = entry.Name.gameObject.AddComponent<OnValueHover>();
+                
+                entry.ValueHover.ShowEquipment = valCopy.ShowEquipment = true;
+                entry.ValueHover.Equipment = valCopy.Equipment = equipment;
+                
             }
 
             generatedObjects.Add(entry.gameObject);

@@ -1026,13 +1026,13 @@ public abstract class Character : MonoBehaviour
                     if (LootTarget.ContainsLoot)
                     {
                         (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-                        PopUpText.ShowText(name + " found " + LootTarget.Loot);
+                        PopUpText.ShowText(name + " found " + LootTarget.Loot,LootTarget.transform.position);
                         Team.OnTreasureFound.Invoke(1);
                     }
                     if (LootTarget.ContainsFood)
                     {
                         (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-                        PopUpText.ShowText(name + " found " + LootTarget.Food);
+                        PopUpText.ShowText(name + " found " + LootTarget.Food, LootTarget.transform.position);
                         Team.OnFoodFound.Invoke(5);
                     }
                     if(this as Goblin)
@@ -1040,7 +1040,7 @@ public abstract class Character : MonoBehaviour
                         {
                             //TODO: create player choice for selecting goblin
                             (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-                            PopUpText.ShowText(name + " found " + equipment.name);
+                            PopUpText.ShowText(name + " found " + equipment.name, LootTarget.transform.position);
                             if (Team && Team.Members.Count > 1)
                                 Team.OnEquipmentFound.Invoke(equipment,this as Goblin);
                             else
@@ -1209,8 +1209,8 @@ public abstract class Character : MonoBehaviour
 
         HealtBar.gameObject.SetActive(false);
 
-        if (tag == "Player")
-            PopUpText.ShowText(name + " is dead");
+        //if (tag == "Player")
+        //    PopUpText.ShowText(name + " is dead");
 
         //LOOT CREATIONS
         var loot = gameObject.AddComponent<Lootable>();
