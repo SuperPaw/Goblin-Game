@@ -617,6 +617,11 @@ public class PlayerController : MonoBehaviour
                 return Instance.EnabledActionOnStates.First(e => e.Action == action).EnabledOnLeaderStates
                            .Contains(Instance.Team.Leader.State) && Instance.Team.Leader.InArea.RoadsTo.Any()
                        & !Instance.Team.Leader.InArea.AnyEnemies();
+            case MappableActions.Camp:
+                return Instance.EnabledActionOnStates.First(e => e.Action == action).EnabledOnLeaderStates.Contains(Instance.Team.Leader.State) 
+                       & !Instance.Team.Leader.InArea.ContainsRoads
+                       & !Instance.Team.Leader.InArea.PointOfInterest
+                       & !Instance.Team.Leader.InArea.AnyEnemies();
             default:
                 return Instance.EnabledActionOnStates.First(e => e.Action == action).EnabledOnLeaderStates
                     .Contains(Instance.Team.Leader.State);

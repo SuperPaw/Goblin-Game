@@ -78,7 +78,7 @@ public class PopUpText : MonoBehaviour
         ViewHolder.SetActive(false);
         GameManager.UnPause();
 
-        yield return new WaitUntil(() => !ViewHolder.AllHidden());
+        yield return new WaitUntil(() => ViewHolder.AllHidden());
        
         //TODO: only unpause if it was already unpaused
 
