@@ -650,6 +650,8 @@ public class PlayerTeam : MonoBehaviour
     {
         List<PlayerChoice.ChoiceOption> options = new List<PlayerChoice.ChoiceOption>();
 
+        //todo: handle only one member
+
         //TODO check for usability
         var potential = new List<Character>();
 
@@ -663,12 +665,15 @@ public class PlayerTeam : MonoBehaviour
         {
             options.Add(new PlayerChoice.ChoiceOption() { Action = () => f.Equip(equipment), Description = f.name });
         }
-        if(options.Any())
-            PlayerChoice.SetupPlayerChoice(options.ToArray(),"Who gets to keep the " + equipment.name + "?");
+        if (options.Any())
+        {
+            PopUpText.ShowText(finder.name + " find " + equipment.name, finder.transform.position);
+            PlayerChoice.SetupPlayerChoice(options.ToArray(),"Who gets the " + equipment.name + "?");
+        }
         else
         {
             OnTreasureFound.Invoke(1);
-            PopUpText.ShowText(finder.name + " broke the " + equipment.name + " and turned it into treasure",finder.transform.position);
+            PopUpText.ShowText($"{finder.name} find {equipment.name} and broke it into treasure",finder.transform.position);
         }
     }
 }

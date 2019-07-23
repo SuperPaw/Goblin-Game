@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -168,6 +167,7 @@ public abstract class Character : MonoBehaviour
 
     public bool actionInProgress;
 
+    #region Event
     [HideInInspector]
     //Static event to handle generic responces to death
     public class RaceDeathEvent : UnityEvent<Race> { }
@@ -176,16 +176,21 @@ public abstract class Character : MonoBehaviour
     public class DamageEvent : UnityEvent<int> { }
     public DamageEvent OnDamage = new DamageEvent();
 
+    public class CharacterEvent : UnityEvent<Character> { }
+
     //using self as parameter, so other listeners will know who dead
-    public class DeathEvent : UnityEvent<Character> { }
-    public DeathEvent OnDeath = new DeathEvent();
+    public CharacterEvent OnDeath = new CharacterEvent();
+
+    public CharacterEvent OnCharacterCharacter = new CharacterEvent();
+    public CharacterEvent OnBeingAttacked = new CharacterEvent();
 
     public class TargetDeathEvent : UnityEvent{ }
     public TargetDeathEvent OnTargetDeath = new TargetDeathEvent();
-    
-    public class CharacterEvent : UnityEvent<Character> { }
-    public CharacterEvent OnCharacterCharacter = new CharacterEvent();
-    public CharacterEvent OnBeingAttacked = new CharacterEvent();
+
+    public class AreaEvent : UnityEvent<Area> { }
+    public AreaEvent OnAreaChange = new AreaEvent();
+
+#endregion
 
     public Vector3 Target;
     public NavMeshAgent navMeshAgent;
@@ -323,8 +328,20 @@ public abstract class Character : MonoBehaviour
     //From walking toward to running away
     public float ProvokeTime = 5;
     private float ProvokeStartTime;
-    
-    public Area InArea;
+
+    private Area area;
+
+    public Area InArea
+    {
+        get { return area; }
+        set
+        {
+            if(value != area)
+                OnAreaChange.Invoke(value);
+            area = value;
+        }
+    }
+
     private Area fleeingToArea;
     private Coroutine stateChangeRoutine;
     
@@ -397,6 +414,8 @@ public abstract class Character : MonoBehaviour
         Morale = COU.GetStatMax()*2;
 
         if(!navMeshAgent) Debug.LogWarning(name+ ": character does not have Nav Mesh Agent");
+
+        OnAreaChange.AddListener(AreaChange);
     }
 
     protected void FixedUpdate()
@@ -1040,11 +1059,8 @@ public abstract class Character : MonoBehaviour
                         {
                             //TODO: create player choice for selecting goblin
                             (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-                            PopUpText.ShowText(name + " found " + equipment.name, LootTarget.transform.position);
-                            if (Team && Team.Members.Count > 1)
-                                Team.OnEquipmentFound.Invoke(equipment,this as Goblin);
-                            else
-                                Equip(equipment);
+                            
+                            Team?.OnEquipmentFound.Invoke(equipment,this as Goblin);
                         }
 
                     LootTarget.EquipmentLoot.Clear();
@@ -1237,6 +1253,42 @@ public abstract class Character : MonoBehaviour
 
         //TODO: check if this create problems:
         navMeshAgent.enabled = false;
+    }
+
+    private void AreaChange(Area a)
+    {
+        if (tag == "Player" && IsChief())
+        {
+            PlayerController.RevealArea(a);
+
+            a.Visited = true;
+            foreach (var aggressive in a.PresentCharacters.Where(e => e.tag == "Enemy" && e.Aggressive && e.tag != tag))
+            {
+                aggressive.ChangeState(Character.CharacterState.Attacking);
+            }
+
+        }
+
+        IrritationMeter = 0;
+
+        Morale = COU.GetStatMax() * 2;
+
+        if (Fleeing() || Travelling())
+        {
+            ChangeState(Character.CharacterState.Idling);
+        }
+
+        //HolderGameObject.SetActive(c.Team || Visible());
+        
+        //TODO: move to area change method
+        if (this as Goblin & !IsChief())
+        {
+            if (a.PointOfInterest)
+                (this as Goblin)?.Speak(PlayerController.GetLocationReaction(a.PointOfInterest.PoiType));
+            else if (a.AnyEnemies()) //TODO:select random enemy
+                (this as Goblin)?.Speak(PlayerController.GetEnemyReaction(a.PresentCharacters.First(ch => ch.tag == "Enemy" && ch.Alive()).CharacterRace));
+        }
+
     }
 
     public void MoveTo(Area a, bool immedeately = false)

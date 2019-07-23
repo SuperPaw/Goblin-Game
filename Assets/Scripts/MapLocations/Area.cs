@@ -129,35 +129,6 @@ public class Area : MonoBehaviour
         c.InArea = this;
         if(!PresentCharacters.Contains(c))
             PresentCharacters.Add(c);
-        if (c.tag == "Player")
-        {
-            Visited = true;
-            foreach (var aggressive in PresentCharacters.Where(e => e.tag == "Enemy" && e.Aggressive && e.tag != c.tag))
-            {
-                aggressive.ChangeState(Character.CharacterState.Attacking);
-            }
-        }
-
-        c.IrritationMeter = 0;
-        if (c.Fleeing() || c.Travelling())
-        {
-            c.Morale = c.COU.GetStatMax() * 2;
-            c.ChangeState(Character.CharacterState.Idling);
-        }
-
-        c.HolderGameObject.SetActive(c.Team || Visible());
-
-        //TODO: check if leader
-        PlayerController.UpdateFog();
-
-
-        //TODO: move to area change method
-        if(c as Goblin &! c.IsChief())
-            if (PointOfInterest)
-                (c as Goblin)?.Speak(PlayerController.GetLocationReaction(this.PointOfInterest.PoiType));
-            else if (AnyEnemies()) //TODO:select random enemy
-                (c as Goblin)?.Speak(PlayerController.GetEnemyReaction(PresentCharacters.First(ch => ch.tag == "Enemy" && ch.Alive()).CharacterRace));
-
     }
 
     //public void OnTriggerExit(Collider other)

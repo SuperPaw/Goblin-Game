@@ -24,7 +24,7 @@ public class PopUpText : MonoBehaviour
     }
 
     public Queue<ShowEvent> TextToShow = new Queue<ShowEvent>();
-    private bool ShowingText;
+    public static bool ShowingText;
     public float ShowTime = 4;
     //private AiryUIAnimatedElement comp;
 

@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //maybe at larger interval
-        if(FollowGoblin)
+        if(FollowGoblin &! PopUpText.ShowingText)
             MoveToFollowGoblin();
 
         //TODO: divide these into methods
@@ -463,9 +463,45 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public static void RevealArea(Area area)
+    {
+        UpdateFog();
+
+        if(area.Visited) return;
+
+        switch (area.PointOfInterest?.PoiType)
+        {
+            case PointOfInterest.Poi.BigStone:
+            case PointOfInterest.Poi.Cave:
+            case PointOfInterest.Poi.Warrens:
+            case PointOfInterest.Poi.HumanFarm:
+            case PointOfInterest.Poi.HumanFort:
+            case PointOfInterest.Poi.Withchut:
+            case PointOfInterest.Poi.SlaveTrader:
+            case PointOfInterest.Poi.GoblinMerchant:
+            case PointOfInterest.Poi.Lake:
+            case PointOfInterest.Poi.ElvenTemple:
+                PopUpText.ShowText("Goblins discover a " + area.PointOfInterest.AreaName, area.transform.position);
+                break;
+            case PointOfInterest.Poi.Count:
+                break;
+            case null:
+                if (area.AnyEnemies())
+                {
+                    var enm = area.PresentCharacters.First(c => c.tag == "Enemy");
+                    PopUpText.ShowText("Goblins met a " + enm.name, enm.transform.position);
+                }
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+    }
+
+
     public static void UpdateFog()
     {
-        if(Instance && Instance.Team && GameManager.Instance.GameStarted)
+        if (Instance && Instance.Team && GameManager.Instance.GameStarted)
             Instance.UpdateFogOfWar();
     }
 
