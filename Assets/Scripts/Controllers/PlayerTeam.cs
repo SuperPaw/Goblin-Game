@@ -31,7 +31,7 @@ public class PlayerTeam : MonoBehaviour
                     _leader.name = "Chief " + _leader.name + NameGenerator.GetSurName();
                 } while (GreatestGoblins.ScoresContainName(_leader.name)); //TODO: check that this works
 
-                PopUpText.ShowText(_leader.name +" is new chief!",_leader.transform.position);
+                PopUpText.ShowText(_leader.name +" is new chief!",_leader.transform);
 
                 //TODO: use event instead of having all this here
                 GreatestGoblins.NewLeader(_leader);
@@ -667,13 +667,13 @@ public class PlayerTeam : MonoBehaviour
         }
         if (options.Any())
         {
-            PopUpText.ShowText(finder.name + " find " + equipment.name, finder.transform.position);
+            PopUpText.ShowText(finder.name + " find " + equipment.name, finder.transform);
             PlayerChoice.SetupPlayerChoice(options.ToArray(),"Who gets the " + equipment.name + "?");
         }
         else
         {
             OnTreasureFound.Invoke(1);
-            PopUpText.ShowText($"{finder.name} find {equipment.name} and broke it into treasure",finder.transform.position);
+            PopUpText.ShowText($"{finder.name} find {equipment.name} and broke it into treasure",finder.transform);
         }
     }
 }

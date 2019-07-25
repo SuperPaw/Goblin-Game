@@ -666,6 +666,15 @@ MonoBehaviour:
   - Type: 14
     Audio:
     - {fileID: 8300000, guid: 0417693f91c1f834b8e53991a55b55fd, type: 3}
+  FXReferences:
+  - Type: 0
+    Audio:
+    - {fileID: 8300000, guid: 0379e6801c633514c818562702626361, type: 3}
+    - {fileID: 8300000, guid: 7a812970de11d894c852521a0f876fc5, type: 3}
+    - {fileID: 8300000, guid: 9b750f04a0db90348870f599923592fe, type: 3}
+    - {fileID: 8300000, guid: 838f6681d54de3643b80fac5d90ed412, type: 3}
+    - {fileID: 8300000, guid: cc44024969d1eb94b82990abb92239a5, type: 3}
+    - {fileID: 8300000, guid: 0b5d3f252d106954eb9d1dfa431e4219, type: 3}
   UiSounds:
   - Type: 0
     Audio:

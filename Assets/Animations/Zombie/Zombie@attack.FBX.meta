@@ -1,128 +1,368 @@
 fileFormatVersion: 2
 guid: 3664e759213d0ba4e973427bbca518ea
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: ' Head'
-    100002: ' L Forearm'
-    100004: ' L Pelvis'
-    100006: ' L Thigh'
-    100008: ' R Pelvis'
-    100010: ' R Thigh'
-    100012: Bip01
-    100014: Bip01 Head
-    100016: Bip01 L Calf
-    100018: Bip01 L Clavicle
-    100020: Bip01 L Foot
-    100022: Bip01 L Forearm
-    100024: Bip01 L Hand
-    100026: Bip01 L Thigh
-    100028: Bip01 L Toe0
-    100030: Bip01 L UpperArm
-    100032: Bip01 Neck
-    100034: Bip01 Pelvis
-    100036: Bip01 R Calf
-    100038: Bip01 R Clavicle
-    100040: Bip01 R Foot
-    100042: Bip01 R Forearm
-    100044: Bip01 R Hand
-    100046: Bip01 R Thigh
-    100048: Bip01 R Toe0
-    100050: Bip01 R UpperArm
-    100052: Bip01 Spine
-    100054: Bip01 Spine1
-    100056: Bone01
-    100058: L Calf
-    100060: L Hand
-    100062: L Spine
-    100064: L Spine1
-    100066: L UpperArm
-    100068: R Calf
-    100070: R Forearm
-    100072: R Hand
-    100074: R Spine
-    100076: R Spine1
-    100078: R UpperArm
-    100080: //RootNode
-    400000: ' Head'
-    400002: ' L Forearm'
-    400004: ' L Pelvis'
-    400006: ' L Thigh'
-    400008: ' R Pelvis'
-    400010: ' R Thigh'
-    400012: Bip01
-    400014: Bip01 Head
-    400016: Bip01 L Calf
-    400018: Bip01 L Clavicle
-    400020: Bip01 L Foot
-    400022: Bip01 L Forearm
-    400024: Bip01 L Hand
-    400026: Bip01 L Thigh
-    400028: Bip01 L Toe0
-    400030: Bip01 L UpperArm
-    400032: Bip01 Neck
-    400034: Bip01 Pelvis
-    400036: Bip01 R Calf
-    400038: Bip01 R Clavicle
-    400040: Bip01 R Foot
-    400042: Bip01 R Forearm
-    400044: Bip01 R Hand
-    400046: Bip01 R Thigh
-    400048: Bip01 R Toe0
-    400050: Bip01 R UpperArm
-    400052: Bip01 Spine
-    400054: Bip01 Spine1
-    400056: Bone01
-    400058: L Calf
-    400060: L Hand
-    400062: L Spine
-    400064: L Spine1
-    400066: L UpperArm
-    400068: R Calf
-    400070: R Forearm
-    400072: R Hand
-    400074: R Spine
-    400076: R Spine1
-    400078: R UpperArm
-    400080: //RootNode
-    2100000: Zombie
-    4300000: ' L Forearm'
-    4300002: L UpperArm
-    4300004: ' Head'
-    4300006: L Hand
-    4300008: L Calf
-    4300010: L Spine
-    4300012: L Spine1
-    4300014: ' R Pelvis'
-    4300016: ' L Thigh'
-    4300018: ' R Thigh'
-    4300020: R Calf
-    4300022: ' L Pelvis'
-    4300024: R Spine
-    4300026: R Spine1
-    4300028: R UpperArm
-    4300030: R Forearm
-    4300032: R Hand
-    7400000: attack
-    9500000: //RootNode
-    13700000: ' Head'
-    13700002: ' L Forearm'
-    13700004: ' L Pelvis'
-    13700006: ' L Thigh'
-    13700008: ' R Pelvis'
-    13700010: ' R Thigh'
-    13700012: L Calf
-    13700014: L Hand
-    13700016: L Spine
-    13700018: L Spine1
-    13700020: L UpperArm
-    13700022: R Calf
-    13700024: R Forearm
-    13700026: R Hand
-    13700028: R Spine
-    13700030: R Spine1
-    13700032: R UpperArm
-    2186277476908879412: ImportLogs
+  serializedVersion: 25
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: ' Head'
+  - first:
+      1: 100002
+    second: ' L Forearm'
+  - first:
+      1: 100004
+    second: ' L Pelvis'
+  - first:
+      1: 100006
+    second: ' L Thigh'
+  - first:
+      1: 100008
+    second: ' R Pelvis'
+  - first:
+      1: 100010
+    second: ' R Thigh'
+  - first:
+      1: 100012
+    second: Bip01
+  - first:
+      1: 100014
+    second: Bip01 Head
+  - first:
+      1: 100016
+    second: Bip01 L Calf
+  - first:
+      1: 100018
+    second: Bip01 L Clavicle
+  - first:
+      1: 100020
+    second: Bip01 L Foot
+  - first:
+      1: 100022
+    second: Bip01 L Forearm
+  - first:
+      1: 100024
+    second: Bip01 L Hand
+  - first:
+      1: 100026
+    second: Bip01 L Thigh
+  - first:
+      1: 100028
+    second: Bip01 L Toe0
+  - first:
+      1: 100030
+    second: Bip01 L UpperArm
+  - first:
+      1: 100032
+    second: Bip01 Neck
+  - first:
+      1: 100034
+    second: Bip01 Pelvis
+  - first:
+      1: 100036
+    second: Bip01 R Calf
+  - first:
+      1: 100038
+    second: Bip01 R Clavicle
+  - first:
+      1: 100040
+    second: Bip01 R Foot
+  - first:
+      1: 100042
+    second: Bip01 R Forearm
+  - first:
+      1: 100044
+    second: Bip01 R Hand
+  - first:
+      1: 100046
+    second: Bip01 R Thigh
+  - first:
+      1: 100048
+    second: Bip01 R Toe0
+  - first:
+      1: 100050
+    second: Bip01 R UpperArm
+  - first:
+      1: 100052
+    second: Bip01 Spine
+  - first:
+      1: 100054
+    second: Bip01 Spine1
+  - first:
+      1: 100056
+    second: Bone01
+  - first:
+      1: 100058
+    second: L Calf
+  - first:
+      1: 100060
+    second: L Hand
+  - first:
+      1: 100062
+    second: L Spine
+  - first:
+      1: 100064
+    second: L Spine1
+  - first:
+      1: 100066
+    second: L UpperArm
+  - first:
+      1: 100068
+    second: R Calf
+  - first:
+      1: 100070
+    second: R Forearm
+  - first:
+      1: 100072
+    second: R Hand
+  - first:
+      1: 100074
+    second: R Spine
+  - first:
+      1: 100076
+    second: R Spine1
+  - first:
+      1: 100078
+    second: R UpperArm
+  - first:
+      1: 100080
+    second: //RootNode
+  - first:
+      4: 400000
+    second: ' Head'
+  - first:
+      4: 400002
+    second: ' L Forearm'
+  - first:
+      4: 400004
+    second: ' L Pelvis'
+  - first:
+      4: 400006
+    second: ' L Thigh'
+  - first:
+      4: 400008
+    second: ' R Pelvis'
+  - first:
+      4: 400010
+    second: ' R Thigh'
+  - first:
+      4: 400012
+    second: Bip01
+  - first:
+      4: 400014
+    second: Bip01 Head
+  - first:
+      4: 400016
+    second: Bip01 L Calf
+  - first:
+      4: 400018
+    second: Bip01 L Clavicle
+  - first:
+      4: 400020
+    second: Bip01 L Foot
+  - first:
+      4: 400022
+    second: Bip01 L Forearm
+  - first:
+      4: 400024
+    second: Bip01 L Hand
+  - first:
+      4: 400026
+    second: Bip01 L Thigh
+  - first:
+      4: 400028
+    second: Bip01 L Toe0
+  - first:
+      4: 400030
+    second: Bip01 L UpperArm
+  - first:
+      4: 400032
+    second: Bip01 Neck
+  - first:
+      4: 400034
+    second: Bip01 Pelvis
+  - first:
+      4: 400036
+    second: Bip01 R Calf
+  - first:
+      4: 400038
+    second: Bip01 R Clavicle
+  - first:
+      4: 400040
+    second: Bip01 R Foot
+  - first:
+      4: 400042
+    second: Bip01 R Forearm
+  - first:
+      4: 400044
+    second: Bip01 R Hand
+  - first:
+      4: 400046
+    second: Bip01 R Thigh
+  - first:
+      4: 400048
+    second: Bip01 R Toe0
+  - first:
+      4: 400050
+    second: Bip01 R UpperArm
+  - first:
+      4: 400052
+    second: Bip01 Spine
+  - first:
+      4: 400054
+    second: Bip01 Spine1
+  - first:
+      4: 400056
+    second: Bone01
+  - first:
+      4: 400058
+    second: L Calf
+  - first:
+      4: 400060
+    second: L Hand
+  - first:
+      4: 400062
+    second: L Spine
+  - first:
+      4: 400064
+    second: L Spine1
+  - first:
+      4: 400066
+    second: L UpperArm
+  - first:
+      4: 400068
+    second: R Calf
+  - first:
+      4: 400070
+    second: R Forearm
+  - first:
+      4: 400072
+    second: R Hand
+  - first:
+      4: 400074
+    second: R Spine
+  - first:
+      4: 400076
+    second: R Spine1
+  - first:
+      4: 400078
+    second: R UpperArm
+  - first:
+      4: 400080
+    second: //RootNode
+  - first:
+      21: 2100000
+    second: Zombie
+  - first:
+      43: 4300000
+    second: ' L Forearm'
+  - first:
+      43: 4300002
+    second: L UpperArm
+  - first:
+      43: 4300004
+    second: ' Head'
+  - first:
+      43: 4300006
+    second: L Hand
+  - first:
+      43: 4300008
+    second: L Calf
+  - first:
+      43: 4300010
+    second: L Spine
+  - first:
+      43: 4300012
+    second: L Spine1
+  - first:
+      43: 4300014
+    second: ' R Pelvis'
+  - first:
+      43: 4300016
+    second: ' L Thigh'
+  - first:
+      43: 4300018
+    second: ' R Thigh'
+  - first:
+      43: 4300020
+    second: R Calf
+  - first:
+      43: 4300022
+    second: ' L Pelvis'
+  - first:
+      43: 4300024
+    second: R Spine
+  - first:
+      43: 4300026
+    second: R Spine1
+  - first:
+      43: 4300028
+    second: R UpperArm
+  - first:
+      43: 4300030
+    second: R Forearm
+  - first:
+      43: 4300032
+    second: R Hand
+  - first:
+      74: 7400000
+    second: attack
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: ' Head'
+  - first:
+      137: 13700002
+    second: ' L Forearm'
+  - first:
+      137: 13700004
+    second: ' L Pelvis'
+  - first:
+      137: 13700006
+    second: ' L Thigh'
+  - first:
+      137: 13700008
+    second: ' R Pelvis'
+  - first:
+      137: 13700010
+    second: ' R Thigh'
+  - first:
+      137: 13700012
+    second: L Calf
+  - first:
+      137: 13700014
+    second: L Hand
+  - first:
+      137: 13700016
+    second: L Spine
+  - first:
+      137: 13700018
+    second: L Spine1
+  - first:
+      137: 13700020
+    second: L UpperArm
+  - first:
+      137: 13700022
+    second: R Calf
+  - first:
+      137: 13700024
+    second: R Forearm
+  - first:
+      137: 13700026
+    second: R Hand
+  - first:
+      137: 13700028
+    second: R Spine
+  - first:
+      137: 13700030
+    second: R Spine1
+  - first:
+      137: 13700032
+    second: R UpperArm
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -166,6 +406,7 @@ ModelImporter:
     - serializedVersion: 16
       name: attack
       takeName: Take 001
+      internalID: 7400000
       firstFrame: 0
       lastFrame: 36
       wrapMode: 0
@@ -186,7 +427,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.27875
+        functionName: AttackEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.69749993
+        functionName: AttackEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -197,6 +452,7 @@ ModelImporter:
     globalScale: 0.01
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
     importVisibility: 0
     importBlendShapes: 1
     importCameras: 0
@@ -204,27 +460,32 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
   copyAvatar: 1
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human:
     - boneName: Bip01 Pelvis
       humanName: Hips
@@ -615,8 +876,8 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 0.01
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1

@@ -167,6 +167,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        UpdateFog();
+
         //maybe at larger interval
         if(FollowGoblin &! PopUpText.ShowingText)
             MoveToFollowGoblin();
@@ -481,7 +483,7 @@ public class PlayerController : MonoBehaviour
             case PointOfInterest.Poi.GoblinMerchant:
             case PointOfInterest.Poi.Lake:
             case PointOfInterest.Poi.ElvenTemple:
-                PopUpText.ShowText("Goblins discover a " + area.PointOfInterest.AreaName, area.transform.position);
+                PopUpText.ShowText("Goblins discover a " + area.PointOfInterest.AreaName, area.transform);
                 break;
             case PointOfInterest.Poi.Count:
                 break;
@@ -489,7 +491,7 @@ public class PlayerController : MonoBehaviour
                 if (area.AnyEnemies())
                 {
                     var enm = area.PresentCharacters.First(c => c.tag == "Enemy");
-                    PopUpText.ShowText("Goblins met a " + enm.name, enm.transform.position);
+                    PopUpText.ShowText("Goblins met a " + enm.name, enm.transform);
                 }
                 break;
             default:

@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 public class SoundBank : MonoBehaviour
 {
     private static SoundBank Instance;
-
+    
     public enum UiSound
     {
         MapClick,
@@ -45,7 +45,12 @@ public class SoundBank : MonoBehaviour
         Menu
     }
 
-
+    public enum FXSound
+    {
+        Hit,
+        Step
+    }
+    
     public enum GoblinSound
     {
         //------------Noices--------------
@@ -91,7 +96,13 @@ public class SoundBank : MonoBehaviour
         public GoblinSound Type;
         public AudioClip[] Audio;
     }
-    
+    [System.Serializable]
+    public struct FXReference
+    {
+        public FXSound Type;
+        public AudioClip[] Audio;
+    }
+
     [System.Serializable]
     public struct UiSoundReference
     {
@@ -118,6 +129,7 @@ public class SoundBank : MonoBehaviour
     }
 
     public SoundReference[] GoblinSounds;
+    public FXReference[] FXReferences;
     public UiSoundReference[] UiSounds;
     public StingerSoundReference[] Stingers;
     public BackgroundSoundref[] Backgrounds;
@@ -139,6 +151,17 @@ public class SoundBank : MonoBehaviour
         }
 
         return Rnd(Instance.GoblinSounds.First(s => s.Type == sound).Audio);
+    }
+
+    internal static AudioClip GetSound(FXSound type)
+    {
+        if (!Instance.FXReferences.Any(s => s.Type == type))
+        {
+            Debug.LogWarning("No sound for " + type);
+            return null;
+        }
+
+        return Rnd(Instance.FXReferences.First(s => s.Type == type).Audio);
     }
 
     internal static AudioClip GetSound(Background type)

@@ -14,12 +14,12 @@ public class PopUpText : MonoBehaviour
     public struct ShowEvent
     {
         public string Text;
-        public Vector3? Position;
+        public Transform Trans;
 
-        public ShowEvent(string text, Vector3? position)
+        public ShowEvent(string text, Transform trans)
         {
             Text = text;
-            Position = position;
+            Trans = trans;
         }
     }
 
@@ -47,9 +47,9 @@ public class PopUpText : MonoBehaviour
             StartCoroutine(ShowTextLoop(TextToShow.Dequeue()));
     }
 
-    public static void ShowText(string text, Vector3 position)
+    public static void ShowText(string text, Transform trans)
     {
-        Instance.TextToShow.Enqueue(new ShowEvent(text,position));
+        Instance.TextToShow.Enqueue(new ShowEvent(text,trans));
     }
 
     private IEnumerator ShowTextLoop(ShowEvent showing)
@@ -64,19 +64,20 @@ public class PopUpText : MonoBehaviour
         //comp.ShowElement();
 
         //TODO: slow down time
-        GameManager.Pause();
+        //GameManager.Pause();
         
         //TODO: different sizes for different types of events
-        PlayerController.MoveCameraToPos(showing.Position.Value,6);
 
         var endTime = Time.unscaledTime + ShowTime;
 
-        yield return new WaitForSecondsRealtime(0.5f);
-
-        yield return new WaitUntil(() => Time.unscaledTime > endTime || Input.anyKeyDown || Input.touchCount > 0);
+        while (Time.unscaledTime < endTime)// & !Input.anyKeyDown && Input.touchCount == 0)
+        {
+            PlayerController.MoveCameraToPos(showing.Trans.position, 6);
+            yield return null;
+        }
 
         ViewHolder.SetActive(false);
-        GameManager.UnPause();
+        //GameManager.UnPause();
 
         yield return new WaitUntil(() => ViewHolder.AllHidden());
        

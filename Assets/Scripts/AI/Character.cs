@@ -284,6 +284,7 @@ public abstract class Character : MonoBehaviour
     [Header("Animation")]
     public Animator Animator;
     public float SpeedAnimationThreshold;
+    public ParticleSystem HitParticles, DeathParticles;
 
     private Vector2 smoothDeltaPosition = Vector2.zero;
     private Vector2 velocity = Vector2.zero;
@@ -302,8 +303,6 @@ public abstract class Character : MonoBehaviour
     private const string SURPRISE_ANIMATION_BOOL = "Surprised";
     private const string EAT_ANIMATION_BOOL = "Eating";
     private const string PROVOKE_ANIMATION_BOOL = "Provoking";
-
-
 
     private Collider2D coll;
     protected Coroutine _attackRoutine;
@@ -782,36 +781,10 @@ public abstract class Character : MonoBehaviour
     protected IEnumerator AttackRoutine()
     {
         //Debug.Log(gameObject.name + " is Attacking " + AttackTarget.gameObject.name);
-        
+
         State = CharacterState.Attacking;
         while (Attacking() && InAttackRange() && AttackTarget.Alive())
         {
-            (this as Goblin)?.Speak(SoundBank.GoblinSound.Attacking);
-            
-            //HIT TARGET
-            var damage = Random.Range(1, DMG.GetStatMax()) * OutgoingDmgPct;
-            if (AttackTarget.Surprised())
-                damage = (int)(damage * AmbushModifier);
-            var target = AttackTarget;
-            if(!(target.Team && GameManager.Instance.InvincibleMode))
-                target.Health -= (int) Mathf.Round(damage *target.IncomingDmgPct);
-
-            if (target.Health <= 0)
-            {
-                //Debug.Log(name + " killed " + target.name);
-
-                if (this as Goblin)
-                {
-                    ((Goblin) this).Xp += GameManager.XpKill();
-                    if (Team)
-                        Team.OnTeamKill.Invoke();
-                    (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-                }
-
-                break;
-
-            }
-
             //Debug.Log(gameObject.name + " hit " + AttackTarget.gameObject.name +" for " + Damage + " damage");
 
             //should be tied to animation maybe?
@@ -819,6 +792,43 @@ public abstract class Character : MonoBehaviour
         }
 
         _attackRoutine = null;
+    }
+
+
+    public void AttackEvent()
+    {
+        if (!Attacking() || !InAttackRange() || !AttackTarget.Alive() || AIM.GetStatMax() < Random.Range(1,11)) return;
+
+        (this as Goblin)?.Speak(SoundBank.GoblinSound.Attacking);
+
+        //HIT TARGET
+        var damage = Random.Range(1, DMG.GetStatMax()) * OutgoingDmgPct;
+
+        //TODO: create source for fx and getsound method for effects
+        Voice?.PlayOneShot(SoundBank.GetSound(SoundBank.FXSound.Hit));
+        
+        HitParticles?.Play(true);
+
+        if (AttackTarget.Surprised())
+            damage = (int)(damage * AmbushModifier);
+        var target = AttackTarget;
+        if (!(target.Team && GameManager.Instance.InvincibleMode))
+            target.Health -= (int)Mathf.Round(damage * target.IncomingDmgPct);
+
+        if (target.Health <= 0)
+        {
+            Debug.Log(name + " killed " + target.name);
+
+            if (this as Goblin)
+            {
+                ((Goblin)this).Xp += GameManager.XpKill();
+                if (Team)
+                    Team.OnTeamKill.Invoke();
+                (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
+            }
+        }
+
+        Debug.Log(gameObject.name + " hit " + AttackTarget.gameObject.name +" for " + damage + " damage");
     }
 
     public bool Alive()
@@ -1045,13 +1055,13 @@ public abstract class Character : MonoBehaviour
                     if (LootTarget.ContainsLoot)
                     {
                         (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-                        PopUpText.ShowText(name + " found " + LootTarget.Loot,LootTarget.transform.position);
+                        PopUpText.ShowText(name + " found " + LootTarget.Loot,LootTarget.transform);
                         Team.OnTreasureFound.Invoke(1);
                     }
                     if (LootTarget.ContainsFood)
                     {
                         (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-                        PopUpText.ShowText(name + " found " + LootTarget.Food, LootTarget.transform.position);
+                        PopUpText.ShowText(name + " found " + LootTarget.Food, LootTarget.transform);
                         Team.OnFoodFound.Invoke(5);
                     }
                     if(this as Goblin)
@@ -1342,6 +1352,8 @@ public abstract class Character : MonoBehaviour
 
         ChangeState(CharacterState.Hiding, true);
     }
+
+
 
     private void Animate(string boolName)
     {

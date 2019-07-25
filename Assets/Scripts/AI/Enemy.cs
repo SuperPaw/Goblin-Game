@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-
-
     public new void FixedUpdate()
     {
         base.FixedUpdate();

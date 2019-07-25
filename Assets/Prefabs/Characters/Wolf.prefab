@@ -9373,7 +9373,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &470744
 Transform:
   m_ObjectHideFlags: 0
@@ -25009,9 +25009,10 @@ MonoBehaviour:
   Material: {fileID: 2100000, guid: 78d88e566e5f7b14aaa719c52b23bd6c, type: 2}
   Animator: {fileID: 9573564}
   SpeedAnimationThreshold: 0
+  HitParticles: {fileID: 19870744}
+  DeathParticles: {fileID: 0}
   provokeDistance: 8
   ProvokeTime: 5
-  InArea: {fileID: 0}
   DebugText: {fileID: 0}
 --- !u!195 &8617906192698219966
 NavMeshAgent:
