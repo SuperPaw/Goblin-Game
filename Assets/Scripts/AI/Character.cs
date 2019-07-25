@@ -797,7 +797,7 @@ public abstract class Character : MonoBehaviour
 
     public void AttackEvent()
     {
-        if (!Attacking() || !InAttackRange() || !AttackTarget.Alive() || AIM.GetStatMax() < Random.Range(1,11)) return;
+        if (!Attacking() || !InAttackRange() || !AttackTarget.Alive() || AIM.GetStatMax() < Random.value) return;
 
         (this as Goblin)?.Speak(SoundBank.GoblinSound.Attacking);
 

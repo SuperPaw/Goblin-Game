@@ -874,6 +874,7 @@ public class MapGenerator : MonoBehaviour
 
         var next = Instantiate(go, pos, Quaternion.identity);
         next.transform.parent = parent;
+        next.name = go.name;
 
         var c = next.GetComponent<Character>();
 

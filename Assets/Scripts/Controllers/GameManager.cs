@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public bool GamePaused;
     public bool InvincibleMode;
     public GameObject[] TurnOnOnStart;
+    public AnimationCurve HitChance;
     
     public enum Icon
     {
@@ -202,6 +203,11 @@ public class GameManager : MonoBehaviour
 
         Instance.GameStarted = true;
 
+    }
+
+    public static float GetHitChance(int i)
+    {
+        return Instance.HitChance.Evaluate(i);
     }
 
     public void PauseButton()

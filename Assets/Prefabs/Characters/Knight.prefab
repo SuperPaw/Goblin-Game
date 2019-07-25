@@ -3045,9 +3045,10 @@ MonoBehaviour:
   Material: {fileID: 0}
   Animator: {fileID: 2001377320644695465}
   SpeedAnimationThreshold: 0
+  HitParticles: {fileID: 0}
+  DeathParticles: {fileID: 0}
   provokeDistance: 10
   ProvokeTime: 5
-  InArea: {fileID: 0}
   DebugText: {fileID: 0}
 --- !u!54 &54649803752173894
 Rigidbody:
@@ -3088,7 +3089,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1969145986120274}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.2
+  m_Radius: 0.15
   m_Speed: 3.5
   m_Acceleration: 20
   avoidancePriority: 50

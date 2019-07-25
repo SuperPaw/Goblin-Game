@@ -108,9 +108,10 @@ MonoBehaviour:
   Material: {fileID: 2100000, guid: aee7b59560db30047bd8f9e5c2a03dc9, type: 2}
   Animator: {fileID: 1382930379288253398}
   SpeedAnimationThreshold: 0
+  HitParticles: {fileID: 0}
+  DeathParticles: {fileID: 0}
   provokeDistance: 10
   ProvokeTime: 5
-  InArea: {fileID: 0}
   DebugText: {fileID: 0}
 --- !u!136 &4770881076443511781
 CapsuleCollider:
@@ -151,7 +152,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.2
+  m_Radius: 0.15
   m_Speed: 3.5
   m_Acceleration: 20
   avoidancePriority: 50
