@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -70,11 +71,13 @@ public class PopUpText : MonoBehaviour
 
         var endTime = Time.unscaledTime + ShowTime;
 
-        while (Time.unscaledTime < endTime)// & !Input.anyKeyDown && Input.touchCount == 0)
+        while (Time.unscaledTime < endTime &!Input.anyKeyDown && Input.touchCount == 0 && (Math.Abs(Input.mouseScrollDelta.y) < 0.001) )
         {
             PlayerController.MoveCameraToPos(showing.Trans.position, 6);
             yield return null;
         }
+
+        yield return new WaitUntil(() => Time.unscaledTime > endTime);
 
         ViewHolder.SetActive(false);
         //GameManager.UnPause();
