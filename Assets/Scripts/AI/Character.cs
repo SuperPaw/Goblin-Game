@@ -303,6 +303,8 @@ public abstract class Character : MonoBehaviour
     private const string SURPRISE_ANIMATION_BOOL = "Surprised";
     private const string EAT_ANIMATION_BOOL = "Eating";
     private const string PROVOKE_ANIMATION_BOOL = "Provoking";
+    private const string PICKUP_ANIMATION_BOOL = "PickUp";
+
 
     private Collider2D coll;
     protected Coroutine _attackRoutine;
@@ -488,6 +490,10 @@ public abstract class Character : MonoBehaviour
         {
             Animate(Walking ?MOVE_ANIMATION_BOOL: RUN_ANIMATION_BOOL);
         }
+        else if (Searching() && LootTarget && Vector3.Distance(transform.position, LootTarget.transform.position) < 0.5f)
+        {
+            Animate(PICKUP_ANIMATION_BOOL);
+        }
         else if (Provoking())
         {
             Animate(PROVOKE_ANIMATION_BOOL);
@@ -521,7 +527,7 @@ public abstract class Character : MonoBehaviour
     /// will do nothing if state == dead
     /// </summary>
     /// <param name="newState">The new character state</param>
-    public void ChangeState(CharacterState newState, bool immedeately = false)//, int leaderAncinitet = 10)
+    public void ChangeState(CharacterState newState, bool immedeately = false, float time = 0f)//, int leaderAncinitet = 10)
     {
         if(!Alive())
             return;
@@ -530,8 +536,11 @@ public abstract class Character : MonoBehaviour
         //if(stateChangeRoutine != null)
         //    Debug.Log(name + ": Changing State already: newState "+newState + ", old: "+ State);
 
-        stateChangeRoutine = StartCoroutine(immedeately
-            ? StateChangingRoutine(newState, 0)
+        stateChangeRoutine = StartCoroutine(
+            immedeately? 
+            StateChangingRoutine(newState, 0)
+            : time > 0f ? 
+            StateChangingRoutine(newState, time)
             : StateChangingRoutine(newState, Random.Range(1.5f, 4f)));
     }
 
@@ -618,6 +627,8 @@ public abstract class Character : MonoBehaviour
     {
         return State == CharacterState.Provoking;
     }
+
+    public bool Searching() => State == CharacterState.Searching;
 
     public bool Watching()
     {
@@ -1079,7 +1090,7 @@ public abstract class Character : MonoBehaviour
                     LootTarget.ContainsLoot = false;
                     LootTarget.Searched = true;
 
-                    State = CharacterState.Idling;
+                    ChangeState(CharacterState.Idling,false,5f);
                     break;
                 }
                 break;

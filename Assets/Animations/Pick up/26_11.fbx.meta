@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 9249f17abb1d32544b190294ab698224
+guid: 2d47b6f5fac054a4abe7f2e6404ecd65
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable:
   - first:
-      74: 3460625198539998107
-    second: 111_18
+      74: -1528243909921034128
+    second: 26_11
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -26,7 +26,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: 111_18
-      takeName: 111_18
-      internalID: 3460625198539998107
+      name: 26_11
+      takeName: 26_11
+      internalID: -1528243909921034128
       firstFrame: 0
-      lastFrame: 108
+      lastFrame: 109
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -115,10 +115,10 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 3
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
