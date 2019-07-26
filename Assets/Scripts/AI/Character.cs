@@ -504,7 +504,8 @@ public abstract class Character : MonoBehaviour
         }
         else if (Watching() &&  !IsChief() && Team.Challenger != this)
         {
-            Animator.SetLookAtPosition(Team.Leader.transform.position);
+            //Animator.SetLookAtPosition(Team.Leader.transform.position);
+            transform.LookAt(Team.Leader.transform);
             Animate(CHEER_ANIMATION_BOOL);
         }
         else if (Surprised())
@@ -797,6 +798,8 @@ public abstract class Character : MonoBehaviour
         while (Attacking() && InAttackRange() && AttackTarget.Alive())
         {
             //Debug.Log(gameObject.name + " hit " + AttackTarget.gameObject.name +" for " + Damage + " damage");
+            
+            transform.LookAt(AttackTarget.transform);
 
             //should be tied to animation maybe?
             yield return new WaitForSeconds(AttackTime);
@@ -819,7 +822,8 @@ public abstract class Character : MonoBehaviour
         if(Voice)
             Voice.PlayOneShot(SoundBank.GetSound(SoundBank.FXSound.Hit));
         
-        HitParticles?.Play(true);
+        if(HitParticles)
+            HitParticles.Play(true);
 
         if (AttackTarget.Surprised())
             damage = (int)(damage * AmbushModifier);
@@ -959,8 +963,7 @@ public abstract class Character : MonoBehaviour
 
                     navMeshAgent.SetDestination(AttackTarget.transform.position);
                     
-                    Animator.SetLookAtPosition(AttackTarget.transform.position);
-
+                    //Animator.SetLookAtPosition(AttackTarget.transform.position);
                     //TODO: add random factor
                 }
                 else

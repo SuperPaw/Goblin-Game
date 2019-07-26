@@ -539,6 +539,8 @@ public class PlayerController : MonoBehaviour
 
     private void RemoveFogAtPos(Vector3 pos, int id,bool unused = false)
     {
+        if(!FogOfWar) return;
+
         if (id < 1 || id > FogPoints)
         {
             Debug.Log("Unknown shader id: " + id);

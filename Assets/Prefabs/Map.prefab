@@ -74,8 +74,8 @@ MonoBehaviour:
     PointOfInterests: 28
     HumanSettlements: 12
     VillagesToGenerate: 4
-  SizeX: 160
-  SizeZ: 160
+  SizeX: 40
+  SizeZ: 40
   AreaTilePrefab: {fileID: 114614147775462646, guid: e15f42e3c6199524da160032eae3127f,
     type: 3}
   AreaSize: 30

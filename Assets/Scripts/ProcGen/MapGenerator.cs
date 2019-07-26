@@ -152,7 +152,7 @@ public class MapGenerator : MonoBehaviour
 
         var areasToCreate = (SizeX / totalAreaSize) * (SizeZ / totalAreaSize);
         
-        if (areasToCreate < 2)
+        if (areasToCreate < 1)
         {
             Debug.LogError("Map size too small for area gen");
             yield break;
