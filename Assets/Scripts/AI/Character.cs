@@ -840,7 +840,7 @@ public abstract class Character : MonoBehaviour
             }
         }
 
-        Debug.Log(gameObject.name + " hit " + AttackTarget.gameObject.name +" for " + damage + " damage");
+        //Debug.Log(gameObject.name + " hit " + AttackTarget.gameObject.name +" for " + damage + " damage");
     }
 
     public bool Alive()
