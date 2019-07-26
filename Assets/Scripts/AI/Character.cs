@@ -816,7 +816,8 @@ public abstract class Character : MonoBehaviour
         var damage = Random.Range(1, DMG.GetStatMax()) * OutgoingDmgPct;
 
         //TODO: create source for fx and getsound method for effects
-        Voice?.PlayOneShot(SoundBank.GetSound(SoundBank.FXSound.Hit));
+        if(Voice)
+            Voice.PlayOneShot(SoundBank.GetSound(SoundBank.FXSound.Hit));
         
         HitParticles?.Play(true);
 
@@ -957,6 +958,8 @@ public abstract class Character : MonoBehaviour
                     }
 
                     navMeshAgent.SetDestination(AttackTarget.transform.position);
+                    
+                    Animator.SetLookAtPosition(AttackTarget.transform.position);
 
                     //TODO: add random factor
                 }
