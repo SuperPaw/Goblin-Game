@@ -486,13 +486,13 @@ public abstract class Character : MonoBehaviour
                 ? RANGED_ATTACK_ANIMATION_BOOL
                 : ATTACK_ANIMATION_BOOL);
         }
+        else if (Searching() && LootTarget && Vector3.Distance(transform.position, LootTarget.transform.position) < 1.2f)
+        {
+            Animate(PICKUP_ANIMATION_BOOL);
+        }
         else if (AgentVelocity > SpeedAnimationThreshold)
         {
             Animate(Walking ?MOVE_ANIMATION_BOOL: RUN_ANIMATION_BOOL);
-        }
-        else if (Searching() && LootTarget && Vector3.Distance(transform.position, LootTarget.transform.position) < 0.5f)
-        {
-            Animate(PICKUP_ANIMATION_BOOL);
         }
         else if (Provoking())
         {
@@ -961,7 +961,11 @@ public abstract class Character : MonoBehaviour
                             AttackTarget = c;
                     }
 
-                    navMeshAgent.SetDestination(AttackTarget.transform.position);
+                    //if (!navMeshAgent.hasPath & !navMeshAgent.pathPending)
+                    //{
+                    //    Debug.Log("recalc attack path");
+                    //    navMeshAgent.SetDestination(AttackTarget.transform.position);
+                    //}
                     
                     //Animator.SetLookAtPosition(AttackTarget.transform.position);
                     //TODO: add random factor
@@ -1067,7 +1071,7 @@ public abstract class Character : MonoBehaviour
                 //}
 
                 //check for arrival and stop travelling
-                if (Vector3.Distance(transform.position, LootTarget.transform.position) < 2f)
+                if (Vector3.Distance(transform.position, LootTarget.transform.position) < 1f)
                 {
                     if (LootTarget.ContainsLoot)
                     {
