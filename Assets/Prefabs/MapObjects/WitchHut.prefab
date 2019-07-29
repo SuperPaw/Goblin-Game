@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Hidable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4081050876500789283
 Transform:
@@ -78,21 +78,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AreaName: Witch Hut
   Inhabitants: witch
-  MinSpawns: 1
-  MaxSpawns: 1
-  MonsterPrefab: {fileID: 114479280790955412, guid: a41febb9abb65c949b38b226685a2ff7,
-    type: 3}
-  NPCPrefab: {fileID: 0}
+  PoiType: 5
   InArea: {fileID: 0}
-  HasBeenAttacked: 0
-  Attackable: 0
+  NPCPrefab: {fileID: 0}
+  NoOfNpcs: 0
   IconSprite: {fileID: 21300000, guid: c2b65fcb79e2b8044bd70eeb7b4a28a5, type: 3}
   PoiOptionController: {fileID: 0}
+  Members: []
+  MonsterPrefab: {fileID: 114479280790955412, guid: a41febb9abb65c949b38b226685a2ff7,
+    type: 3}
+  MinSpawns: 1
+  MaxSpawns: 1
+  WinCondition: 0
+  InitialEnemies: 0
+  HasBeenAttacked: 0
+  Attackable: 0
+  LivingDead: 0
   Options: 08000000
   Buyables:
   - Name: skull hat
     Sprite: {fileID: 0}
     Type: 3
+    BuyableClass: 0
     EquipmentType: 1
     Price: 5
     AmountForSale: 1
@@ -100,6 +107,7 @@ MonoBehaviour:
   - Name: stick
     Sprite: {fileID: 0}
     Type: 3
+    BuyableClass: 0
     EquipmentType: 6
     Price: 4
     AmountForSale: 1
@@ -107,11 +115,15 @@ MonoBehaviour:
   - Name: healing
     Sprite: {fileID: 0}
     Type: 2
+    BuyableClass: 0
     EquipmentType: 0
     Price: 2
     AmountForSale: 10
     OptionType: 7
-  PoiType: 5
+  GoblinPrefab: {fileID: 0}
+  Explored: 0
+  Difficulty: 0
+  Treasure: 0
 --- !u!1 &8503355671099633675
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,7 +139,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7906681578375453446
 Transform:
@@ -232,6 +244,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 857306969045598565, guid: 380063dad049b0941b95b8c2e16e0a04,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 8588657935196260327, guid: 380063dad049b0941b95b8c2e16e0a04,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 3309811077593519687, guid: 380063dad049b0941b95b8c2e16e0a04,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 380063dad049b0941b95b8c2e16e0a04, type: 3}

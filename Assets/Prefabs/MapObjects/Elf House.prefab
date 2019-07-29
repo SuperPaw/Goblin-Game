@@ -11,13 +11,12 @@ GameObject:
   - component: {fileID: 4081050876500789283}
   - component: {fileID: 4526848622528733997}
   - component: {fileID: 3279508761785604338}
-  - component: {fileID: 5110183197440440962}
   m_Layer: 0
   m_Name: Elf House
   m_TagString: Hidable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4081050876500789283
 Transform:
@@ -64,18 +63,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5, y: 6, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5110183197440440962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6920746842318355173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a651f248e0891324394137ad859cf3cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8503355671099633675
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,7 +78,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7906681578375453446
 Transform:
@@ -222,6 +209,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 857306969045598565, guid: 380063dad049b0941b95b8c2e16e0a04,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 5751424616047342296, guid: 380063dad049b0941b95b8c2e16e0a04,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -251,6 +243,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8588657935196260327, guid: 380063dad049b0941b95b8c2e16e0a04,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 3309811077593519687, guid: 380063dad049b0941b95b8c2e16e0a04,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 557149591274259965, guid: 380063dad049b0941b95b8c2e16e0a04, type: 3}

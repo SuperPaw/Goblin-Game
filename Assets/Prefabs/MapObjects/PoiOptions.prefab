@@ -250,6 +250,7 @@ MonoBehaviour:
   initialScale: {x: 0, y: 0, z: 0}
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPivot: {x: 0, y: 0}
+  Hidden: 0
 --- !u!1 &3309811077593519687
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,7 +345,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!224 &8794739696217485326
 RectTransform:
@@ -502,6 +503,7 @@ MonoBehaviour:
   initialScale: {x: 0, y: 0, z: 0}
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPivot: {x: 0, y: 0}
+  Hidden: 0
 --- !u!114 &5258957995591205063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,6 +518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   childrenElements: []
   showMenuOnEnable: 1
+  Active: 0
 --- !u!1 &8588657935196260327
 GameObject:
   m_ObjectHideFlags: 0
