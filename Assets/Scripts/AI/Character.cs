@@ -1243,6 +1243,7 @@ public abstract class Character : MonoBehaviour
         if(this as Goblin)
             (this as Goblin).particles.Stop();
 
+        Debug.Log("death sound!!!!");
         (this as Goblin)?.Speak(SoundBank.GoblinSound.Death);
 
         if(MovementAudio)
