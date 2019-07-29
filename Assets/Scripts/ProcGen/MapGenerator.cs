@@ -261,6 +261,8 @@ public class MapGenerator : MonoBehaviour
         //Find suitable start position
         GoblinTeam.transform.position = new Vector3(pos.x,0,pos.z);
 
+        goblinStartArea.Visited = true;
+
         var b = PlayerTeam.TribeBlessing;
         if (b == LegacySystem.Blessing.SoloGoblin)
             GoblinsToGenerate = 1;

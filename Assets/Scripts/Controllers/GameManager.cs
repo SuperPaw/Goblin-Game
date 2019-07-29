@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public bool GameStarted;
     public bool GamePaused;
     public bool InvincibleMode;
+    public bool DisableUnseenCharacters;
     public GameObject[] TurnOnOnStart;
     public AnimationCurve HitChance;
     
@@ -197,7 +198,7 @@ public class GameManager : MonoBehaviour
 
         FindObjectOfType<PlayerController>().Initialize();
 
-        SoundController.PlayGameStart();
+        //SoundController.PlayGameStart();
 
         SoundController.ChangeMusic(SoundBank.Music.Explore);
 

@@ -29,7 +29,9 @@ public class SoundBank : MonoBehaviour
         GameWin,
         BattleWon,
         AchievementUnlocked,
-        MenuOpen
+        MenuOpen,
+        RevealArea,
+        FoundEquipment
     }
     public enum Background
     {

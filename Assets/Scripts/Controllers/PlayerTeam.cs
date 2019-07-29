@@ -31,6 +31,7 @@ public class PlayerTeam : MonoBehaviour
                     _leader.name = "Chief " + _leader.name + NameGenerator.GetSurName();
                 } while (GreatestGoblins.ScoresContainName(_leader.name)); //TODO: check that this works
 
+                SoundController.PlayStinger(SoundBank.Stinger.GameStart);
                 PopUpText.ShowText(_leader.name +" is new chief!",_leader.transform);
 
                 //TODO: use event instead of having all this here
@@ -651,6 +652,8 @@ public class PlayerTeam : MonoBehaviour
         List<PlayerChoice.ChoiceOption> options = new List<PlayerChoice.ChoiceOption>();
 
         //todo: handle only one member
+
+        SoundController.PlayStinger(SoundBank.Stinger.FoundEquipment);
 
         //TODO check for usability
         var potential = new List<Character>();

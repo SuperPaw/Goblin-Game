@@ -95,7 +95,8 @@ public class Area : MonoBehaviour
 
         FogOfWarSprite.color = LightFogColor;
         
-        PresentCharacters.ForEach(c => c.HolderGameObject.SetActive(true));
+        //if(GameManager.Instance.DisableUnseenCharacters)
+        //    PresentCharacters.ForEach(c => c.HolderGameObject.SetActive(inArea));
     }
 
     public void OnTriggerEnter(Collider other)

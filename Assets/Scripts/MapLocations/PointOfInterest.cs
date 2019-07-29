@@ -248,6 +248,7 @@ public class PointOfInterest : MonoBehaviour
             g.Team.OnTreasureFound.Invoke(Treasure);
             g.gameObject.SetActive(true);
             g.ChangeState(Character.CharacterState.Idling, true);
+            SoundController.PlayStinger(SoundBank.Stinger.FoundEquipment);
             PopUpText.ShowText($"{g.name} found {Treasure} goblin treasures in {AreaName}!", g.transform);
 
             Explored = true;

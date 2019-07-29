@@ -1306,7 +1306,8 @@ public abstract class Character : MonoBehaviour
             ChangeState(Character.CharacterState.Idling);
         }
 
-        //HolderGameObject.SetActive(c.Team || Visible());
+        //if (GameManager.Instance.DisableUnseenCharacters)
+        //    HolderGameObject.SetActive(Team || a.Visible());
         
         //TODO: move to area change method
         if (this as Goblin & !IsChief())
