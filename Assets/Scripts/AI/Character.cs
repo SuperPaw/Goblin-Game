@@ -419,7 +419,7 @@ public abstract class Character : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        if(StateRoutine == null)
+        if(StateRoutine == null && GameManager.Instance.GameStarted)
             ChangeState(CharacterState.Idling,true);
 
         if (DebugText )
@@ -549,7 +549,7 @@ public abstract class Character : MonoBehaviour
     private IEnumerator StateChangingRoutine(CharacterState newState, float wait)
     {
         var fromState = State;
-        
+       
         yield return new WaitForSeconds(wait);
 
         if (fromState != State)
