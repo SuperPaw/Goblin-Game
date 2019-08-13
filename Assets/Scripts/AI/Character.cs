@@ -20,6 +20,8 @@ public abstract class Character : MonoBehaviour
     public bool PathStale;
     public bool IsOnNavMesh;
 
+    public Coroutine StateRoutine;
+
 
     //Should we use different state for travelling and just looking at something clsoe by
     public enum CharacterState
@@ -50,7 +52,6 @@ public abstract class Character : MonoBehaviour
     [Header("AI Values")]
     public int MaxGroupSize = 4;
     public float SurprisedTime = 4;
-    public float SurprisedStartTime;
 
     public bool Aggressive;
 
@@ -307,8 +308,8 @@ public abstract class Character : MonoBehaviour
 
 
     private Collider2D coll;
-    protected Coroutine _attackRoutine;
-    private Hidable hiding;
+    public bool attackAnimation;
+    public Hidable hiding;
     
     public Hidable Hidingplace
     {
@@ -327,8 +328,6 @@ public abstract class Character : MonoBehaviour
     //TODO: move to goblin
     public int provokeDistance = 10;
     //From walking toward to running away
-    public float ProvokeTime = 5;
-    private float ProvokeStartTime;
 
     private Area area;
 
@@ -404,7 +403,7 @@ public abstract class Character : MonoBehaviour
         
         AttackRange = transform.lossyScale.x * 2f;
 
-        OnTargetDeath.AddListener(TargetGone);
+        //OnTargetDeath.AddListener(TargetGone);
         OnBeingAttacked.AddListener(BeingAttacked);
         OnCharacterCharacter.AddListener(AttackCharacter);
 
@@ -417,10 +416,14 @@ public abstract class Character : MonoBehaviour
         if(!navMeshAgent) Debug.LogWarning(name+ ": character does not have Nav Mesh Agent");
 
         OnAreaChange.AddListener(AreaChange);
+
     }
 
     protected void FixedUpdate()
     {
+        if(StateRoutine == null)
+            ChangeState(CharacterState.Idling,true);
+
         if (DebugText )
         {
             DebugText.text = GameManager.Instance.DebugText ? State.ToString(): "";
@@ -480,7 +483,7 @@ public abstract class Character : MonoBehaviour
         {
             Animate(FLEE_ANIMATION_BOOL);
         }
-        else if (_attackRoutine != null && Attacking())
+        else if (attackAnimation && Attacking())
         {
             Animate(Equipped.Values.Any(e => e && e.Type == Equipment.EquipmentType.Bow)
                 ? RANGED_ATTACK_ANIMATION_BOOL
@@ -548,12 +551,12 @@ public abstract class Character : MonoBehaviour
     private IEnumerator StateChangingRoutine(CharacterState newState, float wait)
     {
         var fromState = State;
-
+        
         yield return new WaitForSeconds(wait);
 
         if (fromState != State)
         {
-            //Debug.Log(name + " no longer "+ fromState + "; Now: "+ State + "; Not " + newState);
+            Debug.Log(name + " no longer "+ fromState + "; Now: "+ State + "; Not " + newState);
             yield break;
         }
 
@@ -563,8 +566,8 @@ public abstract class Character : MonoBehaviour
 
         if (State == newState)
         {
-            //Debug.Log(name + " is already "+ newState);
-            yield break;
+            Debug.Log(name + " is already "+ newState);
+            //yield break;
         }
 
         if (Morale <= 0 && newState != CharacterState.Fleeing)
@@ -582,7 +585,14 @@ public abstract class Character : MonoBehaviour
             newState != CharacterState.Fleeing)
             TravellingToArea = null;
 
+        Debug.Log($"Starting state: {newState}");
+        //TODO: Assign to field and close the last state
 
+        //TODO: just assign and set to null when applicable
+        var s = ActionStateProcessor.CreateStateRoutine(this, newState);
+        if (s != null)
+            StateRoutine = s;
+        
         if (this as Goblin && PlayerController.IsStateChangeShout(State))
         {
             (this as Goblin)?.Speak(PlayerController.GetStateChangeReaction(State));
@@ -721,7 +731,7 @@ public abstract class Character : MonoBehaviour
         return closest;
     }
 
-    protected Character GetClosestEnemy()
+    public Character GetClosestEnemy()
     {
         var playerChar = (gameObject.tag == "Player");
         var enemyTag = playerChar ? "Enemy" : "Player";
@@ -754,19 +764,6 @@ public abstract class Character : MonoBehaviour
         return closest;
     }
 
-    protected void TargetGone()
-    {
-        if(!Attacking()) return;
-
-        var closest = GetClosestEnemy();
-        if (!closest)
-        {
-            State = CharacterState.Idling;
-            AttackTarget = null;
-        }
-        else
-            AttackTarget = closest;
-    }
 
     //Should only be called through setting the attack target
     private void AttackCharacter(Character target)
@@ -789,25 +786,6 @@ public abstract class Character : MonoBehaviour
             AttackTarget = closest ? closest : attacker;
         }
     }
-
-    protected IEnumerator AttackRoutine()
-    {
-        //Debug.Log(gameObject.name + " is Attacking " + AttackTarget.gameObject.name);
-
-        State = CharacterState.Attacking;
-        while (Attacking() && InAttackRange() && AttackTarget.Alive())
-        {
-            //Debug.Log(gameObject.name + " hit " + AttackTarget.gameObject.name +" for " + Damage + " damage");
-            
-            transform.LookAt(AttackTarget.transform);
-
-            //should be tied to animation maybe?
-            yield return new WaitForSeconds(AttackTime);
-        }
-
-        _attackRoutine = null;
-    }
-
 
     public void AttackEvent()
     {
@@ -851,345 +829,11 @@ public abstract class Character : MonoBehaviour
     {
         return State != CharacterState.Dead;
     }
-    //TODO: create specific select action for each child class
-    protected  void SelectAction()
+
+    public void SpotArrival(Character ch)
     {
-        switch (State)
-        {
-            case CharacterState.Idling:
-                if (actionInProgress)
-                {
-                    if (navMeshAgent.remainingDistance < 0.02f)
-                        actionInProgress = false;
-                }
-                else if (IrritationMeter >= IrritaionTolerance)
-                {
-                    ChangeState(CharacterState.Attacking,true);
-                }
-                else if (Random.value < 0.015f) //selecting idle action
-                {
-                    if(!IsChief())
-                        (this as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.Idle));
-
-                    actionInProgress = true;
-
-                    Vector3 dest;
-
-                    if (InArea)
-                    {
-                        if (GetClosestEnemy() 
-                            && ( //ANY friends fighting
-                            InArea.PresentCharacters.Any(c => c.tag == tag && c.Alive() && c.Attacking())
-                            // I am aggressive wanderer
-                            || (StickToRoad && InArea.PresentCharacters.Any(c => c.tag == "Player" &! c.Hiding()))
-                            ))
-                        {
-                            //Debug.Log(name + ": Joining attack without beeing attacked");
-
-                            ChangeState(CharacterState.Attacking,true);
-                            Morale -= 5;
-                            Target = GetClosestEnemy().transform.position;
-                            dest = Target;
-                        }
-                        else if ((this as Goblin) && Team && Team.Leader.InArea != InArea &! Team.Leader.Travelling())
-                        {
-                            TravellingToArea = Team.Leader.InArea;
-                            dest = Team.Leader.InArea.GetRandomPosInArea();
-                        }
-                        else if ((this as Goblin) &&tag == "Player" && GetClosestEnemy() && (GetClosestEnemy().transform.position - transform.position).magnitude < provokeDistance)
-                        {
-                            ChangeState(CharacterState.Provoking, true);
-                            var ctx = GetClosestEnemy();
-                            (this as Goblin).ProvokeTarget = ctx;
-                            (this as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.Mocking));
-                            dest = ctx.transform.position;
-                        }
-                        else if (StickToRoad)
-                        {
-                            var goingTo = InArea.GetClosestNeighbour(transform.position,true);
-
-                            //TODO: handle this in moveto method instead
-                            dest = goingTo.PointOfInterest ? goingTo.GetRandomPosInArea(): goingTo.transform.position;
-                            
-                            //Debug.Log(name + ": Wandering to "+ goingTo);
-                            Target = dest;
-                            TravellingToArea = goingTo;
-                            
-                            goingTo.PresentCharacters.ForEach(c => StartCoroutine(c.SpotArrivalCheck(this)));
-
-                            ChangeState(CharacterState.Travelling,true);
-                        }
-                        else
-                            dest = InArea.GetRandomPosInArea();
-                    }
-                    else
-                    {
-                        dest = transform.position + Random.insideUnitSphere * idleDistance;
-                        dest.y = 0;
-                    }
-
-                    navMeshAgent.SetDestination(dest);//new Vector3(Random.Range(-idleDistance, idleDistance), 0,Random.Range(-idleDistance, idleDistance)));
-                    
-                }
-                //TODO: use a different method for activity selection than else if
-                else if (Random.value < 0.0025f && this as Goblin && Team
-                    && !(Team.Leader == this) && Team.Members.Count > 4 && (this as Goblin).ClassType > Goblin.Class.Slave
-                    & !Team.Challenger && (Team.Leader as Goblin).CurrentLevel < ((Goblin)this).CurrentLevel)
-                {
-                    //TODO: make it only appear after a while
-
-                    Debug.Log("Chief Fight!!");
-                    Team.ChallengeForLeadership(this as Goblin);
-                }
-                //TODO: define better which characters should search stuff
-                else if (Random.value < 0.001f * SMA.GetStatMax() && Team && this as Goblin && !InArea.AnyEnemies() && InArea.Lootables.Any(l => !l.Searched))
-                {
-                    var loots = InArea.Lootables.Where(l => !l.Searched).ToArray();
-
-                    var loot = loots[Random.Range(0, loots.Count())];
-
-                    (this as Goblin).Search(loot);
-                }
-                break;
-            case CharacterState.Attacking:
-                if (AttackTarget && AttackTarget.Alive() && AttackTarget.InArea == InArea)
-                {
-                    if (AttackTarget.Fleeing())
-                    {
-                        var c = GetClosestEnemy();
-                        if (c)
-                            AttackTarget = c;
-                    }
-
-                    //if (!navMeshAgent.hasPath & !navMeshAgent.pathPending)
-                    //{
-                    //    Debug.Log("recalc attack path");
-                    //    navMeshAgent.SetDestination(AttackTarget.transform.position);
-                    //}
-                    
-                    //Animator.SetLookAtPosition(AttackTarget.transform.position);
-                    //TODO: add random factor
-                }
-                else
-                {
-                    TargetGone();
-                }
-                break;
-            case CharacterState.Travelling:
-                navMeshAgent.SetDestination(Target);
-                //check for arrival and stop travelling
-                if (Vector3.Distance(transform.position, Target) < 3f)
-                {
-                    //Debug.Log(name +" arrived at target");
-                    ChangeState(CharacterState.Idling);
-                }
-
-                break;
-            case CharacterState.Fleeing:
-                (this as Goblin)?.Speak(SoundBank.GoblinSound.PanicScream);
-                
-                if (fleeingToArea == InArea && navMeshAgent.remainingDistance < 1f )
-                {
-                    //Debug.Log(name + "done fleeing");
-                    //reset morale
-                    Morale = COU.GetStatMax() * 2;
-                    ChangeState(CharacterState.Idling,true);
-                }
-                else if (!actionInProgress || (!fleeingToArea &! navMeshAgent.hasPath))
-                {
-                    fleeingToArea = TravellingToArea ? TravellingToArea.GetClosestNeighbour(transform.position, StickToRoad,TravellingToArea.ContainsRoads) 
-                        : InArea.GetClosestNeighbour(transform.position,StickToRoad,InArea.ContainsRoads);
-                    navMeshAgent.SetDestination(fleeingToArea.GetRandomPosInArea());
-
-                    //Debug.Log(name + " fleeing to " +fleeingToArea);
-                    TravellingToArea = fleeingToArea;
-                    
-                    actionInProgress = true;
-                }
-                else if (!navMeshAgent.hasPath &! navMeshAgent.pathPending)
-                {
-                    //Debug.Log(name + " updating fleeing to " + fleeingToArea);
-                    navMeshAgent.SetDestination(fleeingToArea.GetRandomPosInArea());
-                }
-                break;
-            case CharacterState.Dead:
-                break;
-            case CharacterState.Hiding:
-                if (!Hidingplace)
-                {
-                    State = CharacterState.Idling;
-                }
-                //already set the destination
-                if ((navMeshAgent.destination - hiding.HideLocation.transform.position).sqrMagnitude < 1f)
-                {
-                    if (InArea.AnyEnemies() && navMeshAgent.remainingDistance > 0.2f)
-                    {
-                        ChangeState(CharacterState.Idling);
-                    }
-                }
-                else
-                {
-                    navMeshAgent.SetDestination(hiding.HideLocation.transform.position);
-                }
-                break;
-                //Only to be used for chief fights. TODO: rename
-            case CharacterState.Watching:
-                if (!Team || !Team.Challenger)
-                {
-                    //cheer
-                    (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-                    ChangeState(CharacterState.Idling, true);
-                }
-                else
-                {
-                    if (Vector3.Distance(transform.position, Team.Challenger.transform.position) < 3f && Team.Challenger != this && Team.Leader != this)
-                    {
-                        //cheer
-                        (this as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.ChiefBattleCheer));
-
-                        navMeshAgent.ResetPath();
-                    }
-                    else if (!actionInProgress)
-                    {
-                        navMeshAgent.SetDestination(Team.Challenger.transform.position);
-                        actionInProgress = true;
-                    }
-                }
-
-                break;
-            case CharacterState.Searching:
-                if (!LootTarget)
-                {
-                    ChangeState(CharacterState.Idling,true);
-                    break;
-                }
-
-                //if (!navMeshAgent.hasPath && !navMeshAgent.pathPending)
-                //{
-                //    Debug.Log($"{name}: Updating loot target path: {LootTarget}, {LootTarget.transform.position}");
-                //    navMeshAgent.SetDestination(LootTarget.transform.position);
-                //}
-
-                //check for arrival and stop travelling
-                if (Vector3.Distance(transform.position, LootTarget.transform.position) < 1f)
-                {
-                    if (LootTarget.ContainsLoot)
-                    {
-                        (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-                        PopUpText.ShowText(name + " found " + LootTarget.Loot,LootTarget.transform);
-                        Team.OnTreasureFound.Invoke(1);
-                    }
-                    if (LootTarget.ContainsFood)
-                    {
-                        (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-                        PopUpText.ShowText(name + " found " + LootTarget.Food, LootTarget.transform);
-                        Team.OnFoodFound.Invoke(5);
-                    }
-                    if(this as Goblin)
-                        foreach (var equipment in LootTarget.EquipmentLoot)
-                        {
-                            //TODO: create player choice for selecting goblin
-                            (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-                            
-                            Team?.OnEquipmentFound.Invoke(equipment,this as Goblin);
-                        }
-
-                    LootTarget.EquipmentLoot.Clear();
-
-                    LootTarget.ContainsFood = false;
-                    LootTarget.ContainsLoot = false;
-                    LootTarget.Searched = true;
-
-                    ChangeState(CharacterState.Idling,false,5f);
-                    break;
-                }
-                break;
-            case CharacterState.Provoking:
-                var g = this as Goblin;
-
-                if (!g)
-                {
-                    Debug.LogWarning("Non-goblin is being provocative");
-                    break;
-                }
-
-                if (!g.ProvokeTarget || g.ProvokeTarget.InArea != InArea)
-                {
-                    (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-                    g.ProvokeTarget = GetClosestEnemy();
-                }
-
-                if (!g.ProvokeTarget)
-                {
-                    ChangeState(CharacterState.Idling, true);
-                    break;
-                }
-
-                if (g.ProvokeTarget.Attacking())
-                {
-                    ChangeState(CharacterState.Attacking);
-                    break;
-                }
-
-                if (!actionInProgress && navMeshAgent.remainingDistance < 0.5f)
-                {
-                    actionInProgress = true;
-                    navMeshAgent.SetDestination(g.ProvokeTarget.transform.position);
-                    ProvokeStartTime = Time.time;
-                    break;
-                }
-
-                if (ProvokeTime + ProvokeStartTime > Time.time)
-                {
-                    //run away
-                    actionInProgress = false;
-                    var dest = InArea.GetRandomPosInArea();
-                    navMeshAgent.SetDestination(dest);
-                    g.ProvokeTarget.IrritationMeter++;
-                    break;
-                }
-                if ((g.ProvokeTarget.transform.position - transform.position).magnitude < 4) //Provoke
-                { 
-                    navMeshAgent.isStopped = true;
-                    (this as Goblin)?.Speak(
-                        PlayerController.GetDynamicReactions(PlayerController.DynamicState.Mocking));
-                }
-                break;
-            case CharacterState.Surprised:
-                navMeshAgent.isStopped = true;
-
-                if(SurprisedTime +SurprisedStartTime <= Time.time)
-                    ChangeState(CharacterState.Attacking);
-                break;
-            case CharacterState.Resting:
-
-
-                if (!Team || !Team.Campfire)
-                {
-                    ChangeState(CharacterState.Idling, true);
-                }
-                else
-                {
-                    if (Vector3.Distance(transform.position, Team.Campfire.transform.position) < 4f)
-                    {
-                        (this as Goblin)?.Speak(SoundBank.GoblinSound.Eat);
-
-                        navMeshAgent.ResetPath();
-                    }
-                    else if (!actionInProgress)
-                    {
-                        navMeshAgent.SetDestination(Team.Campfire.transform.position);
-                        actionInProgress = true;
-                    }
-                }
-
-                break;
-            default:
-                break;
-        }
-
+        StartCoroutine(SpotArrivalCheck(ch));
     }
-
 
     private IEnumerator SpotArrivalCheck(Character character)
     {
@@ -1342,8 +986,8 @@ public abstract class Character : MonoBehaviour
         actionInProgress = true;
     }
     
-
-    protected bool InAttackRange()
+    //TODO: move to attack action
+    public bool InAttackRange()
     {
         if (!AttackTarget || !AttackTarget.Alive())
             return false;

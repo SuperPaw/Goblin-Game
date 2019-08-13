@@ -126,22 +126,7 @@ public class Goblin : Character
     {
         base.FixedUpdate();
 
-        //TODO: merge together with move's switch statement
-        if (Attacking() && AttackTarget && AttackTarget.Alive() && InAttackRange()
-        ) //has live enemy target and in attackrange
-        {
-            navMeshAgent.isStopped = true;
-
-            if (_attackRoutine == null)
-                _attackRoutine = StartCoroutine(AttackRoutine());
-        }
-        else if(Alive())
-        {
-            navMeshAgent.isStopped = false;
-            SelectAction();
-        }
-
-
+        
         //TODO: this could be handled with events instead of checking each frame
         if (Team &! CharacterUI.ViewHolder.Active)
         {

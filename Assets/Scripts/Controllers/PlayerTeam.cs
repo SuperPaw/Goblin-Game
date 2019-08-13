@@ -379,7 +379,6 @@ public class PlayerTeam : MonoBehaviour
             foreach (var character in Leader.InArea.PresentCharacters.Where(e => e.tag == "Enemy"))
             {
                 character.ChangeState(Character.CharacterState.Surprised, true);
-                character.SurprisedStartTime = Time.time;
             }
         }
 

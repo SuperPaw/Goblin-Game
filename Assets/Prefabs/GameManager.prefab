@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6057858525446187768}
   - component: {fileID: 6057858525446187765}
   - component: {fileID: 6057858525446187764}
+  - component: {fileID: 7461442153177409491}
   - component: {fileID: 6057858525446187767}
   - component: {fileID: 1904222527947742187}
   m_Layer: 0
@@ -70,11 +71,18 @@ MonoBehaviour:
   GameStarted: 0
   GamePaused: 0
   InvincibleMode: 0
+  DisableUnseenCharacters: 0
   TurnOnOnStart:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  HitChance:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   IconImages:
   - IconType: 0
     Image: {fileID: 21300000, guid: e3c0ced939ade584eb258c335d0dbea4, type: 3}
@@ -256,6 +264,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e530a6300d6fbc42adde866af5b7f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7461442153177409491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6057858525446187769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4875cb7c665ad2e4d8e972b93a513b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &6057858525446187767
