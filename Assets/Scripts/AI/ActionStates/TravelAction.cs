@@ -15,11 +15,8 @@ public class TravelAction : ActionState
         ch.navMeshAgent.SetDestination(ch.Target);
         //check for arrival and stop travelling
 
-        while (Vector3.Distance(ch.transform.position, ch.Target) < 3f)
-        {
-            yield return new WaitForFixedUpdate();
-        }
-
+        yield return new WaitUntil(() =>Vector3.Distance(ch.transform.position, ch.Target) < 3f);
+        
         ch.ChangeState(Character.CharacterState.Idling);
     }
     

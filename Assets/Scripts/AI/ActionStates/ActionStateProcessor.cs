@@ -9,7 +9,7 @@ public class ActionStateProcessor : MonoBehaviour
 {
     private static Dictionary<Character.CharacterState,Func<Character,Coroutine>> actionStates = new Dictionary<Character.CharacterState, Func<Character,Coroutine>>();
     private static bool initialized;
-    private static ActionStateProcessor Instance;
+    public static ActionStateProcessor Instance;
 
     private void Start()
     {

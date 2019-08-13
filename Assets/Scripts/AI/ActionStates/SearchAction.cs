@@ -32,38 +32,37 @@ public class SearchAction : ActionState
             //}
 
             //check for arrival and stop travelling
-            if (Vector3.Distance(ch.transform.position, ch.LootTarget.transform.position) < 1f)
+            if (!(Vector3.Distance(ch.transform.position, ch.LootTarget.transform.position) < 2f)) continue;
+
+            if (ch.LootTarget.ContainsLoot)
             {
-                if (ch.LootTarget.ContainsLoot)
-                {
-                    (ch as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-                    PopUpText.ShowText(ch.name + " found " + ch.LootTarget.Loot, ch.LootTarget.transform);
-                    ch.Team.OnTreasureFound.Invoke(1);
-                }
-                if (ch.LootTarget.ContainsFood)
-                {
-                    (ch as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-                    PopUpText.ShowText(ch.name + " found " + ch.LootTarget.Food, ch.LootTarget.transform);
-                    ch.Team.OnFoodFound.Invoke(5);
-                }
-                if (ch as Goblin)
-                    foreach (var equipment in ch.LootTarget.EquipmentLoot)
-                    {
-                        //TODO: create player choice for selecting goblin
-                        (ch as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-
-                        ch.Team?.OnEquipmentFound.Invoke(equipment, ch as Goblin);
-                    }
-
-                ch.LootTarget.EquipmentLoot.Clear();
-
-                ch.LootTarget.ContainsFood = false;
-                ch.LootTarget.ContainsLoot = false;
-                ch.LootTarget.Searched = true;
-
-                ch.ChangeState(Character.CharacterState.Idling, false, 5f);
-                break;
+                (ch as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
+                PopUpText.ShowText(ch.name + " found " + ch.LootTarget.Loot, ch.LootTarget.transform);
+                ch.Team.OnTreasureFound.Invoke(1);
             }
+            if (ch.LootTarget.ContainsFood)
+            {
+                (ch as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
+                PopUpText.ShowText(ch.name + " found " + ch.LootTarget.Food, ch.LootTarget.transform);
+                ch.Team.OnFoodFound.Invoke(5);
+            }
+            if (ch as Goblin)
+                foreach (var equipment in ch.LootTarget.EquipmentLoot)
+                {
+                    //TODO: create player choice for selecting goblin
+                    (ch as Goblin).Speak(SoundBank.GoblinSound.Laugh);
+
+                    ch.Team?.OnEquipmentFound.Invoke(equipment, ch as Goblin);
+                }
+
+            ch.LootTarget.EquipmentLoot.Clear();
+
+            ch.LootTarget.ContainsFood = false;
+            ch.LootTarget.ContainsLoot = false;
+            ch.LootTarget.Searched = true;
+
+            ch.ChangeState(Character.CharacterState.Idling, false, 5f);
+            break;
         }
 
         //TODO: handle cleanup
