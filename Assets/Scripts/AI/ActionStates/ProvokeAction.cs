@@ -16,6 +16,7 @@ public class ProvokeAction : ActionState
         float ProvokeTime = 5;
         float ProvokeStartTime = Time.time;
         var g = ch as Goblin;
+        var goingToProvoke = false;
 
         if (!g)
         {
@@ -30,8 +31,11 @@ public class ProvokeAction : ActionState
             g.ProvokeTarget = g.GetClosestEnemy();
             if(g.ProvokeTarget)
                 g.navMeshAgent.SetDestination(g.ProvokeTarget.transform.position);
-            g.actionInProgress = true;
+            goingToProvoke = true;
         }
+
+
+        Vector3 provokeDest = g.ProvokeTarget.transform.position;
 
         while (true)
         {
@@ -50,10 +54,13 @@ public class ProvokeAction : ActionState
                 break;
             }
 
-            if (!g.actionInProgress && g.navMeshAgent.remainingDistance < 0.5f)
+            if (!goingToProvoke && g.navMeshAgent.remainingDistance < 0.5f)
             {
-                g.actionInProgress = true;
-                g.navMeshAgent.SetDestination(g.ProvokeTarget.transform.position);
+                goingToProvoke = true;
+
+                provokeDest = g.ProvokeTarget.transform.position;
+                g.navMeshAgent.SetDestination(provokeDest);
+
                 ProvokeStartTime = Time.time;
             }
 
@@ -61,13 +68,13 @@ public class ProvokeAction : ActionState
             if (ProvokeTime + ProvokeStartTime > Time.time)
             {
                 //run away
-                g.actionInProgress = false;
+                goingToProvoke = false;
                 var dest = g.InArea.GetRandomPosInArea();
                 g.navMeshAgent.SetDestination(dest);
                 g.ProvokeTarget.IrritationMeter++;
                 break;
             }
-            if ((g.ProvokeTarget.transform.position - g.transform.position).magnitude < 4) //Provoke
+            if ((provokeDest - g.transform.position).magnitude < 4) //Provoke
             {
                 g.navMeshAgent.isStopped = true;
                 g.Speak(

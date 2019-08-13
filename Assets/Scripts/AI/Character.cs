@@ -166,8 +166,6 @@ public abstract class Character : MonoBehaviour
     public float AttackRange;
     public Area TravellingToArea;
 
-    public bool actionInProgress;
-
     #region Event
     [HideInInspector]
     //Static event to handle generic responces to death
@@ -578,8 +576,7 @@ public abstract class Character : MonoBehaviour
 
         if (State != CharacterState.Dead)
             State = newState;
-
-        actionInProgress = false;
+        
 
         if (newState != CharacterState.Travelling && newState != CharacterState.Attacking &&
             newState != CharacterState.Fleeing)
@@ -859,16 +856,7 @@ public abstract class Character : MonoBehaviour
             
         }
     }
-
-    private IEnumerator ActionInProgressUntill(Func<bool> p)
-    {
-        actionInProgress = true;
-
-        yield return new WaitUntil(p);
-
-        actionInProgress = false;
-    }
-
+    
     //could take a damage parameter
     public IEnumerator HurtRoutine()
     {
@@ -984,8 +972,7 @@ public abstract class Character : MonoBehaviour
         ChangeState(Character.CharacterState.Travelling, immedeately);
         
         Target = t;
-
-        actionInProgress = true;
+        
     }
     
     //TODO: move to attack action
