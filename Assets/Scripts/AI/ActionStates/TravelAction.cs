@@ -8,16 +8,16 @@ public class TravelAction : ActionState
     private Coroutine ActionRoutine;
     public override Character.CharacterState StateType => Character.CharacterState.Travelling;
     
-    public override IEnumerator StateRoutine(Character ch)
+    public override IEnumerator StateRoutine(Character g)
     {
-        Debug.Log($"{ch.name}: Starting {StateType} action");
+        Debug.Log($"{g.name}: Starting {StateType} action");
 
-        ch.navMeshAgent.SetDestination(ch.Target);
+        g.navMeshAgent.SetDestination(g.Target);
         //check for arrival and stop travelling
 
-        yield return new WaitUntil(() =>Vector3.Distance(ch.transform.position, ch.Target) < 3f);
+        yield return new WaitUntil(() =>Vector3.Distance(g.transform.position, g.Target) < 3f);
         
-        ch.ChangeState(Character.CharacterState.Idling);
+        g.ChangeState(Character.CharacterState.Idling);
     }
     
     //public override void EndState()

@@ -417,11 +417,16 @@ public abstract class Character : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+
+        //if (StateRoutine == null && GameManager.Instance.GameStarted)
+            ChangeState(CharacterState.Idling, true);
+
+    }
+
     protected void FixedUpdate()
     {
-        if(StateRoutine == null && GameManager.Instance.GameStarted)
-            ChangeState(CharacterState.Idling,true);
-
         if (DebugText )
         {
             DebugText.text = GameManager.Instance.DebugText ? State.ToString(): "";

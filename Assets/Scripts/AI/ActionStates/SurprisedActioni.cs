@@ -8,15 +8,15 @@ public class SurprisedAction : ActionState
     private Coroutine ActionRoutine;
     public override Character.CharacterState StateType => Character.CharacterState.Surprised;
     
-    public override IEnumerator StateRoutine(Character ch)
+    public override IEnumerator StateRoutine(Character g)
     {
-        Debug.Log($"{ch.name}: Starting {StateType} action");
+        Debug.Log($"{g.name}: Starting {StateType} action");
         
-        ch.navMeshAgent.isStopped = true;
+        g.navMeshAgent.isStopped = true;
 
-        yield return new WaitForSeconds(ch.SurprisedTime);
+        yield return new WaitForSeconds(g.SurprisedTime);
 
-        ch.ChangeState(Character.CharacterState.Attacking);
+        g.ChangeState(Character.CharacterState.Attacking);
         
 
         //TODO: handle cleanup

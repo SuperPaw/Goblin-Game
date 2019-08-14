@@ -12,23 +12,30 @@ public class RestingAction : ActionState
     {
         Debug.Log($"{ch.name}: Starting {StateType} action");
 
-        if (!ch.Team || !ch.Team.Campfire)
+        var g = ch as Goblin;
+
+        if (!g)
         {
-            ch.ChangeState(Character.CharacterState.Idling, true);
+            Debug.LogError($"Non goblin: {StateType}");
+        }
+
+        if (!g.Team || !g.Team.Campfire)
+        {
+            g.ChangeState(Character.CharacterState.Idling, true);
             yield break;
         }
 
-        ch.navMeshAgent.SetDestination(ch.Team.Campfire.transform.position);
+        g.navMeshAgent.SetDestination(g.Team.Campfire.transform.position);
 
-        yield return new WaitUntil(()=> !ch.Team.Campfire || Vector3.Distance(ch.transform.position, ch.Team.Campfire.transform.position) < 4f);
+        yield return new WaitUntil(()=> !g.Team.Campfire || Vector3.Distance(g.transform.position, g.Team.Campfire.transform.position) < 4f);
 
-        ch.navMeshAgent.isStopped = true;
+        g.navMeshAgent.isStopped = true;
 
-        while (ch.Team.Campfire)
+        while (g.Team.Campfire)
         {
             yield return new WaitForFixedUpdate();
 
-            (ch as Goblin)?.Speak(SoundBank.GoblinSound.Eat);
+            g.Speak(SoundBank.GoblinSound.Eat);
 
         }
 

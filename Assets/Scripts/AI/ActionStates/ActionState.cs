@@ -15,7 +15,7 @@ public abstract class ActionState
 
     public abstract Character.CharacterState StateType { get; }
 
-    public abstract IEnumerator StateRoutine(Character ch);
+    public abstract IEnumerator StateRoutine(Character g);
 
     //public abstract void EndState();
 }

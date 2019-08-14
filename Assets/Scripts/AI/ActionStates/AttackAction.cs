@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AttackAction : ActionState
 {
@@ -33,10 +34,11 @@ public class AttackAction : ActionState
                 //should be tied to animation maybe?
                 ch.navMeshAgent.isStopped = true;
             }
-            else
+            else 
             {
                 ch.attackAnimation = false;
-                //ch.navMeshAgent.SetDestination(ch.AttackTarget.transform.position);
+                if(ch.navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete)
+                    ch.navMeshAgent.SetDestination(ch.AttackTarget.transform.position);
             }
         }
         //TODO: handle cleanup

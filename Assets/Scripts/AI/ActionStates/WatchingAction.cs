@@ -12,27 +12,34 @@ public class WatchingAction : ActionState
     {
         Debug.Log($"{ch.name}: Starting {StateType} action");
 
-        if (ch.Team && ch.Team.Challenger)
-            ch.navMeshAgent.SetDestination(ch.Team.Challenger.transform.position);
+        var g = ch as Goblin;
 
-        while (ch.Team.Challenger)
+        if (!g)
+        {
+            Debug.LogError($"Non goblin: {StateType}");
+        }
+
+        if (g.Team && g.Team.Challenger)
+            g.navMeshAgent.SetDestination(g.Team.Challenger.transform.position);
+
+        while (g.Team.Challenger)
         {
             yield return new WaitForFixedUpdate();
 
-            if (!ch.Team || !ch.Team.Challenger)
+            if (!g.Team || !g.Team.Challenger)
             {
                 //(ch as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
-                ch.ChangeState(Character.CharacterState.Idling, true);
+                g.ChangeState(Character.CharacterState.Idling, true);
                 break;
             }
             else
             {
-                if (Vector3.Distance(ch.transform.position, ch.Team.Challenger.transform.position) < 3f && ch.Team.Challenger != ch && ch.Team.Leader != ch)
+                if (Vector3.Distance(g.transform.position, g.Team.Challenger.transform.position) < 3f && g.Team.Challenger != g && g.Team.Leader != g)
                 {
                     //cheer
-                    (ch as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.ChiefBattleCheer));
+                    g.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.ChiefBattleCheer));
 
-                    ch.navMeshAgent.ResetPath();
+                    g.navMeshAgent.ResetPath();
                 }
             }
         }
