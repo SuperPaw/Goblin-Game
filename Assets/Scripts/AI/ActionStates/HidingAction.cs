@@ -14,7 +14,7 @@ public class HidingAction : ActionState
 
         ch.navMeshAgent.SetDestination(ch.hiding.HideLocation.transform.position);
 
-        while (true)
+        while (ch.State == StateType)
         {
             yield return new WaitForFixedUpdate();
 

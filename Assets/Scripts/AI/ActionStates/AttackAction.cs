@@ -13,11 +13,8 @@ public class AttackAction : ActionState
     {
         Debug.Log($"{ch.name}: Starting {StateType} action");
 
-        while (true)
+        while (ch.State == StateType)
         {
-            if(!ch.Attacking())
-                break;
-
             yield return new WaitForFixedUpdate();
             
             if (!ch.AttackTarget || !ch.AttackTarget.Alive() || ch.AttackTarget.InArea != ch.InArea)// || (ch.AttackTarget.Fleeing()&& ch.InArea.AnyEnemies())
@@ -25,8 +22,7 @@ public class AttackAction : ActionState
                 //TODO. handle fleeing change S
                 TargetGone(ch);
             }
-            else if ( ch.InAttackRange()
-            ) //has live enemy target and in attackrange
+            else if ( ch.InAttackRange()) //has live enemy target and in attackrange
             {
                 ch.attackAnimation = true;
                 ch.transform.LookAt(ch.AttackTarget.transform);
@@ -37,8 +33,13 @@ public class AttackAction : ActionState
             else 
             {
                 ch.attackAnimation = false;
-                if(ch.navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete)
+                ch.navMeshAgent.isStopped = false;
+
+                if (ch.navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete)
+                {
+                    Debug.Log($"{ch.name} going to attack target {ch.AttackTarget}");
                     ch.navMeshAgent.SetDestination(ch.AttackTarget.transform.position);
+                }
             }
         }
         //TODO: handle cleanup

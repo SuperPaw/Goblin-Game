@@ -13,7 +13,7 @@ public class FleeAction : ActionState
         Area fleeingToArea = null;
         Debug.Log($"{ch.name}: Starting {StateType} action");
 
-        while (true)
+        while (ch.State == StateType)
         {
             yield return new WaitForFixedUpdate();
 

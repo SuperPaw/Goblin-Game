@@ -22,7 +22,7 @@ public class WatchingAction : ActionState
         if (g.Team && g.Team.Challenger)
             g.navMeshAgent.SetDestination(g.Team.Challenger.transform.position);
 
-        while (g.Team.Challenger)
+        while (g.Team.Challenger && ch.State == StateType)
         {
             yield return new WaitForFixedUpdate();
 

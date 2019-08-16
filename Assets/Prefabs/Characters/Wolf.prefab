@@ -4627,6 +4627,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9321,6 +9322,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -14097,6 +14099,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -18799,6 +18802,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -23528,6 +23532,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -23620,6 +23625,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -24964,7 +24970,6 @@ MonoBehaviour:
   MovementAudio: {fileID: 0}
   MaxGroupSize: 5
   SurprisedTime: 4
-  SurprisedStartTime: 0
   Aggressive: 0
   CharacterRace: 5
   IrritationMeter: 0
@@ -24989,7 +24994,6 @@ MonoBehaviour:
   Walking: 0
   AttackRange: 0
   TravellingToArea: {fileID: 0}
-  actionInProgress: 0
   Target: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 0}
   HolderGameObject: {fileID: 1358234886585000463}
@@ -25011,8 +25015,9 @@ MonoBehaviour:
   SpeedAnimationThreshold: 0
   HitParticles: {fileID: 19870744}
   DeathParticles: {fileID: 0}
+  attackAnimation: 0
+  hiding: {fileID: 0}
   provokeDistance: 8
-  ProvokeTime: 5
   DebugText: {fileID: 0}
 --- !u!195 &8617906192698219966
 NavMeshAgent:
@@ -25023,7 +25028,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 180470}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.15
+  m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 20
   avoidancePriority: 50
@@ -25234,7 +25239,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7905071209046412532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -25254,6 +25259,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8849893772239821329
 GameObject:
   m_ObjectHideFlags: 0
@@ -25310,7 +25316,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8849893772239821329}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -25330,6 +25336,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &5668572928229546375
 MonoBehaviour:
   m_ObjectHideFlags: 0

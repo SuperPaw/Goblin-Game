@@ -953,7 +953,7 @@ public abstract class Character : MonoBehaviour
         //    HolderGameObject.SetActive(Team || a.Visible());
         
         //TODO: move to area change method
-        if (this as Goblin & !IsChief())
+        if (this as Goblin & !IsChief() && Team)
         {
             if (a.PointOfInterest)
                 (this as Goblin)?.Speak(PlayerController.GetLocationReaction(a.PointOfInterest.PoiType));

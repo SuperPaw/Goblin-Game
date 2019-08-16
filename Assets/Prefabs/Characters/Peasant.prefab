@@ -63,7 +63,6 @@ MonoBehaviour:
   MovementAudio: {fileID: 0}
   MaxGroupSize: 4
   SurprisedTime: 4
-  SurprisedStartTime: 0
   Aggressive: 0
   CharacterRace: 1
   IrritationMeter: 0
@@ -88,7 +87,6 @@ MonoBehaviour:
   Walking: 0
   AttackRange: 0
   TravellingToArea: {fileID: 0}
-  actionInProgress: 0
   Target: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 0}
   HolderGameObject: {fileID: 2829638507195367860}
@@ -110,8 +108,9 @@ MonoBehaviour:
   SpeedAnimationThreshold: 0
   HitParticles: {fileID: 0}
   DeathParticles: {fileID: 0}
+  attackAnimation: 0
+  hiding: {fileID: 0}
   provokeDistance: 10
-  ProvokeTime: 5
   DebugText: {fileID: 0}
 --- !u!54 &54649803752173894
 Rigidbody:
@@ -152,7 +151,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1969145986120274}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.15
+  m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 20
   avoidancePriority: 50
@@ -273,6 +272,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -386,6 +386,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

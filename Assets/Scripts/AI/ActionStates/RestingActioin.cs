@@ -38,6 +38,7 @@ public class RestingAction : ActionState
             g.Speak(SoundBank.GoblinSound.Eat);
 
         }
+        ch.ChangeState(Character.CharacterState.Idling);
 
         //TODO: handle cleanup
     }

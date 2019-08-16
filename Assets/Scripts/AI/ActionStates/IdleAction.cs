@@ -12,108 +12,108 @@ public class IdleAction : ActionState
 
     public override Character.CharacterState StateType => Character.CharacterState.Idling;
     
-    public override IEnumerator StateRoutine(Character g)
+    public override IEnumerator StateRoutine(Character ch)
     {
-        Debug.Log($"{g.name}: Starting {StateType} action");
+        Debug.Log($"{ch.name}: Starting {StateType} action");
 
-        while (g.Alive())
+        while (ch.State == StateType)
         {
             yield return new WaitForFixedUpdate();
 
             if (actionInProgress)
             {
-                if (g.navMeshAgent.remainingDistance < 0.02f)
+                if (ch.navMeshAgent.remainingDistance < 0.02f)
                     actionInProgress = false;
             }
-            else if (g.IrritationMeter >= g.IrritaionTolerance)
+            else if (ch.IrritationMeter >= ch.IrritaionTolerance)
             {
-                g.ChangeState(Character.CharacterState.Attacking, true);
+                ch.ChangeState(Character.CharacterState.Attacking, true);
                 break;
             }
             else if (Random.value < 0.015f) //selecting idle action
             {
-                if (!g.IsChief())
-                    (g as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.Idle));
+                if (!ch.IsChief())
+                    (ch as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.Idle));
 
                 actionInProgress = true;
 
                 Vector3 dest;
 
-                if (g.InArea)
+                if (ch.InArea)
                 {
-                    if (g.GetClosestEnemy()
+                    if (ch.GetClosestEnemy()
                         && ( //ANY friends fighting
-                        g.InArea.PresentCharacters.Any(c => c.tag == g.tag && c.Alive() && c.Attacking())
+                        ch.InArea.PresentCharacters.Any(c => c.tag == ch.tag && c.Alive() && c.Attacking())
                         // I am aggressive wanderer
-                        || (g.StickToRoad && g.InArea.PresentCharacters.Any(c => c.tag == "Player" & !c.Hiding()))
+                        || (ch.StickToRoad && ch.InArea.PresentCharacters.Any(c => c.tag == "Player" & !c.Hiding()))
                         ))
                     {
                         //Debug.Log(name + ": Joining attack without beeing attacked");
 
-                        g.ChangeState(Character.CharacterState.Attacking, true);
-                        g.Morale -= 5;
+                        ch.ChangeState(Character.CharacterState.Attacking, true);
+                        ch.Morale -= 5;
                         break;
                     }
-                    else if ((g as Goblin) && g.Team && g.Team.Leader.InArea != g.InArea & !g.Team.Leader.Travelling())
+                    else if ((ch as Goblin) && ch.Team && ch.Team.Leader.InArea != ch.InArea & !ch.Team.Leader.Travelling())
                     {
-                        g.TravellingToArea = g.Team.Leader.InArea;
-                        dest = g.Team.Leader.InArea.GetRandomPosInArea();
+                        ch.TravellingToArea = ch.Team.Leader.InArea;
+                        dest = ch.Team.Leader.InArea.GetRandomPosInArea();
                     }
-                    else if ((g as Goblin) && g.tag == "Player" && g.GetClosestEnemy() && (g.GetClosestEnemy().transform.position - g.transform.position).magnitude < g.provokeDistance)
+                    else if ((ch as Goblin) && ch.tag == "Player" && ch.GetClosestEnemy() && (ch.GetClosestEnemy().transform.position - ch.transform.position).magnitude < ch.provokeDistance)
                     {
-                        g.ChangeState(Character.CharacterState.Provoking, true);
-                        var ctx = g.GetClosestEnemy();
-                        (g as Goblin).ProvokeTarget = ctx;
-                        (g as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.Mocking));
+                        ch.ChangeState(Character.CharacterState.Provoking, true);
+                        var ctx = ch.GetClosestEnemy();
+                        (ch as Goblin).ProvokeTarget = ctx;
+                        (ch as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.Mocking));
                         dest = ctx.transform.position;
                         break;
                     }
-                    else if (g.StickToRoad)
+                    else if (ch.StickToRoad)
                     {
-                        var goingTo = g.InArea.GetClosestNeighbour(g.transform.position, true);
+                        var goingTo = ch.InArea.GetClosestNeighbour(ch.transform.position, true);
 
                         //TODO: handle this in moveto method instead
                         dest = goingTo.PointOfInterest ? goingTo.GetRandomPosInArea() : goingTo.transform.position;
 
                         //Debug.Log(name + ": Wandering to "+ goingTo);
-                        g.Target = dest;
-                        g.TravellingToArea = goingTo;
+                        ch.Target = dest;
+                        ch.TravellingToArea = goingTo;
 
-                        goingTo.PresentCharacters.ForEach(c => c.SpotArrival(g));
+                        goingTo.PresentCharacters.ForEach(c => c.SpotArrival(ch));
 
-                        g.ChangeState(Character.CharacterState.Travelling, true);
+                        ch.ChangeState(Character.CharacterState.Travelling, true);
                         break;
                     }
                     else
-                        dest = g.InArea.GetRandomPosInArea();
+                        dest = ch.InArea.GetRandomPosInArea();
                 }
                 else
                 {
-                    dest = g.transform.position + Random.insideUnitSphere * g.idleDistance;
+                    dest = ch.transform.position + Random.insideUnitSphere * ch.idleDistance;
                     dest.y = 0;
                 }
 
-                g.navMeshAgent.SetDestination(dest);//new Vector3(Random.Range(-idleDistance, idleDistance), 0,Random.Range(-idleDistance, idleDistance)));
+                ch.navMeshAgent.SetDestination(dest);//new Vector3(Random.Range(-idleDistance, idleDistance), 0,Random.Range(-idleDistance, idleDistance)));
 
             }
             //TODO: use a different method for activity selection than else if
-            else if (Random.value < 0.0025f && g as Goblin && g.Team
-                && !(g.Team.Leader == g) && g.Team.Members.Count > 4 && (g as Goblin).ClassType > Goblin.Class.Slave
-                & !g.Team.Challenger && (g.Team.Leader as Goblin).CurrentLevel < ((Goblin)g).CurrentLevel)
+            else if (Random.value < 0.0025f && ch as Goblin && ch.Team
+                && !(ch.Team.Leader == ch) && ch.Team.Members.Count > 4 && (ch as Goblin).ClassType > Goblin.Class.Slave
+                & !ch.Team.Challenger && (ch.Team.Leader as Goblin).CurrentLevel < ((Goblin)ch).CurrentLevel)
             {
                 //TODO: make it only appear after a while
 
                 Debug.Log("Chief Fight!!");
-                g.Team.ChallengeForLeadership(g as Goblin);
+                ch.Team.ChallengeForLeadership(ch as Goblin);
             }
             //TODO: define better which characters should search stuff
-            else if (Random.value < 0.001f * g.SMA.GetStatMax() && g.Team && g as Goblin && !g.InArea.AnyEnemies() && g.InArea.Lootables.Any(l => !l.Searched))
+            else if (Random.value < 0.001f * ch.SMA.GetStatMax() && ch.Team && ch as Goblin && !ch.InArea.AnyEnemies() && ch.InArea.Lootables.Any(l => !l.Searched))
             {
-                var loots = g.InArea.Lootables.Where(l => !l.Searched).ToArray();
+                var loots = ch.InArea.Lootables.Where(l => !l.Searched).ToArray();
 
                 var loot = loots[Random.Range(0, loots.Count())];
 
-                (g as Goblin).Search(loot);
+                (ch as Goblin).Search(loot);
             }
         }
 

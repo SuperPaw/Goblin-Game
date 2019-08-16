@@ -10734,6 +10734,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -10902,6 +10903,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -11104,6 +11106,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -11273,6 +11276,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -11430,7 +11434,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 100702}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.15
+  m_Radius: 0.5
   m_Speed: 4
   m_Acceleration: 20
   avoidancePriority: 50
@@ -11519,7 +11523,6 @@ MonoBehaviour:
   MovementAudio: {fileID: 0}
   MaxGroupSize: 4
   SurprisedTime: 4
-  SurprisedStartTime: 0
   Aggressive: 0
   CharacterRace: 0
   IrritationMeter: 0
@@ -11544,7 +11547,6 @@ MonoBehaviour:
   Walking: 0
   AttackRange: 0
   TravellingToArea: {fileID: 0}
-  actionInProgress: 0
   Target: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 4600599033896219243}
   HolderGameObject: {fileID: 1218143795376610366}
@@ -11566,8 +11568,9 @@ MonoBehaviour:
   SpeedAnimationThreshold: 0
   HitParticles: {fileID: 0}
   DeathParticles: {fileID: 0}
+  attackAnimation: 0
+  hiding: {fileID: 0}
   provokeDistance: 10
-  ProvokeTime: 5
   DebugText: {fileID: 0}
 --- !u!1 &1649641874408870
 GameObject:
@@ -11802,7 +11805,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6442824206488953403}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -11822,6 +11825,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &8627913087637334291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12017,7 +12021,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8817464722306697759}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -12037,3 +12041,4 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
