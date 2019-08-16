@@ -72,7 +72,6 @@ public class ProvokeAction : ActionState
                 var dest = g.InArea.GetRandomPosInArea();
                 g.navMeshAgent.SetDestination(dest);
                 g.ProvokeTarget.IrritationMeter++;
-                break;
             }
             if ((provokeDest - g.transform.position).magnitude < 4) //Provoke
             {
@@ -81,6 +80,8 @@ public class ProvokeAction : ActionState
                     PlayerController.GetDynamicReactions(PlayerController.DynamicState.Mocking));
             }
         }
+
+        g.ChangeState(Character.CharacterState.Idling);
 
         //TODO: handle cleanup
     }

@@ -375,7 +375,8 @@ public abstract class Character : MonoBehaviour
 
         if (HasEquipment)
         {
-            Equip(EquipmentGen.GetRandomEquipment());
+            var randomEquipment = EquipmentGen.GetRandomEquipment();
+            Equip(randomEquipment);
         }
 
         //------------------------- STAT SET-UP --------------------------
@@ -436,6 +437,7 @@ public abstract class Character : MonoBehaviour
         if(Target != Vector3.zero) Debug.DrawLine(transform.position, Target, Color.blue);
         if (navMeshAgent) Debug.DrawLine(transform.position, navMeshAgent.destination, Color.red);
         if(this as Goblin && (this as Goblin).ProvokeTarget) Debug.DrawLine(transform.position, (this as Goblin).ProvokeTarget.transform.position, Color.cyan);
+        if (this as Goblin && (this as Goblin).AttackTarget) Debug.DrawLine(transform.position, (this as Goblin).AttackTarget.transform.position, Color.white);
         if (this as Goblin && (this as Goblin).LootTarget) Debug.DrawLine(transform.position, (this as Goblin).LootTarget.transform.position, Color.yellow);
 
 
@@ -680,6 +682,9 @@ public abstract class Character : MonoBehaviour
         //Debug.Log("Equipped "+ e.name + " to " + name);
 
         Equipped[e.EquipLocation] = e;
+
+
+        e.transform.parent = this.transform;
 
         e.OnEquip.Invoke(this);
 
@@ -953,7 +958,7 @@ public abstract class Character : MonoBehaviour
         //    HolderGameObject.SetActive(Team || a.Visible());
         
         //TODO: move to area change method
-        if (this as Goblin & !IsChief() && Team)
+        if (this as Goblin & !IsChief() && Team != null)
         {
             if (a.PointOfInterest)
                 (this as Goblin)?.Speak(PlayerController.GetLocationReaction(a.PointOfInterest.PoiType));

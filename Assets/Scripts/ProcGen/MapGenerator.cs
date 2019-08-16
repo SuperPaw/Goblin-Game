@@ -598,7 +598,10 @@ public class MapGenerator : MonoBehaviour
 
             if (EquipmentInLootChance > Random.value)
             {
-                l.EquipmentLoot.Add(EquipmentGen.GetRandomEquipment());
+                var randomEquipment = EquipmentGen.GetRandomEquipment();
+                randomEquipment.transform.parent = l.transform;
+                l.EquipmentLoot.Add(randomEquipment);
+
                 l.ContainsLoot = false;
             }
 
