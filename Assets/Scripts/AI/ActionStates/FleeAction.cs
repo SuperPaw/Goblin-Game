@@ -38,7 +38,7 @@ public class FleeAction : ActionState
                 ch.TravellingToArea = fleeingToArea;
 
             }
-            else if (!ch.navMeshAgent.hasPath & !ch.navMeshAgent.pathPending)
+            else if (!ch.NavigationPathIsStaleOrCompleted())
             {
                 //Debug.Log(name + " updating fleeing to " + fleeingToArea);
                 ch.navMeshAgent.SetDestination(fleeingToArea.GetRandomPosInArea());

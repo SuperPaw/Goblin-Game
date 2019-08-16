@@ -35,7 +35,7 @@ public class AttackAction : ActionState
                 ch.attackAnimation = false;
                 ch.navMeshAgent.isStopped = false;
 
-                if (ch.navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete)
+                if (ch.NavigationPathIsStaleOrCompleted())
                 {
                     Debug.Log($"{ch.name} going to attack target {ch.AttackTarget}");
                     ch.navMeshAgent.SetDestination(ch.AttackTarget.transform.position);

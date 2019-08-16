@@ -553,6 +553,15 @@ public abstract class Character : MonoBehaviour
             : StateChangingRoutine(newState, Random.Range(1.5f, 4f)));
     }
 
+    public bool NavigationPathIsStaleOrCompleted()
+    {
+        return
+            navMeshAgent.isPathStale ||
+            !navMeshAgent.pathPending &&
+               (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+               && (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f);
+    }
+
     private IEnumerator StateChangingRoutine(CharacterState newState, float wait)
     {
         var fromState = State;
