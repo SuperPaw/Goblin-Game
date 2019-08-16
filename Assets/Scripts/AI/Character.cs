@@ -494,7 +494,7 @@ public abstract class Character : MonoBehaviour
                 ? RANGED_ATTACK_ANIMATION_BOOL
                 : ATTACK_ANIMATION_BOOL);
         }
-        else if (Searching() && LootTarget && Vector3.Distance(transform.position, LootTarget.transform.position) < 1.2f)
+        else if (Searching() && LootTarget && Vector3.Distance(transform.position, LootTarget.transform.position) < 3f)
         {
             Animate(PICKUP_ANIMATION_BOOL);
         }
@@ -627,23 +627,13 @@ public abstract class Character : MonoBehaviour
         return State == CharacterState.Attacking;
     }
 
-    public bool Fleeing()
-    {
-        return State == CharacterState.Fleeing;
-    }
-    public bool Idling()
-    {
-        return State == CharacterState.Idling;
-    }
+    public bool Fleeing()=> State == CharacterState.Fleeing;
+    
+    public bool Idling() => State == CharacterState.Idling;
 
-    public bool Hiding()
-    {
-        return State == CharacterState.Hiding;
-    }
-    public bool Provoking()
-    {
-        return State == CharacterState.Provoking;
-    }
+    public bool Hiding() => State == CharacterState.Hiding;
+
+    public bool Provoking() => State == CharacterState.Provoking;
 
     public bool Searching() => State == CharacterState.Searching;
 
