@@ -44,7 +44,7 @@ public class SearchAction : ActionState
             if (g.LootTarget.ContainsLoot)
             {
                 g.Speak(SoundBank.GoblinSound.Laugh);
-                PopUpText.ShowText(g.name + " found " + g.LootTarget.Loot, g.LootTarget.transform);
+                PopUpText.ShowText(g.name + " found " + g.LootTarget.Loot, g.transform);
                 g.Team.OnTreasureFound.Invoke(1);
             }
             if (g.LootTarget.ContainsFood)

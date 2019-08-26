@@ -601,7 +601,7 @@ public abstract class Character : MonoBehaviour
         Debug.Log($"Starting state: {newState}");
         //TODO: Assign to field and close the last state
 
-        if(StateRoutine != null) ActionStateProcessor.Instance.StopCoroutine(StateRoutine);
+        //if(StateRoutine != null) ActionStateProcessor.Instance.StopCoroutine(StateRoutine);
 
         //TODO: just assign and set to null when applicable
         var s = ActionStateProcessor.CreateStateRoutine(this, newState);

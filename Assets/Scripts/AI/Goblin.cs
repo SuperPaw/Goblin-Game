@@ -311,8 +311,7 @@ public class Goblin : Character
         VoiceText.text = text;
         yield return new WaitForSeconds(ShoutTime);
 
-        if(navMeshAgent.isOnNavMesh)
-            navMeshAgent.isStopped = false;
+        navMeshAgent.isStopped = false;
 
         VoiceText.text = "";
     }

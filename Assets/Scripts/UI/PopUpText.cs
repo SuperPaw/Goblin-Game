@@ -66,18 +66,29 @@ public class PopUpText : MonoBehaviour
 
         //TODO: slow down time
         //GameManager.Pause();
-        
-        //TODO: different sizes for different types of events
 
+        //TODO: different sizes for different types of events
         var endTime = Time.unscaledTime + ShowTime;
 
-        while (Time.unscaledTime < endTime &!Input.anyKeyDown && Input.touchCount == 0 && (Math.Abs(Input.mouseScrollDelta.y) < 0.001) )
+        //CHECK IF EVENT IS WITHIN FOG OF WAR
+        var chiefLocation = PlayerController.Instance.Team.Leader.transform.position;
+        chiefLocation.y = 0;
+        var showingY0 = showing.Trans.position;
+        showingY0.y = 0;
+
+        if((chiefLocation-showingY0).sqrMagnitude < 300)
         {
-            PlayerController.MoveCameraToPos(showing.Trans.position, 6);
-            yield return null;
+            while (Time.unscaledTime < endTime & !Input.anyKeyDown && Input.touchCount == 0 && (Math.Abs(Input.mouseScrollDelta.y) < 0.001))
+            {
+                PlayerController.MoveCameraToPos(showing.Trans.position, 6);
+                yield return null;
+            }
         }
+        else
+            Debug.Log("Popup too far away to show!");
 
         yield return new WaitUntil(() => Time.unscaledTime > endTime);
+
 
         ViewHolder.SetActive(false);
         //GameManager.UnPause();
