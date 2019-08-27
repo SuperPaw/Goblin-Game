@@ -26,7 +26,7 @@ public abstract class Character : MonoBehaviour
     //Should we use different state for travelling and just looking at something clsoe by
     public enum CharacterState
     {
-        Idling, Attacking, Travelling, Fleeing, Hiding, Dead,Watching,Searching,Provoking, Surprised, Resting
+        Idling, Attacking, Travelling, Fleeing, Hiding, Dead,Watching,Searching,Provoking, Surprised, Resting,StartState
     }
 
     public enum Race
@@ -59,8 +59,8 @@ public abstract class Character : MonoBehaviour
 
     public int IrritationMeter = 0;
     public int IrritaionTolerance = 50;
-    
-    public CharacterState State;
+
+    public CharacterState State;// = CharacterState.StartState;
 
     public class Stat
     {
@@ -422,7 +422,7 @@ public abstract class Character : MonoBehaviour
     {
 
         //if (StateRoutine == null && GameManager.Instance.GameStarted)
-            ChangeState(CharacterState.Idling, true);
+        ChangeState(CharacterState.Idling, true);
 
     }
 
@@ -529,7 +529,15 @@ public abstract class Character : MonoBehaviour
             Animate(IDLE_ANIMATION_BOOL);
         }
     }
-    
+
+    public bool NavigationPathIsStaleOrCompleted()
+    {
+        return
+            navMeshAgent.isPathStale ||
+            !navMeshAgent.pathPending &&
+               (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+               && (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f);
+    }
 
     /// <summary>
     /// to be used for orders
@@ -553,14 +561,6 @@ public abstract class Character : MonoBehaviour
             : StateChangingRoutine(newState, Random.Range(1.5f, 4f)));
     }
 
-    public bool NavigationPathIsStaleOrCompleted()
-    {
-        return
-            navMeshAgent.isPathStale ||
-            !navMeshAgent.pathPending &&
-               (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
-               && (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f);
-    }
 
     private IEnumerator StateChangingRoutine(CharacterState newState, float wait)
     {
@@ -571,7 +571,7 @@ public abstract class Character : MonoBehaviour
         if (fromState != State)
         {
             Debug.Log(name + " no longer "+ fromState + "; Now: "+ State + "; Not " + newState);
-            yield break;
+            //yield break;
         }
 
         //TODO: maybe sounds on specific states
@@ -581,7 +581,7 @@ public abstract class Character : MonoBehaviour
         if (State == newState)
         {
             Debug.Log(name + " is already "+ newState);
-            //yield break;
+            yield break;
         }
 
         if (Morale <= 0 && newState != CharacterState.Fleeing)
@@ -788,7 +788,7 @@ public abstract class Character : MonoBehaviour
 
         if (!Attacking() || AttackTarget == null)
         {
-            State = CharacterState.Attacking;
+            ChangeState(CharacterState.Attacking, true);
             var closest = GetClosestEnemy();
             
             AttackTarget = closest ? closest : attacker;

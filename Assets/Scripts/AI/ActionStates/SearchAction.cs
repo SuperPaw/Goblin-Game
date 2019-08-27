@@ -50,7 +50,7 @@ public class SearchAction : ActionState
             if (g.LootTarget.ContainsFood)
             {
                 g.Speak(SoundBank.GoblinSound.Laugh);
-                PopUpText.ShowText(g.name + " found " + g.LootTarget.Food, g.LootTarget.transform);
+                PopUpText.ShowText(g.name + " found " + g.LootTarget.Food, g.transform);
                 g.Team.OnFoodFound.Invoke(5);
             }
 

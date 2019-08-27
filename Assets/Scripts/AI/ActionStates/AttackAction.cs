@@ -20,6 +20,7 @@ public class AttackAction : ActionState
             if (!ch.AttackTarget || !ch.AttackTarget.Alive() || ch.AttackTarget.InArea != ch.InArea)// || (ch.AttackTarget.Fleeing()&& ch.InArea.AnyEnemies())
             {
                 //TODO. handle fleeing change S
+                Debug.Log($"{ch.name}'s Target is gone");
                 TargetGone(ch);
             }
             else if ( ch.InAttackRange()) //has live enemy target and in attackrange
@@ -42,6 +43,8 @@ public class AttackAction : ActionState
                 }
             }
         }
+
+
         //TODO: handle cleanup
     }
 

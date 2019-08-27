@@ -1860,7 +1860,7 @@ MonoBehaviour:
   CharacterRace: 2
   IrritationMeter: 0
   IrritaionTolerance: 50
-  State: 0
+  State: 11
   LootTarget: {fileID: 0}
   Team: {fileID: 0}
   DamMin: 5
