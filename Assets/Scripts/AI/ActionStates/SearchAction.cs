@@ -10,7 +10,7 @@ public class SearchAction : ActionState
     
     public override IEnumerator StateRoutine(Character ch)
     {
-        Debug.Log($"{ch.name}: Starting {StateType} action");
+        //Debug.Log($"{ch.name}: Starting {StateType} action");
         
         var g = ch as Goblin;
 
@@ -22,7 +22,7 @@ public class SearchAction : ActionState
         if (g.LootTarget)
             g.navMeshAgent.SetDestination(g.LootTarget.transform.position);
 
-        while (true)
+        while (ch.State == StateType)
         {
             yield return new WaitForFixedUpdate();
 
@@ -31,15 +31,15 @@ public class SearchAction : ActionState
                 g.ChangeState(Character.CharacterState.Idling, true);
                 break;
             }
-        
-            //if (!navMeshAgent.hasPath && !navMeshAgent.pathPending)
-            //{
-            //    Debug.Log($"{name}: Updating loot target path: {LootTarget}, {LootTarget.transform.position}");
-            //    navMeshAgent.SetDestination(LootTarget.transform.position);
-            //}
+
+            if (ch.NavigationPathIsStaleOrCompleted())
+            {
+                Debug.Log($"{ch.name}: Updating loot target path: {ch.LootTarget}, {ch.LootTarget.transform.position}");
+                ch.navMeshAgent.SetDestination(ch.LootTarget.transform.position);
+            }
 
             //check for arrival and stop travelling
-            if (!(Vector3.Distance(g.transform.position, g.LootTarget.transform.position) < 2f)) continue;
+            if ((Vector3.Distance(g.transform.position, g.LootTarget.transform.position) > 2f)) continue;
 
             if (g.LootTarget.ContainsLoot)
             {

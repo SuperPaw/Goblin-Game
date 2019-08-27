@@ -10,7 +10,7 @@ public class WatchingAction : ActionState
     
     public override IEnumerator StateRoutine(Character ch)
     {
-        Debug.Log($"{ch.name}: Starting {StateType} action");
+        //Debug.Log($"{ch.name}: Starting {StateType} action");
 
         var g = ch as Goblin;
 

@@ -14,7 +14,7 @@ public class IdleAction : ActionState
     
     public override IEnumerator StateRoutine(Character ch)
     {
-        Debug.Log($"{ch.name}: Starting {StateType} action");
+        //Debug.Log($"{ch.name}: Starting {StateType} action");
 
         while (ch.State == StateType)
         {

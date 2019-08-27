@@ -11,7 +11,7 @@ public class FleeAction : ActionState
     public override IEnumerator StateRoutine(Character ch)
     {
         Area fleeingToArea = null;
-        Debug.Log($"{ch.name}: Starting {StateType} action");
+        //Debug.Log($"{ch.name}: Starting {StateType} action");
 
         while (ch.State == StateType)
         {

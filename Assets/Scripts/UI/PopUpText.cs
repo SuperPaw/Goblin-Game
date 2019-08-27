@@ -11,6 +11,7 @@ public class PopUpText : MonoBehaviour
     public TextMeshProUGUI PopText;
     private static PopUpText Instance;
     public AiryUIAnimationManager ViewHolder;
+    public int DistanceFromLeaderToShow = 500;
 
     public struct ShowEvent
     {
@@ -76,7 +77,7 @@ public class PopUpText : MonoBehaviour
         var showingY0 = showing.Trans.position;
         showingY0.y = 0;
 
-        if((chiefLocation-showingY0).sqrMagnitude < 300)
+        if((chiefLocation-showingY0).sqrMagnitude < DistanceFromLeaderToShow)
         {
             while (Time.unscaledTime < endTime & !Input.anyKeyDown && Input.touchCount == 0 && (Math.Abs(Input.mouseScrollDelta.y) < 0.001))
             {

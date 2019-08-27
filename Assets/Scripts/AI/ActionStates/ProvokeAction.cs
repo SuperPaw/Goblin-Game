@@ -10,7 +10,7 @@ public class ProvokeAction : ActionState
     
     public override IEnumerator StateRoutine(Character ch)
     {
-        Debug.Log($"{ch.name}: Starting {StateType} action");
+        //Debug.Log($"{ch.name}: Starting {StateType} action");
 
 
         float ProvokeTime = 5;
@@ -41,6 +41,12 @@ public class ProvokeAction : ActionState
         {
             yield return new WaitForFixedUpdate();
 
+            if(ch.NavigationPathIsStaleOrCompleted())
+            {
+                Debug.Log($"{g} updating provoke path");
+                ch.navMeshAgent.SetDestination(goingToProvoke ? g.ProvokeTarget.transform.position : g.InArea.GetRandomPosInArea());
+            }
+
             //TODO: define these in the while statement instead
             if (!g.ProvokeTarget)
             {
@@ -54,34 +60,37 @@ public class ProvokeAction : ActionState
                 break;
             }
 
-            if (!goingToProvoke && g.navMeshAgent.remainingDistance < 0.5f)
+            if (!goingToProvoke)
             {
-                goingToProvoke = true;
+                if (g.navMeshAgent.remainingDistance < 0.5f)
+                {
+                    goingToProvoke = true;
 
-                provokeDest = g.ProvokeTarget.transform.position;
-                g.navMeshAgent.SetDestination(provokeDest);
+                    provokeDest = g.ProvokeTarget.transform.position;
+                    g.navMeshAgent.SetDestination(provokeDest);
 
-                ProvokeStartTime = Time.time;
+                    ProvokeStartTime = Time.time;
+                }
             }
-
-            //TODO: remove provoke start time and just use yield return waituntill
-            if (ProvokeTime + ProvokeStartTime > Time.time)
+            else
             {
-                //run away
-                goingToProvoke = false;
-                var dest = g.InArea.GetRandomPosInArea();
-                g.navMeshAgent.SetDestination(dest);
-                g.ProvokeTarget.IrritationMeter++;
-            }
-            if ((provokeDest - g.transform.position).magnitude < 4) //Provoke
-            {
-                g.navMeshAgent.isStopped = true;
-                g.Speak(
-                    PlayerController.GetDynamicReactions(PlayerController.DynamicState.Mocking));
+                //TODO: remove provoke start time and just use yield return waituntill
+                if (ProvokeTime + ProvokeStartTime > Time.time)
+                {
+                    //run away
+                    goingToProvoke = false;
+                    var dest = g.InArea.GetRandomPosInArea();
+                    g.navMeshAgent.SetDestination(dest);
+                    g.ProvokeTarget.IrritationMeter++;
+                }
+                if ((provokeDest - g.transform.position).magnitude < 4) //Provoke
+                {
+                    g.navMeshAgent.isStopped = true;
+                    g.Speak(
+                        PlayerController.GetDynamicReactions(PlayerController.DynamicState.Mocking));
+                }
             }
         }
-
-        g.ChangeState(Character.CharacterState.Idling);
 
         //TODO: handle cleanup
     }

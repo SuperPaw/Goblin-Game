@@ -570,7 +570,7 @@ public abstract class Character : MonoBehaviour
 
         if (fromState != State)
         {
-            Debug.Log(name + " no longer "+ fromState + "; Now: "+ State + "; Not " + newState);
+            //Debug.Log(name + " no longer "+ fromState + "; Now: "+ State + "; Not " + newState);
             //yield break;
         }
 
@@ -598,7 +598,7 @@ public abstract class Character : MonoBehaviour
             newState != CharacterState.Fleeing)
             TravellingToArea = null;
 
-        Debug.Log($"Starting state: {newState}");
+        //Debug.Log($"Starting state: {newState}");
         //TODO: Assign to field and close the last state
 
         //if(StateRoutine != null) ActionStateProcessor.Instance.StopCoroutine(StateRoutine);
@@ -786,7 +786,7 @@ public abstract class Character : MonoBehaviour
     {
         if(Fleeing() || Surprised()) return;
 
-        if (!Attacking() || AttackTarget == null)
+        if (!Attacking())
         {
             ChangeState(CharacterState.Attacking, true);
             var closest = GetClosestEnemy();

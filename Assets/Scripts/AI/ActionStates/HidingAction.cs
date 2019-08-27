@@ -10,7 +10,7 @@ public class HidingAction : ActionState
     
     public override IEnumerator StateRoutine(Character ch)
     {
-        Debug.Log($"{ch.name}: Starting {StateType} action");
+        //Debug.Log($"{ch.name}: Starting {StateType} action");
 
         ch.navMeshAgent.SetDestination(ch.hiding.HideLocation.transform.position);
 

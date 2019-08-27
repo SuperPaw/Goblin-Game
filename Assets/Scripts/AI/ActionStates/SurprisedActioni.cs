@@ -10,7 +10,7 @@ public class SurprisedAction : ActionState
     
     public override IEnumerator StateRoutine(Character g)
     {
-        Debug.Log($"{g.name}: Starting {StateType} action");
+        //Debug.Log($"{g.name}: Starting {StateType} action");
         
         g.navMeshAgent.isStopped = true;
 
