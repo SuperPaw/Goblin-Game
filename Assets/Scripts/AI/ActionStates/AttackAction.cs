@@ -20,7 +20,7 @@ public class AttackAction : ActionState
             if (!ch.AttackTarget || !ch.AttackTarget.Alive() || ch.AttackTarget.InArea != ch.InArea)// || (ch.AttackTarget.Fleeing()&& ch.InArea.AnyEnemies())
             {
                 //TODO. handle fleeing change S
-                Debug.Log($"{ch.name}'s Target is gone");
+                Debug.Log($"{ch}'s Target is gone");
                 TargetGone(ch);
             }
             else if ( ch.InAttackRange()) //has live enemy target and in attackrange
@@ -38,7 +38,7 @@ public class AttackAction : ActionState
 
                 if (ch.NavigationPathIsStaleOrCompleted())
                 {
-                    Debug.Log($"{ch.name} going to attack target {ch.AttackTarget}");
+                    Debug.Log($"{ch} going to attack target {ch.AttackTarget}");
                     ch.navMeshAgent.SetDestination(ch.AttackTarget.transform.position);
                 }
             }
@@ -50,10 +50,8 @@ public class AttackAction : ActionState
 
     protected void TargetGone(Character ch)
     {
-        if (!ch.Attacking()) return;
-
         var closest = ch.GetClosestEnemy();
-        if (!closest)
+        if (!closest || !ch.Attacking())
         {
             ch.ChangeState(Character.CharacterState.Idling, true);
             ch.AttackTarget = null;

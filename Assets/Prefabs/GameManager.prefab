@@ -79,7 +79,25 @@ MonoBehaviour:
   - {fileID: 0}
   HitChance:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.1284201
+      outSlope: 0.1284201
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.07638863
+    - serializedVersion: 3
+      time: 20.072815
+      value: 1
+      inSlope: 0.010876327
+      outSlope: 0.010876327
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1060277
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

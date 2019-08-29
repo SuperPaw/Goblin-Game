@@ -174,15 +174,15 @@ public class EquipmentGen : MonoBehaviour
             equip.name = equip.Type.ToString();
 
             equip.name = Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, false) + " " +
-                         equip.name;
+                         equip;
 
             if (attributes.Count > 1)
                 equip.name = Instance.GetStatDescription(attributes.ElementAt(1).Key, attributes.ElementAt(1).Value, false) + "-" +
-                             equip.name;
+                             equip;
 
             if (attributes.Count == 3)
                 equip.name = Instance.GetStatDescription(attributes.ElementAt(2).Key, attributes.ElementAt(2).Value, true) + " " +
-                             equip.name;
+                             equip;
         }
         else if (x < 0.67)
         {
@@ -193,7 +193,7 @@ public class EquipmentGen : MonoBehaviour
 
             if (attributes.Count > 1)
                 equip.name = Instance.GetStatDescription(attributes.ElementAt(1).Key, attributes.ElementAt(1).Value, true) + " " +
-                             equip.name;
+                             equip;
 
             if (attributes.Count == 3)
                 equip.name += " of " + Instance.GetStatDescription(attributes.ElementAt(2).Key, attributes.ElementAt(2).Value, false) + "ing";
@@ -202,7 +202,7 @@ public class EquipmentGen : MonoBehaviour
         {
             equip.name = "" + equip.Type;
 
-            equip.name = Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, true) + " " + equip.name;
+            equip.name = Instance.GetStatDescription(attributes.First().Key, attributes.First().Value, true) + " " + equip;
 
             if (attributes.Count > 1)
                 equip.name += " of " + Instance.GetStatDescription(attributes.ElementAt(1).Key, attributes.ElementAt(1).Value, false) + "ing";

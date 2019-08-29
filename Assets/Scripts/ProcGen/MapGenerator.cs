@@ -449,7 +449,7 @@ public class MapGenerator : MonoBehaviour
 
             AddAreaPoi(area, next);
 
-            area.name += next.name;
+            area.name += next;
             next.InArea = area;
 
             ////Create characters
@@ -557,7 +557,7 @@ public class MapGenerator : MonoBehaviour
             next.transform.parent = area.transform;
 
             AddAreaPoi(area, next);
-            area.name += next.name;
+            area.name += next;
             next.InArea = area;
         }
 

@@ -90,6 +90,17 @@ public class PlayerTeam : MonoBehaviour
         if (!Instance) Instance = this;
     }
 
+
+    public override string ToString()
+    {
+        if (Members.Count == 0)
+            return "no-one";
+        else if (Members.Count == 1)
+            return Members.First().name;
+        else
+            return "Goblins";
+    }
+
     // Use this for initialization
     public void Initialize (List<Goblin> members)
     {
@@ -277,7 +288,7 @@ public class PlayerTeam : MonoBehaviour
 
     public void Move(Area a )
     {
-        Sun.TravelRoutine((Leader.transform.position-a.transform.position).magnitude);
+        Sun.TravelRoutine(Leader);
         //if(a && a== Leader.InArea) //if already there
         //    return;
         //var leaderPos = Leader.transform.position;
@@ -472,12 +483,12 @@ public class PlayerTeam : MonoBehaviour
         PlayerChoice.ChoiceOption o1 = new PlayerChoice.ChoiceOption(){ Description = "Let them Fight!",Action = ()=>AttackCharacter(Challenger,Leader)};
 
         //TODO: other word than support maybe?
-        PlayerChoice.ChoiceOption o2 = new PlayerChoice.ChoiceOption() { Description = "Support " + Leader.name, Action = () => Attack(Challenger) };
+        PlayerChoice.ChoiceOption o2 = new PlayerChoice.ChoiceOption() { Description = "Support " + Leader, Action = () => Attack(Challenger) };
             
-        PlayerChoice.ChoiceOption o3 = new PlayerChoice.ChoiceOption() { Description = "Support " + Challenger.name, Action = () => Attack(Leader) };
+        PlayerChoice.ChoiceOption o3 = new PlayerChoice.ChoiceOption() { Description = "Support " + Challenger, Action = () => Attack(Leader) };
 
         PlayerChoice.SetupPlayerChoice(new PlayerChoice.ChoiceOption[] {o1, o2, o3},
-            Challenger.name + " challenge " + Leader.name + " to be new chief!");//.\n\nDo you want to choose a chief or let them fight for it?");
+            Challenger + " challenge " + Leader + " to be new chief!");//.\n\nDo you want to choose a chief or let them fight for it?");
 
         yield return new WaitUntil(()=>!Challenger || !Challenger.Alive() ||!Leader.Alive());
 
@@ -665,17 +676,17 @@ public class PlayerTeam : MonoBehaviour
 
         foreach (var f in potential.Take(3))
         {
-            options.Add(new PlayerChoice.ChoiceOption() { Action = () => f.Equip(equipment), Description = f.name });
+            options.Add(new PlayerChoice.ChoiceOption() { Action = () => f.Equip(equipment), Description = f.ToString() });
         }
         if (options.Any())
         {
-            PopUpText.ShowText(finder.name + " find " + equipment.name, finder.transform);
-            PlayerChoice.SetupPlayerChoice(options.ToArray(),"Who gets the " + equipment.name + "?");
+            PopUpText.ShowText(finder + " find " + equipment, finder.transform);
+            PlayerChoice.SetupPlayerChoice(options.ToArray(),"Who gets the " + equipment + "?");
         }
         else
         {
             OnTreasureFound.Invoke(1);
-            PopUpText.ShowText($"{finder.name} find {equipment.name} and broke it into treasure",finder.transform);
+            PopUpText.ShowText($"{finder} find {equipment} and broke it into treasure",finder.transform);
         }
     }
 }

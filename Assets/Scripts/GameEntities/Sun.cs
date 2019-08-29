@@ -44,30 +44,41 @@ public class Sun : MonoBehaviour
         Instance.StartCoroutine(Instance.ChangeLightToColor(Instance.DayColor,duration));
     }
 
-    public static void TravelRoutine(float travelDist)
+    public static void TravelRoutine(Goblin leader)
     {
-        Instance.StartCoroutine(Instance.TravelFade(travelDist));
+        Instance.StartCoroutine(Instance.TravelFade(leader));
     }
 
-    private IEnumerator TravelFade(float distance)
+    private IEnumerator TravelFade(Goblin leader)
     {
         //Debug.Log("Travel distance: "+ distance + ", Fade time: "+ distance * TravelFadeFactor);
 
-        var duration = distance * TravelFadeFactor;
+        var fadeInOutDuration = 2;
 
-        //Night(duration);
-        var start = Time.time;
+        var start = Time.unscaledTime;
 
-        //TODO: should it be a curve down or simply stop once the chief stops travelling
-        while (Time.time < start + duration)
+        //Time speeds up
+        while (Time.unscaledTime < start + fadeInOutDuration)
         {
             yield return new WaitForFixedUpdate();
-            var x = TimeSpeedUpCurve.Evaluate((Time.time - start) / duration);
+            var x = TimeSpeedUpCurve.Evaluate((Time.unscaledTime - start) / fadeInOutDuration);
 
             Time.timeScale = x;
             //SoundController.Instance.MusicAudioSource.pitch = x;
         }
 
-        //Day();
+        yield return new WaitUntil(() => !leader.Travelling());
+
+        start = Time.unscaledTime;
+
+        //fading time back down
+        while (Time.unscaledTime < start + fadeInOutDuration)
+        {
+            yield return new WaitForFixedUpdate();
+            var x = TimeSpeedUpCurve.Evaluate((start - Time.unscaledTime) / fadeInOutDuration);
+
+            Time.timeScale = x;
+            //SoundController.Instance.MusicAudioSource.pitch = x;
+        }
     }
 }

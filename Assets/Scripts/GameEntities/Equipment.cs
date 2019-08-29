@@ -67,7 +67,11 @@ public class Equipment : MonoBehaviour
         OnEquip.AddListener(Equip);
         OnDeequip.AddListener(DeEquip);
     }
-    
+
+    public override string ToString()
+    {
+        return name;
+    }
 
     void Equip(Character c)
     {

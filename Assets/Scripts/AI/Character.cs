@@ -19,6 +19,7 @@ public abstract class Character : MonoBehaviour
     public bool HasPath;
     public bool PathStale;
     public bool IsOnNavMesh;
+    public bool IsStopped;
 
     public Coroutine StateRoutine;
 
@@ -465,10 +466,16 @@ public abstract class Character : MonoBehaviour
         HasPath = navMeshAgent.hasPath;
         PathStale = navMeshAgent.isPathStale;
         IsOnNavMesh = navMeshAgent.isOnNavMesh;
+        IsStopped = navMeshAgent.isStopped;
 
         //if (IncoherentNavAgentSpeed() && agentStuckRoutine == null)
         //    agentStuckRoutine = StartCoroutine(CheckForNavAgentStuck(0.25f));
 
+    }
+
+    public override string ToString()
+    {
+        return name;
     }
 
 
@@ -592,7 +599,9 @@ public abstract class Character : MonoBehaviour
 
         if (State != CharacterState.Dead)
             State = newState;
-        
+
+        navMeshAgent.isStopped = false;
+
 
         if (newState != CharacterState.Travelling && newState != CharacterState.Attacking &&
             newState != CharacterState.Fleeing)
@@ -674,7 +683,7 @@ public abstract class Character : MonoBehaviour
         }
         if (this as Goblin && !e.IsUsableby(this as Goblin))
         {
-            Debug.LogWarning(gameObject.name + ": Not usable by " + ((Goblin)this).ClassType);
+            Debug.LogWarning(e + ": Not usable by " + ((Goblin)this).ClassType);
             return false;
         }
         

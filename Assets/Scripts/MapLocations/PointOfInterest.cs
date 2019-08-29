@@ -101,6 +101,11 @@ public class PointOfInterest : MonoBehaviour
         }
     }
 
+    public override string ToString()
+    {
+        return name;
+    }
+
     protected IEnumerator Spawning(PlayerTeam team, bool livingDead = false)
     {
         Debug.Log("Spawning monsters!!");
@@ -334,7 +339,7 @@ public class PointOfInterest : MonoBehaviour
     {
         //TODO: maybe shuffle first
         var options = team.Members.OrderBy(g=>g.Xp).Take(4).Select(g =>
-            new PlayerChoice.ChoiceOption() { Action = () => PlayerTeam.Instance.SacGoblin(g, this), Description = g.name + " the " + g.ClassType }).ToList();
+            new PlayerChoice.ChoiceOption() { Action = () => PlayerTeam.Instance.SacGoblin(g, this), Description = g + " the " + g.ClassType }).ToList();
         options.Add(No);
 
         PlayerChoice.SetupPlayerChoice(options.ToArray(),
@@ -346,7 +351,7 @@ public class PointOfInterest : MonoBehaviour
         //TODO: maybe shuffle first
 
         var options = team.Members.Where(g => g != team.Leader).Take(4).Select(g =>
-            new PlayerChoice.ChoiceOption() { Action = () => PlayerTeam.Instance.SellGoblin(g, 2), Description = g.name + " the " + g.ClassType }).ToList();
+            new PlayerChoice.ChoiceOption() { Action = () => PlayerTeam.Instance.SellGoblin(g, 2), Description = g + " the " + g.ClassType }).ToList();
         options.Add(No);
 
         PlayerChoice.SetupPlayerChoice(options.ToArray(),

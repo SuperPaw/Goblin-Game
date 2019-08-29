@@ -80,7 +80,7 @@ public class GoblinUIList : MonoBehaviour
         }
         else
         {
-            e.NameText.text = g.name;
+            e.NameText.text = g.ToString();
         }
 
         e.ChiefImage.gameObject.SetActive(g == Team.Leader);

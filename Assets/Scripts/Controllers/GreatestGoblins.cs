@@ -57,7 +57,7 @@ public class GreatestGoblins : MonoBehaviour
         }
         ActiveScore = new Score
         {
-            Name = leader.name,
+            Name = leader.ToString(),
             GoblinsInTribe = leader.Team.Members.Count,
             LeaderLevel = leader.CurrentLevel,
             NewScore = true

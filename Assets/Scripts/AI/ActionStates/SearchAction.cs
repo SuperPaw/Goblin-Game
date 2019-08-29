@@ -34,7 +34,7 @@ public class SearchAction : ActionState
 
             if (ch.NavigationPathIsStaleOrCompleted())
             {
-                Debug.Log($"{ch.name}: Updating loot target path: {ch.LootTarget}, {ch.LootTarget.transform.position}");
+                Debug.Log($"{ch}: Updating loot target path: {ch.LootTarget}, {ch.LootTarget.transform.position}");
                 ch.navMeshAgent.SetDestination(ch.LootTarget.transform.position);
             }
 

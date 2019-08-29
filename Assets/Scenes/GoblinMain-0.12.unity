@@ -575,39 +575,21 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1.0038109
-      inSlope: 5.015742
-      outSlope: 5.015742
-      tangentMode: 34
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.29971927
-      value: 2.5071254
-      inSlope: 0.17233726
-      outSlope: 0.17233726
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.11733078
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.79170865
-      value: 2.4959478
-      inSlope: -0.20084602
-      outSlope: -0.20084602
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.735827
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 1.0038109
-      inSlope: -7.163701
-      outSlope: -7.163701
-      tangentMode: 34
+      value: 3
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -5275,11 +5257,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
         type: 3}
-      propertyPath: HitChance.m_Curve.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
       propertyPath: TurnOnOnStart.Array.data[0]
       value: 
       objectReference: {fileID: 2071338400}
@@ -5308,101 +5285,6 @@ PrefabInstance:
       propertyPath: HighScoreScreen
       value: 
       objectReference: {fileID: 2386521503912806096}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[0].time
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[0].value
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[0].tangentMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[0].inWeight
-      value: 0.33333334
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[0].outWeight
-      value: 0.07638863
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[1].time
-      value: 20.072815
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[1].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[1].tangentMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[1].inWeight
-      value: 0.1060277
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[1].outWeight
-      value: 0.33333334
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[2].time
-      value: 20.072815
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[2].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[2].tangentMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[2].inWeight
-      value: 0.1060277
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[2].outWeight
-      value: 0.33333334
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[1].inSlope
-      value: 0.010876327
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[1].outSlope
-      value: 0.010876327
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[0].inSlope
-      value: 0.1284201
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HitChance.m_Curve.Array.data[0].outSlope
-      value: 0.1284201
-      objectReference: {fileID: 0}
     - target: {fileID: 6057858525446187771, guid: affee8357be7256439d8473952deead4,
         type: 3}
       propertyPath: m_LocalPosition.x

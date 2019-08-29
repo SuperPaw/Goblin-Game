@@ -87,7 +87,7 @@ public class CharacterView : MonoBehaviour
         }
         generatedObjects.Clear();
         
-        Name.text = c.name;
+        Name.text = c.ToString();
         var lvl = Goblin.GetLevel((int) c.Xp);
         ClassLevelText.text = "LVL " + lvl;// + " " + ClassName(c.ClassType);
         ClassLevelText.GetComponent<OnValueHover>().Class = c.ClassType;
@@ -142,7 +142,7 @@ public class CharacterView : MonoBehaviour
         foreach (var equipment in c.Equipped.Values.Where(v => v))
         {
             var entry = Instantiate(EquipmentInfo, EquipmentInfo.transform.parent);
-            entry.Value.text = equipment.name;
+            entry.Value.text = equipment.ToString();
             entry.Name.sprite = GameManager.GetIconImage(equipment.Type);
             entry.gameObject.SetActive(true);
             //var hover =entry.GetComponent<OnValueHover>();

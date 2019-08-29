@@ -149,6 +149,11 @@ public class Goblin : Character
         emission.enabled = WaitingOnLevelup();//LevelUps > 0|| WaitingOnClassSelection;
     }
     
+    public override string ToString()
+    {
+        return name;
+    }
+
     public List<Class> GetClassChoices(List<Class> possibleChoises)
     {
         if (ClassChoices != null) return ClassChoices;

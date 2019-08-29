@@ -484,7 +484,7 @@ public class PlayerController : MonoBehaviour
             case PointOfInterest.Poi.Lake:
             case PointOfInterest.Poi.ElvenTemple:
                 SoundController.PlayStinger(SoundBank.Stinger.RevealArea);
-                PopUpText.ShowText("Goblins discover a " + area.PointOfInterest.AreaName, area.transform);
+                PopUpText.ShowText($"{Instance.Team} discover a {area.PointOfInterest.AreaName}", area.transform);
                 break;
             case PointOfInterest.Poi.Count:
                 break;
@@ -493,7 +493,7 @@ public class PlayerController : MonoBehaviour
                 {
                     SoundController.PlayStinger(SoundBank.Stinger.RevealArea);
                     var enm = area.PresentCharacters.First(c => c.tag == "Enemy");
-                    PopUpText.ShowText("Goblins met a " + enm.name, enm.transform);
+                    PopUpText.ShowText($"{Instance.Team} meet a ugly {enm}", enm.transform);
                 }
                 break;
             default:
