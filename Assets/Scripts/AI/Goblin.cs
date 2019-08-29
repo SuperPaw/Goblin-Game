@@ -124,9 +124,12 @@ public class Goblin : Character
         //TODO: make better or remove
         //StartCoroutine(AwarenessLoop());
 
+        
         OnMoodChange.AddListener(MoodChange);
 
         OnLevelUp.AddListener(NextLevel);
+
+        OnTargetDeath.AddListener(() => OnMoodChange.Invoke(1));
     }
 
     public new void FixedUpdate()
@@ -197,6 +200,9 @@ public class Goblin : Character
     private void MoodChange(int arg0)
     {
         //TODO: let mood go to negative and positive?
+
+        //Chief is in no mood ;)
+        if (IsChief()) return;
 
         if ((int)Mood + arg0 < 0)
             return;

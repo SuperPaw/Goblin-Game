@@ -213,16 +213,21 @@ MonoBehaviour:
     Image: {fileID: 21300000, guid: 1381c04e043ab2b4b99d8624ea888154, type: 3}
     Description: SPEED - How fast goblin run
   HappinessImages:
-  - Type: 0
+  - Type: 4
     Sprite: {fileID: 21300000, guid: 446bc68d439145a4eb96740498be5ff8, type: 3}
-  - Type: 1
+    Color: {r: 0.78431374, g: 1, b: 0.39215687, a: 1}
+  - Type: 3
     Sprite: {fileID: 21300000, guid: cd2187895b3e8264498014589adb6a5a, type: 3}
+    Color: {r: 0.78431374, g: 1, b: 0.39215687, a: 1}
   - Type: 2
     Sprite: {fileID: 21300000, guid: e0e07bcb72c436242b40dc1d599fe13f, type: 3}
-  - Type: 3
+    Color: {r: 1, g: 0.9313208, b: 0.8160377, a: 1}
+  - Type: 1
     Sprite: {fileID: 21300000, guid: 246355cfe7c986643b082fc60e83319e, type: 3}
-  - Type: 4
+    Color: {r: 0.754717, g: 0.5176471, b: 0.27450982, a: 1}
+  - Type: 0
     Sprite: {fileID: 21300000, guid: 97d962624ce7dbc4fb820a677da08b14, type: 3}
+    Color: {r: 0.754717, g: 0.18670559, b: 0.13883947, a: 1}
   OptionTargetImages:
   - Type: 0
     Image: {fileID: 21300000, guid: 78dc59c8441d1524091a52788eda3ba1, type: 3}
