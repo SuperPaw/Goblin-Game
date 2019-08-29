@@ -251,8 +251,9 @@ public abstract class Character : MonoBehaviour
             if (value == _morale) return;
             _morale = value;
             //Debug.Log(gameObject.name + " lost " + value + " moral");
-            if (_morale <= 0 &! Fleeing())
+            if (_morale <= 0 &! Fleeing() &! (this as Goblin && (this as Goblin).Mood > Goblin.Happiness.Neutral))
             {
+                
                 //Debug.Log(name+" fleeing now!");
                 ChangeState(CharacterState.Fleeing,true);
             }

@@ -113,8 +113,8 @@ NavMeshSettings:
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
-    manualCellSize: 1
-    cellSize: 0.1
+    manualCellSize: 0
+    cellSize: 0.13333334
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -5285,106 +5285,6 @@ PrefabInstance:
       propertyPath: HighScoreScreen
       value: 
       objectReference: {fileID: 2386521503912806096}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[0].Color.r
-      value: 0.78431374
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[0].Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[0].Color.b
-      value: 0.39215687
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[0].Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[1].Color.r
-      value: 0.78431374
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[1].Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[1].Color.b
-      value: 0.39215687
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[1].Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[2].Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[2].Color.g
-      value: 0.9313208
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[2].Color.b
-      value: 0.8160377
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[2].Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[3].Color.r
-      value: 0.754717
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[3].Color.g
-      value: 0.5176471
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[3].Color.b
-      value: 0.27450982
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[3].Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[4].Color.r
-      value: 0.754717
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[4].Color.g
-      value: 0.18670559
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[4].Color.b
-      value: 0.13883947
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
-        type: 3}
-      propertyPath: HappinessImages.Array.data[4].Color.a
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6057858525446187771, guid: affee8357be7256439d8473952deead4,
         type: 3}
       propertyPath: m_LocalPosition.x

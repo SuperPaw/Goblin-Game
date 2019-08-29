@@ -120,9 +120,7 @@ public class PlayerTeam : MonoBehaviour
             //Debug.Log(character +" Material: "+ mat);
 
             character.GoblinSkin.sharedMaterial = mat;
-
-            OnOrder.AddListener(() => character.OnMoodChange.Invoke(-1));
-            
+                        
             character.OnDeath?.AddListener(MemberDied);
         }
 
@@ -282,9 +280,7 @@ public class PlayerTeam : MonoBehaviour
 
         Members.Add(goblin);
         OnMemberAdded.Invoke();
-
-        //TODO: add these to method together with the same from the start method
-        OnOrder.AddListener(() => goblin.OnMoodChange.Invoke(-1));
+        
 
         goblin.OnDeath?.AddListener(MemberDied);
 
@@ -303,6 +299,8 @@ public class PlayerTeam : MonoBehaviour
         
         foreach (var gobbo in Members)
         {
+            gobbo.OnMoodChange.Invoke(-1);
+            
             //if (gobbo.InArea != Leader.InArea)
             //    continue;
 
