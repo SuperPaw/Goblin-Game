@@ -681,10 +681,15 @@ public abstract class Character : MonoBehaviour
             Debug.LogWarning("already equipped at "+ e.EquipLocation);
             return false;
         }
-        if (this as Goblin && !e.IsUsableby(this as Goblin))
+        if (this as Goblin)
         {
-            Debug.LogWarning(e + ": Not usable by " + ((Goblin)this).ClassType);
-            return false;
+            if (!e.IsUsableby(this as Goblin))
+            {
+                Debug.LogWarning(e + ": Not usable by " + ((Goblin)this).ClassType);
+                return false;
+            }
+
+            (this as Goblin).OnMoodChange.Invoke(2);
         }
         
         //Debug.Log("Equipped "+ e.name + " to " + name);

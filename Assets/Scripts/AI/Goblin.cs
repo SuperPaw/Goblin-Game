@@ -12,9 +12,12 @@ using Random = UnityEngine.Random;
 public class Goblin : Character
 {
     [Header("Goblin Specific")]
-    //consider removing to Character
-    //meaning how often they notice what other are doing
-    //0-10
+    public Happiness Mood = Happiness.Happy;
+
+    public class HappinessEvent : UnityEvent<int> { }
+
+    public HappinessEvent OnMoodChange = new HappinessEvent();
+
     public Image ChiefImage;
     
     public Image StateImage;
@@ -54,10 +57,8 @@ public class Goblin : Character
     public int CurrentLevel = GetLevel(0);
     public static int[] LevelCaps = { 0, 10, 20, 30, 50, 80, 130, 210, 340, 550, 890, 20000 };
 
-
-    public class LevelUp : UnityEvent { }
-
-    public LevelUp OnLevelUp = new LevelUp();
+    
+    public UnityEvent OnLevelUp = new UnityEvent();
 
     public AnimationCurve ProvokeScaredCurve;
 
@@ -106,7 +107,11 @@ public class Goblin : Character
 
     public CharacterView CharacterUI;
 
-        
+    public enum Happiness
+    {
+        VerySad, Sad, Neutral, Happy, VeryHappy, 
+        count
+    }
 
     new void Awake()
     {
@@ -115,9 +120,11 @@ public class Goblin : Character
         CharacterUI.SetCharacter(this);
         
         emission = particles.emission;
-        
+
         //TODO: make better or remove
         //StartCoroutine(AwarenessLoop());
+
+        OnMoodChange.AddListener(MoodChange);
 
         OnLevelUp.AddListener(NextLevel);
     }
@@ -185,6 +192,22 @@ public class Goblin : Character
     {
         Morale = COU.GetStatMax() *2;
         Health = HEA.GetStatMax();
+    }
+
+    private void MoodChange(int arg0)
+    {
+        //TODO: let mood go to negative and positive?
+
+        if ((int)Mood + arg0 < 0)
+            return;
+        if ((int)Mood + arg0 > (int)Happiness.VeryHappy)
+            return;
+
+        Debug.Log($"{name}- mood change: {arg0}");
+
+        Mood += arg0;
+
+        GoblinUIList.UpdateGoblinList();
     }
 
     private void NextLevel()

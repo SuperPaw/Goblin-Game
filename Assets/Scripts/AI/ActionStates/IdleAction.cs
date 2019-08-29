@@ -28,6 +28,8 @@ public class IdleAction : ActionState
             else if (ch.IrritationMeter >= ch.IrritaionTolerance)
             {
                 ch.ChangeState(Character.CharacterState.Attacking, true);
+                ch.IrritationMeter = 0;
+
                 break;
             }
             else if (Random.value < 0.015f) //selecting idle action
@@ -45,7 +47,7 @@ public class IdleAction : ActionState
                         && ( //ANY friends fighting
                         ch.InArea.PresentCharacters.Any(c => c.tag == ch.tag && c.Alive() && c.Attacking())
                         // I am aggressive wanderer
-                        || (ch.StickToRoad && ch.InArea.PresentCharacters.Any(c => c.tag == "Player" & !c.Hiding()))
+                        || (ch.StickToRoad && ch.InArea.PresentCharacters.Any(c => c.tag == "Player" &&c.Alive() & !c.Hiding()))
                         ))
                     {
                         //Debug.Log(name + ": Joining attack without beeing attacked");

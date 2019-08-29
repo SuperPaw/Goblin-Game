@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GoblinUIList : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GoblinUIList : MonoBehaviour
     public GoblinListEntry EntryObject;
     private List<GoblinListEntry> Entries = new List<GoblinListEntry>();
     public static GoblinUIList Instance;
+    private Sprite ChiefSprite;
 
     // Start is called before the first frame update
     void Awake()
@@ -19,6 +21,8 @@ public class GoblinUIList : MonoBehaviour
 
         if (!Instance)
             Instance = this;
+
+        ChiefSprite = EntryObject.ChiefImage.sprite;
 
         EntryObject.gameObject.SetActive(false);
     }
@@ -83,7 +87,11 @@ public class GoblinUIList : MonoBehaviour
             e.NameText.text = g.ToString();
         }
 
-        e.ChiefImage.gameObject.SetActive(g == Team.Leader);
+        var happi = GameManager.GetSmiley((Goblin.Happiness)Random.Range(0,(int)Goblin.Happiness.count));
+
+        e.ChiefImage.sprite = g.IsChief() ? ChiefSprite : happi.Sprite;
+
+        e.ChiefImage.color = g.IsChief() ? Color.white : happi.Color;
 
         e.LevelUpReady.gameObject.SetActive(g.WaitingOnLevelup());// || g.WaitingOnClassSelection);
     }

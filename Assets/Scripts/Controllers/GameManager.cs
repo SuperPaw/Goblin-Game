@@ -63,12 +63,21 @@ public class GameManager : MonoBehaviour
         public Sprite Sprite;
     }
 
+    [Serializable]
+    public struct HappinessImage
+    {
+        public Goblin.Happiness Type;
+        public Sprite Sprite;
+        public Color Color;
+    }
+
 
     [Header("References")]
     public IconImg[] IconImages;
     public ClassImg[] ClassImgs;
     public EquipmentImage[] EquipmentImages;
     public AttributeImg[] AttributeImages;
+    public HappinessImage[] HappinessImages;
     public List<TargetImaget> OptionTargetImages;
     public Image BlackscreenImage;
     public GameObject HighScoreScreen;
@@ -105,6 +114,14 @@ public class GameManager : MonoBehaviour
             return Instance.AttributeImages.First(im => im.Stat == type).Image;
 
         return Instance.AttributeImages.First().Image;
+    }
+
+    public static HappinessImage GetSmiley(Goblin.Happiness type)
+    {
+        if (Instance.HappinessImages.Any(im => im.Type == type))
+            return Instance.HappinessImages.First(im => im.Type == type);
+
+        return Instance.HappinessImages.First();
     }
 
     public void ResetGame()
