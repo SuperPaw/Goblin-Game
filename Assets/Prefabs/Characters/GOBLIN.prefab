@@ -56,6 +56,7 @@ MonoBehaviour:
   HasPath: 0
   PathStale: 0
   IsOnNavMesh: 0
+  IsStopped: 0
   StickToRoad: 0
   HasEquipment: 0
   Voice: {fileID: 993784395133949661}
@@ -114,12 +115,18 @@ MonoBehaviour:
   hiding: {fileID: 0}
   provokeDistance: 10
   DebugText: {fileID: 67269001809020726}
+  Mood: 3
   ChiefImage: {fileID: 114764703591676486}
   StateImage: {fileID: 114716199431146400}
   ProvokeTarget: {fileID: 0}
   GoblinSkin: {fileID: 5823732466600683179}
   speakWait: 3
   CurrentLevel: 1
+  OnLevelUp:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   ProvokeScaredCurve:
     serializedVersion: 2
     m_Curve:
@@ -157,7 +164,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 100702}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.4
+  m_Radius: 0.35
   m_Speed: 4
   m_Acceleration: 20
   avoidancePriority: 50

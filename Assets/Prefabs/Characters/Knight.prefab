@@ -2997,6 +2997,7 @@ MonoBehaviour:
   HasPath: 0
   PathStale: 0
   IsOnNavMesh: 0
+  IsStopped: 0
   StickToRoad: 1
   HasEquipment: 1
   Voice: {fileID: 0}
@@ -3094,7 +3095,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1969145986120274}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.4
+  m_Radius: 0.35
   m_Speed: 3.5
   m_Acceleration: 20
   avoidancePriority: 50

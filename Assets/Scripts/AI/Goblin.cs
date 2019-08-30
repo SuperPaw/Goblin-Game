@@ -205,9 +205,15 @@ public class Goblin : Character
         if (IsChief()) return;
 
         if ((int)Mood + arg0 < 0)
+        {
+            Debug.Log($"{name}'s mood change under 0");
             return;
+        }
         if ((int)Mood + arg0 > (int)Happiness.VeryHappy)
+        {
+            Debug.Log($"{name}'s mood change over Happy");
             return;
+        }
 
         Debug.Log($"{name}- mood change: {arg0}");
 

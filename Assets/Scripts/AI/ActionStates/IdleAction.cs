@@ -99,7 +99,7 @@ public class IdleAction : ActionState
 
             }
             //TODO: use a different method for activity selection than else if
-            else if (Random.value < 0.0025f && ch as Goblin && (ch as Goblin).Mood < Goblin.Happiness.Neutral &&ch.Team
+            else if (Random.value < 0.025f && ch as Goblin && (ch as Goblin).Mood < Goblin.Happiness.Neutral &&ch.Team
                 && !(ch.Team.Leader == ch) && ch.Team.Members.Count > 4 && (ch as Goblin).ClassType > Goblin.Class.Slave
                 & !ch.Team.Challenger && (ch.Team.Leader as Goblin).CurrentLevel <= ((Goblin)ch).CurrentLevel)
             {

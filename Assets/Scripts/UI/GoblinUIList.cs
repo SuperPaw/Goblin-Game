@@ -87,7 +87,7 @@ public class GoblinUIList : MonoBehaviour
             e.NameText.text = g.ToString();
         }
 
-        var happi = GameManager.GetSmiley((Goblin.Happiness)Random.Range(0,(int)Goblin.Happiness.count));
+        var happi = GameManager.GetSmiley(g.Mood);
 
         e.ChiefImage.sprite = g.IsChief() ? ChiefSprite : happi.Sprite;
 
