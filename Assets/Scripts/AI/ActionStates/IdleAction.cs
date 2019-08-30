@@ -16,6 +16,8 @@ public class IdleAction : ActionState
     {
         //Debug.Log($"{ch.name}: Starting {StateType} action");
 
+        var g = ch as Goblin;
+
         while (ch.State == StateType)
         {
             yield return new WaitForFixedUpdate();
@@ -34,8 +36,9 @@ public class IdleAction : ActionState
             }
             else if (Random.value < 0.015f) //selecting idle action
             {
-                if (!ch.IsChief())
-                    (ch as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.Idle));
+
+                if (!ch.IsChief() && g)
+                    g.Speak(PlayerController.GetMoodReaction(g.Mood));
 
                 actionInProgress = true;
 
@@ -56,17 +59,17 @@ public class IdleAction : ActionState
                         ch.Morale -= 5;
                         break;
                     }
-                    else if ((ch as Goblin) && ch.Team && ch.Team.Leader.InArea != ch.InArea & !ch.Team.Leader.Travelling())
+                    else if ((g) && ch.Team && ch.Team.Leader.InArea != ch.InArea & !ch.Team.Leader.Travelling())
                     {
                         ch.TravellingToArea = ch.Team.Leader.InArea;
                         dest = ch.Team.Leader.InArea.GetRandomPosInArea();
                     }
-                    else if ((ch as Goblin) && ch.tag == "Player" && ch.GetClosestEnemy() && (ch.GetClosestEnemy().transform.position - ch.transform.position).magnitude < ch.provokeDistance)
+                    else if ((g) && ch.tag == "Player" && ch.GetClosestEnemy() && (ch.GetClosestEnemy().transform.position - ch.transform.position).magnitude < ch.provokeDistance)
                     {
                         ch.ChangeState(Character.CharacterState.Provoking, true);
                         var ctx = ch.GetClosestEnemy();
-                        (ch as Goblin).ProvokeTarget = ctx;
-                        (ch as Goblin)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.Mocking));
+                        (g).ProvokeTarget = ctx;
+                        (g)?.Speak(PlayerController.GetDynamicReactions(PlayerController.DynamicState.Mocking));
                         dest = ctx.transform.position;
                         break;
                     }
@@ -99,33 +102,24 @@ public class IdleAction : ActionState
 
             }
             //TODO: use a different method for activity selection than else if
-            else if (Random.value < 0.025f && ch as Goblin && (ch as Goblin).Mood < Goblin.Happiness.Neutral &&ch.Team
-                && !(ch.Team.Leader == ch) && ch.Team.Members.Count > 4 && (ch as Goblin).ClassType > Goblin.Class.Slave
+            else if (Random.value < 0.025f && g && (g).Mood < Goblin.Happiness.Neutral &&ch.Team
+                && !(ch.Team.Leader == ch) && ch.Team.Members.Count > 4 && (g).ClassType > Goblin.Class.Slave
                 & !ch.Team.Challenger && (ch.Team.Leader as Goblin).CurrentLevel <= ((Goblin)ch).CurrentLevel)
             {
                 //TODO: make it only appear after a while
 
                 Debug.Log("Chief Fight!!");
-                ch.Team.ChallengeForLeadership(ch as Goblin);
+                ch.Team.ChallengeForLeadership(g);
             }
             //TODO: define better which characters should search stuff
-            else if (Random.value < 0.001f * ch.SMA.GetStatMax() && ch.Team && ch as Goblin && !ch.InArea.AnyEnemies() && ch.InArea.Lootables.Any(l => !l.Searched))
+            else if (Random.value < 0.001f * ch.SMA.GetStatMax() && ch.Team && g && !ch.InArea.AnyEnemies() && ch.InArea.Lootables.Any(l => !l.Searched))
             {
                 var loots = ch.InArea.Lootables.Where(l => !l.Searched).ToArray();
 
                 var loot = loots[Random.Range(0, loots.Count())];
 
-                (ch as Goblin).Search(loot);
+                (g).Search(loot);
             }
         }
-
-
-        //TODO: clean up?
     }
-    
-    //public override void EndState()
-    //{
-    //    throw new System.NotImplementedException();
-    //}
-    
 }

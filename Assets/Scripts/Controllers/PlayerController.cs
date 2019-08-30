@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     }
     public KeyMapping[] KeyMappings;
 
+
     //TODO: move all shout stuff to seperate controller 
     [Serializable]
     public struct OrderType
@@ -87,8 +88,15 @@ public class PlayerController : MonoBehaviour
         public DynamicState State;
         public Shout[] GoblinShouts;
     }
+    [Serializable]
+    public struct MoodReaction
+    {
+        //Searching / Attacking / resting / Provoking
+        public Goblin.Happiness Mood;
+        public Shout[] GoblinShouts;
+    }
 
-    public enum DynamicState { Idle, ChiefBattleCheer, FoundStuff, Mocking, ChallengingChief}
+    public enum DynamicState { Idle,  ChiefBattleCheer, FoundStuff, Mocking, ChallengingChief}
 
     [Header("Order Controls")]
     public OrderType[] Orders;
@@ -103,7 +111,8 @@ public class PlayerController : MonoBehaviour
     public EnemyReaction[] EnemyReactions;
     public StateChangeReaction[] StateChangeReactions;
     public DynamicReaction[] DynamicReactions;
-    
+    public MoodReaction[] MoodReactions;
+
     private bool _mouseHeld;
     private Vector3 _mouseDragPos;
 
@@ -786,5 +795,11 @@ public class PlayerController : MonoBehaviour
     public static Shout GetDynamicReactions(DynamicState trigger)
     {
         return Instance.GetRandom(Instance.DynamicReactions.First(l => l.State == trigger).GoblinShouts);
+    }
+
+
+    internal static Shout GetMoodReaction(Goblin.Happiness mood)
+    {
+        return Instance.GetRandom(Instance.MoodReactions.First(l => l.Mood == mood).GoblinShouts);
     }
 }

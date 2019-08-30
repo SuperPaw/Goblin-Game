@@ -11481,6 +11481,7 @@ MonoBehaviour:
   ClassLevelText: {fileID: 5009654255964515759}
   EquipmentInfo: {fileID: 0}
   ClassIcon: {fileID: 5851224103366882955}
+  SmileyImage: {fileID: 0}
   levelUpButton: {fileID: 7622511449129654370}
   ViewHolder: {fileID: 4397952258288452311}
 --- !u!223 &4112279837990132907
@@ -11979,7 +11980,7 @@ MonoBehaviour:
   Rect: {fileID: 8523106097527212058}
   PopText: {fileID: 7062973971520777893}
   ViewHolder: {fileID: 5263032510634892121}
-  DistanceFromLeaderToShow: 500
+  DistanceFromLeaderToShow: 600
   ShowTime: 4
 --- !u!1 &8786633997951540669
 GameObject:

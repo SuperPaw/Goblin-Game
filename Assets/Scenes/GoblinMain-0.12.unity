@@ -1329,14 +1329,6 @@ MonoBehaviour:
     - Speech: Where are we going?
       GoblinSound: {fileID: 8300000, guid: 986c4156ee5e38248944d550678ef6dd, type: 3}
   DynamicReactions:
-  - State: 0
-    GoblinShouts:
-    - Speech: I'm bored
-      GoblinSound: {fileID: 8300000, guid: 3a831c2f8d1b0fd449c0584843be44b6, type: 3}
-    - Speech: I'm hungry
-      GoblinSound: {fileID: 8300000, guid: 3a831c2f8d1b0fd449c0584843be44b6, type: 3}
-    - Speech: I'm bored and hungry
-      GoblinSound: {fileID: 8300000, guid: 03208fdc8dcff0b428a920458a84d6c7, type: 3}
   - State: 1
     GoblinShouts:
     - Speech: Get him, chief!
@@ -1344,8 +1336,6 @@ MonoBehaviour:
     - Speech: I love new chief!
       GoblinSound: {fileID: 8300000, guid: 08d3afcbc804861428fb280de70a0442, type: 3}
     - Speech: Chief battle!!
-      GoblinSound: {fileID: 8300000, guid: 08d3afcbc804861428fb280de70a0442, type: 3}
-    - Speech: Old chief better than new chief
       GoblinSound: {fileID: 8300000, guid: 08d3afcbc804861428fb280de70a0442, type: 3}
   - State: 2
     GoblinShouts:
@@ -1375,6 +1365,47 @@ MonoBehaviour:
       GoblinSound: {fileID: 8300000, guid: a0fc58c3215576d449caa3ad3295df03, type: 3}
     - Speech: Me be good chief! Kill bad chief
       GoblinSound: {fileID: 8300000, guid: a0fc58c3215576d449caa3ad3295df03, type: 3}
+  MoodReactions:
+  - Mood: 0
+    GoblinShouts:
+    - Speech: Chief is bad chief
+      GoblinSound: {fileID: 8300000, guid: 6f16ef0389e108b4eb38a0c7401e0dd2, type: 3}
+    - Speech: Stupid chief!
+      GoblinSound: {fileID: 8300000, guid: 18dc7414d7a2f4b4d8c9450f334f4224, type: 3}
+    - Speech: I hate chief
+      GoblinSound: {fileID: 8300000, guid: 18dc7414d7a2f4b4d8c9450f334f4224, type: 3}
+  - Mood: 1
+    GoblinShouts:
+    - Speech: No more work now! I'm hungry!
+      GoblinSound: {fileID: 8300000, guid: 3a831c2f8d1b0fd449c0584843be44b6, type: 3}
+    - Speech: Why always me?
+      GoblinSound: {fileID: 8300000, guid: 68341d63fa09ddc4c92f61db66a83366, type: 3}
+    - Speech: I want to play. Not work
+      GoblinSound: {fileID: 8300000, guid: cf012be4215202a4f87cd73e3983fdd8, type: 3}
+  - Mood: 2
+    GoblinShouts:
+    - Speech: I'm bored
+      GoblinSound: {fileID: 8300000, guid: 3a831c2f8d1b0fd449c0584843be44b6, type: 3}
+    - Speech: I'm hungry
+      GoblinSound: {fileID: 8300000, guid: 3a831c2f8d1b0fd449c0584843be44b6, type: 3}
+    - Speech: I'm bored and hungry
+      GoblinSound: {fileID: 8300000, guid: 03208fdc8dcff0b428a920458a84d6c7, type: 3}
+  - Mood: 3
+    GoblinShouts:
+    - Speech: I am hungry. Maybe food now?
+      GoblinSound: {fileID: 8300000, guid: 3a831c2f8d1b0fd449c0584843be44b6, type: 3}
+    - Speech: Eat good - Fight good!
+      GoblinSound: {fileID: 8300000, guid: 08d3afcbc804861428fb280de70a0442, type: 3}
+    - Speech: I like chief
+      GoblinSound: {fileID: 8300000, guid: 1a156833729fdb84699eba68a4c5f834, type: 3}
+  - Mood: 4
+    GoblinShouts:
+    - Speech: I love chief
+      GoblinSound: {fileID: 8300000, guid: 1a156833729fdb84699eba68a4c5f834, type: 3}
+    - Speech: Chief is pretty chief
+      GoblinSound: {fileID: 8300000, guid: 1a156833729fdb84699eba68a4c5f834, type: 3}
+    - Speech: I fight for big chief
+      GoblinSound: {fileID: 8300000, guid: d0901afb94b04c54abd1a3d21da6ea03, type: 3}
   GoblinViewSize: 6
   AreaViewSize: 10
   MapViewSize: 45

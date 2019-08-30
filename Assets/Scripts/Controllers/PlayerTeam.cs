@@ -34,6 +34,8 @@ public class PlayerTeam : MonoBehaviour
                 SoundController.PlayStinger(SoundBank.Stinger.GameStart);
                 PopUpText.ShowText(_leader.name +" is new chief!",_leader.transform);
 
+                _leader.Mood = Goblin.Happiness.VeryHappy;
+
                 //TODO: use event instead of having all this here
                 GreatestGoblins.NewLeader(_leader);
 

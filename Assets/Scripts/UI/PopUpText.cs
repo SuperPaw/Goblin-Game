@@ -11,7 +11,7 @@ public class PopUpText : MonoBehaviour
     public TextMeshProUGUI PopText;
     private static PopUpText Instance;
     public AiryUIAnimationManager ViewHolder;
-    public int DistanceFromLeaderToShow = 500;
+    public int DistanceFromLeaderToShow = 600;
 
     public struct ShowEvent
     {

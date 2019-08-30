@@ -19,6 +19,8 @@ public class CharacterView : MonoBehaviour
     //public GameObject ClassSelectionHolder;
     [SerializeField]
     private Image ClassIcon = null;
+    [SerializeField]
+    private Image SmileyImage;
     private Goblin character;
     private readonly List<GameObject> generatedObjects = new List<GameObject>(10);
     [SerializeField]
@@ -95,6 +97,19 @@ public class CharacterView : MonoBehaviour
         //ClassSelectionHolder.SetActive(c.WaitingOnClassSelection && c.Alive());
 
         levelUpButton.interactable = c.WaitingOnLevelup();
+
+        if(!c.IsChief())
+        {
+            SmileyImage.gameObject.SetActive(true);
+            
+            var happi = GameManager.GetSmiley(c.Mood);
+
+            SmileyImage.sprite = happi.Sprite;
+            SmileyImage.color = happi.Color;
+        }
+        else
+            SmileyImage.gameObject.SetActive(false);
+
 
         if (c.WaitingOnLevelup())//LevelUps > 0 || c.WaitingOnClassSelection)
         {
