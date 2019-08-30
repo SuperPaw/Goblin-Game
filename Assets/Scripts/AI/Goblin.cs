@@ -327,7 +327,7 @@ public class Goblin : Character
     
     public void Speak(PlayerController.Shout shout, bool overridePlaying = false)
     {
-        if ((Random.value > (IsChief() ? 0.0f : 0.35f)) &&InArea && InArea.Visible() && Voice && Voice.isActiveAndEnabled && lastSpeak + speakWait < Time.time && (overridePlaying || !Voice.isPlaying))
+        if ((Random.value > (IsChief() ? 0.0f : 0.35f)) && PlayerController.ObjectIsSeen(transform) && Voice && Voice.isActiveAndEnabled && lastSpeak + speakWait < Time.time && (overridePlaying || !Voice.isPlaying))
         {
             if(IsChief() || Team?.GoblinsSpeaking() < Team?.Members.Count / 4 +1)
                 StartCoroutine(ShoutRoutine(shout.Speech));
@@ -340,7 +340,7 @@ public class Goblin : Character
     //TODO: inherit this for each type of character to differentiate sound sets
     public void Speak(SoundBank.GoblinSound soundtype, bool overridePlaying = false)
     {
-        if ( InArea.Visible() && Voice && Voice.isActiveAndEnabled && (overridePlaying || !Voice.isPlaying))
+        if ( PlayerController.ObjectIsSeen(transform)&& Voice && Voice.isActiveAndEnabled && (overridePlaying || !Voice.isPlaying))
             Voice.PlayOneShot(SoundBank.GetSound(soundtype));
     }
 

@@ -14,11 +14,13 @@ public class GoblinListEntry : MonoBehaviour
 
     public void SelectGoblin()
     {
-        Goblin.CharacterUI.ShowCharacter();
+        if(PlayerController.ObjectIsSeen(Goblin.transform))
+            Goblin.CharacterUI.ShowCharacter();
     }
 
     public void MarkAsDead()
     {
         if(ClassImage) ClassImage.sprite = DeadGoblinSprite;
+        ChiefImage?.gameObject.SetActive(false);
     }
 }

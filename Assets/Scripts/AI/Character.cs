@@ -508,9 +508,9 @@ public abstract class Character : MonoBehaviour
         }
         else if (AgentVelocity > SpeedAnimationThreshold)
         {
-            Animate(Walking ?MOVE_ANIMATION_BOOL: RUN_ANIMATION_BOOL);
+            Animate(Walking ? MOVE_ANIMATION_BOOL : RUN_ANIMATION_BOOL);
         }
-        else if (Provoking())
+        else if (Provoking() && this as Goblin && Vector3.Distance(transform.position, (this as Goblin).ProvokeTarget.transform.position) < 5f)
         {
             Animate(PROVOKE_ANIMATION_BOOL);
         }
@@ -820,7 +820,7 @@ public abstract class Character : MonoBehaviour
         var damage = Random.Range(1, DMG.GetStatMax()) * OutgoingDmgPct;
 
         //TODO: create source for fx and getsound method for effects
-        if(Voice)
+        if(Voice && PlayerController.ObjectIsSeen(transform))
             Voice.PlayOneShot(SoundBank.GetSound(SoundBank.FXSound.Hit));
         
         if(HitParticles)
@@ -987,15 +987,20 @@ public abstract class Character : MonoBehaviour
         if (Fleeing() || Attacking())
             return;
 
+
         TravellingToArea = a;
+
         MoveTo(a.GetRandomPosInArea(),immedeately);
     }
 
     public void MoveTo(Vector3 t, bool immedeately = false)
     {
-        ChangeState(Character.CharacterState.Travelling, immedeately);
-        
         Target = t;
+
+        if (!Travelling())
+            ChangeState(CharacterState.Travelling, immedeately);
+        else //if already travelling we just update the target
+            navMeshAgent.SetDestination(t);
         
     }
     

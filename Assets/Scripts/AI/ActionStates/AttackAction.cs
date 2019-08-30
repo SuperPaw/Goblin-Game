@@ -43,7 +43,7 @@ public class AttackAction : ActionState
                 }
             }
         }
-
+        ch.navMeshAgent.isStopped = false;
 
         //TODO: handle cleanup
     }

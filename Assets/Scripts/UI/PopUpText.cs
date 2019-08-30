@@ -11,7 +11,6 @@ public class PopUpText : MonoBehaviour
     public TextMeshProUGUI PopText;
     private static PopUpText Instance;
     public AiryUIAnimationManager ViewHolder;
-    public int DistanceFromLeaderToShow = 600;
 
     public struct ShowEvent
     {
@@ -75,9 +74,8 @@ public class PopUpText : MonoBehaviour
         var chiefLocation = PlayerController.Instance.Team.Leader.transform.position;
         chiefLocation.y = 0;
         var showingY0 = showing.Trans.position;
-        showingY0.y = 0;
 
-        if((chiefLocation-showingY0).sqrMagnitude < DistanceFromLeaderToShow)
+        if(PlayerController.ObjectIsSeen(showing.Trans))
         {
             while (Time.unscaledTime < endTime & !Input.anyKeyDown && Input.touchCount == 0 && (Math.Abs(Input.mouseScrollDelta.y) < 0.001))
             {

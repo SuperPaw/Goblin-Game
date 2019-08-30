@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public int MouseMoveKey = 1;
     public enum MappableActions { Hide, Attack, Flee, Menu,FixCamOnLeader, Move, Camp,InvincibleMode, AddXp, ZoomIn, ZoomOut, Pause,Kill,RaiseDead } //TODO: move should contain direction maybe
     public LayerMask HitMask;
+    public int DistanceFromLeaderToShow = 600;
 
     [Serializable]
     public struct ActionOnStates
@@ -205,7 +206,19 @@ public class PlayerController : MonoBehaviour
             Instance.UpdateFogOfWar();
         
     }
-    
+
+    public static bool ObjectIsSeen(Transform t)
+    {
+        if (!Instance.Team.Leader) return false;
+
+        var chiefLocation = Instance.Team.Leader.transform.position;
+        chiefLocation.y = 0;
+        var showingY0 = t.position;
+        showingY0.y = 0;
+
+        return ((chiefLocation - showingY0).sqrMagnitude < Instance.DistanceFromLeaderToShow);
+    }
+
 
     void HandleMouseKeys()
     {

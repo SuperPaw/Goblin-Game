@@ -83,7 +83,7 @@ public class ProvokeAction : ActionState
                     g.navMeshAgent.SetDestination(dest);
                     g.ProvokeTarget.IrritationMeter++;
                 }
-                if ((provokeDest - g.transform.position).magnitude < 4) //Provoke
+                else if ((provokeDest - g.transform.position).magnitude < 4) //Provoke
                 {
                     g.navMeshAgent.isStopped = true;
                     g.Speak(
