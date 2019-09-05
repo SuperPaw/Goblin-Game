@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 
 
 //TODO: Should be divided into smaller classes
-public abstract class Character : MonoBehaviour
+public abstract partial class Character : MonoBehaviour
 {
     [Header("NAV MESH Debug Values")]
     public float AgentVelocity;
@@ -27,15 +27,15 @@ public abstract class Character : MonoBehaviour
     //Should we use different state for travelling and just looking at something clsoe by
     public enum CharacterState
     {
-        Idling, Attacking, Travelling, Fleeing, Hiding, Dead,Watching,Searching,Provoking, Surprised, Resting,StartState
+        Idling, Attacking, Travelling, Fleeing, Hiding, Dead, Watching, Searching, Provoking, Surprised, Resting, StartState
     }
 
     public enum Race
     {
-        Goblin, Human, Spider, Zombie, Ogre, Wolf,Orc,Elf,
+        Goblin, Human, Spider, Zombie, Ogre, Wolf, Orc, Elf,
         NoRace
     }
-    
+
     [Header("Enemy specific")]
     public bool StickToRoad;
     public bool HasEquipment;
@@ -60,8 +60,7 @@ public abstract class Character : MonoBehaviour
 
     public int IrritationMeter = 0;
     public int IrritaionTolerance = 50;
-
-    public CharacterState State;// = CharacterState.StartState;
+    protected StateController stateController;
 
     public class Stat
     {
@@ -72,7 +71,7 @@ public abstract class Character : MonoBehaviour
             //public ModType Type;
             public int Modifier;
 
-            public StatMod(string name,int modifier)
+            public StatMod(string name, int modifier)
             {
                 Name = name;
                 //Type = type;
@@ -83,7 +82,7 @@ public abstract class Character : MonoBehaviour
         public StatType Type;
         private int Max;
         //TODO: should decreases like damage be done with modifiers instead?
-        
+
         //TODO: modifiers should have a func<bool> which determines the reason they are valid
         public List<StatMod> Modifiers;
 
@@ -106,7 +105,7 @@ public abstract class Character : MonoBehaviour
         {
             string x = GameManager.GetAttributeDescription(Type) + System.Environment.NewLine;
 
-             x += "" + Max + "(base)";
+            x += "" + Max + "(base)";
 
             foreach (var mod in Modifiers)
             {
@@ -124,7 +123,7 @@ public abstract class Character : MonoBehaviour
             //Debug.Log(Name + " increased to "+ Max);
         }
     }
-    
+
     [HideInInspector] public Lootable LootTarget;
     [HideInInspector] public PlayerTeam Team;
 
@@ -144,7 +143,7 @@ public abstract class Character : MonoBehaviour
     public Stat HEA;
     public Stat SPE;
     public Stat SMA;
-    public Dictionary<StatType,Stat> Stats;
+    public Dictionary<StatType, Stat> Stats;
 
     public int DamMin,
         DamMax,
@@ -172,7 +171,7 @@ public abstract class Character : MonoBehaviour
     //Static event to handle generic responces to death
     public class RaceDeathEvent : UnityEvent<Race> { }
     public static RaceDeathEvent OnAnyCharacterDeath = new RaceDeathEvent();
-    
+
     public class DamageEvent : UnityEvent<int> { }
     public DamageEvent OnDamage = new DamageEvent();
 
@@ -184,20 +183,20 @@ public abstract class Character : MonoBehaviour
     public CharacterEvent OnCharacterCharacter = new CharacterEvent();
     public CharacterEvent OnBeingAttacked = new CharacterEvent();
 
-    public class TargetDeathEvent : UnityEvent{ }
+    public class TargetDeathEvent : UnityEvent { }
     public TargetDeathEvent OnTargetDeath = new TargetDeathEvent();
 
     public class AreaEvent : UnityEvent<Area> { }
     public AreaEvent OnAreaChange = new AreaEvent();
 
-#endregion
+    #endregion
 
     public Vector3 Target;
     public NavMeshAgent navMeshAgent;
     public GameObject HolderGameObject;
 
     public EquipmentManager EquipmentManager;
-    public Dictionary<Equipment.EquipLocations,Equipment> Equipped = new Dictionary<Equipment.EquipLocations, Equipment>();
+    public Dictionary<Equipment.EquipLocations, Equipment> Equipped = new Dictionary<Equipment.EquipLocations, Equipment>();
 
     private Character _attackTarget;
     public Character AttackTarget
@@ -205,11 +204,19 @@ public abstract class Character : MonoBehaviour
         get { return _attackTarget; }
         set
         {
-            if (_attackTarget == value) return;
+            if (_attackTarget == value)
+            {
+                return;
+            }
+
             _attackTarget = value;
-            if(!value) return;
+            if (!value)
+            {
+                return;
+            }
+
             OnCharacterCharacter.Invoke(_attackTarget);
-            _attackTarget.OnDeath.AddListener(x=>OnTargetDeath.Invoke());
+            _attackTarget.OnDeath.AddListener(x => OnTargetDeath.Invoke());
 
         }
     }
@@ -223,12 +230,25 @@ public abstract class Character : MonoBehaviour
         set
         {
             if (HealtBar)
+            {
                 HealtBar.HealthImage.fillAmount = value / (float)HEA.GetStatMax();
-            if (value == _health) return;
+            }
+
+            if (value == _health)
+            {
+                return;
+            }
+
             if (value <= 0)
+            {
                 OnDeath.Invoke(this);
+            }
+
             if (value < _health)
+            {
                 OnDamage.Invoke(_health - value);
+            }
+
             _health = value;
         }
     }
@@ -248,18 +268,22 @@ public abstract class Character : MonoBehaviour
         get { return _morale; }
         set
         {
-            if (value == _morale) return;
+            if (value == _morale)
+            {
+                return;
+            }
+
             _morale = value;
             //Debug.Log(gameObject.name + " lost " + value + " moral");
-            if (_morale <= 0 &! Fleeing() &! (this as Goblin && (this as Goblin).Mood > Goblin.Happiness.Neutral))
+            if (_morale <= 0 & !Fleeing() & !(this as Goblin && (this as Goblin).Mood > Goblin.Happiness.Neutral))
             {
-                
+
                 //Debug.Log(name+" fleeing now!");
-                ChangeState(CharacterState.Fleeing,true);
+                stateController.ChangeState(CharacterState.Fleeing, true);
             }
-            else if(Fleeing())
+            else if (Fleeing())
             {
-                ChangeState(CharacterState.Idling);
+                stateController.ChangeState(CharacterState.Idling);
             }
         }
     }
@@ -272,16 +296,16 @@ public abstract class Character : MonoBehaviour
     public int MoralBoostOnKill = 5;
 
     public float AmbushModifier = 1.2f;
-    
+
     public float IncomingDmgPct = 1f;
     public float OutgoingDmgPct = 1f;
-    
+
     [Header("Sprite")]
     //public SpriteRenderer CharacterSprite;
     public Color DamageColor, NormalColor;
 
     public Material Material;
-    
+
     [Header("Animation")]
     public Animator Animator;
     public float SpeedAnimationThreshold;
@@ -290,7 +314,7 @@ public abstract class Character : MonoBehaviour
     private Vector2 smoothDeltaPosition = Vector2.zero;
     private Vector2 velocity = Vector2.zero;
 
-    private int lastAnimationRandom;
+    public int lastAnimationRandom;
 
     private const string FLEE_ANIMATION_BOOL = "Fleeing";
     private const string DEATH_ANIMATION_BOOL = "Dead";
@@ -307,18 +331,24 @@ public abstract class Character : MonoBehaviour
     private const string PICKUP_ANIMATION_BOOL = "PickUp";
 
 
-    private Collider2D coll;
+    private readonly Collider2D coll;
     public bool attackAnimation;
     public Hidable hiding;
-    
+
     public Hidable Hidingplace
     {
         get { return hiding; }
         set
         {
             if (hiding)
+            {
                 hiding.OccupiedBy = null;
-            if(!value) return;
+            }
+
+            if (!value)
+            {
+                return;
+            }
 
             value.OccupiedBy = this;
             hiding = value;
@@ -336,15 +366,17 @@ public abstract class Character : MonoBehaviour
         get { return area; }
         set
         {
-            if(value != area)
+            if (value != area)
+            {
                 OnAreaChange.Invoke(value);
+            }
+
             area = value;
         }
     }
 
-    private Area fleeingToArea;
-    private Coroutine stateChangeRoutine;
-    
+    private readonly Area fleeingToArea;
+
     [Header("Debug")]
     public TextMeshProUGUI DebugText;
 
@@ -357,21 +389,29 @@ public abstract class Character : MonoBehaviour
             VoicePitch = Random.Range(PitchMin, PitchMax);
 
             if (CharacterRace == Race.Zombie)
+            {
                 VoicePitch /= 2;
+            }
 
             Voice.pitch = VoicePitch;
         }
 
+        stateController = new StateController(this);
+
         //TODO: remove this and actually handle the warnings :P
-        if(Animator)
+        if (Animator)
+        {
             Animator.logWarnings = false;
+        }
 
         if (!HealtBar)
-            HealtBar = GetComponentInChildren<HealtBar>();
-
-        for (int i = 0; i < (int) Equipment.EquipLocations.COUNT; i++)
         {
-            Equipped.Add((Equipment.EquipLocations) i, null);
+            HealtBar = GetComponentInChildren<HealtBar>();
+        }
+
+        for (int i = 0; i < (int)Equipment.EquipLocations.COUNT; i++)
+        {
+            Equipped.Add((Equipment.EquipLocations)i, null);
         }
 
 
@@ -387,34 +427,42 @@ public abstract class Character : MonoBehaviour
         COU = new Stat(StatType.COURAGE, Random.Range(CouMin, CouMax));
         SPE = new Stat(StatType.SPEED, Random.Range(SpeMin, SpeMax));
         SMA = new Stat(StatType.SMARTS, Random.Range(SmaMin, SmaMax));
-        Stats = new List<Stat>() {DMG, AIM, COU, SMA}.ToDictionary(s => s.Type);
+        Stats = new List<Stat>() { DMG, AIM, COU, SMA }.ToDictionary(s => s.Type);
 
         //Health is a special case
         HEA = new Stat(StatType.HEALTH, Random.Range(HeaMin, HeaMax));
         Health = HEA.GetStatMax();
-    
+
         Material = GetComponentInChildren<Renderer>().material;
-        if(Material &&Material.HasProperty("_Color"))
+        if (Material && Material.HasProperty("_Color"))
+        {
             NormalColor = Material.color;
+        }
+
         DamageColor = Color.red;
-        
-        OnDamage.AddListener(x=> StartCoroutine(HurtRoutine()));
+
+        OnDamage.AddListener(x => StartCoroutine(HurtRoutine()));
         OnDeath.AddListener(Die);
-        OnDeath.AddListener(c=> OnAnyCharacterDeath.Invoke(c.CharacterRace));
-        
+        OnDeath.AddListener(c => OnAnyCharacterDeath.Invoke(c.CharacterRace));
+
         AttackRange = transform.lossyScale.x * 2f;
 
         //OnTargetDeath.AddListener(TargetGone);
         OnBeingAttacked.AddListener(BeingAttacked);
         OnCharacterCharacter.AddListener(AttackCharacter);
 
-        if(!navMeshAgent)
+        if (!navMeshAgent)
+        {
             navMeshAgent = GetComponentInChildren<NavMeshAgent>();
+        }
 
         //navMeshAgent.speed = SPE.GetStatMax() /2f; Set in fixedupdate
-        Morale = COU.GetStatMax()*2;
+        Morale = COU.GetStatMax() * 2;
 
-        if(!navMeshAgent) Debug.LogWarning(name+ ": character does not have Nav Mesh Agent");
+        if (!navMeshAgent)
+        {
+            Debug.LogWarning(name + ": character does not have Nav Mesh Agent");
+        }
 
         OnAreaChange.AddListener(AreaChange);
 
@@ -424,42 +472,67 @@ public abstract class Character : MonoBehaviour
     {
 
         //if (StateRoutine == null && GameManager.Instance.GameStarted)
-        ChangeState(CharacterState.Idling, true);
+        stateController.ChangeState(CharacterState.Idling, true);
 
     }
 
     protected void FixedUpdate()
     {
-        if (DebugText )
+        if (DebugText)
         {
-            DebugText.text = GameManager.Instance.DebugText ? State.ToString(): "";
+            DebugText.text = GameManager.Instance.DebugText ? stateController.State.ToString() : "";
         }
-        
-        // Debug Draw
-        if(Target != Vector3.zero) Debug.DrawLine(transform.position, Target, Color.blue);
-        if (navMeshAgent) Debug.DrawLine(transform.position, navMeshAgent.destination, Color.red);
-        if(this as Goblin && (this as Goblin).ProvokeTarget) Debug.DrawLine(transform.position, (this as Goblin).ProvokeTarget.transform.position, Color.cyan);
-        if (this as Goblin && (this as Goblin).AttackTarget) Debug.DrawLine(transform.position, (this as Goblin).AttackTarget.transform.position, Color.white);
-        if (this as Goblin && (this as Goblin).LootTarget) Debug.DrawLine(transform.position, (this as Goblin).LootTarget.transform.position, Color.yellow);
 
+        // Debug Draw
+        if (Target != Vector3.zero)
+        {
+            Debug.DrawLine(transform.position, Target, Color.blue);
+        }
+
+        if (navMeshAgent)
+        {
+            Debug.DrawLine(transform.position, navMeshAgent.destination, Color.red);
+        }
+
+        if (this as Goblin && (this as Goblin).ProvokeTarget)
+        {
+            Debug.DrawLine(transform.position, (this as Goblin).ProvokeTarget.transform.position, Color.cyan);
+        }
+
+        if (this as Goblin && (this as Goblin).AttackTarget)
+        {
+            Debug.DrawLine(transform.position, (this as Goblin).AttackTarget.transform.position, Color.white);
+        }
+
+        if (this as Goblin && (this as Goblin).LootTarget)
+        {
+            Debug.DrawLine(transform.position, (this as Goblin).LootTarget.transform.position, Color.yellow);
+        }
 
         HandleAnimation();
 
         if (!Alive() || !GameManager.Instance.GameStarted || !navMeshAgent.isOnNavMesh)
+        {
             return;
-        
+        }
 
         if (InArea && InArea.Visible() && MovementAudio && !MovementAudio.isPlaying)
+        {
             MovementAudio.Play();
-        else if(InArea && !InArea.Visible() && MovementAudio && MovementAudio.isPlaying)
+        }
+        else if (InArea && !InArea.Visible() && MovementAudio && MovementAudio.isPlaying)
+        {
             MovementAudio.Stop();
+        }
 
-        if(SPE.GetStatMax() < 1)
+        if (SPE.GetStatMax() < 1)
+        {
             Debug.LogWarning("Speed is 0");
+        }
 
-        Walking = State == CharacterState.Travelling || State == CharacterState.Idling;
+        Walking = stateController.State == CharacterState.Travelling || stateController.State == CharacterState.Idling;
 
-        navMeshAgent.speed = Walking ? Mathf.Min(WalkingSpeed,SPE.GetStatMax())/2f : SPE.GetStatMax() / 2f;
+        navMeshAgent.speed = Walking ? Mathf.Min(WalkingSpeed, SPE.GetStatMax()) / 2f : SPE.GetStatMax() / 2f;
 
         Destination = navMeshAgent.destination;
         DesiredVelocity = navMeshAgent.desiredVelocity.sqrMagnitude;
@@ -483,10 +556,15 @@ public abstract class Character : MonoBehaviour
     //TODO: override in goblin class.
     private void HandleAnimation()
     {
-        if (!Animator) return;
+        if (!Animator)
+        {
+            return;
+        }
 
         if (navMeshAgent)
-            Animator.SetFloat("Speed",navMeshAgent.speed);
+        {
+            Animator.SetFloat("Speed", navMeshAgent.speed);
+        }
 
         if (!Alive())
         {
@@ -518,7 +596,7 @@ public abstract class Character : MonoBehaviour
         {
             Animate(HIDE_ANIMATION_BOOL);
         }
-        else if (Watching() &&  !IsChief() && Team.Challenger != this)
+        else if (Watching() && !IsChief() && Team.Challenger != this)
         {
             //Animator.SetLookAtPosition(Team.Leader.transform.position);
             transform.LookAt(Team.Leader.transform);
@@ -547,126 +625,45 @@ public abstract class Character : MonoBehaviour
                && (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f);
     }
 
-    /// <summary>
-    /// to be used for orders
-    /// will do nothing if state == dead
-    /// </summary>
-    /// <param name="newState">The new character state</param>
-    public void ChangeState(CharacterState newState, bool immedeately = false, float time = 0f)//, int leaderAncinitet = 10)
-    {
-        if(!Alive())
-            return;
-        
-        //check if state is already being changed
-        //if(stateChangeRoutine != null)
-        //    Debug.Log(name + ": Changing State already: newState "+newState + ", old: "+ State);
+    internal CharacterState GetState() => stateController.State;
 
-        stateChangeRoutine = StartCoroutine(
-            immedeately? 
-            StateChangingRoutine(newState, 0)
-            : time > 0f ? 
-            StateChangingRoutine(newState, time)
-            : StateChangingRoutine(newState, Random.Range(1.5f, 4f)));
+    internal void ChangeState(CharacterState s, bool now = false, float time = 0)
+    {
+        stateController.ChangeState(s, now,time);
     }
 
-
-    private IEnumerator StateChangingRoutine(CharacterState newState, float wait)
-    {
-        var fromState = State;
-       
-        yield return new WaitForSeconds(wait);
-
-        if (fromState != State)
-        {
-            //Debug.Log(name + " no longer "+ fromState + "; Now: "+ State + "; Not " + newState);
-            //yield break;
-        }
-
-        //TODO: maybe sounds on specific states
-        //if (Voice&& !Voice.isPlaying)
-        //    Voice.PlayOneShot(SoundBank.GetSound(SoundBank.GoblinSound.Grunt));
-
-        if (State == newState)
-        {
-            Debug.Log(name + " is already "+ newState);
-            yield break;
-        }
-
-        if (Morale <= 0 && newState != CharacterState.Fleeing)
-        {
-            //Debug.Log(name + " not able to change state to " + newState + " Fleeing!");
-            yield break;
-        }
-
-        if (State != CharacterState.Dead)
-            State = newState;
-
-        navMeshAgent.isStopped = false;
-
-
-        if (newState != CharacterState.Travelling && newState != CharacterState.Attacking &&
-            newState != CharacterState.Fleeing)
-            TravellingToArea = null;
-
-        //Debug.Log($"Starting state: {newState}");
-        //TODO: Assign to field and close the last state
-
-        //if(StateRoutine != null) ActionStateProcessor.Instance.StopCoroutine(StateRoutine);
-
-        //TODO: just assign and set to null when applicable
-        var s = ActionStateProcessor.CreateStateRoutine(this, newState);
-        if (s != null)
-            StateRoutine = s;
-        
-        if (this as Goblin && PlayerController.IsStateChangeShout(State))
-        {
-            (this as Goblin)?.Speak(PlayerController.GetStateChangeReaction(State));
-        }
-        else if (State == CharacterState.Attacking)
-        {
-            Aggressive = true;
-            yield return new WaitForSeconds(Random.Range(0f,1.5f));
-            if(State == CharacterState.Attacking )
-                (this as Goblin)?.Speak(SoundBank.GoblinSound.Roar);
-        }
-
-        lastAnimationRandom = Random.Range(0, 4);
-        Animator.SetInteger("AnimationRandom",lastAnimationRandom);
-
-        stateChangeRoutine = null;
-    }
 
     public bool Travelling()
     {
-        return State == CharacterState.Travelling;
+        return stateController.State == CharacterState.Travelling;
     }
 
     public bool Attacking()
     {
-        return State == CharacterState.Attacking;
+        return stateController.State == CharacterState.Attacking;
     }
 
-    public bool Fleeing()=> State == CharacterState.Fleeing;
-    
-    public bool Idling() => State == CharacterState.Idling;
+    public bool Fleeing() => stateController.State == CharacterState.Fleeing;
 
-    public bool Hiding() => State == CharacterState.Hiding;
+    public bool Idling() => stateController.State == CharacterState.Idling;
 
-    public bool Provoking() => State == CharacterState.Provoking;
+    public bool Hiding() => stateController.State == CharacterState.Hiding;
 
-    public bool Searching() => State == CharacterState.Searching;
+    public bool Provoking() => stateController.State == CharacterState.Provoking;
+
+    public bool Searching() => stateController.State == CharacterState.Searching;
 
     public bool Watching()
     {
-        return State == CharacterState.Watching;
+        return stateController.State == CharacterState.Watching;
     }
 
     private bool Surprised()
     {
-        return State == CharacterState.Surprised;
+        return stateController.State == CharacterState.Surprised;
     }
 
-    private bool Resting() => State == CharacterState.Resting;
+    private bool Resting() => stateController.State == CharacterState.Resting;
 
 
 
@@ -679,7 +676,7 @@ public abstract class Character : MonoBehaviour
         }
         if (Equipped[e.EquipLocation] != null)
         {
-            Debug.LogWarning("already equipped at "+ e.EquipLocation);
+            Debug.LogWarning("already equipped at " + e.EquipLocation);
             return false;
         }
         if (this as Goblin)
@@ -692,7 +689,7 @@ public abstract class Character : MonoBehaviour
 
             (this as Goblin).OnMoodChange.Invoke(2);
         }
-        
+
         //Debug.Log("Equipped "+ e.name + " to " + name);
 
         Equipped[e.EquipLocation] = e;
@@ -737,10 +734,16 @@ public abstract class Character : MonoBehaviour
         Vector3 position = transform.position;
         foreach (Hidable go in area.Hidables)//.Where(h=> h.GetComponent<Hidable>().Area = InArea))
         {
-            if(!go)
+            if (!go)
+            {
                 Debug.LogError("Hidable object does not have hidable script");
-            if(go.OccupiedBy != null)
+            }
+
+            if (go.OccupiedBy != null)
+            {
                 continue;
+            }
+
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
             if (curDistance < distance)
@@ -750,7 +753,11 @@ public abstract class Character : MonoBehaviour
             }
         }
 
-        if (!closest) return null;
+        if (!closest)
+        {
+            return null;
+        }
+
         return closest;
     }
 
@@ -767,7 +774,10 @@ public abstract class Character : MonoBehaviour
 
         //get these from a game or fight controller instead for maintenance
         var gos = InArea.PresentCharacters.Where(c => c.tag == enemyTag && c.Alive()).ToList();//GameObject.FindGameObjectsWithTag(enemyTag).Select(g=>g.GetComponent<Character>());
-        if(TravellingToArea) gos.AddRange(TravellingToArea.PresentCharacters.Where(c => c.tag == enemyTag && c.Alive()));
+        if (TravellingToArea)
+        {
+            gos.AddRange(TravellingToArea.PresentCharacters.Where(c => c.tag == enemyTag && c.Alive()));
+        }
 
         Character closest = null;
         float distance = Mathf.Infinity;
@@ -783,7 +793,11 @@ public abstract class Character : MonoBehaviour
             }
         }
 
-        if (!closest) return null;
+        if (!closest)
+        {
+            return null;
+        }
+
         return closest;
     }
 
@@ -791,46 +805,61 @@ public abstract class Character : MonoBehaviour
     //Should only be called through setting the attack target
     private void AttackCharacter(Character target)
     {
-        if(Voice && !Voice.isPlaying)
+        if (Voice && !Voice.isPlaying)
+        {
             (this as Goblin)?.Speak(SoundBank.GoblinSound.Roar);
+        }
 
         target.OnBeingAttacked.Invoke(this);
     }
 
     private void BeingAttacked(Character attacker)
     {
-        if(Fleeing() || Surprised()) return;
+        if (Fleeing() || Surprised())
+        {
+            return;
+        }
 
         if (!Attacking())
         {
-            ChangeState(CharacterState.Attacking, true);
+            stateController.ChangeState(CharacterState.Attacking, true);
             var closest = GetClosestEnemy();
-            
+
             AttackTarget = closest ? closest : attacker;
         }
     }
 
     public void AttackEvent()
     {
-        if (!Attacking() || !InAttackRange() || !AttackTarget.Alive() || AIM.GetStatMax() < Random.value) return;
-
-        (this as Goblin)?.Speak(SoundBank.GoblinSound.Attacking);
+        if (!Attacking() || !InAttackRange() || !AttackTarget.Alive() || AIM.GetStatMax() < Random.value)
+        {
+            return;
+        } (this as Goblin)?.Speak(SoundBank.GoblinSound.Attacking);
 
         //HIT TARGET
         var damage = Random.Range(1, DMG.GetStatMax()) * OutgoingDmgPct;
 
         //TODO: create source for fx and getsound method for effects
-        if(Voice && PlayerController.ObjectIsSeen(transform))
+        if (Voice && PlayerController.ObjectIsSeen(transform))
+        {
             Voice.PlayOneShot(SoundBank.GetSound(SoundBank.FXSound.Hit));
-        
-        if(HitParticles)
+        }
+
+        if (HitParticles)
+        {
             HitParticles.Play(true);
+        }
 
         if (AttackTarget.Surprised())
+        {
             damage = (int)(damage * AmbushModifier);
+        }
+
         var target = AttackTarget;
         if (!(target.Team && GameManager.Instance.InvincibleMode))
+        {
             target.Health -= (int)Mathf.Round(damage * target.IncomingDmgPct);
+        }
 
         if (target.Health <= 0)
         {
@@ -838,10 +867,11 @@ public abstract class Character : MonoBehaviour
 
             if (this as Goblin)
             {
-                ((Goblin)this).Xp += GameManager.XpKill();
+                ((Goblin)this).Xp += GameManager.XpKill;
                 if (Team)
+                {
                     Team.OnTeamKill.Invoke();
-                (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
+                } (this as Goblin)?.Speak(SoundBank.GoblinSound.Laugh);
             }
         }
 
@@ -850,7 +880,7 @@ public abstract class Character : MonoBehaviour
 
     public bool Alive()
     {
-        return State != CharacterState.Dead;
+        return stateController.State != CharacterState.Dead;
     }
 
     public void SpotArrival(Character ch)
@@ -860,34 +890,37 @@ public abstract class Character : MonoBehaviour
 
     private IEnumerator SpotArrivalCheck(Character character)
     {
-        yield return new WaitForSeconds(Random.Range(0.5f,3f));
+        yield return new WaitForSeconds(Random.Range(0.5f, 3f));
 
         if (InArea == null)
         {
             Debug.LogError(name + " not in Area");
-            yield break;     }
+            yield break;
+        }
 
         //if enemy and not fleeing or fighting and attentive enough
         //TODO: double up chance as scout
-        if(!InArea.AnyEnemies() && this as Goblin &! Fleeing() &! Hiding() && Alive() &! Attacking() && character.tag == "Enemy" )
+        if (!InArea.AnyEnemies() && this as Goblin & !Fleeing() & !Hiding() && Alive() & !Attacking() && character.tag == "Enemy")
         {
             if (Random.Range(0, 12) < SMA.GetStatMax())
+            {
                 (this as Goblin).Shout("I see enemy!!", SoundBank.GoblinSound.EnemyComing);
+            }
             //else
             //{
             //    Debug.Log(name + " failed enemy spoting");
             //}
-            
+
         }
     }
-    
+
     //could take a damage parameter
     public IEnumerator HurtRoutine()
     {
         if (!Material)
+        {
             yield break;
-
-        (this as Goblin)?.Speak(SoundBank.GoblinSound.Hurt);
+        } (this as Goblin)?.Speak(SoundBank.GoblinSound.Hurt);
 
         Material.color = DamageColor;
 
@@ -902,16 +935,20 @@ public abstract class Character : MonoBehaviour
         //TODO: remove listeners
         OnDamage.RemoveAllListeners();
 
-        if(this as Goblin)
+        if (this as Goblin)
+        {
             (this as Goblin).particles.Stop();
+        }
 
         Debug.Log("death sound!!!!");
         (this as Goblin)?.Speak(SoundBank.GoblinSound.Death);
 
-        if(MovementAudio)
+        if (MovementAudio)
+        {
             MovementAudio.Stop();
+        }
 
-        State = CharacterState.Dead;
+        stateController.ChangeState(CharacterState.Dead,true);
 
         HealtBar.gameObject.SetActive(false);
 
@@ -929,7 +966,7 @@ public abstract class Character : MonoBehaviour
             loot.Food = CharacterRace + " " + NameGenerator.GetFoodName();
         }
         var removeEquip = Equipped.Values.Where(e => e).ToArray();
-            
+
         foreach (var eq in removeEquip)
         {
             RemoveEquipment(eq);
@@ -954,7 +991,7 @@ public abstract class Character : MonoBehaviour
             a.Visited = true;
             foreach (var aggressive in a.PresentCharacters.Where(e => e.tag == "Enemy" && e.Aggressive && e.tag != tag))
             {
-                aggressive.ChangeState(Character.CharacterState.Attacking);
+                aggressive.stateController.ChangeState(Character.CharacterState.Attacking);
             }
 
         }
@@ -965,19 +1002,23 @@ public abstract class Character : MonoBehaviour
 
         if (Fleeing() || Travelling())
         {
-            ChangeState(Character.CharacterState.Idling);
+            stateController.ChangeState(Character.CharacterState.Idling);
         }
 
         //if (GameManager.Instance.DisableUnseenCharacters)
         //    HolderGameObject.SetActive(Team || a.Visible());
-        
+
         //TODO: move to area change method
         if (this as Goblin & !IsChief() && Team != null)
         {
             if (a.PointOfInterest)
+            {
                 (this as Goblin)?.Speak(PlayerController.GetLocationReaction(a.PointOfInterest.PoiType));
+            }
             else if (a.AnyEnemies()) //TODO:select random enemy
+            {
                 (this as Goblin)?.Speak(PlayerController.GetEnemyReaction(a.PresentCharacters.First(ch => ch.tag == "Enemy" && ch.Alive()).CharacterRace));
+            }
         }
 
     }
@@ -985,12 +1026,13 @@ public abstract class Character : MonoBehaviour
     public void MoveTo(Area a, bool immedeately = false)
     {
         if (Fleeing() || Attacking())
+        {
             return;
-
+        }
 
         TravellingToArea = a;
 
-        MoveTo(a.GetRandomPosInArea(),immedeately);
+        MoveTo(a.GetRandomPosInArea(), immedeately);
     }
 
     public void MoveTo(Vector3 t, bool immedeately = false)
@@ -998,31 +1040,36 @@ public abstract class Character : MonoBehaviour
         Target = t;
 
         if (!Travelling())
-            ChangeState(CharacterState.Travelling, immedeately);
+        {
+            stateController.ChangeState(CharacterState.Travelling, immedeately);
+        }
         else //if already travelling we just update the target
+        {
             navMeshAgent.SetDestination(t);
-        
+        }
     }
-    
+
     //TODO: move to attack action
     public bool InAttackRange()
     {
         if (!AttackTarget || !AttackTarget.Alive())
+        {
             return false;
+        }
 
         var targetCol = AttackTarget.GetComponent<CapsuleCollider>();
 
         if (!targetCol)
         {
-            Debug.LogWarning(name+ "'s target does not have a capsule collider");
+            Debug.LogWarning(name + "'s target does not have a capsule collider");
             return false;
         }
 
         var boxCol = GetComponent<CapsuleCollider>();
 
-        return ((boxCol.transform.position -(targetCol.transform.position) ).magnitude 
-            <= boxCol.radius*boxCol.transform.lossyScale.x
-            + targetCol.radius*targetCol.transform.lossyScale.x+AttackRange);
+        return ((boxCol.transform.position - (targetCol.transform.position)).magnitude
+            <= boxCol.radius * boxCol.transform.lossyScale.x
+            + targetCol.radius * targetCol.transform.lossyScale.x + AttackRange);
 
     }
 
@@ -1033,9 +1080,12 @@ public abstract class Character : MonoBehaviour
     {
         Hidingplace = GetClosestHidingPlace();
 
-        if (!Hidingplace) return;
+        if (!Hidingplace)
+        {
+            return;
+        }
 
-        ChangeState(CharacterState.Hiding, true);
+        stateController.ChangeState(CharacterState.Hiding, true);
     }
 
 
@@ -1065,11 +1115,11 @@ public abstract class Character : MonoBehaviour
         {
             yield return null;
         }
-        if(IncoherentNavAgentSpeed())
+        if (IncoherentNavAgentSpeed())
         {
             //TODO: test that this is working
             Debug.Log(name + ": Bump");
-            ChangeState(CharacterState.Idling,true);
+            stateController.ChangeState(CharacterState.Idling, true);
         }
         //agentStuckRoutine = null;
     }
@@ -1077,5 +1127,5 @@ public abstract class Character : MonoBehaviour
     public virtual bool IsChief() => false;
 
     private bool IncoherentNavAgentSpeed() =>
-        (navMeshAgent.hasPath && navMeshAgent.desiredVelocity.sqrMagnitude > navMeshAgent.speed/3 && navMeshAgent.velocity.sqrMagnitude < navMeshAgent.desiredVelocity.sqrMagnitude /2);
+        (navMeshAgent.hasPath && navMeshAgent.desiredVelocity.sqrMagnitude > navMeshAgent.speed / 3 && navMeshAgent.velocity.sqrMagnitude < navMeshAgent.desiredVelocity.sqrMagnitude / 2);
 }

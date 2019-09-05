@@ -37,7 +37,7 @@ public class ProvokeAction : ActionState
 
         Vector3 provokeDest = g.ProvokeTarget.transform.position;
 
-        while (ch.State == StateType)
+        while (ch.GetState() == StateType)
         {
             yield return new WaitForFixedUpdate();
 

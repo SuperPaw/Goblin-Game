@@ -2,12 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
@@ -23,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public bool DragToPan;
     public bool ZoomEnabled;
     public int MouseMoveKey = 1;
-    public enum MappableActions { Hide, Attack, Flee, Menu,FixCamOnLeader, Move, Camp,InvincibleMode, AddXp, ZoomIn, ZoomOut, Pause,Kill,RaiseDead } //TODO: move should contain direction maybe
+    public enum MappableActions { Hide, Attack, Flee, Menu, FixCamOnLeader, Move, Camp, InvincibleMode, AddXp, ZoomIn, ZoomOut, Pause, Kill, RaiseDead } //TODO: move should contain direction maybe
     public LayerMask HitMask;
     public int DistanceFromLeaderToShow = 600;
 
@@ -97,7 +94,7 @@ public class PlayerController : MonoBehaviour
         public Shout[] GoblinShouts;
     }
 
-    public enum DynamicState { Idle,  ChiefBattleCheer, FoundStuff, Mocking, ChallengingChief}
+    public enum DynamicState { Idle, ChiefBattleCheer, FoundStuff, Mocking, ChallengingChief }
 
     [Header("Order Controls")]
     public OrderType[] Orders;
@@ -121,7 +118,7 @@ public class PlayerController : MonoBehaviour
     public int GoblinViewSize;
     public int AreaViewSize;
     public int MapViewSize;
-    public float ZoomMinBound= 2;
+    public float ZoomMinBound = 2;
     public float ZoomMaxBound = 50;
     public float TouchZoomFactor;
     public float PcZoomFactor;
@@ -132,38 +129,49 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 desiredCamPos;
     private float desiredOrtographicSize;
-    
+
     private Vector2[] lastZoomPositions;
     private bool wasZoomingLastFrame;
     private int panFingerId;
-    
+
     private float touchTime;
 
     public class ZoomLevelChangeEvent : UnityEvent<ZoomLevel> { }
     public static ZoomLevelChangeEvent OnZoomLevelChange = new ZoomLevelChangeEvent();
 
-    public enum ZoomLevel {GoblinView, AreaView, MapView}
+    public enum ZoomLevel { GoblinView, AreaView, MapView }
     private ZoomLevel currentZoomLevel;
     private bool showingMoveView;
     private Vector3 moveDelta;
-    private float moveDamp = 0.85f;
+    private readonly float moveDamp = 0.85f;
     private readonly int FogPoints = 8;
 
     void Awake()
     {
         if (!Instance)
+        {
             Instance = this;
+        }
     }
 
     public void Initialize()
     {
         Team = GetComponent<PlayerTeam>();
 
-        if(!Team) Debug.LogWarning("Unable to find team for player controls!");
+        if (!Team)
+        {
+            Debug.LogWarning("Unable to find team for player controls!");
+        }
 
-        if (!Cam) Cam = Camera.main;
+        if (!Cam)
+        {
+            Cam = Camera.main;
+        }
 
-        if (!Sound) Sound = FindObjectOfType<SoundController>();
+        if (!Sound)
+        {
+            Sound = FindObjectOfType<SoundController>();
+        }
 
         //UpdateFogOfWar();
         OnZoomLevelChange.AddListener(ChangeZoomLevel);
@@ -180,8 +188,10 @@ public class PlayerController : MonoBehaviour
         UpdateFog();
 
         //maybe at larger interval
-        if(FollowGoblin &! PopUpText.ShowingText)
+        if (FollowGoblin & !PopUpText.ShowingText)
+        {
             MoveToFollowGoblin();
+        }
 
         //TODO: divide these into methods
         if (Input.touchSupported)
@@ -200,16 +210,20 @@ public class PlayerController : MonoBehaviour
             Cam.transform.position = Vector3.Lerp(Cam.transform.position, desiredCamPos, PanSpeed * Time.unscaledDeltaTime);
         }
 
-        Cam.orthographicSize = Mathf.Lerp(Cam.orthographicSize, desiredOrtographicSize, ZoomSpeed*Time.unscaledDeltaTime);
+        Cam.orthographicSize = Mathf.Lerp(Cam.orthographicSize, desiredOrtographicSize, ZoomSpeed * Time.unscaledDeltaTime);
 
         if (Instance && Instance.Team)
+        {
             Instance.UpdateFogOfWar();
-        
+        }
     }
 
     public static bool ObjectIsSeen(Transform t)
     {
-        if (!Instance.Team.Leader) return false;
+        if (!Instance.Team.Leader)
+        {
+            return false;
+        }
 
         var chiefLocation = Instance.Team.Leader.transform.position;
         chiefLocation.y = 0;
@@ -232,7 +246,7 @@ public class PlayerController : MonoBehaviour
         {
             _mouseHeld = false;
         }
-        
+
 
         if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
         {
@@ -271,7 +285,7 @@ public class PlayerController : MonoBehaviour
                     PanCamera(touch.position);
                     touchTime -= 0.01f;
                 }
-                else if (Input.GetTouch(0).phase == TouchPhase.Ended && touchTime +0.5f > Time.time &! IsPointerOverUIObject())
+                else if (Input.GetTouch(0).phase == TouchPhase.Ended && touchTime + 0.5f > Time.time & !IsPointerOverUIObject())
                 {
                     HandleClick(Input.GetTouch(0).position);
                 }
@@ -307,10 +321,13 @@ public class PlayerController : MonoBehaviour
 
     private void ZoomOut()
     {
-        if (currentZoomLevel > ZoomLevel.GoblinView) return;
+        if (currentZoomLevel > ZoomLevel.GoblinView)
+        {
+            return;
+        }
 
         FollowGoblin = null;
-        OnZoomLevelChange.Invoke( currentZoomLevel+1);
+        OnZoomLevelChange.Invoke(currentZoomLevel + 1);
     }
     private void ZoomIn()
     {
@@ -319,16 +336,24 @@ public class PlayerController : MonoBehaviour
 
     private void ChangeZoomLevel(ZoomLevel newLevel)
     {
-        if(newLevel == currentZoomLevel)
+        if (newLevel == currentZoomLevel)
+        {
             return;
+        }
+
         if (newLevel > ZoomLevel.GoblinView)
+        {
             FollowGoblin = null;
+        }
 
         switch (newLevel)
         {
             case ZoomLevel.GoblinView:
                 if (!FollowGoblin)
+                {
                     SetFollowGoblin(Team.Leader);
+                }
+
                 break;
             case ZoomLevel.AreaView:
                 MoveCamera(Team.Leader.InArea.transform.position, AreaViewSize);
@@ -369,7 +394,9 @@ public class PlayerController : MonoBehaviour
                 var loot = hit.collider.GetComponent<Lootable>();
 
                 if (loot.InArea && loot.InArea.Visible() && !loot.InArea.AnyEnemies())
+                {
                     Team.Leader.Search(loot);
+                }
             }
             else if (hit.collider && hit.collider.GetComponent<Character>()) //TODO:check visibility else just move there
             {
@@ -382,7 +409,9 @@ public class PlayerController : MonoBehaviour
                     if (c.tag == "Enemy" && c.Alive())
                     {
                         if (c.InArea.Visible())
+                        {
                             Team.Attack(c);
+                        }
                         else
                         {
                             //ClickedArea(c.InArea);
@@ -404,9 +433,11 @@ public class PlayerController : MonoBehaviour
                 var v = hit.collider.GetComponent<PointOfInterest>();
 
                 if (v.InArea.Visible())
+                {
                     v.SetupMenuOptions();
+                }
                 //else
-                  //  ClickedArea(v.InArea);
+                //  ClickedArea(v.InArea);
             }
             else if (hit.collider && hit.collider.GetComponent<Area>())
             {
@@ -425,8 +456,10 @@ public class PlayerController : MonoBehaviour
 
     private void PanCamera(Vector2 newPanPosition)
     {
-        if(!DragToPan)
+        if (!DragToPan)
+        {
             return;
+        }
 
         //To compensate for the 45 degree angle of the cam. TODO: Should have been calculated 
         newPanPosition.y *= 2f;
@@ -436,10 +469,10 @@ public class PlayerController : MonoBehaviour
         //Sound.PlayMapCLick();
         if (!_mouseHeld)
         {
-            _mouseDragPos =inWorld;
+            _mouseDragPos = inWorld;
             _mouseHeld = true;
         }
-        
+
         moveDelta = (_mouseDragPos - inWorld);
         moveDelta.y = 0;
 
@@ -450,9 +483,9 @@ public class PlayerController : MonoBehaviour
         Cam.transform.position = desiredCamPos;
 
         FollowGoblin = null;
-        
+
     }
-    
+
 
     //TODO: only from button click
     public void ClickedArea(Area a)
@@ -478,10 +511,10 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("Not possible to move to " + a + " from " + Team.Leader.InArea);
             return;
         } //TODO: replace with ready for order
-        else if(!Team.Leader.Fleeing() || Team.Leader.Attacking())
+        else if (!Team.Leader.Fleeing() || Team.Leader.Attacking())
         {
             Team.LeaderShout(MoveOrder);
-            
+
             Team.Move(a);
 
             OnZoomLevelChange.Invoke(ZoomLevel.AreaView);
@@ -493,7 +526,10 @@ public class PlayerController : MonoBehaviour
     {
         UpdateFog();
 
-        if(area.Visited) return;
+        if (area.Visited)
+        {
+            return;
+        }
 
         switch (area.PointOfInterest?.PoiType)
         {
@@ -530,7 +566,9 @@ public class PlayerController : MonoBehaviour
     public static void UpdateFog()
     {
         if (Instance && Instance.Team && GameManager.Instance.GameStarted)
+        {
             Instance.UpdateFogOfWar();
+        }
     }
 
     private void UpdateFogOfWar()
@@ -558,14 +596,17 @@ public class PlayerController : MonoBehaviour
         //removing unused fog points TODO: make it actually remove instead of just hiding
         for (; id <= FogPoints; id++)
         {
-            RemoveFogAtPos(new Vector3(), id,true);
+            RemoveFogAtPos(new Vector3(), id, true);
         }
 
     }
 
-    private void RemoveFogAtPos(Vector3 pos, int id,bool unused = false)
+    private void RemoveFogAtPos(Vector3 pos, int id, bool unused = false)
     {
-        if(!FogOfWar) return;
+        if (!FogOfWar)
+        {
+            return;
+        }
 
         if (id < 1 || id > FogPoints)
         {
@@ -575,13 +616,13 @@ public class PlayerController : MonoBehaviour
 
         if (unused)
         {
-            FogOfWar.material.SetVector("_Player" + id.ToString() + "_Pos",new Vector4(-100,-100,-100,-100));
+            FogOfWar.material.SetVector("_Player" + id.ToString() + "_Pos", new Vector4(-100, -100, -100, -100));
             return;
         }
 
         Vector3 screenPos = Cam.WorldToScreenPoint(pos);
         Ray rayToPlayerPos = Cam.ScreenPointToRay(screenPos);
-        int layermask = (int)(1 << 8);
+        int layermask = 1 << 8;
         RaycastHit hit;
         if (Physics.Raycast(rayToPlayerPos, out hit, 1000, layermask))
         {
@@ -594,13 +635,14 @@ public class PlayerController : MonoBehaviour
         //TODO: check for order legality
         if (!ActionIsLegal(action))
         {
-            Debug.Log("Trying to call illegal aciton: "+ action);
+            Debug.Log("Trying to call illegal aciton: " + action);
             return;
         }
 
         if (Orders.Any(o => o.Order == action))
+        {
             Team.LeaderShout(Orders.First(o => o.Order == action));
-
+        }
 
         switch (action)
         {
@@ -630,9 +672,14 @@ public class PlayerController : MonoBehaviour
                 break;
             case MappableActions.Move:
                 if (showingMoveView)
+                {
                     ZoomIn();
+                }
                 else
+                {
                     MoveView();
+                }
+
                 break;
             case MappableActions.ZoomIn:
                 ZoomIn();
@@ -641,10 +688,15 @@ public class PlayerController : MonoBehaviour
                 ZoomOut();
                 break;
             case MappableActions.Pause:
-                if(GameManager.Instance.GamePaused)
+                if (GameManager.Instance.GamePaused)
+                {
                     GameManager.UnPause();
+                }
                 else
+                {
                     GameManager.Pause();
+                }
+
                 break;
             case MappableActions.Kill:
                 FollowGoblin?.Kill();
@@ -656,11 +708,13 @@ public class PlayerController : MonoBehaviour
                 throw new ArgumentOutOfRangeException();
         }
     }
-    
+
     public bool ReadyForInput()
     {
         if (!Team.Leader)
+        {
             return false;
+        }
 
         return Team.Leader.Idling();
     }
@@ -677,39 +731,51 @@ public class PlayerController : MonoBehaviour
         {
             case MappableActions.RaiseDead:
                 return Instance.EnabledActionOnStates.First(e => e.Action == action).EnabledOnLeaderStates
-                           .Contains(Instance.Team.Leader.State) && Instance.Team.Leader.ClassType == Goblin.Class.Necromancer && Instance.Team.Leader.InArea.AnyGoblins(true);
+                           .Contains(Instance.Team.Leader.GetState()) && Instance.Team.Leader.ClassType == Goblin.Class.Necromancer && Instance.Team.Leader.InArea.AnyGoblins(true);
             case MappableActions.Hide:
                 return Instance.EnabledActionOnStates.First(e => e.Action == action).EnabledOnLeaderStates
-                           .Contains(Instance.Team.Leader.State) && Instance.Team.Leader.InArea.RoadsTo.Any()
+                           .Contains(Instance.Team.Leader.GetState()) && Instance.Team.Leader.InArea.RoadsTo.Any()
                        & !Instance.Team.Leader.InArea.AnyEnemies();
             case MappableActions.Camp:
-                return Instance.EnabledActionOnStates.First(e => e.Action == action).EnabledOnLeaderStates.Contains(Instance.Team.Leader.State) 
+                return Instance.EnabledActionOnStates.First(e => e.Action == action).EnabledOnLeaderStates.Contains(Instance.Team.Leader.GetState())
                        & !Instance.Team.Leader.InArea.ContainsRoads
                        & !Instance.Team.Leader.InArea.PointOfInterest
                        & !Instance.Team.Leader.InArea.AnyEnemies();
             default:
                 return Instance.EnabledActionOnStates.First(e => e.Action == action).EnabledOnLeaderStates
-                    .Contains(Instance.Team.Leader.State);
+                    .Contains(Instance.Team.Leader.GetState());
         }
     }
 
     //TODO: move top camera controller
     public void Zoom(float deltaMagnitudeDiff, bool touch)
     {
-        if(!ZoomEnabled) return;
-
-        if(Math.Abs(deltaMagnitudeDiff) < 0.001) return;
-
-        if (Cam.orthographicSize >= ZoomMaxBound - 0.2f && deltaMagnitudeDiff * (touch ? TouchZoomFactor : PcZoomFactor) < -0.4f)
+        if (!ZoomEnabled)
         {
-            if(ActionIsLegal(MappableActions.Move))
-                MoveView();
             return;
         }
 
-        if (currentZoomLevel > ZoomLevel.AreaView) currentZoomLevel = ZoomLevel.AreaView;
+        if (Math.Abs(deltaMagnitudeDiff) < 0.001)
+        {
+            return;
+        }
 
-        desiredOrtographicSize -= deltaMagnitudeDiff * (touch ?  TouchZoomFactor: PcZoomFactor);
+        if (Cam.orthographicSize >= ZoomMaxBound - 0.2f && deltaMagnitudeDiff * (touch ? TouchZoomFactor : PcZoomFactor) < -0.4f)
+        {
+            if (ActionIsLegal(MappableActions.Move))
+            {
+                MoveView();
+            }
+
+            return;
+        }
+
+        if (currentZoomLevel > ZoomLevel.AreaView)
+        {
+            currentZoomLevel = ZoomLevel.AreaView;
+        }
+
+        desiredOrtographicSize -= deltaMagnitudeDiff * (touch ? TouchZoomFactor : PcZoomFactor);
         // set min and max value of Clamp function upon your requirement
 
         desiredOrtographicSize = Mathf.Clamp(desiredOrtographicSize, ZoomMinBound, ZoomMaxBound);
@@ -722,7 +788,10 @@ public class PlayerController : MonoBehaviour
 
     public void SetFollowGoblin(Goblin g)
     {
-        if(FollowGoblin != g) FollowGoblin?.CharacterUI.Close();
+        if (FollowGoblin != g)
+        {
+            FollowGoblin?.CharacterUI.Close();
+        }
 
         FollowGoblin = g;
 
@@ -730,9 +799,9 @@ public class PlayerController : MonoBehaviour
         desiredOrtographicSize = GoblinViewSize;
     }
 
-    public static void MoveCameraToPos(Vector3 pos,int ortoSize)
+    public static void MoveCameraToPos(Vector3 pos, int ortoSize)
     {
-        Instance.MoveCamera(pos,ortoSize);
+        Instance.MoveCamera(pos, ortoSize);
     }
 
 
@@ -748,7 +817,7 @@ public class PlayerController : MonoBehaviour
     {
         //currentLocation = loc;
         var offset = 49;
-        
+
         desiredCamPos = new Vector3(xz.x, Cam.transform.position.y, xz.z - offset);
         desiredOrtographicSize = orthographicSize;
     }
@@ -761,10 +830,14 @@ public class PlayerController : MonoBehaviour
 
         foreach (var movable in l)
         {
-            if(movable.Visited)
+            if (movable.Visited)
+            {
                 movable.EnableAreaUI(true);
+            }
             else
-                movable.EnableAreaUI(scouts-- >0);
+            {
+                movable.EnableAreaUI(scouts-- > 0);
+            }
         }
 
         showingMoveView = true;
@@ -778,9 +851,11 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitUntil(() => currentZoomLevel != ZoomLevel.MapView || !ActionIsLegal(MappableActions.Move));
 
-        if(currentZoomLevel == ZoomLevel.MapView)
+        if (currentZoomLevel == ZoomLevel.MapView)
+        {
             ZoomIn();
-        
+        }
+
         showingMoveView = false;
 
         toDisable.ForEach(d => d.DisableAreaUI());
@@ -790,7 +865,7 @@ public class PlayerController : MonoBehaviour
 
     public static Shout GetLocationReaction(PointOfInterest.Poi Type)
     {
-        return Instance.GetRandom(Instance.LocationReactions.First(l=> l.LocationType == Type).GoblinShouts);
+        return Instance.GetRandom(Instance.LocationReactions.First(l => l.LocationType == Type).GoblinShouts);
     }
     public static Shout GetEnemyReaction(Character.Race Type)
     {

@@ -164,7 +164,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 100702}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.35
+  m_Radius: 0.3
   m_Speed: 4
   m_Acceleration: 20
   avoidancePriority: 50
@@ -5287,7 +5287,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.4
+      value: 0.6
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -5296,7 +5296,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 1
+      value: 1.2
       inSlope: 0
       outSlope: 0
       tangentMode: 0

@@ -44,12 +44,19 @@ public class Area : MonoBehaviour
     public Color LightFogColor, UnseenFogColor;
     //should be the size of x and z of the box collider
     public int Size;
+    [HideInInspector]
+    public int RoomForDifficulty;
     
     public Image AreaIcon;
     public AiryUIAnimationManager IconAnimationManager;
     public TextMeshProUGUI AreaText;
     
     private Sprite IconSprite;
+
+    private void Start()
+    {
+        RoomForDifficulty = 100;
+    }
 
     public void SetUpUI()
     {

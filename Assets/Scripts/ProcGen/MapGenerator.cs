@@ -101,10 +101,11 @@ public class MapGenerator : MonoBehaviour
     private int NpcsToGenerate;
     public GameObject DefaultCharacter;
     public PlayerTeam GoblinTeam;
-    private int GroupDistance = 4;
+    private int GroupDistance = 8;
     private float startTime;
     private Area center;
     private Area goblinStartArea;
+    private Area[] nextToStartArea;
     private bool areaGenDone;
     private bool pathGenDone;
     private bool poiGenDone;
@@ -275,13 +276,13 @@ public class MapGenerator : MonoBehaviour
         //TODO: Use create character
         for (int i = 0; i < GoblinsToGenerate; i++)
         {
-            var next = Instantiate(DefaultCharacter, GoblinTeam.transform);
-            
             pos = pos + Random.insideUnitSphere * GroupDistance;
 
-            //Debug.Log("Creating gbolin at "+ pos.X +","+pos.Y);
+            Debug.Log("Creating gbolin at "+ pos.x +","+pos.z);
 
-            next.transform.position = new Vector3(pos.x, 0, pos.z);
+            var next = Instantiate(DefaultCharacter, new Vector3(pos.x, 0, pos.z), DefaultCharacter.transform.rotation,GoblinTeam.transform);
+
+            //next.transform.position = 
 
             var g = next.GetComponent<Goblin>();
 
@@ -519,11 +520,22 @@ public class MapGenerator : MonoBehaviour
         }
 
         //Create goblin start area
-        goblinStartArea = center; // AreaMap[noOfAreasX / 2, noOfAreasZ / 2];
+        goblinStartArea = Areas.First(a => !a.PointOfInterest && !a.ContainsRoads && !a.Neighbours.Any(n => n.PointOfInterest|| n.ContainsRoads));
 
-        while ((goblinStartArea.PointOfInterest || goblinStartArea.ContainsRoads))
-            goblinStartArea = GetRandomArea();
+        if (!goblinStartArea)
+        {
+            Debug.LogWarning("not able to find perfect start location");
+            goblinStartArea = Areas.First(a => !a.PointOfInterest && !a.ContainsRoads);
+        }
 
+        if (!goblinStartArea) goblinStartArea = Areas.First(a => !a.PointOfInterest);
+
+        nextToStartArea = goblinStartArea.Neighbours.ToArray();
+
+        foreach(var a in nextToStartArea)
+        {
+            a.RoomForDifficulty = 2;
+        }
 
         for (int i = 0; i < PointOfInterests; i++)
         {
@@ -855,16 +867,18 @@ public class MapGenerator : MonoBehaviour
     private GameObject CreateEnemyCharacter(GameObject go, Transform parent, Area goblinStartArea)
     {
 
-        var ch = go.GetComponent<Character>();
-
-
+        var ch = go.GetComponent<Enemy>();
 
         var areas = Areas.Where(ar =>
-            !ar.PointOfInterest && ar != goblinStartArea && !ar.ContainsRoads &!
+            !ar.PointOfInterest && ar != goblinStartArea && !ar.ContainsRoads && ar.RoomForDifficulty >= ch.Difficulty &!
               ar.PresentCharacters.Any(c => c.CharacterRace != ch.CharacterRace) && ar.PresentCharacters.Count < ch.MaxGroupSize).ToList();
+
+
         if (areas.Any())
         {
-            return GenerateCharacter(go, areas[Random.Range(0, areas.Count)], parent);
+            var a = areas[Random.Range(0, areas.Count)];
+            a.RoomForDifficulty -= ch.Difficulty;
+            return GenerateCharacter(go,a , parent);
         }
         else
         {

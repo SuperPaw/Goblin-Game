@@ -24978,10 +24978,10 @@ MonoBehaviour:
   State: 11
   LootTarget: {fileID: 0}
   Team: {fileID: 0}
-  DamMin: 4
-  DamMax: 4
-  AimMin: 8
-  AimMax: 8
+  DamMin: 3
+  DamMax: 3
+  AimMin: 5
+  AimMax: 5
   CouMin: 50
   CouMax: 50
   HeaMin: 10
@@ -25020,6 +25020,7 @@ MonoBehaviour:
   hiding: {fileID: 0}
   provokeDistance: 8
   DebugText: {fileID: 0}
+  Difficulty: 2
 --- !u!195 &8617906192698219966
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -25029,7 +25030,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 180470}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.35
+  m_Radius: 0.3
   m_Speed: 3.5
   m_Acceleration: 20
   avoidancePriority: 50

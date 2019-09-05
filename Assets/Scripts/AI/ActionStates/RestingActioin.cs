@@ -29,7 +29,7 @@ public class RestingAction : ActionState
 
         yield return new WaitUntil(()=> !g.Team.Campfire || Vector3.Distance(g.transform.position, g.Team.Campfire.transform.position) < 4f);
 
-        g.OnMoodChange.Invoke(1);
+        g.OnMoodChange.Invoke(3);
 
         g.navMeshAgent.isStopped = true;
 

@@ -2,12 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Object = UnityEngine.Object;
-using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,10 +17,10 @@ public class GameManager : MonoBehaviour
     public bool DisableUnseenCharacters;
     public GameObject[] TurnOnOnStart;
     public AnimationCurve HitChance;
-    
+
     public enum Icon
     {
-        LevelUp, Chief, Healing, Idling, Fleeing, Travelling, Fighting, Hiding, Dead,Watching,Searching, Provoking, Resting,
+        LevelUp, Chief, Healing, Idling, Fleeing, Travelling, Fighting, Hiding, Dead, Watching, Searching, Provoking, Resting,
         Unknown
     }
     [Serializable]
@@ -88,30 +85,39 @@ public class GameManager : MonoBehaviour
     //TODO: implement
     public int XpOnTreasureFind = 1;
     public int XpOnAreaMove = 1;
-    
+
     void Awake()
     {
-        if (!Instance) Instance = this;
+        if (!Instance)
+        {
+            Instance = this;
+        }
     }
 
     public static Sprite GetIconImage(Icon type)
     {
-        if(Instance.IconImages.Any(im => im.IconType == type))
+        if (Instance.IconImages.Any(im => im.IconType == type))
+        {
             return Instance.IconImages.First(im => im.IconType == type).Image;
+        }
 
         return null;
     }
     public static Sprite GetClassImage(Goblin.Class type)
     {
         if (Instance.ClassImgs.Any(im => im.ClassType == type))
+        {
             return Instance.ClassImgs.First(im => im.ClassType == type).Image;
+        }
 
         return Instance.ClassImgs.First().Image;
     }
     public static Sprite GetAttributeImage(Character.StatType type)
     {
         if (Instance.AttributeImages.Any(im => im.Stat == type))
+        {
             return Instance.AttributeImages.First(im => im.Stat == type).Image;
+        }
 
         return Instance.AttributeImages.First().Image;
     }
@@ -119,7 +125,9 @@ public class GameManager : MonoBehaviour
     public static HappinessImage GetSmiley(Goblin.Happiness type)
     {
         if (Instance.HappinessImages.Any(im => im.Type == type))
+        {
             return Instance.HappinessImages.First(im => im.Type == type);
+        }
 
         return Instance.HappinessImages.First();
     }
@@ -132,14 +140,20 @@ public class GameManager : MonoBehaviour
     public static string GetClassDescription(Goblin.Class type)
     {
         if (Instance.ClassImgs.Any(im => im.ClassType == type))
+        {
             return Instance.ClassImgs.First(im => im.ClassType == type).Description;
+        }
+
         return "Goblins are cool!!";
     }
 
     public static string GetAttributeDescription(Character.StatType type)
     {
         if (Instance.AttributeImages.Any(im => im.Stat == type))
+        {
             return Instance.AttributeImages.First(im => im.Stat == type).Description;
+        }
+
         return "Goblins are cool!!";
     }
 
@@ -173,33 +187,33 @@ public class GameManager : MonoBehaviour
             default:
                 return GetIconImage(Icon.Idling);
         }
-        
+
     }
 
     internal static Sprite GetIconImage(Equipment.EquipmentType type)
     {
 
         if (Instance.EquipmentImages.Any(im => im.Type == type))
+        {
             return Instance.EquipmentImages.First(im => im.Type == type).Sprite;
+        }
 
         return Instance.EquipmentImages.First().Sprite;
     }
 
-    public static int XpKill()
-    {
-        return Instance.XpOnKill;
-    }
-    public static int XpTeamKill()
-    {
-        return Instance.XpOnTeamKill;
-    }
+    public static int XpKill => Instance.XpOnKill;
+    public static int XpTeamKill => Instance.XpOnTeamKill;
 
     internal static void GameOver(bool gameWon = false)
     {
-        if(gameWon)
+        if (gameWon)
+        {
             SoundController.PlayStinger(SoundBank.Stinger.GameWin);
+        }
         else
+        {
             SoundController.PlayGameLoss();
+        }
 
         //tODO: add points to score if won
 
@@ -230,10 +244,14 @@ public class GameManager : MonoBehaviour
 
     public void PauseButton()
     {
-        if(GamePaused)
+        if (GamePaused)
+        {
             UnPause();
+        }
         else
+        {
             Pause();
+        }
     }
 
     public static void Pause()
@@ -256,7 +274,7 @@ public class GameManager : MonoBehaviour
         var end = start + duration;
 
         var endColor = BlackscreenImage.color;
-        var startColor = new Color(0,0,0,0);
+        var startColor = new Color(0, 0, 0, 0);
 
         BlackscreenImage.gameObject.SetActive(true);
 

@@ -13,7 +13,7 @@ public class AttackAction : ActionState
     {
         //Debug.Log($"{ch.name}: Starting {StateType} action");
 
-        while (ch.State == StateType)
+        while (ch.GetState() == StateType)
         {
             yield return new WaitForFixedUpdate();
             

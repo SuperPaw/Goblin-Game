@@ -231,7 +231,7 @@ public class PlayerTeam : MonoBehaviour
 
     private void TeamKill()
     {
-        AddXp(GameManager.XpTeamKill());
+        AddXp(GameManager.XpTeamKill);
 
 
         if (Leader.InArea.AnyEnemies() &&

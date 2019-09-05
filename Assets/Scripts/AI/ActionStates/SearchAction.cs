@@ -22,7 +22,7 @@ public class SearchAction : ActionState
         if (g.LootTarget)
             g.navMeshAgent.SetDestination(g.LootTarget.transform.position);
 
-        while (ch.State == StateType)
+        while (ch.GetState() == StateType)
         {
             yield return new WaitForFixedUpdate();
 

@@ -14,7 +14,7 @@ public class WorldToScreenSpace : MonoBehaviour
     }
 
 
-	void Update ()
+	void Update()
 	{
 	    //if (!canvas)
 	    //{

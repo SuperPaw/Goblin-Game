@@ -106,7 +106,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.35
+    agentRadius: 0.3
     agentHeight: 2
     agentSlope: 10.2
     agentClimb: 2
@@ -114,7 +114,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.11666667
+    cellSize: 0.1
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -1103,6 +1103,7 @@ MonoBehaviour:
   HitMask:
     serializedVersion: 2
     m_Bits: 1
+  DistanceFromLeaderToShow: 600
   KeyMappings:
   - Key: 104
     Action: 0
@@ -1409,7 +1410,7 @@ MonoBehaviour:
   GoblinViewSize: 6
   AreaViewSize: 10
   MapViewSize: 45
-  ZoomMinBound: 2
+  ZoomMinBound: 4
   ZoomMaxBound: 10
   TouchZoomFactor: 0.025
   PcZoomFactor: 2

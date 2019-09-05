@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OverheadUIScaler : MonoBehaviour {
-    public AnimationCurve ScaleCurve = AnimationCurve.EaseInOut(0f,0.4f,1f,1f);
+    public AnimationCurve ScaleCurve = AnimationCurve.EaseInOut(0f,0.6f,1f,1.2f);
     private Vector3 MaxScale;
     private float MinZoom, MaxZoom;
     private Camera Cam;

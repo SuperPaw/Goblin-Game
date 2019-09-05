@@ -57,7 +57,6 @@ public class Goblin : Character
     public int CurrentLevel = GetLevel(0);
     public static int[] LevelCaps = { 0, 10, 20, 30, 50, 80, 130, 210, 340, 550, 890, 20000 };
 
-    
     public UnityEvent OnLevelUp = new UnityEvent();
 
     public AnimationCurve ProvokeScaredCurve;
@@ -143,7 +142,7 @@ public class Goblin : Character
             ChiefImage.enabled = IsChief();
 
             StateImage.enabled = true;
-            StateImage.sprite = GameManager.GetIconImage(State);
+            StateImage.sprite = GameManager.GetIconImage(GetState());
         }
         else
         {
@@ -327,7 +326,7 @@ public class Goblin : Character
     
     public void Speak(PlayerController.Shout shout, bool overridePlaying = false)
     {
-        if ((Random.value > (IsChief() ? 0.0f : 0.35f)) && PlayerController.ObjectIsSeen(transform) && Voice && Voice.isActiveAndEnabled && lastSpeak + speakWait < Time.time && (overridePlaying || !Voice.isPlaying))
+        if ((Random.value > (IsChief() ? 0.0f : 0.40f)) && PlayerController.ObjectIsSeen(transform) && Voice && Voice.isActiveAndEnabled && lastSpeak + speakWait < Time.time && (overridePlaying || !Voice.isPlaying))
         {
             if(IsChief() || Team?.GoblinsSpeaking() < Team?.Members.Count / 4 +1)
                 StartCoroutine(ShoutRoutine(shout.Speech));
@@ -366,7 +365,7 @@ public class Goblin : Character
 
         LootTarget = loot;
 
-        ChangeState(CharacterState.Searching, true);
+        stateController.ChangeState(CharacterState.Searching, true);
     }
 
     public void Kill()
@@ -378,4 +377,5 @@ public class Goblin : Character
     {
         return Team?.Leader == this;
     }
+
 }
