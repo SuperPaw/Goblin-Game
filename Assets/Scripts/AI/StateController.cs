@@ -112,8 +112,8 @@ public class StateController
             }
         }
 
-        _owner.lastAnimationRandom = Random.Range(0, 4);
-        _owner.Animator.SetInteger("AnimationRandom", _owner.lastAnimationRandom);
+        //TODO: should have an event instead for when statechanging is done;
+        _owner.SetAnimationRandom();
 
         stateChangeRoutine = null;
     }

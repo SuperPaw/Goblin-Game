@@ -61,6 +61,9 @@ public abstract partial class Character : MonoBehaviour
     public int IrritationMeter = 0;
     public int IrritaionTolerance = 50;
     protected StateController stateController;
+    protected AnimationController _animationController;
+    public int lastAnimationRandom;
+    public float SpeedAnimationThreshold =0.2f;
 
     public class Stat
     {
@@ -306,30 +309,7 @@ public abstract partial class Character : MonoBehaviour
 
     public Material Material;
 
-    [Header("Animation")]
-    public Animator Animator;
-    public float SpeedAnimationThreshold;
     public ParticleSystem HitParticles, DeathParticles;
-
-    private Vector2 smoothDeltaPosition = Vector2.zero;
-    private Vector2 velocity = Vector2.zero;
-
-    public int lastAnimationRandom;
-
-    private const string FLEE_ANIMATION_BOOL = "Fleeing";
-    private const string DEATH_ANIMATION_BOOL = "Dead";
-    private const string ATTACK_ANIMATION_BOOL = "Attacking";
-    private const string RANGED_ATTACK_ANIMATION_BOOL = "ArcherAttack";
-    private const string MOVE_ANIMATION_BOOL = "Walking";
-    private const string IDLE_ANIMATION_BOOL = "Idling";
-    private const string RUN_ANIMATION_BOOL = "Running";
-    private const string HIDE_ANIMATION_BOOL = "Hiding";
-    private const string CHEER_ANIMATION_BOOL = "Cheering";
-    private const string SURPRISE_ANIMATION_BOOL = "Surprised";
-    private const string EAT_ANIMATION_BOOL = "Eating";
-    private const string PROVOKE_ANIMATION_BOOL = "Provoking";
-    private const string PICKUP_ANIMATION_BOOL = "PickUp";
-
 
     private readonly Collider2D coll;
     public bool attackAnimation;
@@ -398,11 +378,16 @@ public abstract partial class Character : MonoBehaviour
 
         stateController = new StateController(this);
 
+        var Animator = GetComponent<Animator>();
+
         //TODO: remove this and actually handle the warnings :P
-        if (Animator)
+        if (!Animator)
         {
             Animator.logWarnings = false;
+            Debug.Log($"{name}: no animator found on");
         }
+        else
+            _animationController = new AnimationController(this, Animator);
 
         if (!HealtBar)
         {
@@ -509,7 +494,7 @@ public abstract partial class Character : MonoBehaviour
             Debug.DrawLine(transform.position, (this as Goblin).LootTarget.transform.position, Color.yellow);
         }
 
-        HandleAnimation();
+        _animationController?.HandleAnimation();
 
         if (!Alive() || !GameManager.Instance.GameStarted || !navMeshAgent.isOnNavMesh)
         {
@@ -552,68 +537,9 @@ public abstract partial class Character : MonoBehaviour
         return name;
     }
 
-
-    //TODO: override in goblin class.
-    private void HandleAnimation()
+    public bool IsChallenger()
     {
-        if (!Animator)
-        {
-            return;
-        }
-
-        if (navMeshAgent)
-        {
-            Animator.SetFloat("Speed", navMeshAgent.speed);
-        }
-
-        if (!Alive())
-        {
-            Animate(DEATH_ANIMATION_BOOL);
-        }
-        else if (Fleeing())
-        {
-            Animate(FLEE_ANIMATION_BOOL);
-        }
-        else if (attackAnimation && Attacking())
-        {
-            Animate(Equipped.Values.Any(e => e && e.Type == Equipment.EquipmentType.Bow)
-                ? RANGED_ATTACK_ANIMATION_BOOL
-                : ATTACK_ANIMATION_BOOL);
-        }
-        else if (Searching() && LootTarget && Vector3.Distance(transform.position, LootTarget.transform.position) < 3f)
-        {
-            Animate(PICKUP_ANIMATION_BOOL);
-        }
-        else if (AgentVelocity > SpeedAnimationThreshold)
-        {
-            Animate(Walking ? MOVE_ANIMATION_BOOL : RUN_ANIMATION_BOOL);
-        }
-        else if (Provoking() && this as Goblin && Vector3.Distance(transform.position, (this as Goblin).ProvokeTarget.transform.position) < 5f)
-        {
-            Animate(PROVOKE_ANIMATION_BOOL);
-        }
-        else if (Hiding())
-        {
-            Animate(HIDE_ANIMATION_BOOL);
-        }
-        else if (Watching() && !IsChief() && Team.Challenger != this)
-        {
-            //Animator.SetLookAtPosition(Team.Leader.transform.position);
-            transform.LookAt(Team.Leader.transform);
-            Animate(CHEER_ANIMATION_BOOL);
-        }
-        else if (Surprised())
-        {
-            Animate(SURPRISE_ANIMATION_BOOL);
-        }
-        else if (Resting())
-        {
-            Animate(EAT_ANIMATION_BOOL);
-        }
-        else
-        {
-            Animate(IDLE_ANIMATION_BOOL);
-        }
+        return Team.Challenger == this;
     }
 
     public bool NavigationPathIsStaleOrCompleted()
@@ -1089,23 +1015,6 @@ public abstract partial class Character : MonoBehaviour
     }
 
 
-
-    private void Animate(string boolName)
-    {
-        DisableOtherAnimations(Animator, boolName);
-        Animator.SetBool(boolName, true);
-    }
-
-    private void DisableOtherAnimations(Animator animator, string animation)
-    {
-        foreach (AnimatorControllerParameter parameter in animator.parameters)
-        {
-            if (parameter.name != animation && parameter.type == AnimatorControllerParameterType.Bool)
-            {
-                animator.SetBool(parameter.name, false);
-            }
-        }
-    }
 
     private IEnumerator CheckForNavAgentStuck(float time)
     {
