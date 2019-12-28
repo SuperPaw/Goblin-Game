@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 4146414560072896}
   - component: {fileID: 65175601132316730}
   - component: {fileID: 114691825108400538}
-  - component: {fileID: 208395386577737414}
+  - component: {fileID: -4662901654776909925}
   m_Layer: 0
   m_Name: Hidable
   m_TagString: Hidable
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HideLocation: {fileID: 4712357691483580}
   OccupiedBy: {fileID: 0}
---- !u!208 &208395386577737414
+--- !u!208 &-4662901654776909925
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,8 +102,8 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.225, y: 0.4, z: 0.225}
-  m_MoveThreshold: 1
+  m_Extents: {x: 0.3, y: 0.5, z: 0.3}
+  m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -115,11 +115,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4146414560072896}
     m_Modifications:
-    - target: {fileID: 1401860419202412919, guid: c3ed0d1baa48e2047935d5942519f229,
-        type: 3}
-      propertyPath: m_Name
-      value: Art
-      objectReference: {fileID: 0}
     - target: {fileID: 1396919403099477313, guid: c3ed0d1baa48e2047935d5942519f229,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -174,6 +169,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1401860419202412919, guid: c3ed0d1baa48e2047935d5942519f229,
+        type: 3}
+      propertyPath: m_Name
+      value: Art
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3ed0d1baa48e2047935d5942519f229, type: 3}

@@ -68,7 +68,8 @@ MonoBehaviour:
   CharacterRace: 1
   IrritationMeter: 0
   IrritaionTolerance: 100
-  State: 11
+  lastAnimationRandom: 0
+  SpeedAnimationThreshold: 0
   LootTarget: {fileID: 0}
   Team: {fileID: 0}
   DamMin: 3
@@ -105,8 +106,6 @@ MonoBehaviour:
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 0}
-  Animator: {fileID: 6003596044765673084}
-  SpeedAnimationThreshold: 0
   HitParticles: {fileID: 0}
   DeathParticles: {fileID: 0}
   attackAnimation: 0
@@ -164,7 +163,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
 --- !u!95 &6003596044765673084
 Animator:
@@ -262,6 +261,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -376,6 +376,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

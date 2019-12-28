@@ -4615,6 +4615,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9310,6 +9311,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -14087,6 +14089,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -18790,6 +18793,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -23520,6 +23524,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -23613,6 +23618,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -24975,7 +24981,8 @@ MonoBehaviour:
   CharacterRace: 5
   IrritationMeter: 0
   IrritaionTolerance: 50
-  State: 11
+  lastAnimationRandom: 0
+  SpeedAnimationThreshold: 0
   LootTarget: {fileID: 0}
   Team: {fileID: 0}
   DamMin: 3
@@ -25012,8 +25019,6 @@ MonoBehaviour:
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   NormalColor: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 2100000, guid: 78d88e566e5f7b14aaa719c52b23bd6c, type: 2}
-  Animator: {fileID: 9573564}
-  SpeedAnimationThreshold: 0
   HitParticles: {fileID: 19870744}
   DeathParticles: {fileID: 0}
   attackAnimation: 0
@@ -25041,7 +25046,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 8
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
 --- !u!1 &1358234886585000463
 GameObject:
@@ -25250,8 +25255,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: c3e7d9a5c4640e7438ca40d549e00b02, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
@@ -25327,8 +25330,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 660680a359bf5e34398bd3c2f24a70d4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
