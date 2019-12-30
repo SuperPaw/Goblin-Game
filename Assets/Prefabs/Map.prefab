@@ -122,6 +122,9 @@ MonoBehaviour:
   - {fileID: 100000, guid: ba76689f220e59a48845d4df03dcbffa, type: 3}
   HidableObjects:
   - {fileID: 1910571166180590, guid: 039038a2da993284dbd739d670e3a939, type: 3}
+  - {fileID: 1910571166180590, guid: 172ccc96cd919fc42ba92ab351c1bba3, type: 3}
+  - {fileID: 1910571166180590, guid: 83335fffad190b846976fd5d061436b9, type: 3}
+  - {fileID: 1910571166180590, guid: 9d27642558b3fc445a761d2741444162, type: 3}
   ForestHolder: {fileID: 2032421715755256616}
   AreaHolder: {fileID: 8276607899882374288}
   TileHolder: {fileID: 8552797219536149722}
@@ -242,6 +245,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -390,6 +394,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4598158572664144}
     m_Modifications:
+    - target: {fileID: 1960715680144610, guid: 7ee82a1f9f896b44b9f5beb10623f336, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4491580849233450, guid: 7ee82a1f9f896b44b9f5beb10623f336, type: 3}
       propertyPath: m_LocalPosition.x
       value: 100
@@ -421,10 +429,6 @@ PrefabInstance:
     - target: {fileID: 4491580849233450, guid: 7ee82a1f9f896b44b9f5beb10623f336, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1960715680144610, guid: 7ee82a1f9f896b44b9f5beb10623f336, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 23628322707052294, guid: 7ee82a1f9f896b44b9f5beb10623f336,
         type: 3}
