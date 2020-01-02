@@ -22,6 +22,8 @@ public class Goblin : Character
     
     public Image StateImage;
 
+    public Sprite GoblinImage;
+
     public Character ProvokeTarget;
 
     public SkinnedMeshRenderer GoblinSkin;
