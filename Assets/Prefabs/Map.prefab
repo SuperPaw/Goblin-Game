@@ -137,6 +137,10 @@ MonoBehaviour:
     type: 3}
   LootObjects:
   - {fileID: 1910571166180590, guid: ee5830f18c2be1244bb0fa764c0769a1, type: 3}
+  - {fileID: 1910571166180590, guid: ff3441e9878a0c144af6f0d93061d294, type: 3}
+  - {fileID: 1910571166180590, guid: 856fc10e023ccbc4ba72ea46066d7440, type: 3}
+  - {fileID: 1910571166180590, guid: c9c5e54d1b338e746874dc1e5dcef5c1, type: 3}
+  - {fileID: 1910571166180590, guid: 3c6a5b8f4f247444cbdabd51920816b4, type: 3}
   PointOfInterestPrefabs:
   - {fileID: 199962508053162890, guid: 7cde1fc3eeb07ab41add50d71da38d93, type: 3}
   - {fileID: 3737014991024357967, guid: 69c2564b5439e0a4892a9240f5182bcc, type: 3}

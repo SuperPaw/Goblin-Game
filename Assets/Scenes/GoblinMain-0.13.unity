@@ -1447,6 +1447,13 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 94265475e2006ab488ba3b3813ee3645, type: 2}
   - {fileID: 2100000, guid: 18ba8654da6c78644bce9a78177a3e6d, type: 2}
   - {fileID: 2100000, guid: 9bdf8ce8bfd44194d85a1e9b0b874af4, type: 2}
+  GoblinLooks:
+  - Icon: {fileID: 21300000, guid: 0dddf91bb12ec034381ee44deca0b7b8, type: 3}
+    Material: {fileID: 2100000, guid: 94265475e2006ab488ba3b3813ee3645, type: 2}
+  - Icon: {fileID: 21300000, guid: 76d5f0374914e4643919a37086dd7522, type: 3}
+    Material: {fileID: 2100000, guid: 18ba8654da6c78644bce9a78177a3e6d, type: 2}
+  - Icon: {fileID: 21300000, guid: e140b9bfd54b73648a36af20a531c64e, type: 3}
+    Material: {fileID: 2100000, guid: 9bdf8ce8bfd44194d85a1e9b0b874af4, type: 2}
   ZombiePrefab: {fileID: 5982750895952644980, guid: 33cae0a0b31c5f74fac564eb302b96fe,
     type: 3}
   NecromancerSkin: {fileID: 2100000, guid: bab5322a7d61f8c4eabe4102656e61e2, type: 2}
@@ -2904,6 +2911,11 @@ PrefabInstance:
       propertyPath: NpcsToGenerate
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 114975237032567612, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
+        type: 3}
+      propertyPath: Forest
+      value: 
+      objectReference: {fileID: 176308, guid: 0638026e2eb7cb44ca8972ba006e48f4, type: 3}
     - target: {fileID: 2959414394161869283, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
       propertyPath: m_Enabled
