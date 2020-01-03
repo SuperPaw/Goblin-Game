@@ -77,7 +77,7 @@ public class MapGenerator : MonoBehaviour
     public GameObject[] HidableObjects;
     public GameObject[] Forest;
     public GameObject ForestHolder, AreaHolder, TileHolder;
-    public GameObject TileArtObject;
+    public GameObject[] TileArtObjects;
     public GameObject RoadTileArtObject;
     public RoadEdgeTile NextToRoadTile;
     public GameObject[] LootObjects;
@@ -642,7 +642,7 @@ public class MapGenerator : MonoBehaviour
         foreach (var tile in map)
         {
             //TODO: no grass under trees, different if in area
-            var obj = tile.Type == TileType.Road ? RoadTileArtObject : TileArtObject;
+            var obj = tile.Type == TileType.Road ? RoadTileArtObject : TileArtObjects[Random.Range(0,TileArtObjects.Length)];
             GameObject next;
             if (tile.Type != TileType.Road && tile.NextToRoad)
             {
@@ -668,16 +668,24 @@ public class MapGenerator : MonoBehaviour
 
                 next = roadEdge.gameObject;
             }
+            else if (tile.Type == TileType.Ground)
+            {
+                 if( Random.value > 0.5f)
+                    continue;
+                next = Instantiate(obj, TileHolder.transform);
+                //TODO:check 
+                next.transform.position = new Vector3(tile.X + Random.value, 0, tile.Y + Random.value) ;
+            }
             else
             {
                 next = Instantiate(obj, TileHolder.transform);
+                //TODO:check 
+                next.transform.position = new Vector3(tile.X, 0, tile.Y);
 
             }
 
             next.name = "Tile " + tile.X + "," + tile.Y;
 
-            //TODO:check 
-            next.transform.position = new Vector3(tile.X, 0, tile.Y);
 
             int loc = (++progress * 100) / totalProgress;
             if (loc != progressPct)
@@ -793,9 +801,9 @@ public class MapGenerator : MonoBehaviour
 
             for (Vector3 pos = corner1; pos.z <= corner2.z; pos.z++)
             {
-                var ground = Instantiate(TileArtObject, TileHolder.transform);
-                ground.name = "Tile " + pos.x + "," + pos.z;
-                ground.transform.position = new Vector3(pos.x, 0, pos.z);
+                //var ground = Instantiate(TileArtObjects[], TileHolder.transform);
+                //ground.name = "Tile " + pos.x + "," + pos.z;
+                //ground.transform.position = new Vector3(pos.x, 0, pos.z);
 
                 //Ignore chance
                 if (Random.value < 0.2)
@@ -806,10 +814,7 @@ public class MapGenerator : MonoBehaviour
             }
             for (Vector3 pos = corner1; pos.x <= corner4.x; pos.x++)
             {
-                var ground = Instantiate(TileArtObject, TileHolder.transform);
-                ground.name = "Tile " + pos.x + "," + pos.z;
-                ground.transform.position = new Vector3(pos.x, 0, pos.z);
-
+                
                 if (Random.value < 0.2)
                     continue;
 
@@ -817,20 +822,14 @@ public class MapGenerator : MonoBehaviour
             }
             for (Vector3 pos = corner4; pos.z <= corner3.z; pos.z++)
             {
-                var ground = Instantiate(TileArtObject, TileHolder.transform);
-                ground.name = "Tile " + pos.x + "," + pos.z;
-                ground.transform.position = new Vector3(pos.x, 0, pos.z);
-
+                
                 if (Random.value < 0.2)
                     continue;
                 CreateForest(pos);
             }
             for (Vector3 pos = corner2; pos.x <= corner3.x; pos.x++)
             {
-                var ground = Instantiate(TileArtObject, TileHolder.transform);
-                ground.name = "Tile " + pos.x + "," + pos.z;
-                ground.transform.position = new Vector3(pos.x, 0, pos.z);
-
+                
                 if (Random.value < 0.2)
                     continue;
                 CreateForest(pos);
