@@ -704,24 +704,18 @@ public class MapGenerator : MonoBehaviour
             if (tile == null|| tile.Type != TileType.Forest)
                 continue;
 
-            if (GetNeightbours(tile).Any(n => n.Type != TileType.Forest))
+            if (GetNeightbours(tile,true).Any(n => n.Type != TileType.Forest))
             {
                 //TODO: use create forest method
-                GameObject next = Instantiate(HidableObjects[Random.Range(0, HidableObjects.Length)], ForestHolder.transform);
-                next.transform.position = new Vector3(tile.X, 1, tile.Y);
+                CreateForest(new Vector3(tile.X, 0, tile.Y), true);
+
+                //GameObject next = 
+                //    Instantiate(HidableObjects[Random.Range(0, HidableObjects.Length)], ForestHolder.transform);
+                //next.transform.position = new Vector3(tile.X, 1, tile.Y);
 
 
-                next.name = "Forest " + tile.X + "," + tile.Y;
+                //next.name = "Forest " + tile.X + "," + tile.Y;
 
-                var parentArea = GetAreaAtPoint(next.transform.position);
-
-                if (parentArea)
-                {
-                    //TODO: do not have unused hidables on tile
-                    if (tile.Hidable) parentArea.Hidables.Add(next.GetComponent<Hidable>());
-
-                    next.transform.parent = parentArea.transform;
-                }
             }
             else
             {
@@ -729,7 +723,7 @@ public class MapGenerator : MonoBehaviour
                 if (Random.value < 0.2)
                     continue;
 
-                CreateForest(new Vector3(tile.X, 1, tile.Y));
+                CreateForest(new Vector3(tile.X, 0, tile.Y));
                 tile.Hidable = false;
             }
 
@@ -776,10 +770,10 @@ public class MapGenerator : MonoBehaviour
     {
         for (int i = 1; i <= thickness; i++)
         {
-            var corner1 = new Vector3(-i,1,-i);
-            var corner2 = new Vector3(-i, 1, SizeZ-1+i);
-            var corner3 = new Vector3(SizeX-1+i, 1, SizeZ + i);
-            var corner4 = new Vector3(SizeX-1 + i, 1, -i);
+            var corner1 = new Vector3(-i,0,-i);
+            var corner2 = new Vector3(-i, 0, SizeZ-1+i);
+            var corner3 = new Vector3(SizeX-1+i, 0, SizeZ + i);
+            var corner4 = new Vector3(SizeX-1 + i, 0, -i);
 
             for (Vector3 pos = corner1; pos.z <= corner2.z; pos.z++)
             {
@@ -829,18 +823,43 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    private void CreateForest(Vector3 pos)
+    private void CreateForest(Vector3 pos, bool hidable = false)
     {
-        float adjustment = 0.3f;
+        float adjustment = 0.2f;
 
         var forest = Instantiate(Forest[Random.Range(0, Forest.Length)], ForestHolder.transform);
         
-        forest.transform.position = pos + new Vector3(Random.Range(-adjustment,adjustment),0, Random.Range(-adjustment, adjustment));
-    
-        forest.transform.localRotation = Quaternion.Euler(0, Random.Range(0, 90), 0);
+        Transform trans;
 
-        forest.name = "Forest " + pos.x.ToString("N0") + "," + pos.y.ToString("N0");
-        
+        if(hidable)
+        {
+            var hideObject = Instantiate(HidableObjects[Random.Range(0, HidableObjects.Length)], ForestHolder.transform);
+
+            hideObject.name = "Hidable " + pos.x.ToString("N0") + "," + pos.y.ToString("N0");
+            forest.transform.parent = hideObject.transform;
+            forest.transform.localPosition = Vector3.zero;
+
+            trans = hideObject.transform;
+            
+            var parentArea = GetAreaAtPoint(pos);
+
+            if (parentArea)
+            {
+                parentArea.Hidables.Add(hideObject.GetComponent<Hidable>());
+
+                trans.parent = parentArea.transform;
+            }
+        }
+        else
+        {
+            trans = forest.transform;
+            forest.name = "Forest " + pos.x.ToString("N0") + "," + pos.y.ToString("N0");
+        }
+
+        trans.position = pos + new Vector3(Random.Range(-adjustment, adjustment), 0, Random.Range(-adjustment, adjustment));
+
+        trans.localRotation = Quaternion.Euler(0, Random.Range(0, 90), 0);
+
     }
 
     private Area CreateArea(Vector3 position, List<Area> neighbour = null)

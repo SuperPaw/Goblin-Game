@@ -103,8 +103,29 @@ public class GameManager : MonoBehaviour
 
         return null;
     }
+
     public static Sprite GetClassImage(Goblin.Class type)
     {
+        if (Instance.ClassImgs.Any(im => im.ClassType == type))
+        {
+            return Instance.ClassImgs.First(im => im.ClassType == type).Image;
+        }
+
+        return Instance.ClassImgs.First().Image;
+    }
+
+    public static Sprite GetClassImage(Goblin goblin)
+    {
+        var type = goblin.ClassType;
+
+        if(!goblin.Alive())
+            return GameManager.GetIconImage(GameManager.Icon.Dead);
+
+        if (type == Goblin.Class.Goblin)
+        {
+            return goblin.GoblinImage;
+        }
+
         if (Instance.ClassImgs.Any(im => im.ClassType == type))
         {
             return Instance.ClassImgs.First(im => im.ClassType == type).Image;

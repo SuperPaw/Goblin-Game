@@ -122,9 +122,6 @@ MonoBehaviour:
   - {fileID: 100000, guid: ba76689f220e59a48845d4df03dcbffa, type: 3}
   HidableObjects:
   - {fileID: 1910571166180590, guid: 039038a2da993284dbd739d670e3a939, type: 3}
-  - {fileID: 1910571166180590, guid: 172ccc96cd919fc42ba92ab351c1bba3, type: 3}
-  - {fileID: 1910571166180590, guid: 83335fffad190b846976fd5d061436b9, type: 3}
-  - {fileID: 1910571166180590, guid: 9d27642558b3fc445a761d2741444162, type: 3}
   Forest:
   - {fileID: 158004, guid: e477fdc7b57d3c541b60f7574b2b2770, type: 3}
   - {fileID: 173508, guid: cb926204b3a342f4fb89ad8488ecc1bc, type: 3}

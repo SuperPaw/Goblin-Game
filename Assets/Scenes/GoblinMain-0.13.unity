@@ -1400,10 +1400,10 @@ MonoBehaviour:
       GoblinSound: {fileID: 8300000, guid: 1a156833729fdb84699eba68a4c5f834, type: 3}
     - Speech: I fight for big chief
       GoblinSound: {fileID: 8300000, guid: d0901afb94b04c54abd1a3d21da6ea03, type: 3}
-  GoblinViewSize: 6
-  AreaViewSize: 10
+  GoblinViewSize: 3
+  AreaViewSize: 6
   MapViewSize: 45
-  ZoomMinBound: 4
+  ZoomMinBound: 2
   ZoomMaxBound: 10
   TouchZoomFactor: 0.025
   PcZoomFactor: 2

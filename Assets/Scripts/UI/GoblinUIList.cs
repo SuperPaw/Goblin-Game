@@ -64,7 +64,7 @@ public class GoblinUIList : MonoBehaviour
     {
         var g = e.Goblin;
 
-        e.ClassImage.sprite = GameManager.GetClassImage(g.ClassType);
+        e.ClassImage.sprite = GameManager.GetClassImage(g);
 
         //without "Chief "
         if ((g.IsChief()))
