@@ -4368,6 +4368,21 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4220182264200183309, guid: 91610a33314402343b24e70fecefb551,
+        type: 3}
+      propertyPath: m_text
+      value: Version 0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4220182264200183309, guid: 91610a33314402343b24e70fecefb551,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4220182264200183309, guid: 91610a33314402343b24e70fecefb551,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4442886857010482732, guid: 91610a33314402343b24e70fecefb551,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size

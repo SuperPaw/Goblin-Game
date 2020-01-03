@@ -180,7 +180,8 @@ public class MapGenerator : MonoBehaviour
         //Setting up mesh builder
         MeshBuilder.transform.localScale = new Vector3(SizeX / 8f, 1, SizeZ / 8f);
         //MeshBuilder.m_Size = new Vector3(SizeX, 10, SizeZ);
-        MeshBuilder.transform.position = new Vector3(SizeX / 2f, 0, SizeZ / 2f);
+        //Adjust for border size. Should be 
+        MeshBuilder.transform.position = new Vector3(SizeX+20, 0, SizeZ+20 );
 
         MeshBuilder.gameObject.SetActive(true);
 
@@ -696,13 +697,28 @@ public class MapGenerator : MonoBehaviour
         //yield return null;
         //Debug.Log("Forest gen started");
 
+        //int forestType = Random.Range(0, Forest.Length);
+
+        //var forestChangeChance = 0.75f;
+
+        //var order = immovableTiles.OrderBy((a) => a.X + a.Y);
+
         //INSTANTIATING MAP
         //y=1 for tree height
         foreach (var tile in immovableTiles)
         {
+
             //TODO: test this is not problematic?
             if (tile == null|| tile.Type != TileType.Forest)
                 continue;
+
+            //if (Random.value > forestChangeChance)
+            //{
+            //    forestType += Random.value > 0.5f ? -1 : 1;
+            //    if (forestType >= Forest.Length) forestType = 0;
+            //    if (forestType < 0) forestType = Forest.Length-1;
+            //}
+            
 
             if (GetNeightbours(tile,true).Any(n => n.Type != TileType.Forest))
             {
@@ -827,7 +843,12 @@ public class MapGenerator : MonoBehaviour
     {
         float adjustment = 0.2f;
 
-        var forest = Instantiate(Forest[Random.Range(0, Forest.Length)], ForestHolder.transform);
+
+        int forestType = (int)(((float)(pos.x * pos.z) / map.Length) * Forest.Length) + Random.Range(-5, 5);
+        if (forestType >= Forest.Length) forestType = 0;
+        if (forestType < 0) forestType = Forest.Length - 1;
+
+        var forest = Instantiate(Forest[forestType], ForestHolder.transform);
         
         Transform trans;
 
