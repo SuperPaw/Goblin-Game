@@ -75,8 +75,8 @@ public class MapGenerator : MonoBehaviour
     public NavMeshBuilder MeshBuilder; 
     public GameObject[] Npcs;
     public GameObject[] HidableObjects;
+    public GameObject[] Forest;
     public GameObject ForestHolder, AreaHolder, TileHolder;
-    public GameObject Forest;
     public GameObject TileArtObject;
     public GameObject RoadTileArtObject;
     public RoadEdgeTile NextToRoadTile;
@@ -700,15 +700,28 @@ public class MapGenerator : MonoBehaviour
         //y=1 for tree height
         foreach (var tile in immovableTiles)
         {
-            GameObject next;
             //TODO: test this is not problematic?
             if (tile == null|| tile.Type != TileType.Forest)
                 continue;
 
             if (GetNeightbours(tile).Any(n => n.Type != TileType.Forest))
             {
+                //TODO: use create forest method
+                GameObject next = Instantiate(HidableObjects[Random.Range(0, HidableObjects.Length)], ForestHolder.transform);
+                next.transform.position = new Vector3(tile.X, 1, tile.Y);
 
-                next = Instantiate(HidableObjects[Random.Range(0, HidableObjects.Length)], ForestHolder.transform);
+
+                next.name = "Forest " + tile.X + "," + tile.Y;
+
+                var parentArea = GetAreaAtPoint(next.transform.position);
+
+                if (parentArea)
+                {
+                    //TODO: do not have unused hidables on tile
+                    if (tile.Hidable) parentArea.Hidables.Add(next.GetComponent<Hidable>());
+
+                    next.transform.parent = parentArea.transform;
+                }
             }
             else
             {
@@ -716,24 +729,12 @@ public class MapGenerator : MonoBehaviour
                 if (Random.value < 0.2)
                     continue;
 
-                next = Instantiate(Forest, ForestHolder.transform);
+                CreateForest(new Vector3(tile.X, 1, tile.Y));
                 tile.Hidable = false;
             }
 
-            next.name = "Forest " + tile.X + "," + tile.Y;
-
             //TODO:check 
-            next.transform.position = new Vector3(tile.X, 1, tile.Y);
 
-            var parentArea = GetAreaAtPoint(next.transform.position);
-
-            if (parentArea)
-            {
-                //TODO: do not have unused hidables on tile
-                if (tile.Hidable) parentArea.Hidables.Add(next.GetComponent<Hidable>());
-
-                next.transform.parent = parentArea.transform;
-            }
             int loc = (++progress * 100) / totalProgress;
             if (loc != progressPct)
             {
@@ -789,10 +790,8 @@ public class MapGenerator : MonoBehaviour
                 //Ignore chance
                 if (Random.value < 0.2)
                     continue;
-
-                var next = Instantiate(Forest, ForestHolder.transform);
-
-                next.transform.position = pos;
+                CreateForest(pos);
+                
 
             }
             for (Vector3 pos = corner1; pos.x <= corner4.x; pos.x++)
@@ -803,9 +802,8 @@ public class MapGenerator : MonoBehaviour
 
                 if (Random.value < 0.2)
                     continue;
-                var next = Instantiate(Forest, ForestHolder.transform);
 
-                next.transform.position = pos;
+                CreateForest(pos);
             }
             for (Vector3 pos = corner4; pos.z <= corner3.z; pos.z++)
             {
@@ -815,9 +813,7 @@ public class MapGenerator : MonoBehaviour
 
                 if (Random.value < 0.2)
                     continue;
-                var next = Instantiate(Forest, ForestHolder.transform);
-
-                next.transform.position = pos;
+                CreateForest(pos);
             }
             for (Vector3 pos = corner2; pos.x <= corner3.x; pos.x++)
             {
@@ -827,13 +823,25 @@ public class MapGenerator : MonoBehaviour
 
                 if (Random.value < 0.2)
                     continue;
-                var next = Instantiate(Forest, ForestHolder.transform);
+                CreateForest(pos);
 
-                next.transform.position = pos;
             }
         }
     }
+
+    private void CreateForest(Vector3 pos)
+    {
+        float adjustment = 0.3f;
+
+        var forest = Instantiate(Forest[Random.Range(0, Forest.Length)], ForestHolder.transform);
+        
+        forest.transform.position = pos + new Vector3(Random.Range(-adjustment,adjustment),0, Random.Range(-adjustment, adjustment));
     
+        forest.transform.localRotation = Quaternion.Euler(0, Random.Range(0, 90), 0);
+
+        forest.name = "Forest " + pos.x.ToString("N0") + "," + pos.y.ToString("N0");
+        
+    }
 
     private Area CreateArea(Vector3 position, List<Area> neighbour = null)
     {
