@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3659271508055760475}
   m_LocalRotation: {x: 0, y: 0.48709774, z: 0, w: 0.8733475}
-  m_LocalPosition: {x: 6.47, y: 0, z: -8.03}
+  m_LocalPosition: {x: 6.92, y: 0, z: -7.81}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 3468824333173467142}
@@ -109,8 +109,8 @@ NavMeshObstacle:
   m_GameObject: {fileID: 6920746842318355173}
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 4, y: 3, z: 4}
+  m_Shape: 0
+  m_Extents: {x: 4.3, y: 1, z: 4.3}
   m_MoveThreshold: 1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -399,7 +399,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 490076, guid: e477fdc7b57d3c541b60f7574b2b2770, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -41.8
+      value: -34.23
       objectReference: {fileID: 0}
     - target: {fileID: 490076, guid: e477fdc7b57d3c541b60f7574b2b2770, type: 3}
       propertyPath: m_LocalPosition.y
@@ -407,7 +407,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 490076, guid: e477fdc7b57d3c541b60f7574b2b2770, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -27.8
+      value: -3.7
       objectReference: {fileID: 0}
     - target: {fileID: 490076, guid: e477fdc7b57d3c541b60f7574b2b2770, type: 3}
       propertyPath: m_LocalRotation.x
