@@ -24,7 +24,6 @@ public class MapGenerator : MonoBehaviour
         public bool Examined = false;
         public bool Hidable = false;
         public float ForestChance = 1f;
-        public bool NextToRoad;
 
         public Tile(int x, int y)
         {
@@ -78,8 +77,7 @@ public class MapGenerator : MonoBehaviour
     public GameObject[] Forest;
     public GameObject ForestHolder, AreaHolder, TileHolder;
     public GameObject[] TileArtObjects;
-    public GameObject RoadTileArtObject;
-    public RoadEdgeTile NextToRoadTile;
+    public RoadTile RoadStraight, RoadBend, RoadEnd, RoadXCross, RoadTCross;
     public GameObject[] LootObjects;
     public PointOfInterest[] PointOfInterestPrefabs;
     public PointOfInterest[] HumanSettlementPrefab;
@@ -637,54 +635,81 @@ public class MapGenerator : MonoBehaviour
     {
         //yield return null;
         //Debug.Log("Ground gen started");
+        
 
         //creating ground tiles
         foreach (var tile in map)
         {
             //TODO: no grass under trees, different if in area
-            var obj = tile.Type == TileType.Road ? RoadTileArtObject : TileArtObjects[Random.Range(0,TileArtObjects.Length)];
-            GameObject next;
-            if (tile.Type != TileType.Road && tile.NextToRoad)
+            if (tile.Type == TileType.Road)
             {
-                var roadEdge = Instantiate(NextToRoadTile, TileHolder.transform);
+                bool ERoad = false;
+                bool WRoad = false;
+                bool SRoad = false;
+                bool NRoad = false;
+
+                int roadsConnect = 0;
 
                 if (map[tile.X + 1, tile.Y].Type == TileType.Road)
                 {
-                    roadEdge.ERoad = true;
+                    ERoad = true;
+                    roadsConnect++;
                 }
                 if (map[tile.X - 1, tile.Y].Type == TileType.Road)
                 {
-                    roadEdge.WRoad = true;
+                    WRoad = true;
+                    roadsConnect++;
                 }
                 if (map[tile.X, tile.Y + 1].Type == TileType.Road)
                 {
-                    roadEdge.NRoad = true;
+                    roadsConnect++;
+                    NRoad = true;
                 }
                 if (map[tile.X, tile.Y - 1].Type == TileType.Road)
                 {
-                    roadEdge.SRoad = true;
+                    roadsConnect++;
+                    SRoad = true;
                 }
-                roadEdge.SetupSprite();
 
-                next = roadEdge.gameObject;
+                RoadTile next;
+
+                if(roadsConnect <= 1)
+                {
+                    next = Instantiate(RoadEnd, TileHolder.transform);
+                }
+                else if(roadsConnect == 2)
+                {
+                    if(WRoad && ERoad || NRoad && SRoad)
+                    {
+                        next = Instantiate(RoadStraight, TileHolder.transform);
+                    }
+                    else
+                        next = Instantiate(RoadBend, TileHolder.transform);
+                }
+                else if(roadsConnect == 3)
+                    next = Instantiate(RoadTCross, TileHolder.transform);
+                else
+                    next = Instantiate(RoadXCross, TileHolder.transform);
+
+                next.RotateToPosition(WRoad, NRoad, ERoad, SRoad);
+
+                next.transform.position = new Vector3(tile.X, 0, tile.Y);
+
+                next.name = "Road " + tile.X + "," + tile.Y;
+
             }
             else if (tile.Type == TileType.Ground)
             {
+                //Generate tile visuals
                  if( Random.value > 0.5f)
                     continue;
-                next = Instantiate(obj, TileHolder.transform);
+                var next = Instantiate(TileArtObjects[Random.Range(0, TileArtObjects.Length)], TileHolder.transform);
                 //TODO:check 
                 next.transform.position = new Vector3(tile.X + Random.value, 0, tile.Y + Random.value) ;
-            }
-            else
-            {
-                next = Instantiate(obj, TileHolder.transform);
-                //TODO:check 
-                next.transform.position = new Vector3(tile.X, 0, tile.Y);
+
+                next.name = "Tile " + tile.X + "," + tile.Y;
 
             }
-
-            next.name = "Tile " + tile.X + "," + tile.Y;
 
 
             int loc = (++progress * 100) / totalProgress;
@@ -1146,15 +1171,11 @@ public class MapGenerator : MonoBehaviour
 
         while (current != end)
         {
-
             //moce vertically or horizontally
             var horizontally =  Random.value < 0.5f;
-            //if (drawRoad && horizontally && current.X == end.X)
-            //    horizontally = false;
-            //else if (drawRoad && !horizontally && current.Y == end.Y)
-            //    horizontally = true;
-
-            var wrongDirection = Random.value < wrongWayMod;
+            
+            //calculate chance that road will continue in wrong direction to create bending paths
+            var wrongDirection = Random.value < (wrongWayMod);
 
             var mod = wrongDirection ? -1 : 1;
 
@@ -1163,6 +1184,11 @@ public class MapGenerator : MonoBehaviour
 
             if (GetNeighbourTile(current, end, mod, horizontally).Type == TileType.Road)
                 horizontally = !horizontally;
+            else if (drawRoad && GetNeightbours(GetNeighbourTile(current, end, mod, horizontally)).Count(n => n.Type == TileType.Road) > 1)
+            {
+                //Prevent roads from creating ugly blocks
+                horizontally = !horizontally;
+            }
 
             current = GetNeighbourTile(current, end, mod, horizontally);
                 //current.X < end.X  ? map[current.X + mod, current.Y] : map[current.X -mod, current.Y];
@@ -1176,9 +1202,9 @@ public class MapGenerator : MonoBehaviour
 
             if (!drawRoad) continue;
             current.Type = TileType.Road;
+            
             foreach (var neightbour in GetNeightbours(current))
             {
-                neightbour.NextToRoad = true;
                 if (neightbour.Type == TileType.Forest)
                 {
                     neightbour.Type = TileType.Ground;

@@ -170,9 +170,14 @@ MonoBehaviour:
   TileArtObjects:
   - {fileID: 170140, guid: f9ef6c35d9402854f851bf9e54de3ebc, type: 3}
   - {fileID: 187920, guid: 127daafb00ba1604f8669edf932ac16d, type: 3}
-  RoadTileArtObject: {fileID: 1221279314926800, guid: 6bc0dbcab52c8b846ad32513b91237d9,
+  RoadStraight: {fileID: -6911892719884511611, guid: 8bfab24fc4678a34687e417b6c79c220,
     type: 3}
-  NextToRoadTile: {fileID: 1151737658520490563, guid: b5c8fe842ed95b942a52cc7ab1c7695e,
+  RoadBend: {fileID: 9142980828352056974, guid: 5bdbdcbc6dca71846bec51dc937ce92a,
+    type: 3}
+  RoadEnd: {fileID: 2993252683880092928, guid: d73e4173373fda0429ae8df852b629a4, type: 3}
+  RoadXCross: {fileID: 7129956645579803753, guid: d6da327ca83f9aa4f85208b822a4ddf4,
+    type: 3}
+  RoadTCross: {fileID: 4328856245290418485, guid: 746a3e48f6191664e957165072c9f2ff,
     type: 3}
   LootObjects:
   - {fileID: 1910571166180590, guid: ee5830f18c2be1244bb0fa764c0769a1, type: 3}
