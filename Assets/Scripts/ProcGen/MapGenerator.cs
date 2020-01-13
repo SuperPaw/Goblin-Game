@@ -868,7 +868,7 @@ public class MapGenerator : MonoBehaviour
         float adjustment = 0.2f;
 
 
-        int forestType = (int)(((float)(pos.x * pos.z) / map.Length) * Forest.Length) + Random.Range(-5, 5);
+        int forestType = (int)(((float)(pos.x * pos.z) / map.Length) * Forest.Length) + Random.Range(-10, 10);
         if (forestType >= Forest.Length) forestType = 0;
         if (forestType < 0) forestType = Forest.Length - 1;
 
