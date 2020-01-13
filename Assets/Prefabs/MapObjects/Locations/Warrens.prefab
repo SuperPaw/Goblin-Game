@@ -149,7 +149,7 @@ MonoBehaviour:
   NPCPrefab: {fileID: 114423572150661240, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe,
     type: 3}
   NoOfNpcs: 5
-  IconSprite: {fileID: 21300000, guid: c148599842f42274194246ba86cb5215, type: 3}
+  IconSprite: {fileID: 21300000, guid: a440c200abcf2cf4983f6b8c2fc48eef, type: 3}
   PoiOptionController: {fileID: 0}
   Members: []
   MonsterPrefab: {fileID: 114423572150661240, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe,
