@@ -115,6 +115,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 _mouseDragPos;
 
     [Header("Camera Controls")]
+    public float Offset = 57;
     public int GoblinViewSize;
     public int AreaViewSize;
     public int MapViewSize;
@@ -807,10 +808,8 @@ public class PlayerController : MonoBehaviour
 
     private void MoveToFollowGoblin()
     {
-        var offset = 51f;
-
         var xz = FollowGoblin.transform.position;
-        desiredCamPos = new Vector3(xz.x, Cam.transform.position.y, xz.z - offset);
+        desiredCamPos = new Vector3(xz.x, Cam.transform.position.y, xz.z - Offset);
     }
 
     private void MoveCamera(Vector3 xz, int orthographicSize)
