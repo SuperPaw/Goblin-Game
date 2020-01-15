@@ -24,7 +24,6 @@ public class MapGenerator : MonoBehaviour
         public bool Examined = false;
         public bool Hidable = false;
         public float ForestChance = 1f;
-        public bool NextToRoad;
 
         public Tile(int x, int y)
         {
@@ -75,11 +74,10 @@ public class MapGenerator : MonoBehaviour
     public NavMeshBuilder MeshBuilder; 
     public GameObject[] Npcs;
     public GameObject[] HidableObjects;
+    public GameObject[] Forest;
     public GameObject ForestHolder, AreaHolder, TileHolder;
-    public GameObject Forest;
-    public GameObject TileArtObject;
-    public GameObject RoadTileArtObject;
-    public RoadEdgeTile NextToRoadTile;
+    public GameObject[] TileArtObjects;
+    public RoadTile RoadStraight, RoadBend, RoadEnd, RoadXCross, RoadTCross;
     public GameObject[] LootObjects;
     public PointOfInterest[] PointOfInterestPrefabs;
     public PointOfInterest[] HumanSettlementPrefab;
@@ -180,7 +178,8 @@ public class MapGenerator : MonoBehaviour
         //Setting up mesh builder
         MeshBuilder.transform.localScale = new Vector3(SizeX / 8f, 1, SizeZ / 8f);
         //MeshBuilder.m_Size = new Vector3(SizeX, 10, SizeZ);
-        MeshBuilder.transform.position = new Vector3(SizeX / 2f, 0, SizeZ / 2f);
+        //Adjust for border size. Should be 
+        MeshBuilder.transform.position = new Vector3(SizeX+20, 0, SizeZ+20 );
 
         MeshBuilder.gameObject.SetActive(true);
 
@@ -636,47 +635,82 @@ public class MapGenerator : MonoBehaviour
     {
         //yield return null;
         //Debug.Log("Ground gen started");
+        
 
         //creating ground tiles
         foreach (var tile in map)
         {
             //TODO: no grass under trees, different if in area
-            var obj = tile.Type == TileType.Road ? RoadTileArtObject : TileArtObject;
-            GameObject next;
-            if (tile.Type != TileType.Road && tile.NextToRoad)
+            if (tile.Type == TileType.Road)
             {
-                var roadEdge = Instantiate(NextToRoadTile, TileHolder.transform);
+                bool ERoad = false;
+                bool WRoad = false;
+                bool SRoad = false;
+                bool NRoad = false;
+
+                int roadsConnect = 0;
 
                 if (map[tile.X + 1, tile.Y].Type == TileType.Road)
                 {
-                    roadEdge.ERoad = true;
+                    ERoad = true;
+                    roadsConnect++;
                 }
                 if (map[tile.X - 1, tile.Y].Type == TileType.Road)
                 {
-                    roadEdge.WRoad = true;
+                    WRoad = true;
+                    roadsConnect++;
                 }
                 if (map[tile.X, tile.Y + 1].Type == TileType.Road)
                 {
-                    roadEdge.NRoad = true;
+                    roadsConnect++;
+                    NRoad = true;
                 }
                 if (map[tile.X, tile.Y - 1].Type == TileType.Road)
                 {
-                    roadEdge.SRoad = true;
+                    roadsConnect++;
+                    SRoad = true;
                 }
-                roadEdge.SetupSprite();
 
-                next = roadEdge.gameObject;
+                RoadTile next;
+
+                if(roadsConnect <= 1)
+                {
+                    next = Instantiate(RoadEnd, TileHolder.transform);
+                }
+                else if(roadsConnect == 2)
+                {
+                    if(WRoad && ERoad || NRoad && SRoad)
+                    {
+                        next = Instantiate(RoadStraight, TileHolder.transform);
+                    }
+                    else
+                        next = Instantiate(RoadBend, TileHolder.transform);
+                }
+                else if(roadsConnect == 3)
+                    next = Instantiate(RoadTCross, TileHolder.transform);
+                else
+                    next = Instantiate(RoadXCross, TileHolder.transform);
+
+                next.RotateToPosition(WRoad, NRoad, ERoad, SRoad);
+
+                next.transform.position = new Vector3(tile.X, 0, tile.Y);
+
+                next.name = "Road " + tile.X + "," + tile.Y;
+
             }
-            else
+            else if (tile.Type == TileType.Ground)
             {
-                next = Instantiate(obj, TileHolder.transform);
+                //Generate tile visuals
+                 if( Random.value > 0.5f)
+                    continue;
+                var next = Instantiate(TileArtObjects[Random.Range(0, TileArtObjects.Length)], TileHolder.transform);
+                //TODO:check 
+                next.transform.position = new Vector3(tile.X + Random.value, 0, tile.Y + Random.value) ;
+
+                next.name = "Tile " + tile.X + "," + tile.Y;
 
             }
 
-            next.name = "Tile " + tile.X + "," + tile.Y;
-
-            //TODO:check 
-            next.transform.position = new Vector3(tile.X, 0, tile.Y);
 
             int loc = (++progress * 100) / totalProgress;
             if (loc != progressPct)
@@ -696,19 +730,41 @@ public class MapGenerator : MonoBehaviour
         //yield return null;
         //Debug.Log("Forest gen started");
 
+        //int forestType = Random.Range(0, Forest.Length);
+
+        //var forestChangeChance = 0.75f;
+
+        //var order = immovableTiles.OrderBy((a) => a.X + a.Y);
+
         //INSTANTIATING MAP
         //y=1 for tree height
         foreach (var tile in immovableTiles)
         {
-            GameObject next;
+
             //TODO: test this is not problematic?
             if (tile == null|| tile.Type != TileType.Forest)
                 continue;
 
-            if (GetNeightbours(tile).Any(n => n.Type != TileType.Forest))
-            {
+            //if (Random.value > forestChangeChance)
+            //{
+            //    forestType += Random.value > 0.5f ? -1 : 1;
+            //    if (forestType >= Forest.Length) forestType = 0;
+            //    if (forestType < 0) forestType = Forest.Length-1;
+            //}
+            
 
-                next = Instantiate(HidableObjects[Random.Range(0, HidableObjects.Length)], ForestHolder.transform);
+            if (GetNeightbours(tile,true).Any(n => n.Type != TileType.Forest))
+            {
+                //TODO: use create forest method
+                CreateForest(new Vector3(tile.X, 0, tile.Y), true);
+
+                //GameObject next = 
+                //    Instantiate(HidableObjects[Random.Range(0, HidableObjects.Length)], ForestHolder.transform);
+                //next.transform.position = new Vector3(tile.X, 1, tile.Y);
+
+
+                //next.name = "Forest " + tile.X + "," + tile.Y;
+
             }
             else
             {
@@ -716,24 +772,12 @@ public class MapGenerator : MonoBehaviour
                 if (Random.value < 0.2)
                     continue;
 
-                next = Instantiate(Forest, ForestHolder.transform);
+                CreateForest(new Vector3(tile.X, 0, tile.Y));
                 tile.Hidable = false;
             }
 
-            next.name = "Forest " + tile.X + "," + tile.Y;
-
             //TODO:check 
-            next.transform.position = new Vector3(tile.X, 1, tile.Y);
 
-            var parentArea = GetAreaAtPoint(next.transform.position);
-
-            if (parentArea)
-            {
-                //TODO: do not have unused hidables on tile
-                if (tile.Hidable) parentArea.Hidables.Add(next.GetComponent<Hidable>());
-
-                next.transform.parent = parentArea.transform;
-            }
             int loc = (++progress * 100) / totalProgress;
             if (loc != progressPct)
             {
@@ -775,65 +819,93 @@ public class MapGenerator : MonoBehaviour
     {
         for (int i = 1; i <= thickness; i++)
         {
-            var corner1 = new Vector3(-i,1,-i);
-            var corner2 = new Vector3(-i, 1, SizeZ-1+i);
-            var corner3 = new Vector3(SizeX-1+i, 1, SizeZ + i);
-            var corner4 = new Vector3(SizeX-1 + i, 1, -i);
+            var corner1 = new Vector3(-i,0,-i);
+            var corner2 = new Vector3(-i, 0, SizeZ-1+i);
+            var corner3 = new Vector3(SizeX-1+i, 0, SizeZ + i);
+            var corner4 = new Vector3(SizeX-1 + i, 0, -i);
 
             for (Vector3 pos = corner1; pos.z <= corner2.z; pos.z++)
             {
-                var ground = Instantiate(TileArtObject, TileHolder.transform);
-                ground.name = "Tile " + pos.x + "," + pos.z;
-                ground.transform.position = new Vector3(pos.x, 0, pos.z);
+                //var ground = Instantiate(TileArtObjects[], TileHolder.transform);
+                //ground.name = "Tile " + pos.x + "," + pos.z;
+                //ground.transform.position = new Vector3(pos.x, 0, pos.z);
 
                 //Ignore chance
                 if (Random.value < 0.2)
                     continue;
-
-                var next = Instantiate(Forest, ForestHolder.transform);
-
-                next.transform.position = pos;
+                CreateForest(pos);
+                
 
             }
             for (Vector3 pos = corner1; pos.x <= corner4.x; pos.x++)
             {
-                var ground = Instantiate(TileArtObject, TileHolder.transform);
-                ground.name = "Tile " + pos.x + "," + pos.z;
-                ground.transform.position = new Vector3(pos.x, 0, pos.z);
-
+                
                 if (Random.value < 0.2)
                     continue;
-                var next = Instantiate(Forest, ForestHolder.transform);
 
-                next.transform.position = pos;
+                CreateForest(pos);
             }
             for (Vector3 pos = corner4; pos.z <= corner3.z; pos.z++)
             {
-                var ground = Instantiate(TileArtObject, TileHolder.transform);
-                ground.name = "Tile " + pos.x + "," + pos.z;
-                ground.transform.position = new Vector3(pos.x, 0, pos.z);
-
+                
                 if (Random.value < 0.2)
                     continue;
-                var next = Instantiate(Forest, ForestHolder.transform);
-
-                next.transform.position = pos;
+                CreateForest(pos);
             }
             for (Vector3 pos = corner2; pos.x <= corner3.x; pos.x++)
             {
-                var ground = Instantiate(TileArtObject, TileHolder.transform);
-                ground.name = "Tile " + pos.x + "," + pos.z;
-                ground.transform.position = new Vector3(pos.x, 0, pos.z);
-
+                
                 if (Random.value < 0.2)
                     continue;
-                var next = Instantiate(Forest, ForestHolder.transform);
+                CreateForest(pos);
 
-                next.transform.position = pos;
             }
         }
     }
-    
+
+    private void CreateForest(Vector3 pos, bool hidable = false)
+    {
+        float adjustment = 0.2f;
+
+
+        int forestType = (int)(((float)(pos.x * pos.z) / map.Length) * Forest.Length) + Random.Range(-10, 10);
+        if (forestType >= Forest.Length) forestType = 0;
+        if (forestType < 0) forestType = Forest.Length - 1;
+
+        var forest = Instantiate(Forest[forestType], ForestHolder.transform);
+        
+        Transform trans;
+
+        if(hidable)
+        {
+            var hideObject = Instantiate(HidableObjects[Random.Range(0, HidableObjects.Length)], ForestHolder.transform);
+
+            hideObject.name = "Hidable " + pos.x.ToString("N0") + "," + pos.y.ToString("N0");
+            forest.transform.parent = hideObject.transform;
+            forest.transform.localPosition = Vector3.zero;
+
+            trans = hideObject.transform;
+            
+            var parentArea = GetAreaAtPoint(pos);
+
+            if (parentArea)
+            {
+                parentArea.Hidables.Add(hideObject.GetComponent<Hidable>());
+
+                trans.parent = parentArea.transform;
+            }
+        }
+        else
+        {
+            trans = forest.transform;
+            forest.name = "Forest " + pos.x.ToString("N0") + "," + pos.y.ToString("N0");
+        }
+
+        trans.position = pos + new Vector3(Random.Range(-adjustment, adjustment), 0, Random.Range(-adjustment, adjustment));
+
+        trans.localRotation = Quaternion.Euler(0, Random.Range(0, 90), 0);
+
+    }
 
     private Area CreateArea(Vector3 position, List<Area> neighbour = null)
     {
@@ -1099,15 +1171,11 @@ public class MapGenerator : MonoBehaviour
 
         while (current != end)
         {
-
             //moce vertically or horizontally
             var horizontally =  Random.value < 0.5f;
-            //if (drawRoad && horizontally && current.X == end.X)
-            //    horizontally = false;
-            //else if (drawRoad && !horizontally && current.Y == end.Y)
-            //    horizontally = true;
-
-            var wrongDirection = Random.value < wrongWayMod;
+            
+            //calculate chance that road will continue in wrong direction to create bending paths
+            var wrongDirection = Random.value < (wrongWayMod);
 
             var mod = wrongDirection ? -1 : 1;
 
@@ -1116,6 +1184,11 @@ public class MapGenerator : MonoBehaviour
 
             if (GetNeighbourTile(current, end, mod, horizontally).Type == TileType.Road)
                 horizontally = !horizontally;
+            else if (drawRoad && GetNeightbours(GetNeighbourTile(current, end, mod, horizontally)).Count(n => n.Type == TileType.Road) > 1)
+            {
+                //Prevent roads from creating ugly blocks
+                horizontally = !horizontally;
+            }
 
             current = GetNeighbourTile(current, end, mod, horizontally);
                 //current.X < end.X  ? map[current.X + mod, current.Y] : map[current.X -mod, current.Y];
@@ -1129,9 +1202,9 @@ public class MapGenerator : MonoBehaviour
 
             if (!drawRoad) continue;
             current.Type = TileType.Road;
+            
             foreach (var neightbour in GetNeightbours(current))
             {
-                neightbour.NextToRoad = true;
                 if (neightbour.Type == TileType.Forest)
                 {
                     neightbour.Type = TileType.Ground;

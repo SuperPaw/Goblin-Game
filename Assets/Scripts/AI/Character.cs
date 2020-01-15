@@ -517,7 +517,7 @@ public abstract partial class Character : MonoBehaviour
 
         Walking = stateController.State == CharacterState.Travelling || stateController.State == CharacterState.Idling;
 
-        navMeshAgent.speed = Walking ? Mathf.Min(WalkingSpeed, SPE.GetStatMax()) / 2f : SPE.GetStatMax() / 2f;
+        navMeshAgent.speed = Walking ? Mathf.Min(WalkingSpeed, SPE.GetStatMax()) / 4f : SPE.GetStatMax() / 4f;
 
         Destination = navMeshAgent.destination;
         DesiredVelocity = navMeshAgent.desiredVelocity.sqrMagnitude;

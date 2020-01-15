@@ -71,18 +71,34 @@ public class PlayerTeam : MonoBehaviour
 
     //Events
     //TODO: use these properly
+    [HideInInspector]
     public UnityEvent OnTeamKill = new UnityEvent();
+    [HideInInspector]
     public UnityEvent OnMemberAdded = new UnityEvent();
+    [HideInInspector]
     public UnityEvent OnOrder = new UnityEvent();
+    [HideInInspector]
     public StuffFoundEvent OnTreasureFound = new StuffFoundEvent();
+    [HideInInspector]
     public EquipmentFoundEvent OnEquipmentFound = new EquipmentFoundEvent();
+    [HideInInspector]
     public StuffFoundEvent OnFoodFound = new StuffFoundEvent();
+    [HideInInspector]
     public UnityEvent OnBattleWon = new UnityEvent();
 
     public class StuffFoundEvent : UnityEvent<int> { }
     public class EquipmentFoundEvent : UnityEvent<Equipment,Goblin> { }
 
     [Header("Graphics")] public Material[] GoblinSkins;
+    public GoblinLook[] GoblinLooks;
+
+
+    [Serializable]
+    public struct GoblinLook
+    {
+        public Sprite Icon;
+        public Material Material;
+    }
 
     [Header("Necromancy")] public Character ZombiePrefab;
     public Material NecromancerSkin;
@@ -117,9 +133,10 @@ public class PlayerTeam : MonoBehaviour
         {
             character.Team = this;
 
-            var mat = GoblinSkins[Random.Range(0, GoblinSkins.Length)];
-
-            //Debug.Log(character +" Material: "+ mat);
+            var look = GoblinLooks[Random.Range(0, GoblinLooks.Length)];
+            var mat = look.Material;
+            var icon = look.Icon;
+            character.GoblinImage = icon;
 
             character.GoblinSkin.sharedMaterial = mat;
                         

@@ -126,8 +126,8 @@ public class CharacterView : MonoBehaviour
         HealthTextEntry.Value.text = $" {c.Health} / {c.HEA.GetStatMax()}";
         HealthTextEntry.FillImage.fillAmount = c.Health / (float) c.HEA.GetStatMax();
         HealthTextEntry.ValueHover.Stat = c.HEA;
-        
-        ClassIcon.sprite = c.Alive() ? GameManager.GetClassImage(c.ClassType): GameManager.GetIconImage(GameManager.Icon.Dead);
+
+        ClassIcon.sprite = GameManager.GetClassImage(c);
         ClassIcon.GetComponent<OnValueHover>().Class = c.ClassType;
         
         //TODO: update current stats instead replacing
