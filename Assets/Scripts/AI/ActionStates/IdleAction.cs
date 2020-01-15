@@ -18,6 +18,8 @@ public class IdleAction : ActionState
     {
         //Debug.Log($"{ch.name}: Starting {StateType} action");
 
+        yield return new WaitUntil(() => GameManager.Instance.GameStarted);
+
         var g = ch as Goblin;
 
         while (ch.GetState() == StateType)

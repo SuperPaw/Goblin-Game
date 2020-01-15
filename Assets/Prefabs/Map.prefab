@@ -114,7 +114,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   Areas: []
-  MeshBuilder: {fileID: 8333565733166306683}
+  Plane: {fileID: 8333565733166306683}
   Npcs:
   - {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9, type: 3}
   - {fileID: 180470, guid: f4864ffb159f30048a3bdafeae646afb, type: 3}
@@ -356,8 +356,8 @@ MonoBehaviour:
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
+  m_OverrideTileSize: 1
+  m_TileSize: 64
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.1
   m_BuildHeightMesh: 0

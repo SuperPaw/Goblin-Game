@@ -71,7 +71,7 @@ public class MapGenerator : MonoBehaviour
     
 
     [Header("References")]
-    public NavMeshBuilder MeshBuilder; 
+    public NavMeshBuilder Plane; 
     public GameObject[] Npcs;
     public GameObject[] HidableObjects;
     public GameObject[] Forest;
@@ -176,12 +176,11 @@ public class MapGenerator : MonoBehaviour
         yield return null;
 
         //Setting up mesh builder
-        MeshBuilder.transform.localScale = new Vector3(SizeX / 8f, 1, SizeZ / 8f);
+        Plane.transform.localScale = new Vector3(SizeX / 8f, 1, SizeZ / 8f);
         //MeshBuilder.m_Size = new Vector3(SizeX, 10, SizeZ);
         //Adjust for border size. Should be 
-        MeshBuilder.transform.position = new Vector3(SizeX+20, 0, SizeZ+20 );
+        Plane.transform.position = new Vector3(SizeX+20, 0, SizeZ+20 );
 
-        MeshBuilder.gameObject.SetActive(true);
 
 
         //Forest gen
@@ -790,6 +789,7 @@ public class MapGenerator : MonoBehaviour
         forestGenDone = true;
         //Debug.Log("Finished forest gen : " + (Time.time - startTime) + " seconds");
 
+        Plane.enabled =(true);
     }
 
     private void AddAreaPoi(Area area ,PointOfInterest next)
