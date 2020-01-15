@@ -31,7 +31,7 @@ public class PopUpText : MonoBehaviour
 
     public Queue<ShowEvent> TextToShow = new Queue<ShowEvent>();
     public static bool ShowingText;
-    public float ShowTime = 4;
+    public float ShowTime = 5;
     //private AiryUIAnimatedElement comp;
 
     // Start is called before the first frame update
@@ -55,19 +55,13 @@ public class PopUpText : MonoBehaviour
 
     public static void ShowText(string text, Transform trans, Sprite messageSprite)
     {
-
-        Debug.Log(" pop up: " + text);
-
-
         Instance.TextToShow.Enqueue(new ShowEvent(text,trans,messageSprite));
     }
 
     private IEnumerator ShowTextLoop(ShowEvent showing)
     {
         ShowingText = true;
-
-        Debug.Log("showing pop up: " + showing.Text);
-
+        
         PopText.text = showing.Text;
         ImageHolder.SetActive(showing.Sprite);
         MessageImage.sprite = showing.Sprite;
@@ -105,8 +99,8 @@ public class PopUpText : MonoBehaviour
         ViewHolder.SetActive(false);
         //GameManager.UnPause();
 
-        yield return new WaitUntil(() => ViewHolder.AllHidden());
-       
+        yield return new WaitForSeconds(1f);
+        
         //TODO: only unpause if it was already unpaused
 
         ShowingText = false;
