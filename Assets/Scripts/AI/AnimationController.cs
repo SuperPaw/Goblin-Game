@@ -59,7 +59,7 @@ public abstract partial class Character
                     ? RANGED_ATTACK_ANIMATION_BOOL
                     : ATTACK_ANIMATION_BOOL);
             }
-            else if (_owner.Searching() && _owner.LootTarget && Vector3.Distance(_owner.transform.position, _owner.LootTarget.transform.position) < 3f)
+            else if (_owner.Searching() && _owner.LootTarget && Vector3.Distance(_owner.transform.position, _owner.LootTarget.transform.position) < 2f)
             {
                 Animate(PICKUP_ANIMATION_BOOL);
             }

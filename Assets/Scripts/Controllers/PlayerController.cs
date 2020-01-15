@@ -815,9 +815,7 @@ public class PlayerController : MonoBehaviour
     private void MoveCamera(Vector3 xz, int orthographicSize)
     {
         //currentLocation = loc;
-        var offset = 49;
-
-        desiredCamPos = new Vector3(xz.x, Cam.transform.position.y, xz.z - offset);
+        desiredCamPos = new Vector3(xz.x, Cam.transform.position.y, xz.z - Offset);
         desiredOrtographicSize = orthographicSize;
     }
 

@@ -991,7 +991,7 @@ public abstract partial class Character : MonoBehaviour
             return false;
         }
 
-        var boxCol = GetComponent<CapsuleCollider>();
+        var boxCol = GetComponent<NavMeshAgent>();
 
         return ((boxCol.transform.position - (targetCol.transform.position)).magnitude
             <= boxCol.radius * boxCol.transform.lossyScale.x

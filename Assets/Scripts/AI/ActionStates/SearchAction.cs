@@ -39,7 +39,9 @@ public class SearchAction : ActionState
             }
 
             //check for arrival and stop travelling
-            if ((Vector3.Distance(g.transform.position, g.LootTarget.transform.position) > 2f)) continue;
+            if ((Vector3.Distance(g.transform.position, g.LootTarget.transform.position) > 1.5f)) continue;
+
+            g.navMeshAgent.ResetPath();
 
             if (g.LootTarget.ContainsLoot)
             {
@@ -68,7 +70,7 @@ public class SearchAction : ActionState
             g.LootTarget.ContainsLoot = false;
             g.LootTarget.Searched = true;
 
-            g.ChangeState(Character.CharacterState.Idling, false, 5f);
+            g.ChangeState(Character.CharacterState.Idling, false, 4f);
             break;
         }
 

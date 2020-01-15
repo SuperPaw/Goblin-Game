@@ -101,6 +101,25 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  EnemyImages:
+  - Type: 0
+    Sprite: {fileID: 21300000, guid: ac009792a9c707a4893def7fe9c6907a, type: 3}
+  - Type: 1
+    Sprite: {fileID: 21300000, guid: 5c2c6415501935740912eb2bcc0f4cfa, type: 3}
+  - Type: 2
+    Sprite: {fileID: 21300000, guid: 96c8e36dc250d144db347c7c1b9bb667, type: 3}
+  - Type: 3
+    Sprite: {fileID: 21300000, guid: 663e16dd82357b64ebf41e83c3efe277, type: 3}
+  - Type: 4
+    Sprite: {fileID: 21300000, guid: 8a90a64a1640a7640b050982b0048bb9, type: 3}
+  - Type: 5
+    Sprite: {fileID: 21300000, guid: 389bcca5603f89545aa327c24838a4e3, type: 3}
+  - Type: 6
+    Sprite: {fileID: 21300000, guid: bf3256172a5da0b4da9307a2491ec69d, type: 3}
+  - Type: 7
+    Sprite: {fileID: 21300000, guid: ee47eb7e782477f49aff1d65e841e2e3, type: 3}
+  - Type: 8
+    Sprite: {fileID: 21300000, guid: 56249695e7578a4428f71431e4e60834, type: 3}
   IconImages:
   - IconType: 0
     Image: {fileID: 21300000, guid: e3c0ced939ade584eb258c335d0dbea4, type: 3}

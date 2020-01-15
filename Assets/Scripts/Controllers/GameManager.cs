@@ -68,8 +68,16 @@ public class GameManager : MonoBehaviour
         public Color Color;
     }
 
+    [Serializable]
+    public struct EnemyImage
+    {
+        public Character.Race Type;
+        public Sprite Sprite;
+    }
+
 
     [Header("References")]
+    public EnemyImage[] EnemyImages;
     public IconImg[] IconImages;
     public ClassImg[] ClassImgs;
     public EquipmentImage[] EquipmentImages;

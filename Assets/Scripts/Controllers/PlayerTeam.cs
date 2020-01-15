@@ -645,6 +645,7 @@ public class PlayerTeam : MonoBehaviour
         {
             Leader = Challenger;
             Challenger = null;
+            GoblinUIList.UpdateGoblinList();
             return;
         }
 
