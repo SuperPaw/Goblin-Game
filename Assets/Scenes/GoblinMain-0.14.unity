@@ -113,7 +113,7 @@ NavMeshSettings:
     agentClimb: 1
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
-    minRegionArea: 5
+    minRegionArea: 100
     manualCellSize: 0
     cellSize: 0.1
     manualTileSize: 0
