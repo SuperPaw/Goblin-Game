@@ -66,6 +66,7 @@ public class Equipment : MonoBehaviour
     {
         OnEquip.AddListener(Equip);
         OnDeequip.AddListener(DeEquip);
+        Icon = GameManager.GetIconImage(Type);
     }
 
     public override string ToString()

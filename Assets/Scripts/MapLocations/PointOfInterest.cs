@@ -153,7 +153,7 @@ public class PointOfInterest : MonoBehaviour
 
             Debug.Log("PLAYER HAS WON");
 
-            PopUpText.ShowText("The goblins have found a new home!",transform);
+            PopUpText.ShowText("The goblins have found a new home!",transform,GameManager.GetEventImage(GameManager.EventIcon.NewHome));
             GameManager.GameOver(true);
         }
 
@@ -254,13 +254,13 @@ public class PointOfInterest : MonoBehaviour
             g.gameObject.SetActive(true);
             g.ChangeState(Character.CharacterState.Idling, true);
             SoundController.PlayStinger(SoundBank.Stinger.FoundEquipment);
-            PopUpText.ShowText($"{g.name} found {Treasure} goblin treasures in {AreaName}!", g.transform);
+            PopUpText.ShowText($"{g.name} found {Treasure} goblin treasures in {AreaName}!", g.transform,IconSprite);
 
             Explored = true;
         }
         else
         {
-            PopUpText.ShowText($"{g.name} did not return from exploring the {AreaName}!",transform);
+            PopUpText.ShowText($"{g.name} did not return from exploring the {AreaName}!",transform,IconSprite);
             g.Health = 0;
             g.Team.Members.Remove(g);
         }

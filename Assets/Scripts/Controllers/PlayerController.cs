@@ -545,7 +545,7 @@ public class PlayerController : MonoBehaviour
             case PointOfInterest.Poi.Lake:
             case PointOfInterest.Poi.ElvenTemple:
                 SoundController.PlayStinger(SoundBank.Stinger.RevealArea);
-                PopUpText.ShowText($"{Instance.Team} discover {area.PointOfInterest.AreaName}", area.transform);
+                PopUpText.ShowText($"{Instance.Team} discover {area.PointOfInterest.AreaName}", area.transform,area.PointOfInterest?.IconSprite);
                 break;
             case PointOfInterest.Poi.Count:
                 break;
@@ -554,7 +554,7 @@ public class PlayerController : MonoBehaviour
                 {
                     SoundController.PlayStinger(SoundBank.Stinger.RevealArea);
                     var enm = area.PresentCharacters.First(c => c.tag == "Enemy");
-                    PopUpText.ShowText($"{Instance.Team} meet ugly {enm}", enm.transform);
+                    PopUpText.ShowText($"{Instance.Team} meet ugly {enm}", enm.transform,GameManager.GetEnemyImg(enm.CharacterRace));
                 }
                 break;
             default:

@@ -32,7 +32,7 @@ public class PlayerTeam : MonoBehaviour
                 } while (GreatestGoblins.ScoresContainName(_leader.name)); //TODO: check that this works
 
                 SoundController.PlayStinger(SoundBank.Stinger.GameStart);
-                PopUpText.ShowText(_leader.name +" is new chief!",_leader.transform);
+                PopUpText.ShowText(_leader.name +" is new chief!",_leader.transform,_leader.GoblinImage);
 
                 _leader.Mood = Goblin.Happiness.VeryHappy;
 
@@ -706,13 +706,14 @@ public class PlayerTeam : MonoBehaviour
         }
         if (options.Any())
         {
-            PopUpText.ShowText(finder + " find " + equipment, finder.transform);
+            PopUpText.ShowText(finder + " found " + equipment, finder.transform,equipment.Icon);
+            //TODO: make Send this as an action, so it triggers when message shows
             PlayerChoice.SetupPlayerChoice(options.ToArray(),"Who gets the " + equipment + "?");
         }
         else
         {
             OnTreasureFound.Invoke(1);
-            PopUpText.ShowText($"{finder} find {equipment} and broke it into treasure",finder.transform);
+            PopUpText.ShowText($"{finder} find {equipment} and broke it into treasure", finder.transform, equipment.Icon);// GameManager.GetEventImage(GameManager.EventIcon.BrokeEquipment));
         }
     }
 }

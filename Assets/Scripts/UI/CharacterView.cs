@@ -158,7 +158,7 @@ public class CharacterView : MonoBehaviour
         {
             var entry = Instantiate(EquipmentInfo, EquipmentInfo.transform.parent);
             entry.Value.text = equipment.ToString();
-            entry.Name.sprite = GameManager.GetIconImage(equipment.Type);
+            entry.Name.sprite = equipment.Icon;
             entry.gameObject.SetActive(true);
             //var hover =entry.GetComponent<OnValueHover>();
             if (entry.ValueHover)

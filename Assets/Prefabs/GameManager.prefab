@@ -49,6 +49,95 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c31ba6d6070b4a47b96fe9dd4de38da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TreasurePartImages:
+  - Name: goo
+    Sprite: {fileID: 21300000, guid: 7ccb3d795a82a9447b3fd8d897badfb6, type: 3}
+  - Name: meat
+    Sprite: {fileID: 21300000, guid: 4caadabb1b20abc428b7828beb3d4377, type: 3}
+  - Name: intestines
+    Sprite: {fileID: 21300000, guid: bdf360cb88f452c4bbc7ecfa02cdf2d3, type: 3}
+  - Name: heart
+    Sprite: {fileID: 21300000, guid: b4756c54b05fcd14db673d690f197ab7, type: 3}
+  - Name: liver
+    Sprite: {fileID: 21300000, guid: ad2995bdb053b1c42a4ad2579fcb77be, type: 3}
+  - Name: eyes
+    Sprite: {fileID: 21300000, guid: 9a145d2e4c1e0d4489a6dd38e08c7f75, type: 3}
+  - Name: tongue
+    Sprite: {fileID: 21300000, guid: bdf360cb88f452c4bbc7ecfa02cdf2d3, type: 3}
+  - Name: food
+    Sprite: {fileID: 21300000, guid: ad2995bdb053b1c42a4ad2579fcb77be, type: 3}
+  - Name: foot
+    Sprite: {fileID: 21300000, guid: 0540494899dda7c4289675de707482f1, type: 3}
+  - Name: hand
+    Sprite: {fileID: 21300000, guid: 733792bfbb4a55e49bc25d8cf15a22a9, type: 3}
+  - Name: tooth
+    Sprite: {fileID: 21300000, guid: 940a827d31e50da44ad5c22a583e244e, type: 3}
+  - Name: skull
+    Sprite: {fileID: 21300000, guid: 0ecd9834ec142094c95364704b3bcb8b, type: 3}
+  - Name: leg
+    Sprite: {fileID: 21300000, guid: bdf360cb88f452c4bbc7ecfa02cdf2d3, type: 3}
+  - Name: arm
+    Sprite: {fileID: 21300000, guid: bdf360cb88f452c4bbc7ecfa02cdf2d3, type: 3}
+  - Name: skin
+    Sprite: {fileID: 21300000, guid: 0e60da2b4f50f19439ccd7e0c1effb83, type: 3}
+  - Name: bone
+    Sprite: {fileID: 21300000, guid: 7bf142ff9dbd3714db003466d9400098, type: 3}
+  - Name: horn
+    Sprite: {fileID: 21300000, guid: 73faf6a0793bfb24cac8d163291ad1ac, type: 3}
+  - Name: ring
+    Sprite: {fileID: 21300000, guid: d0278fb5d5cc56449a9a784529ec1245, type: 3}
+  - Name: necklace
+    Sprite: {fileID: 21300000, guid: 8ede3a66c38b67e449247972eb22e164, type: 3}
+  - Name: coin
+    Sprite: {fileID: 21300000, guid: 8363b5da159ae444e96e3b27f0bfce84, type: 3}
+  - Name: crystal
+    Sprite: {fileID: 21300000, guid: 8ef0072ab5997674cb5122de3080a9fc, type: 3}
+  - Name: key
+    Sprite: {fileID: 21300000, guid: eaab36c933329004f9e7e1cb0cdfcf30, type: 3}
+  - Name: crown
+    Sprite: {fileID: 21300000, guid: 56c34b475322138469e0e5c41ac7c417, type: 3}
+  - Name: armband
+    Sprite: {fileID: 21300000, guid: 965dc33ef2f74ee4e90d476323eb9ed0, type: 3}
+  - Name: rock
+    Sprite: {fileID: 21300000, guid: ee9a214ead385f644973e9d3aac7a2f3, type: 3}
+  - Name: stone
+    Sprite: {fileID: 21300000, guid: 5e6dd575dca635147b5f432482e9be1d, type: 3}
+  - Name: stick
+    Sprite: {fileID: 21300000, guid: 3febefcfd9447814487b6969b5d7d634, type: 3}
+  - Name: branch
+    Sprite: {fileID: 21300000, guid: 3febefcfd9447814487b6969b5d7d634, type: 3}
+  - Name: leaf
+    Sprite: {fileID: 21300000, guid: eaee69b4bd67eeb4e8e8a0d8bc693583, type: 3}
+  - Name: bottle
+    Sprite: {fileID: 21300000, guid: 1ecdb64662d65554ab37a680366f6f1e, type: 3}
+  - Name: bag
+    Sprite: {fileID: 21300000, guid: 89aa6e218d5f38443be50fe262baec95, type: 3}
+  - Name: chest
+    Sprite: {fileID: 21300000, guid: b2095f8ebc5c647479a006bd1810eba0, type: 3}
+  - Name: book
+    Sprite: {fileID: 21300000, guid: 6d0402648500d7e48b84207c75e9bc47, type: 3}
+  - Name: paper
+    Sprite: {fileID: 21300000, guid: fb77bc928869b144faaea697df7bb30b, type: 3}
+  - Name: scroll
+    Sprite: {fileID: 21300000, guid: a79604f7249999246adb5e61fb614400, type: 3}
+  - Name: statue
+    Sprite: {fileID: 21300000, guid: 2b5089d460718dd4cb4cc392a8b3ee0e, type: 3}
+  - Name: figure
+    Sprite: {fileID: 21300000, guid: b2c4cde1007d97444b81a9e229639205, type: 3}
+  - Name: effigy
+    Sprite: {fileID: 21300000, guid: a40ecd67e1430a641be7f366a1a22331, type: 3}
+  - Name: puppet
+    Sprite: {fileID: 21300000, guid: 8d2f03f10ed8e7f4b93a6d45ef2d6c11, type: 3}
+  - Name: claw
+    Sprite: {fileID: 21300000, guid: b20729c7728d4e94696a7e4cfbdd4741, type: 3}
+  - Name: feather
+    Sprite: {fileID: 21300000, guid: 41382fb7b60946e4687afa1cb9d172e9, type: 3}
+  - Name: beak
+    Sprite: {fileID: 21300000, guid: 9624498ea2a409747b35c2d27aaade3f, type: 3}
+  - Name: bone
+    Sprite: {fileID: 21300000, guid: 7bf142ff9dbd3714db003466d9400098, type: 3}
+  - Name: wing
+    Sprite: {fileID: 21300000, guid: 36ecdfd5d048c984fa197c7662b5a40d, type: 3}
   TwotimesSyllabalChance: 2
   RhymingSyllabalChance: 2
   SingleSyllabalChance: 3
@@ -103,23 +192,32 @@ MonoBehaviour:
     m_RotationOrder: 4
   EnemyImages:
   - Type: 0
-    Sprite: {fileID: 21300000, guid: ac009792a9c707a4893def7fe9c6907a, type: 3}
+    Sprite: {fileID: 21300000, guid: 7268836550ff0d545be10452b6f068dd, type: 3}
   - Type: 1
-    Sprite: {fileID: 21300000, guid: 5c2c6415501935740912eb2bcc0f4cfa, type: 3}
+    Sprite: {fileID: 21300000, guid: a7df60fcd2e364a4489e965b32bb83ba, type: 3}
   - Type: 2
-    Sprite: {fileID: 21300000, guid: 96c8e36dc250d144db347c7c1b9bb667, type: 3}
+    Sprite: {fileID: 21300000, guid: d5266c3090afecf41bcbe9b090c74707, type: 3}
   - Type: 3
-    Sprite: {fileID: 21300000, guid: 663e16dd82357b64ebf41e83c3efe277, type: 3}
+    Sprite: {fileID: 21300000, guid: b6fe3ae6eb2cc944e80d314332a9650a, type: 3}
   - Type: 4
-    Sprite: {fileID: 21300000, guid: 8a90a64a1640a7640b050982b0048bb9, type: 3}
+    Sprite: {fileID: 21300000, guid: 09247a2e339246f428aaef6196f52661, type: 3}
   - Type: 5
-    Sprite: {fileID: 21300000, guid: 389bcca5603f89545aa327c24838a4e3, type: 3}
+    Sprite: {fileID: 21300000, guid: 610f24b8538fc114aaf9fa92e37c1e29, type: 3}
   - Type: 6
-    Sprite: {fileID: 21300000, guid: bf3256172a5da0b4da9307a2491ec69d, type: 3}
+    Sprite: {fileID: 21300000, guid: 506edcfc1b4321d49816e78efb55aa1e, type: 3}
   - Type: 7
-    Sprite: {fileID: 21300000, guid: ee47eb7e782477f49aff1d65e841e2e3, type: 3}
+    Sprite: {fileID: 21300000, guid: 0dc9656d56e9c25469fa5e6bd8feaeaf, type: 3}
   - Type: 8
-    Sprite: {fileID: 21300000, guid: 56249695e7578a4428f71431e4e60834, type: 3}
+    Sprite: {fileID: 21300000, guid: 1637cf8f8222f374da4e318c8deeb014, type: 3}
+  EventImgs:
+  - Type: 0
+    Image: {fileID: 21300000, guid: 4caadabb1b20abc428b7828beb3d4377, type: 3}
+  - Type: 1
+    Image: {fileID: 21300000, guid: 8ef0072ab5997674cb5122de3080a9fc, type: 3}
+  - Type: 2
+    Image: {fileID: 21300000, guid: 2c73ec8128bd32141b8ee798e57e5fea, type: 3}
+  - Type: 3
+    Image: {fileID: 21300000, guid: a440c200abcf2cf4983f6b8c2fc48eef, type: 3}
   IconImages:
   - IconType: 0
     Image: {fileID: 21300000, guid: e3c0ced939ade584eb258c335d0dbea4, type: 3}

@@ -20,7 +20,6 @@ public class AttackAction : ActionState
             if (!ch.AttackTarget || !ch.AttackTarget.Alive() || ch.AttackTarget.InArea != ch.InArea)// || (ch.AttackTarget.Fleeing()&& ch.InArea.AnyEnemies())
             {
                 //TODO. handle fleeing change S
-                Debug.Log($"{ch}'s Target is gone");
                 TargetGone(ch);
             }
             else if ( ch.InAttackRange()) //has live enemy target and in attackrange
@@ -51,7 +50,7 @@ public class AttackAction : ActionState
     protected void TargetGone(Character ch)
     {
         var closest = ch.GetClosestEnemy();
-        if (!closest || !ch.Attacking())
+        if (!closest || !ch.Attacking() )
         {
             ch.ChangeState(Character.CharacterState.Idling, true);
             ch.AttackTarget = null;

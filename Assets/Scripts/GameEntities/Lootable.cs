@@ -1,21 +1,29 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Lootable : MonoBehaviour
 {
     public bool ContainsLoot = true;
-    public string Loot;
+    public Treasure Loot;
     public bool Searched;
     public bool ContainsFood;
-    public string Food;
+    public Treasure Food;
     public List<Equipment> EquipmentLoot = new List<Equipment>();
+
+    [Serializable]
+    public struct Treasure
+    {
+        public string Name;
+        public Sprite LootImage;
+        
+    }
 
     public Area InArea;
 
     public void Start()
     {
-        //TODO: could be handled when found, so it 
         Loot = NameGenerator.GetTreasureName();
     }
 }

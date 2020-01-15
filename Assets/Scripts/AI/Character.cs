@@ -889,7 +889,9 @@ public abstract partial class Character : MonoBehaviour
         {
             loot.ContainsFood = true;
 
-            loot.Food = CharacterRace + " " + NameGenerator.GetFoodName();
+            var food = NameGenerator.GetFoodName();
+            loot.Food.Name = CharacterRace + " " + food.Name;
+            loot.Food.LootImage = food.Sprite;
         }
         var removeEquip = Equipped.Values.Where(e => e).ToArray();
 

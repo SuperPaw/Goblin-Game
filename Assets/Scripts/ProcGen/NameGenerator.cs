@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -6,6 +6,8 @@ using Random = UnityEngine.Random;
 public class NameGenerator : MonoBehaviour
 {
     public static NameGenerator Instance;
+
+    public TreasurePart[] TreasurePartImages;
 
     private static string[] endings = new[] {"k", "p", "ka", "k", "l", "k", "ki"}; //g
     private static string[] specialEndings = new[] { "zo", "zak","ox","ax"}; //g
@@ -49,6 +51,19 @@ public class NameGenerator : MonoBehaviour
         "hacker", "kicker", "whacker", "gnawer", "slapper", "gnasher", "basher", "biter", "cutter", "eater",
     };
 
+    //TODO: make less hacky by using arrays of this instead of String[]
+    [Serializable]
+    public struct TreasurePart
+    {
+        public string Name;
+        public Sprite Sprite;
+    }
+    [Serializable]
+    public struct TreasureAdjective
+    {
+        public string Name;
+        public Sprite Sprite;
+    }
 
     /// TREASURE STUFF  --- should be inedible
     private enum treasureTypes { RACEPART, ANIMALPART,BIRDPART,THING,BURNEDBOOK,EMPTYCONTAINER,LOOKSLIKE,STATUE,SMALLSKELETON}
@@ -62,7 +77,7 @@ public class NameGenerator : MonoBehaviour
     private static string[] birdParts = new[] { "skull", "claw","feather", "beak", "bone","wing"};
     private static string[] colors = new[] { "red","blue","black","grey","brown","golden","green","yellow" };
     private static string[] magicAttributes = new[] { "shiny","glowing","magic","engraved","radiant","shiny" };
-    private static string[] fancyStuff = new[] {"ring", "coin", "crystal","crown","armband"};
+    private static string[] fancyStuff = new[] {"ring", "coin", "crystal","crown","armband","necklace","key"};
     private static string[] stuff = new[] { "rock", "stone", "stick","branch","leaf" };
     private static string[] containers = new[] { "bottle","bag","chest"};
     private static string[] burnedStuff = new[] { "book", "piece of paper", "scroll" };
@@ -120,12 +135,14 @@ public class NameGenerator : MonoBehaviour
 
 
 
-    public static string GetFoodName()
+    public static TreasurePart GetFoodName()
     {
         if (!Instance)
-            return "sausage";
-        
-        return Rnd(food);
+            return new TreasurePart() { Name = "sausage"} ;
+        var f = Rnd(food);
+        var img = Instance.TreasurePartImages.FirstOrDefault(t => t.Name == f);
+
+        return new TreasurePart() { Name = f, Sprite = img.Sprite };
     }
 
 
@@ -166,7 +183,7 @@ public class NameGenerator : MonoBehaviour
     }
 
 
-    public static string GetTreasureName(string randomGoblinName = "old chief")
+    public static Lootable.Treasure GetTreasureName(string randomGoblinName = "old chief")
     {
         string treasure = "";
         Array values = Enum.GetValues(typeof(treasureTypes));
@@ -238,7 +255,11 @@ public class NameGenerator : MonoBehaviour
         
         treasure = AddAttribute(treasure, treasureAdjectives,0.55f);
 
-        return treasure;
+        var asArray = treasure.Split(' ');
+
+        var img = Instance.TreasurePartImages.FirstOrDefault(t => asArray.Contains(t.Name)).Sprite;
+
+        return new Lootable.Treasure() { Name = treasure,LootImage = img};
     }
 
     #region Private Methods

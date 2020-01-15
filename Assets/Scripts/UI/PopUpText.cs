@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PopUpText : MonoBehaviour
 {
@@ -11,16 +12,20 @@ public class PopUpText : MonoBehaviour
     public TextMeshProUGUI PopText;
     private static PopUpText Instance;
     public AiryUIAnimationManager ViewHolder;
+    public GameObject ImageHolder;
+    public Image MessageImage;
 
     public struct ShowEvent
     {
         public string Text;
         public Transform Trans;
+        public Sprite Sprite;
 
-        public ShowEvent(string text, Transform trans)
+        public ShowEvent(string text, Transform trans, Sprite sprite)
         {
             Text = text;
             Trans = trans;
+            Sprite = sprite;
         }
     }
 
@@ -48,16 +53,24 @@ public class PopUpText : MonoBehaviour
             StartCoroutine(ShowTextLoop(TextToShow.Dequeue()));
     }
 
-    public static void ShowText(string text, Transform trans)
+    public static void ShowText(string text, Transform trans, Sprite messageSprite)
     {
-        Instance.TextToShow.Enqueue(new ShowEvent(text,trans));
+
+        Debug.Log(" pop up: " + text);
+
+
+        Instance.TextToShow.Enqueue(new ShowEvent(text,trans,messageSprite));
     }
 
     private IEnumerator ShowTextLoop(ShowEvent showing)
     {
         ShowingText = true;
-        
+
+        Debug.Log("showing pop up: " + showing.Text);
+
         PopText.text = showing.Text;
+        ImageHolder.SetActive(showing.Sprite);
+        MessageImage.sprite = showing.Sprite;
 
         SoundController.PlayEvent();
         

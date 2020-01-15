@@ -46,13 +46,13 @@ public class SearchAction : ActionState
             if (g.LootTarget.ContainsLoot)
             {
                 g.Speak(SoundBank.GoblinSound.Laugh);
-                PopUpText.ShowText(g.name + " found " + g.LootTarget.Loot, g.transform);
+                PopUpText.ShowText(g.name + " found " + g.LootTarget.Loot.Name, g.transform, g.LootTarget.Loot.LootImage);
                 g.Team.OnTreasureFound.Invoke(1);
             }
             if (g.LootTarget.ContainsFood)
             {
                 g.Speak(SoundBank.GoblinSound.Laugh);
-                PopUpText.ShowText(g.name + " found " + g.LootTarget.Food, g.transform);
+                PopUpText.ShowText(g.name + " found " + g.LootTarget.Food.Name, g.transform,g.LootTarget.Food.LootImage);
                 g.Team.OnFoodFound.Invoke(5);
             }
 

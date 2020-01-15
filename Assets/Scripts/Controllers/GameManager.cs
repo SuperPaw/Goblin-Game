@@ -23,10 +23,24 @@ public class GameManager : MonoBehaviour
         LevelUp, Chief, Healing, Idling, Fleeing, Travelling, Fighting, Hiding, Dead, Watching, Searching, Provoking, Resting,
         Unknown
     }
+    public enum EventIcon
+    {
+        FoundFood,
+        FoundTreasure,
+        BrokeEquipment,
+        NewHome,
+    }
     [Serializable]
     public struct IconImg
     {
         public Icon IconType;
+        public Sprite Image;
+    }
+
+    [Serializable]
+    public struct EventImg
+    {
+        public EventIcon Type;
         public Sprite Image;
     }
 
@@ -60,6 +74,7 @@ public class GameManager : MonoBehaviour
         public Sprite Sprite;
     }
 
+
     [Serializable]
     public struct HappinessImage
     {
@@ -78,6 +93,7 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     public EnemyImage[] EnemyImages;
+    public EventImg[] EventImgs;
     public IconImg[] IconImages;
     public ClassImg[] ClassImgs;
     public EquipmentImage[] EquipmentImages;
@@ -112,6 +128,25 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
+    internal static Sprite GetEnemyImg(Character.Race characterRace)
+    {
+        if (Instance.EnemyImages.Any(im => im.Type == characterRace))
+        {
+            return Instance.EnemyImages.First(im => im.Type == characterRace).Sprite;
+        }
+
+        return null;
+    }
+
+    internal static Sprite GetEventImage(EventIcon type)
+    {
+        if (Instance.EventImgs.Any(im => im.Type == type))
+        {
+            return Instance.EventImgs.First(im => im.Type == type).Image;
+        }
+
+        return null;
+    }
     public static Sprite GetClassImage(Goblin.Class type)
     {
         if (Instance.ClassImgs.Any(im => im.ClassType == type))
@@ -318,4 +353,5 @@ public class GameManager : MonoBehaviour
         //TODO: move to above method
         HighScoreScreen.gameObject.SetActive(true);
     }
+
 }
