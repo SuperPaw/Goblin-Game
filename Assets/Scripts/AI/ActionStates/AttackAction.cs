@@ -8,6 +8,7 @@ public class AttackAction : ActionState
 {
     private Coroutine ActionRoutine;
     public override Character.CharacterState StateType => Character.CharacterState.Attacking;
+    private float LastTargetUpdate;
     
     public override IEnumerator StateRoutine(Character ch)
     {
@@ -35,10 +36,22 @@ public class AttackAction : ActionState
                 ch.attackAnimation = false;
                 ch.navMeshAgent.isStopped = false;
 
-                if (ch.NavigationPathIsStaleOrCompleted())
+                //updates path every half second
+                if(LastTargetUpdate + 0.5f < Time.time)
+                {
+                    if (ch.AttackTarget.Fleeing())
+                    {
+                        TargetGone(ch);
+                    }
+                    else
+                        ch.navMeshAgent.SetDestination(ch.AttackTarget.transform.position);
+                    LastTargetUpdate = Time.time;
+                }
+                else if (ch.NavigationPathIsStaleOrCompleted())
                 {
                     Debug.Log($"{ch} going to attack target {ch.AttackTarget}");
                     ch.navMeshAgent.SetDestination(ch.AttackTarget.transform.position);
+                    LastTargetUpdate = Time.time;
                 }
             }
         }
@@ -61,6 +74,7 @@ public class AttackAction : ActionState
 
             //TODO: check what happens if character moves another place, before they get there
             ch.navMeshAgent.SetDestination(closest.transform.position);
+            LastTargetUpdate = Time.time;
         }
     }
     

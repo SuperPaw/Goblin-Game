@@ -267,7 +267,7 @@ public class Goblin : Character
                 COU.Modifiers.Add(new Stat.StatMod("Meatshield", 1));
                 break;
             case Class.Shooter:
-                AttackRange *= 5;
+                AttackRange += 5;
                 AIM.Modifiers.Add(new Stat.StatMod("Shooter", 2));
                 break;
             case Class.Ambusher:

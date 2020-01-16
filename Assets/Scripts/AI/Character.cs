@@ -430,7 +430,7 @@ public abstract partial class Character : MonoBehaviour
         OnDeath.AddListener(Die);
         OnDeath.AddListener(c => OnAnyCharacterDeath.Invoke(c.CharacterRace));
 
-        AttackRange = transform.lossyScale.x * 2f;
+        //AttackRange = transform.lossyScale.x * 2f;
 
         //OnTargetDeath.AddListener(TargetGone);
         OnBeingAttacked.AddListener(BeingAttacked);

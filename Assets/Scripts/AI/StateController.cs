@@ -44,12 +44,19 @@ public class StateController
 
     private IEnumerator StateChangingRoutine(CharacterState newState, float wait)
     {
+        if(newState == CharacterState.Dead)
+        {
+            State = newState;
+            yield break;
+        }
+
         var fromState = State;
 
         yield return new WaitForSeconds(wait);
-
+        
         if (fromState != State)
         {
+            //TODO: use precedence. Mark state priority
             Debug.Log(_owner + " no longer " + fromState + "; Now: " + State + "; Not doing" + newState);
             yield break;
         }
@@ -113,7 +120,7 @@ public class StateController
         }
 
         //TODO: should have an event instead for when statechanging is done;
-        _owner.SetAnimationRandom();
+        //_owner.SetAnimationRandom();
 
         stateChangeRoutine = null;
     }

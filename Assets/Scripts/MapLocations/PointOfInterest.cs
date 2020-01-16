@@ -28,7 +28,7 @@ public class PointOfInterest : MonoBehaviour
     public bool HasBeenAttacked;
     //TODO: use this instead of the option
     [HideInInspector]
-    public bool Attackable;
+    public bool Attackable { get => !HasBeenAttacked && Options.Any(o => o == OptionType.Attack);  }
     public bool LivingDead;
 
     [Header("POI Options")]
@@ -266,7 +266,7 @@ public class PointOfInterest : MonoBehaviour
         }
     }
     
-    private void Attack(PlayerTeam team)
+    public void Attack(PlayerTeam team)
     {
         StartCoroutine(Spawning(team));
     }

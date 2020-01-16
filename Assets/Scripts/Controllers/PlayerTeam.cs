@@ -418,6 +418,12 @@ public class PlayerTeam : MonoBehaviour
             }
         }
 
+        if(!Leader.InArea.AnyEnemies() && Leader.InArea.PointOfInterest && Leader.InArea.PointOfInterest.Attackable)
+        {
+            PlayerChoice.CreateDoChoice(() => Leader.InArea.PointOfInterest.Attack(this), "Do you want to attack the " + Leader.InArea.PointOfInterest.Inhabitants);
+            return;
+        }
+
         foreach (var gobbo in Members)
         {
             if (gobbo.Fleeing() |! 
@@ -426,7 +432,7 @@ public class PlayerTeam : MonoBehaviour
             if (gobbo.Hiding())
                 gobbo.Hidingplace = null;
             
-            gobbo.ChangeState(Character.CharacterState.Attacking, AllHidden() ||gobbo == Leader);
+            gobbo.ChangeState(Character.CharacterState.Attacking, true ||gobbo == Leader);
         }
     }
 

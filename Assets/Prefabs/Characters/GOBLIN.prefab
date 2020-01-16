@@ -80,8 +80,8 @@ MonoBehaviour:
   AimMax: 5
   CouMin: 2
   CouMax: 5
-  HeaMin: 6
-  HeaMax: 11
+  HeaMin: 10
+  HeaMax: 15
   SpeMin: 5
   SpeMax: 5
   SmaMin: 2
@@ -174,7 +174,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 1
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 2
 --- !u!54 &4467384537960578526
 Rigidbody:
   m_ObjectHideFlags: 0
