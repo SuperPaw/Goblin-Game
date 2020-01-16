@@ -15,14 +15,10 @@ public class TravelAction : ActionState
         g.navMeshAgent.SetDestination(g.Target);
         //check for arrival and stop travelling
 
-        yield return new WaitUntil(() =>Vector3.Distance(g.transform.position, g.Target) < 3f);
+        yield return new WaitUntil(() => g.GetState() != Character.CharacterState.Travelling ||Vector3.Distance(g.transform.position, g.Target) < 3f);
         
-        g.ChangeState(Character.CharacterState.Idling);
+        if(g.GetState() == Character.CharacterState.Travelling)
+            g.ChangeState(Character.CharacterState.Idling);
     }
-    
-    //public override void EndState()
-    //{
-    //    throw new System.NotImplementedException();
-    //}
-    
+        
 }

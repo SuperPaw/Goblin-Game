@@ -216,7 +216,7 @@ public class Goblin : Character
             return;
         }
 
-        Debug.Log($"{name}- mood change: {arg0}");
+        //Debug.Log($"{name}- mood change: {arg0}");
 
         Mood += arg0;
 

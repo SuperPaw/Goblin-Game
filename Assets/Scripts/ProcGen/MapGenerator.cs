@@ -286,7 +286,7 @@ public class MapGenerator : MonoBehaviour
 
             g.name = NameGenerator.GetName();
 
-            Debug.Log($"Creating {g.name} at " + pos.x + "," + pos.z);
+            //Debug.Log($"Creating {g.name} at " + pos.x + "," + pos.z);
 
             members.Add(g);
 
