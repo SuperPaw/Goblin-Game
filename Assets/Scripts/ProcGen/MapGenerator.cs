@@ -222,6 +222,7 @@ public class MapGenerator : MonoBehaviour
         yield return new WaitUntil(() => poiGenDone && areasExpanding <= 0 );
         StartCoroutine(ForestGenRoutine());
         
+        yield return new WaitUntil(() => forestGenDone);
         //HACK CHECK FOR AREA ACCESSIBILITY
         //select a middle point 
         //ground points at random a bunch of times and check that they are reachable
@@ -776,8 +777,6 @@ public class MapGenerator : MonoBehaviour
                 tile.Hidable = false;
             }
 
-            //TODO:check 
-
             int loc = (++progress * 100) / totalProgress;
             if (loc != progressPct)
             {
@@ -787,10 +786,10 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
+        Plane.enabled = (true);
+
         forestGenDone = true;
         //Debug.Log("Finished forest gen : " + (Time.time - startTime) + " seconds");
-
-        Plane.enabled =(true);
     }
 
     private void AddAreaPoi(Area area ,PointOfInterest next)

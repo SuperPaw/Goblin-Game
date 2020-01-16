@@ -84,7 +84,8 @@ public class StateController
             State = newState;
         }
 
-        _owner.navMeshAgent.isStopped = false;
+        if(GameManager.Instance.GameStarted)
+            _owner.navMeshAgent.isStopped = false;
 
 
         if (newState != CharacterState.Travelling && newState != CharacterState.Attacking &&

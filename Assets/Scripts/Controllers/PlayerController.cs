@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour
     public static ZoomLevelChangeEvent OnZoomLevelChange = new ZoomLevelChangeEvent();
 
     public enum ZoomLevel { GoblinView, AreaView, MapView }
-    private ZoomLevel currentZoomLevel;
+    private ZoomLevel currentZoomLevel = ZoomLevel.AreaView;
     private bool showingMoveView;
     private Vector3 moveDelta;
     private readonly float moveDamp = 0.85f;
@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
 
         //UpdateFogOfWar();
         OnZoomLevelChange.AddListener(ChangeZoomLevel);
-        ChangeZoomLevel(ZoomLevel.AreaView);
+        ChangeZoomLevel(ZoomLevel.GoblinView);
     }
 
     void Update()

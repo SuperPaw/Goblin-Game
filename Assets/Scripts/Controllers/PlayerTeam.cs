@@ -133,7 +133,13 @@ public class PlayerTeam : MonoBehaviour
         {
             character.Team = this;
 
-            var look = GoblinLooks[Random.Range(0, GoblinLooks.Length)];
+            GoblinLook look;
+
+            //Always unique leader image
+            do
+                look = GoblinLooks[Random.Range(0, GoblinLooks.Length)];
+            while (character != Members.First() && look.Icon == Members.First().GoblinImage);
+
             var mat = look.Material;
             var icon = look.Icon;
             character.GoblinImage = icon;
@@ -155,7 +161,10 @@ public class PlayerTeam : MonoBehaviour
         UpdateFoodAndTreasure();
 
         if (!Leader)
+        {
             Leader = Members.First();
+            Leader.transform.LookAt(Members.Last().transform);
+        }
 
 
         //TODO: use assign class for bonuses instead

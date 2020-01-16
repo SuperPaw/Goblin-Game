@@ -50,6 +50,8 @@ public class ProvokeAction : ActionState
             //TODO: define these in the while statement instead
             if (!g.ProvokeTarget)
             {
+                
+                Debug.Log($"{ch} stopped provoking");
                 g.ChangeState(Character.CharacterState.Idling, true);
                 break;
             }
