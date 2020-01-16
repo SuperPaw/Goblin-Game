@@ -65,6 +65,7 @@ public class AttackAction : ActionState
         var closest = ch.GetClosestEnemy();
         if (!closest || !ch.Attacking() )
         {
+            Debug.Log($"{ch} stopped attacking");
             ch.ChangeState(Character.CharacterState.Idling, true);
             ch.AttackTarget = null;
         }
