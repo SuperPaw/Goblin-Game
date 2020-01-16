@@ -141,6 +141,8 @@ public class PlayerTeam : MonoBehaviour
             character.GoblinSkin.sharedMaterial = mat;
                         
             character.OnDeath?.AddListener(MemberDied);
+
+            character.transform.LookAt(Members.First().transform);
         }
 
         OnTeamKill.AddListener(TeamKill);
@@ -154,6 +156,7 @@ public class PlayerTeam : MonoBehaviour
 
         if (!Leader)
             Leader = Members.First();
+
 
         //TODO: use assign class for bonuses instead
         if (LeaderClass != Goblin.Class.NoClass)

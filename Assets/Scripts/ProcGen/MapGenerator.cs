@@ -99,7 +99,7 @@ public class MapGenerator : MonoBehaviour
     private int NpcsToGenerate;
     public GameObject DefaultCharacter;
     public PlayerTeam GoblinTeam;
-    private int GroupDistance = 8;
+    private int GroupDistance = 3;
     private float startTime;
     private Area center;
     private Area goblinStartArea;
@@ -276,7 +276,6 @@ public class MapGenerator : MonoBehaviour
         {
             pos = pos + Random.insideUnitSphere * GroupDistance;
 
-            Debug.Log("Creating gbolin at "+ pos.x +","+pos.z);
 
             var next = Instantiate(DefaultCharacter, new Vector3(pos.x, 0, pos.z), DefaultCharacter.transform.rotation,GoblinTeam.transform);
 
@@ -285,7 +284,9 @@ public class MapGenerator : MonoBehaviour
             var g = next.GetComponent<Goblin>();
 
             g.name = NameGenerator.GetName();
-            
+
+            Debug.Log($"Creating {g.name} at " + pos.x + "," + pos.z);
+
             members.Add(g);
 
             g.InArea = goblinStartArea;
