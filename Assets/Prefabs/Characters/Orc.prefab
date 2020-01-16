@@ -72,8 +72,8 @@ MonoBehaviour:
   SpeedAnimationThreshold: 0
   LootTarget: {fileID: 0}
   Team: {fileID: 0}
-  DamMin: 6
-  DamMax: 6
+  DamMin: 5
+  DamMax: 5
   AimMin: 4
   AimMax: 4
   CouMin: 10
