@@ -119,7 +119,7 @@ public class LegacySystem : MonoBehaviour
             case Character.Race.Goblin:
                 OnConditionEvent.Invoke(UnlockCondition.GoblinDeath);
                 break;
-            case Character.Race.Human:
+            case Character.Race.Man:
                 OnConditionEvent.Invoke(UnlockCondition.KillHuman);
                 break;
             case Character.Race.Spider:

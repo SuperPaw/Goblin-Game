@@ -87,13 +87,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AreaName: Goblin Trader
-  Inhabitants: Goblin Trader
+  Inhabitants: Trader
   PoiType: 7
   InArea: {fileID: 0}
   NPCPrefab: {fileID: 114423572150661240, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe,
     type: 3}
   NoOfNpcs: 1
-  IconSprite: {fileID: 21300000, guid: be090ecd660be5c42b71efdadc373a37, type: 3}
+  IconSprite: {fileID: 21300000, guid: 767b0eede157fd64cb8be25ad8d2c66a, type: 3}
   PoiOptionController: {fileID: 0}
   Members: []
   MonsterPrefab: {fileID: 114423572150661240, guid: a8fe9acb1e0f9f74c81a0ac4738f9efe,
@@ -103,7 +103,6 @@ MonoBehaviour:
   WinCondition: 0
   InitialEnemies: 0
   HasBeenAttacked: 0
-  Attackable: 0
   LivingDead: 0
   Options: 05000000
   Buyables:

@@ -53,7 +53,7 @@ MonoBehaviour:
   - Name: goo
     Sprite: {fileID: 21300000, guid: 7ccb3d795a82a9447b3fd8d897badfb6, type: 3}
   - Name: meat
-    Sprite: {fileID: 21300000, guid: 4caadabb1b20abc428b7828beb3d4377, type: 3}
+    Sprite: {fileID: 21300000, guid: 638a43e6607f6d8488709b008b4c4a96, type: 3}
   - Name: intestines
     Sprite: {fileID: 21300000, guid: 98694af7322cfb84f84c76342816238e, type: 3}
   - Name: heart
@@ -61,11 +61,11 @@ MonoBehaviour:
   - Name: liver
     Sprite: {fileID: 21300000, guid: 62b1bf2ee108cf1439bc6df2b94c84d4, type: 3}
   - Name: eyes
-    Sprite: {fileID: 21300000, guid: 9a145d2e4c1e0d4489a6dd38e08c7f75, type: 3}
+    Sprite: {fileID: 21300000, guid: bfa69c343ae89b8479f6616bee15527b, type: 3}
   - Name: tongue
     Sprite: {fileID: 21300000, guid: bdf360cb88f452c4bbc7ecfa02cdf2d3, type: 3}
   - Name: food
-    Sprite: {fileID: 21300000, guid: 4caadabb1b20abc428b7828beb3d4377, type: 3}
+    Sprite: {fileID: 21300000, guid: fb5767a021bc2da4c87d30bde599ecc4, type: 3}
   - Name: foot
     Sprite: {fileID: 21300000, guid: 0540494899dda7c4289675de707482f1, type: 3}
   - Name: hand
@@ -83,7 +83,7 @@ MonoBehaviour:
   - Name: fur
     Sprite: {fileID: 21300000, guid: 7610ef9fd535b914aa47b375cc5b7251, type: 3}
   - Name: bone
-    Sprite: {fileID: 21300000, guid: 7bf142ff9dbd3714db003466d9400098, type: 3}
+    Sprite: {fileID: 21300000, guid: 320a83e65200f0d4788dd8f1d21eeb16, type: 3}
   - Name: horn
     Sprite: {fileID: 21300000, guid: c99f482351b4b5a4499ecf45d3c75ddb, type: 3}
   - Name: ring
@@ -93,21 +93,21 @@ MonoBehaviour:
   - Name: coin
     Sprite: {fileID: 21300000, guid: 0afa993f1e6fce443a079139d52f6bb9, type: 3}
   - Name: crystal
-    Sprite: {fileID: 21300000, guid: ff1a961c9ad79a64a9dd70499fbe145b, type: 3}
+    Sprite: {fileID: 21300000, guid: 8313c1861ac84fc4aa6a484bf1fbc8fb, type: 3}
   - Name: key
     Sprite: {fileID: 21300000, guid: 21338db7823c81745b7022664b946846, type: 3}
   - Name: crown
     Sprite: {fileID: 21300000, guid: 695331766f99a4a4a8e849890df013f4, type: 3}
   - Name: armband
-    Sprite: {fileID: 21300000, guid: 37d06885846b7454eadca402757dcf1d, type: 3}
+    Sprite: {fileID: 21300000, guid: 3b7e3c0f50af18c4db191c3734fe4694, type: 3}
   - Name: rock
     Sprite: {fileID: 21300000, guid: 4f6a2dde16005e44685b7cc8fa136adc, type: 3}
   - Name: stone
-    Sprite: {fileID: 21300000, guid: c9b6eeba5d6ebf64e9d32f035f3ba447, type: 3}
+    Sprite: {fileID: 21300000, guid: 156da6b20d83b24438cf040ed3e9ce47, type: 3}
   - Name: stick
-    Sprite: {fileID: 21300000, guid: 3febefcfd9447814487b6969b5d7d634, type: 3}
+    Sprite: {fileID: 21300000, guid: 8f3a857efdb76f548bdb3cf98df3178a, type: 3}
   - Name: branch
-    Sprite: {fileID: 21300000, guid: 3febefcfd9447814487b6969b5d7d634, type: 3}
+    Sprite: {fileID: 21300000, guid: f9a2e9246b9fd234897ccd96aa2ab583, type: 3}
   - Name: leaf
     Sprite: {fileID: 21300000, guid: cef2dcc08a001b4478e9944e435ce72b, type: 3}
   - Name: bottle
@@ -123,21 +123,19 @@ MonoBehaviour:
   - Name: scroll
     Sprite: {fileID: 21300000, guid: 761ef95a94c143a458baa0364902dd5a, type: 3}
   - Name: statue
-    Sprite: {fileID: 21300000, guid: 2b5089d460718dd4cb4cc392a8b3ee0e, type: 3}
+    Sprite: {fileID: 21300000, guid: dca0f884c6c405a43be895ab54942bd0, type: 3}
   - Name: figure
-    Sprite: {fileID: 21300000, guid: b2c4cde1007d97444b81a9e229639205, type: 3}
+    Sprite: {fileID: 21300000, guid: b547c9d7eb97acd408fe29a89ce5d4a0, type: 3}
   - Name: effigy
-    Sprite: {fileID: 21300000, guid: a40ecd67e1430a641be7f366a1a22331, type: 3}
+    Sprite: {fileID: 21300000, guid: a2c53c655955674458df8d67bf0c5077, type: 3}
   - Name: puppet
-    Sprite: {fileID: 21300000, guid: 8d2f03f10ed8e7f4b93a6d45ef2d6c11, type: 3}
+    Sprite: {fileID: 21300000, guid: a2c53c655955674458df8d67bf0c5077, type: 3}
   - Name: claw
-    Sprite: {fileID: 21300000, guid: b20729c7728d4e94696a7e4cfbdd4741, type: 3}
+    Sprite: {fileID: 21300000, guid: 6ac6dfe4757e69940bf4fa477905c68e, type: 3}
   - Name: feather
-    Sprite: {fileID: 21300000, guid: 566bd905f2f69624580dfdafa79f4489, type: 3}
+    Sprite: {fileID: 21300000, guid: a525e969cfd242443aeee05c3b1cb02f, type: 3}
   - Name: beak
     Sprite: {fileID: 21300000, guid: 9624498ea2a409747b35c2d27aaade3f, type: 3}
-  - Name: bone
-    Sprite: {fileID: 21300000, guid: 7bf142ff9dbd3714db003466d9400098, type: 3}
   - Name: wing
     Sprite: {fileID: 21300000, guid: 36ecdfd5d048c984fa197c7662b5a40d, type: 3}
   - Name: skeleton

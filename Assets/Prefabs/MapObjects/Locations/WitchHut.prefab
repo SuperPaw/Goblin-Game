@@ -84,7 +84,7 @@ MonoBehaviour:
   InArea: {fileID: 0}
   NPCPrefab: {fileID: 0}
   NoOfNpcs: 0
-  IconSprite: {fileID: 21300000, guid: 15f5d954ce1eff54db055229d22604f0, type: 3}
+  IconSprite: {fileID: 21300000, guid: eef98e77dd7727e458150892cd4bba5e, type: 3}
   PoiOptionController: {fileID: 0}
   Members: []
   MonsterPrefab: {fileID: 114479280790955412, guid: a41febb9abb65c949b38b226685a2ff7,
@@ -94,7 +94,6 @@ MonoBehaviour:
   WinCondition: 0
   InitialEnemies: 0
   HasBeenAttacked: 0
-  Attackable: 0
   LivingDead: 0
   Options: 08000000
   Buyables:

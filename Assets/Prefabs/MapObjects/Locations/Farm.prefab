@@ -308,13 +308,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79083799dc4cb564482ebd282aad8db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AreaName: Human Farm
-  Inhabitants: Humans
+  AreaName: Man Foodhouse
+  Inhabitants: Mans
   PoiType: 3
   InArea: {fileID: 0}
   NPCPrefab: {fileID: 0}
   NoOfNpcs: 0
-  IconSprite: {fileID: 21300000, guid: 74cd09957347b7e44b159f4836da5d6e, type: 3}
+  IconSprite: {fileID: 21300000, guid: 368a5201091732b4bac9960c377b854b, type: 3}
   PoiOptionController: {fileID: 0}
   Members: []
   MonsterPrefab: {fileID: 114479280790955412, guid: 4a77b2ccf128b394e9e4c49eaa315810,
@@ -324,7 +324,6 @@ MonoBehaviour:
   WinCondition: 0
   InitialEnemies: 3
   HasBeenAttacked: 0
-  Attackable: 0
   LivingDead: 0
   Options: 08000000
   Buyables: []
