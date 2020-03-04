@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 427514}
   - component: {fileID: 3375418}
   - component: {fileID: 2391022}
-  - component: {fileID: 7916575869025404492}
+  - component: {fileID: 8433821542633036989}
   m_Layer: 0
   m_Name: SF_Env_RiverPlants_04
   m_TagString: Untagged
@@ -80,7 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!205 &7916575869025404492
+--- !u!205 &8433821542633036989
 LODGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,11 +90,11 @@ LODGroup:
   serializedVersion: 2
   m_LocalReferencePoint: {x: 0, y: 1.1801393, z: 0.0000038146973}
   m_Size: 2.3602786
-  m_FadeMode: 1
-  m_AnimateCrossFading: 0
+  m_FadeMode: 2
+  m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.023197532
+  - screenRelativeHeight: 0.0077111106
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2391022}

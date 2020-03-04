@@ -2917,16 +2917,6 @@ PrefabInstance:
       propertyPath: Forest
       value: 
       objectReference: {fileID: 176308, guid: 0638026e2eb7cb44ca8972ba006e48f4, type: 3}
-    - target: {fileID: 2959414394161869283, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2959414394161869283, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 28a443a271083234eac13af63aacb88d, type: 2}
     - target: {fileID: 8117359875643797009, guid: 2fcb0bbe2b393ee4f8e87e9788e059a0,
         type: 3}
       propertyPath: m_IsActive
@@ -4991,7 +4981,7 @@ PrefabInstance:
     - target: {fileID: 6057858525446187764, guid: affee8357be7256439d8473952deead4,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6057858525446187768, guid: affee8357be7256439d8473952deead4,
         type: 3}

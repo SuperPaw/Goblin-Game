@@ -179,7 +179,7 @@ public class MapGenerator : MonoBehaviour
         Plane.transform.localScale = new Vector3(SizeX / 8f, 1, SizeZ / 8f);
         //MeshBuilder.m_Size = new Vector3(SizeX, 10, SizeZ);
         //Adjust for border size. Should be 
-        Plane.transform.position = new Vector3(SizeX+20, 0, SizeZ+20 );
+        Plane.transform.position = new Vector3((SizeX+20)/2, 0, (SizeZ+20)/2 );
 
 
 
